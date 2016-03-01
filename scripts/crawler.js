@@ -1,3 +1,5 @@
+// npm install xml2js, request
+
 var request = require('request');
 var fs = require('fs');
 var parseString = require('xml2js').parseString;
