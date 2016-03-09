@@ -1,5 +1,12 @@
+<pre>
 <?php
+error_reporting(E_ALL);
 
+// Melde alle PHP Fehler
+error_reporting(-1);
+
+// Dies entspricht error_reporting(E_ALL);
+ini_set('error_reporting', E_ALL);
 ini_set('memory_limit','512M');
 
 // FACET INFO
@@ -12,9 +19,11 @@ ini_set('memory_limit','512M');
 // $types = array("Schulbuch", "Elektronische Publikation", "Online-Publikation");
 
 $books = array();
-
+$i = 0;
 if($dh = opendir("../data/")){
-    while(($file = readdir($dh)) != false) {
+    while(($file = readdir($dh)) != false && $i < 4) {
+
+    	$i++;
 
 		$file_parts = pathinfo($file);
 
@@ -106,15 +115,15 @@ if($dh = opendir("../data/")){
 	
 					array_push($books, $book);
 				}				
-    }
+    	}
 	}
 }
 
 
 	
-error_log(print_r($books, true));
+print_r($books);
 	
-file_put_contents("../data/books.json", json_encode($books));
+file_put_contents("./books.json", json_encode($books));
 
 
 ?>
