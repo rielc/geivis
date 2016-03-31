@@ -31,16 +31,16 @@
 
 var dataObject;
 
-var n = 20, // number of layers
-    m = 200, // number of samples per layer
+var n = 50, // number of layers
+    m = 1000, // number of samples per layer
     stack = d3.layout.stack()
       .offset("zero")
       // .x(function(d){ console.log(d.key);  return d.key; })
-      .y(function(d){ return d.length; })
-      .values(function(d) { return d.histo; })
+      .y( function(d){ return d.length; } )
+      .values( function(d) { return d.histo; }) 
 
 var margin = {top: 20, right: 30, bottom: 30, left: 40},
-    width = 8000 - margin.left - margin.right,
+    width =  window.width - margin.left - margin.right,
     height = 1200 - margin.top - margin.bottom;
 
 
@@ -78,9 +78,7 @@ var svg = d3.select("body").append("svg")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
   .append("g")
-    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-console.log(svg)
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");    
 
 var format = d3.time.format("%Y");
 
@@ -107,10 +105,10 @@ d3.json("../data/books.json", function (data) {
     .entries(data);
 
   lang.forEach(function(d,i){
-    d.histo = d3.layout.histogram()
-      .value(function(d){ return d.date; })
-      .bins(x.ticks(d3.time.year, 1))
-      (d.values);
+      d.histo = d3.layout.histogram()
+        .value( function(d) { return d.date; })
+        .bins( x.ticks(d3.time.year, 1) )
+        ( d.values.filter(function(d) { return ( d.tags.indexOf("Somalia") != -1 && d.tags.indexOf("Erstleseunterricht") != -1 ) }));
 
   })
   var s = stack(lang)
@@ -125,7 +123,8 @@ d3.json("../data/books.json", function (data) {
       .data(s)
     .enter().append("path")
       .attr("d", function(d){ return area(d.histo)})
-      .style("fill", function(d, i) { return z(d.key); });
+      .style("fill", function(d, i) { return z(d.key); })
+      .on("mouseover", function(d) { console.log(d);} );
 
   svg.append("g")
         .attr("class", "x axis")
