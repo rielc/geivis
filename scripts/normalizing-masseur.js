@@ -19,6 +19,8 @@ More Detail:
 
 */
 
+debugger;
+
 var fs = require("fs");
 
 var pathToDataFiles = "../data/raw/";
@@ -55,7 +57,7 @@ function returnBookID (entry) { return entry.id;}
 function loop() {
 	if (loadedFiles == fileNames.length-2) {
 		var total = {'books' : books, 'fields' : stringDB};
-		fs.writeFile("./normalizedBooks.json", JSON.stringify(total), function () { clearInterval(interval);});
+		//fs.writeFile("./normalizedBooks.json", JSON.stringify(total), function () { clearInterval(interval);});
 		console.log("Finished!");
 	}
 }
@@ -86,12 +88,17 @@ function parseFile (content, file) {
 		// for every book
 		data.forEach( function (book) {
 
+			// https://www.gbv.de/vgm/info/mitglieder/02Verbund/01Erschliessung/02Richtlinien/01KatRicht/pica3.pdf
+			// Documentation of the facets
+
 			// these fields hold the values for the new generated book-data
 			// ID (omitted) , l-anguage , y-ear , p-ublisher , t-ags
 			var newBook = { /*id:"",*/ l:[], y:"", p:[], t:[] };
 
 			// iteratate through all facets
 			book.forEach( function (facet) {
+
+				console.log(facet);
 
 				var type = facet['$'].tag;
 				var subfield = facet.subfield;
