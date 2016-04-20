@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title></title>
+  <style>
+
+  body {
+    font: 10px sans-serif;
+  }
+
+  .axis path,
+  .axis line {
+    fill: none;
+    stroke: #000;
+    shape-rendering: crispEdges;
+  }
+
+  </style>
+  <script src="d3.js"></script>
+  <script src="legend.js"></script>
+</head>
+<body>
+
+<h1>Schulbücher nach Ländern</h1>
+<div class="vis"></div>
+
+
+<script>
+
+var keywordClasses;
+var dataObject;
+
+function classification (keyword) {
+  var r = undefined;
+  for (var classification in keywordClasses ) {
+    if ( keywordClasses.hasOwnProperty(classification) ) {
+      for (var type in keywordClasses[classification] ) {
+        if ( keywordClasses[classification].hasOwnProperty(type) ) {
+          if (keywordClasses[classification][type].indexOf(keyword) != -1) {
+            r = {"classification" : classification, "type" : type};
+          }
+        }
+      }
+    }
+  }
+  return r;
+}
+
+d3.json("../data/keyword-classes.json", function (content) {
+
+  keywordClasses = content;
+
+  var margin = {top: 20, right: 30, bottom: 30, left: 40},
+      width =  window.width - margin.left - margin.right,
+      height = 1200 - margin.top - margin.bottom;
+
+  var svg = d3.select("body").append("svg")
+      .attr("width", width + margin.left + margin.right)
+      .attr("height", height + margin.top + margin.bottom)
+      .append("g")
+      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");    
+
+  var format = d3.time.format("%Y");
+
+  d3.json("../data/normalized-books2.json", function (content) {
+    var data = content.books.map(
+      function (d, index, array) {
+        return { 
+          "year" : content.fields.y[d.y],
+          "lang" : content.fields.l[d.l], 
+          "tags" : d.t.map(function (t) { return content.fields.t[t]; }),
+          "classification" : d.t.map( function (t) { return classification(content.fields.t[t]); }).filter(function(c) { return (c != undefined); })
+        }; 
+      });
+
+    console.log(data);
+
+  });
+
+});
+
+
+
+
+
+</script>
+</body>
+</html>

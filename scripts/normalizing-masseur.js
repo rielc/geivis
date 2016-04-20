@@ -23,7 +23,7 @@ debugger;
 
 var fs = require("fs");
 
-var pathToDataFiles = "../data/raw/";
+var pathToDataFiles = "../data/raw2/";
 var interval;
 
 var fileNames = [];
@@ -55,9 +55,9 @@ function returnBookID (entry) { return entry.id;}
 
 // finishes the program once all files are loaded/parsed
 function loop() {
-	if (loadedFiles == fileNames.length-2) {
+	if (loadedFiles == fileNames.length-1) {
 		var total = {'books' : books, 'fields' : stringDB};
-		//fs.writeFile("./normalizedBooks.json", JSON.stringify(total), function () { clearInterval(interval);});
+		fs.writeFile("../data/normalized-books2.json", JSON.stringify(total), function () { clearInterval(interval);});
 		console.log("Finished!");
 	}
 }
@@ -68,7 +68,7 @@ function loadFiles (error, fn) {
 	// loop through all files in dir
 	for (var i=0; i<fileNames.length; i++) {
 		var file = fileNames[i];
-		if (file != '.DS_Store' && file != 'books.json' ) { rfClosure(file); }
+		if (file != '.DS_Store' ) { rfClosure(file); }
 	}
 }
 
@@ -98,7 +98,7 @@ function parseFile (content, file) {
 			// iteratate through all facets
 			book.forEach( function (facet) {
 
-				console.log(facet);
+				//console.log(facet);
 
 				var type = facet['$'].tag;
 				var subfield = facet.subfield;

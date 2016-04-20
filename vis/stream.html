@@ -29,6 +29,8 @@
 <script>
 
 
+var filtered;
+
 var dataObject;
 
 var n = 50, // number of layers
@@ -83,20 +85,29 @@ var svg = d3.select("body").append("svg")
 var format = d3.time.format("%Y");
 
 // d3.json("../scripts/books.json", function (data) {
-d3.json("../data/books.json", function (data) {
-  console.log(data, data[0]);
+d3.json("../data/normalized-books2.json", function (content) {
+
+
+  //dataObject = content;
+
+  //console.log(content);
+
+  var cRef = content;
+  //console.log(cRef.fields.y);
+  //console.log(cRef.fields.l.indexOf("ger"));
+
+  var data = content.books.map(
+    function (d) {
+      return { "year" : cRef.fields.y[d.y]  , "lang" : cRef.fields.l[d.l], tags : d.t.map(function (t) { return cRef.fields.t[t]; }) }; 
+    } );
 
   dataObject = data;
 
-  var filtered = data.filter(function(d){
-    return d.year;
-  })
+  //filtered = data.(function (d) { return d.year; });
 
-  filtered.forEach(function(d) {
-    d.date = format.parse(d.year);
-  })
+  data.forEach(function (d) { d.date = format.parse(d.year);});
 
-  console.log(data.length, filtered.length)
+  //console.log(data.length, filtered.length)
 
   x.domain(d3.extent(data, function(d){ return d.date; }));
 
@@ -108,16 +119,19 @@ d3.json("../data/books.json", function (data) {
       d.histo = d3.layout.histogram()
         .value( function(d) { return d.date; })
         .bins( x.ticks(d3.time.year, 1) )
-        ( d.values.filter(function(d) { return ( d.tags.indexOf("Somalia") != -1 && d.tags.indexOf("Erstleseunterricht") != -1 ) }));
+        ( d.values );
+  });
 
-  })
-  var s = stack(lang)
-  console.log(lang, s);
+
+  var s = stack(lang);
+
+
+  //console.log(lang);
 
   y.domain([0, d3.max(s, function(d){ return d3.max(d.histo, function(d){ return d.y; })})*2])
   // y.domain([0, 50])
   z.domain([0, s.length])
-  console.log(x.domain(), y.domain(), z.domain())
+  //console.log(x.domain(), y.domain(), z.domain())
 
   svg.selectAll("path")
       .data(s)
