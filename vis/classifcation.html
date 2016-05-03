@@ -31,6 +31,9 @@
 var keywordClasses;
 var dataObject;
 
+var keywordClasses;
+var dataObject;
+
 function classification (keyword) {
   var r = undefined;
   for (var classification in keywordClasses ) {
@@ -46,6 +49,21 @@ function classification (keyword) {
   }
   return r;
 }
+
+function getClassification (keywords) {
+  var cl = undefined;
+  if (keywords.length > 0 ) {
+    keywords.forEach(function (k) {
+      if (classification(k) != undefined) {
+        if (cl == undefined) { cl = {}; }
+        var tmp = classification(k);
+        cl[tmp.classification] = keywordClasses[tmp.classification][tmp.type][0];
+      }
+    })
+  }
+  return cl;
+
+};
 
 d3.json("../data/keyword-classes.json", function (content) {
 
@@ -70,7 +88,7 @@ d3.json("../data/keyword-classes.json", function (content) {
           "year" : content.fields.y[d.y],
           "lang" : content.fields.l[d.l], 
           "tags" : d.t.map(function (t) { return content.fields.t[t]; }),
-          "classification" : d.t.map( function (t) { return classification(content.fields.t[t]); }).filter(function(c) { return (c != undefined); })
+          "classification" : getClassification( d.t.map( function (t) { return content.fields.t[t]; }) )
         }; 
       });
 
