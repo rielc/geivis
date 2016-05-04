@@ -85,6 +85,7 @@ d3.json("../data/data.json", function (data) {
   console.log(data, data[0]);
 
   var classifications = getClassificationList(data);
+  console.log(classifications);
 
   var filtered = data.filter(function(d){
     return d.year;
@@ -96,6 +97,9 @@ d3.json("../data/data.json", function (data) {
 
 
   x.domain(d3.extent(data, function(d){ return d.date; }));
+
+  makeGraph(data, "publisher", function(d){ return d.publisher || "none"});
+  makeGraph(data, "lang", function(d){ return d.lang || "none"});
 
   classifications.forEach(function(c){
     makeGraph(data, c, function(d){ return d.classification[c] || "none"});
