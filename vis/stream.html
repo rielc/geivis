@@ -28,16 +28,21 @@
 
 <script>
 
-var n = 20, // number of layers
-    m = 200, // number of samples per layer
+
+var filtered;
+
+var dataObject;
+
+var n = 50, // number of layers
+    m = 1000, // number of samples per layer
     stack = d3.layout.stack()
       .offset("zero")
       // .x(function(d){ console.log(d.key);  return d.key; })
-      .y(function(d){ return d.length; })
-      .values(function(d) { return d.histo; })
+      .y( function(d){ return d.length; } )
+      .values( function(d) { return d.histo; }) 
 
 var margin = {top: 20, right: 30, bottom: 30, left: 40},
-    width = 8000 - margin.left - margin.right,
+    width =  window.width - margin.left - margin.right,
     height = 1200 - margin.top - margin.bottom;
 
 
@@ -75,25 +80,34 @@ var svg = d3.select("body").append("svg")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
   .append("g")
-    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-console.log(svg)
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");    
 
 var format = d3.time.format("%Y");
 
 // d3.json("../scripts/books.json", function (data) {
-d3.json("../data/books.json", function (data) {
-  console.log(data, data[0]);
+d3.json("../data/normalized-books2.json", function (content) {
 
-  var filtered = data.filter(function(d){
-    return d.year;
-  })
 
-  filtered.forEach(function(d) {
-    d.date = format.parse(d.year);
-  })
+  //dataObject = content;
 
-  console.log(data.length, filtered.length)
+  //console.log(content);
+
+  var cRef = content;
+  //console.log(cRef.fields.y);
+  //console.log(cRef.fields.l.indexOf("ger"));
+
+  var data = content.books.map(
+    function (d) {
+      return { "year" : cRef.fields.y[d.y]  , "lang" : cRef.fields.l[d.l], tags : d.t.map(function (t) { return cRef.fields.t[t]; }) }; 
+    } );
+
+  dataObject = data;
+
+  //filtered = data.(function (d) { return d.year; });
+
+  data.forEach(function (d) { d.date = format.parse(d.year);});
+
+  //console.log(data.length, filtered.length)
 
   x.domain(d3.extent(data, function(d){ return d.date; }));
 
@@ -102,25 +116,29 @@ d3.json("../data/books.json", function (data) {
     .entries(data);
 
   lang.forEach(function(d,i){
-    d.histo = d3.layout.histogram()
-      .value(function(d){ return d.date; })
-      .bins(x.ticks(d3.time.year, 1))
-      (d.values);
+      d.histo = d3.layout.histogram()
+        .value( function(d) { return d.date; })
+        .bins( x.ticks(d3.time.year, 1) )
+        ( d.values );
+  });
 
-  })
-  var s = stack(lang)
-  console.log(lang, s);
+
+  var s = stack(lang);
+
+
+  //console.log(lang);
 
   y.domain([0, d3.max(s, function(d){ return d3.max(d.histo, function(d){ return d.y; })})*2])
   // y.domain([0, 50])
   z.domain([0, s.length])
-  console.log(x.domain(), y.domain(), z.domain())
+  //console.log(x.domain(), y.domain(), z.domain())
 
   svg.selectAll("path")
       .data(s)
     .enter().append("path")
       .attr("d", function(d){ return area(d.histo)})
-      .style("fill", function(d, i) { return z(d.key); });
+      .style("fill", function(d, i) { return z(d.key); })
+      .on("mouseover", function(d) { console.log(d);} );
 
   svg.append("g")
         .attr("class", "x axis")

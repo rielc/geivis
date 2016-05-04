@@ -20,8 +20,10 @@ ini_set('memory_limit','512M');
 
 $books = array();
 $i = 0;
-if($dh = opendir("../data/")){
-    while(($file = readdir($dh)) != false && $i < 4) {
+
+if($dh = opendir("../data/raw2/")) {
+
+    while(($file = readdir($dh)) != false && $i < 100) {
 
     	$i++;
 
@@ -121,9 +123,9 @@ if($dh = opendir("../data/")){
 
 
 	
-print_r($books);
+//print_r($books);
 	
-file_put_contents("./books.json", json_encode($books));
+file_put_contents("./books2.json", json_encode($books));
 
 
 ?>
