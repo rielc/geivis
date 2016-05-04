@@ -97,16 +97,16 @@ d3.json("../data/data.json", function (data) {
 
   x.domain(d3.extent(data, function(d){ return d.date; }));
 
-  classifications.forEach(function(d){
-    makeGraph(data, d);
+  classifications.forEach(function(c){
+    makeGraph(data, c, function(d){ return d.classification[c] || "none"});
   })
 
 })
 
 
-function makeGraph(data, kat){
+function makeGraph(data,name, key){
   var nest = d3.nest()
-    .key(function(d) { return d.classification[kat] || "none"; })
+    .key(key)
     .entries(data);
 
   nest.forEach(function(d,i){
@@ -122,7 +122,7 @@ function makeGraph(data, kat){
   // y.domain([0, 50])
   z.domain([0, s.length])
 
-  d3.select("body").append("h2").text(kat);
+  d3.select("body").append("h2").text(name);
 
   var svg = d3.select("body").append("svg")
       .attr("width", width + margin.left + margin.right)
