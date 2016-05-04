@@ -22,7 +22,6 @@
 </head>
 <body>
 
-<h1>Schulbücher nach Ländern</h1>
 <div class="vis"></div>
 
 
@@ -35,8 +34,8 @@ var stack = d3.layout.stack()
       .values(function(d) { return d.histo; })
 
 var margin = {top: 20, right: 30, bottom: 30, left: 40},
-    width = 1400 - margin.left - margin.right,
-    height = 1200 - margin.top - margin.bottom;
+    width = window.innerWidth - margin.left - margin.right,
+    height = window.innerHeight - margin.top - margin.bottom;
 
 
 var x = d3.time.scale()
@@ -69,19 +68,23 @@ var area = d3.svg.area()
     .y0(function(d) { return y(d.y0); })
     .y1(function(d) { return y(d.y0 + d.y); });
 
-var svg = d3.select("body").append("svg")
-    .attr("width", width + margin.left + margin.right)
-    .attr("height", height + margin.top + margin.bottom)
-  .append("g")
-    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-console.log(svg)
+function getClassificationList(data){
+  var classification = {};
+  data.forEach(function(d){
+    d3.keys(d.classification).forEach(function(d){
+      classification[d] = true;
+    });
+  })
+  return d3.keys(classification);
+}
 
 var format = d3.time.format("%Y");
 
-// d3.json("../scripts/books.json", function (data) {
-d3.json("../data/books.json", function (data) {
+d3.json("../data/data.json", function (data) {
   console.log(data, data[0]);
+
+  var classifications = getClassificationList(data);
 
   var filtered = data.filter(function(d){
     return d.year;
@@ -91,28 +94,41 @@ d3.json("../data/books.json", function (data) {
     d.date = format.parse(d.year);
   })
 
-  console.log(data.length, filtered.length)
 
   x.domain(d3.extent(data, function(d){ return d.date; }));
 
-  var lang = d3.nest()
-    .key(function(d) { return d.lang; })
+  classifications.forEach(function(d){
+    makeGraph(data, d);
+  })
+
+})
+
+
+function makeGraph(data, kat){
+  var nest = d3.nest()
+    .key(function(d) { return d.classification[kat] || "none"; })
     .entries(data);
 
-  lang.forEach(function(d,i){
+  nest.forEach(function(d,i){
     d.histo = d3.layout.histogram()
       .value(function(d){ return d.date; })
       .bins(x.ticks(d3.time.year, 1))
       (d.values);
 
   })
-  var s = stack(lang)
-  console.log(lang, s);
+  var s = stack(nest)
 
   y.domain([0, d3.max(s, function(d){ return d3.max(d.histo, function(d){ return d.y; })})*2])
   // y.domain([0, 50])
   z.domain([0, s.length])
-  console.log(x.domain(), y.domain(), z.domain())
+
+  d3.select("body").append("h2").text(kat);
+
+  var svg = d3.select("body").append("svg")
+      .attr("width", width + margin.left + margin.right)
+      .attr("height", height + margin.top + margin.bottom)
+    .append("g")
+      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
   svg.selectAll("path")
       .data(s)
@@ -144,8 +160,7 @@ d3.json("../data/books.json", function (data) {
 
     svg.select(".legendQuant")
       .call(legend);
-})
-
+}
 
 
 
