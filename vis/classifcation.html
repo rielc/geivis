@@ -70,7 +70,7 @@ d3.json("../data/keyword-classes.json", function (content) {
   keywordClasses = content;
 
   var margin = {top: 20, right: 30, bottom: 30, left: 40},
-      width =  window.width - margin.left - margin.right,
+      width =  window.innerWidth - margin.left - margin.right,
       height = 1200 - margin.top - margin.bottom;
 
   var svg = d3.select("body").append("svg")
@@ -82,13 +82,14 @@ d3.json("../data/keyword-classes.json", function (content) {
   var format = d3.time.format("%Y");
 
   d3.json("../data/normalized-books2.json", function (content) {
-    var data = content.books.map(
-      function (d, index, array) {
+    var fields = content.fields;
+    var books = content.books;
+    var data = books.map(function (d) {
         return { 
-          "year" : content.fields.y[d.y],
-          "lang" : content.fields.l[d.l], 
-          "tags" : d.t.map(function (t) { return content.fields.t[t]; }),
-          "classification" : getClassification( d.t.map( function (t) { return content.fields.t[t]; }) )
+          "year" : fields.y[d.y],
+          "lang" : fields.l[d.l], 
+          "tags" : d.t.map(function (t) { return fields.t[t]; }),
+          "classification" : getClassification( d.t.map( function (t) { return fields.t[t]; }) )
         }; 
       });
 
