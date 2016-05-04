@@ -42,8 +42,9 @@ var books = bookData.books;
 var data = books.map(function (d) {
     return { 
       "year" : fields.y[d.y],
-      "lang" : fields.l[d.l], 
+      "lang" : fields.l[d.l],
       "tags" : d.t.map(function (t) { return fields.t[t]; }),
+      "publisher" : fields.p[d.p], 
       "classification" : getClassification( d.t.map( function (t) { return fields.t[t]; }) )
     }; 
   });
