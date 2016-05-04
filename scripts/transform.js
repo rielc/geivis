@@ -2,7 +2,7 @@ var fs = require("fs");
 
 var bookData = require('../data/normalized-books2.json');
 var keywordClasses = require('../data/keyword-classes.json');
-
+var missingIndex = {};
 
 
 function classification (keyword) {
@@ -22,18 +22,32 @@ function classification (keyword) {
 }
 
 function getClassification (keywords) {
-  var cl = {};
+  var cl = undefined;
+
   if (keywords.length > 0 ) {
     keywords.forEach(function (k) {
       if (classification(k) != undefined) {
         if (cl == undefined) { cl = {}; }
         var tmp = classification(k);
-        cl[tmp.classification] = keywordClasses[tmp.classification][tmp.type][0];
+
+        // exception for keywords/tags
+        if (tmp.classification == "keyword") {
+          if (cl["keyword"] == undefined) {
+            cl["keyword"] = [];
+            //console.log("added keyword");
+          }
+          cl["keyword"].push(k);
+        } else {
+          cl[tmp.classification] = keywordClasses[tmp.classification][tmp.type][0];
+        }
+      } else {
+        if (missingIndex[k] == undefined) { missingIndex[k] = 0;}
+        missingIndex[k]++;
       }
     })
   }
+  //if (cl.subject != undefined) { if (cl.subject == 0) { console.log(keywords); } }
   return cl;
-
 };
 
 
