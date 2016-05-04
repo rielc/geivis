@@ -22,7 +22,7 @@ function classification (keyword) {
 }
 
 function getClassification (keywords) {
-  var cl = undefined;
+  var cl = {};
   if (keywords.length > 0 ) {
     keywords.forEach(function (k) {
       if (classification(k) != undefined) {
