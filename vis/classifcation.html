@@ -56,7 +56,6 @@ function getClassification (keywords) {
   var cl = undefined;
 
   if (keywords.length > 0 ) {
-
     keywords.forEach(function (k) {
       if (classification(k) != undefined) {
         if (cl == undefined) { cl = {}; }
@@ -78,6 +77,7 @@ function getClassification (keywords) {
       }
     })
   }
+  if (cl.subject!= undefined) { if (cl.subject == 0) { console.log(keywords); } }
   return cl;
 };
 

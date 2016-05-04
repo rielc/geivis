@@ -7,13 +7,15 @@
 		"u050" : ["Geschichtsunterricht"],
 		"u060" : ["Realien"],
 		"u070" : ["Sozialkundeunterricht","Gemeinschaftskunde", "Sozialkunde <Unterricht>","Soziallehreunterricht", "Sozialunterricht","Sozialwissenschaften / Unterricht","Sozialwissenschaftlicher Unterricht","Gesellschaftslehreunterricht","Gesellschaftskunde","Politischer Unterricht","Gegenwartskunde", "Politikunterricht","Staatsbürgerkunde", "Staatskunde <Unterrichtsfach>","Politische Bildung","Politische Erziehung/ Pädagogik","Politik, Gesellschaft, Wirtschaft","Rechtskundeunterricht","Recht / Politischer Unterricht", "Rechtsunterricht","Wirtschaftslehre","Wirtschafts- und Rechtslehre","Wirtschaft und Recht <Unterrichtsfach>","Wirtschafts- und Rechtskundeunterricht"],
-		"u075x" : ["Sachunterricht","Sachkundeunterricht","Heimatkundeunterricht"],
+		"u075x": ["Sachunterricht","Sachkundeunterricht","Heimatkundeunterricht"],
 		"u09x" : ["Werterziehung","Lebensgestaltung – Ethik – Religionskunde","Humanistische Lebenskunde","Natur-Mensch-Mitwelt"],	
 		"u091" : ["Ethikunterricht"],
 		"u092" : ["Philosophieunterricht", "Praktische Philosophie"],
 		"u093" : ["Religionsunterricht","Evangelischer Religionsunterricht","Christenlehre","Islamischer Religionsunterricht","Jüdischer Religionsunterricht","Israelitischer Religionsunterricht","Bibelunterricht","Katholischer Religionsunterricht","Orthodoxer Religionsunterricht","Russisch-orthodoxer Religionsunterricht","Russisch-orthodoxe Kirche","Syrisch-Orthodoxer Religionsunterricht","Jakobitische Kirche","Interreligiöses Lernen","Interkulturelle Erziehung"]
 	},
 	"schooltype" : {
+		"s00" : ["Grundschule"],
+		"s01" : ["Orientierungsstufe", "Förderstufe"],
 		"s02" : ["Hauptschule","Volksschule","Einklassige Schule","Zweiklassige Schule","Halbtagsschule","Landschule"],
 		"s03" : ["Mittelschule","Realschule","Regionale Schule"],
 		"s04" : ["Realschule", "Mittlere-Reife-Zug"],
@@ -27,6 +29,7 @@
 		"k01" : ["Grundschule","Elementarbereich","Eingangsstufe"],
 		"k02" : ["Sekundarstufe 1","Polytechnische Oberschule"	,"POS –, Allgemeinbildende zehnjährige polytechnische Oberschule der DDR","Polytechnische Oberschule", "Unterstufe","Allgemein bildende höhere Schule","(AHS) in Österreich","Neue Mittelschule","(NMS) in Österreich"],
 		"k03" : ["Sekundarstufe 2","Reifeprüfung","Mündliche Reifeprüfung","Schriftliche Reifeprüfung","Erweiterte Oberschule","EOS","Abiturstufe","High School","College"],
+		"k05" : ["Berufliche Bildungsgänge","Berufsbildende Schule", "Berufsbildende Höhere Schule", "Berufsbildende Mittlere Schule", "Berufsfachschule", "Berufsgrundbildungsjahr", "Berufliches Gymnasium", "Berufskolleg", "Berufsoberschule", "Berufsschule", "Fachoberschule", "Fortbildungsschule", "Gewerbeschule", "Gewerbliche Berufsfachschule", "Gewerbliche Fortbildungsschule", "Heeres-Unteroffiziervorschule", "Handelsakademie (HAK)", "Handelsschule (HAS)", "Höhere Berufsfachschule", "Höhere Handelsschule", "Höhere Lehranstalt für wirtschaftliche Berufe (HLW)", "Höhere Lehranstalt für Tourismus (HLT)", "Höhere technische Lehranstalt (HTL)", "Kaufmännische Fortbildungsschule", "Marineschule", "Militärschule", "Technikerschule (Technikum)", "Technisches Gymnasium", "Wirtschaftsgymnasium"],
 		"k06" : ["Tertiärbereich","Hochschulbildung","College","Erwachsenenbildung","Selbststudium","Selbstunterricht"]
 	},
 	"keyword" : {
