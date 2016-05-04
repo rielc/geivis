@@ -34,6 +34,8 @@ var dataObject;
 var keywordClasses;
 var dataObject;
 
+var missingIndex = {};
+
 function classification (keyword) {
   var r = undefined;
   for (var classification in keywordClasses ) {
@@ -52,17 +54,31 @@ function classification (keyword) {
 
 function getClassification (keywords) {
   var cl = undefined;
+
   if (keywords.length > 0 ) {
+
     keywords.forEach(function (k) {
       if (classification(k) != undefined) {
         if (cl == undefined) { cl = {}; }
         var tmp = classification(k);
-        cl[tmp.classification] = keywordClasses[tmp.classification][tmp.type][0];
+
+        // exception for keywords/tags
+        if (tmp.classification == "keyword") {
+          if (cl["keyword"] == undefined) {
+            cl["keyword"] = [];
+            console.log("added keyword");
+          }
+          cl["keyword"].push(k);
+        } else {
+          cl[tmp.classification] = keywordClasses[tmp.classification][tmp.type][0];
+        }
+      } else {
+        if (missingIndex[k] == undefined) { missingIndex[k] = 0;}
+        missingIndex[k]++;
       }
     })
   }
   return cl;
-
 };
 
 d3.json("../data/keyword-classes.json", function (content) {
