@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title></title>
+  <style>
+
+  body {
+    font: 10px sans-serif;
+  }
+
+  .axis path,
+  .axis line {
+    fill: none;
+    stroke: #000;
+    shape-rendering: crispEdges;
+  }
+
+  </style>
+  <script src="d3.js"></script>
+  <script src="legend.js"></script>
+</head>
+<body>
+
+<h1>Schulbücher nach Ländern</h1>
+<div class="vis"></div>
+
+
+<script>
+
+var stack = d3.layout.stack()
+      .offset("zero")
+      // .x(function(d){ console.log(d.key);  return d.key; })
+      .y(function(d){ return d.length; })
+      .values(function(d) { return d.histo; })
+
+var margin = {top: 20, right: 30, bottom: 30, left: 40},
+    width = 8000 - margin.left - margin.right,
+    height = 1200 - margin.top - margin.bottom;
+
+
+var x = d3.time.scale()
+    //.domain([0, m - 1])
+    .range([0, width]);
+
+var y = d3.scale.linear()
+    //.domain([0, d3.max(layers0.concat(layers1), function(layer) { return d3.max(layer, function(d) { return d.y0 + d.y; }); })])
+    .range([height, 0]);
+
+var z = d3.scale.category20c()
+  // .range(["black","white"])
+  // .interpolate(d3.interpolateHcl);
+
+var xAxis = d3.svg.axis()
+    .scale(x)
+    .orient("bottom")
+    .ticks(d3.time.years, 1)
+
+
+var yAxis = d3.svg.axis()
+    .scale(y)
+    .orient("left");
+
+var color = d3.scale.linear()
+    .range(["#aad", "#556"]);
+
+var area = d3.svg.area()
+    .x(function(d) { return x(d.x); })
+    .y0(function(d) { return y(d.y0); })
+    .y1(function(d) { return y(d.y0 + d.y); });
+
+var svg = d3.select("body").append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+  .append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+console.log(svg)
+
+var format = d3.time.format("%Y");
+
+// d3.json("../scripts/books.json", function (data) {
+d3.json("../data/books.json", function (data) {
+  console.log(data, data[0]);
+
+  var filtered = data.filter(function(d){
+    return d.year;
+  })
+
+  filtered.forEach(function(d) {
+    d.date = format.parse(d.year);
+  })
+
+  console.log(data.length, filtered.length)
+
+  x.domain(d3.extent(data, function(d){ return d.date; }));
+
+  var lang = d3.nest()
+    .key(function(d) { return d.lang; })
+    .entries(data);
+
+  lang.forEach(function(d,i){
+    d.histo = d3.layout.histogram()
+      .value(function(d){ return d.date; })
+      .bins(x.ticks(d3.time.year, 1))
+      (d.values);
+
+  })
+  var s = stack(lang)
+  console.log(lang, s);
+
+  y.domain([0, d3.max(s, function(d){ return d3.max(d.histo, function(d){ return d.y; })})*2])
+  // y.domain([0, 50])
+  z.domain([0, s.length])
+  console.log(x.domain(), y.domain(), z.domain())
+
+  svg.selectAll("path")
+      .data(s)
+    .enter().append("path")
+      .attr("d", function(d){ return area(d.histo)})
+      .style("fill", function(d, i) { return z(d.key); });
+
+  svg.append("g")
+        .attr("class", "x axis")
+        .attr("transform", "translate(0," + height + ")")
+        .call(xAxis)
+        .selectAll("text")
+        .attr("transform", function(d) {
+             return "translate(" + this.getBBox().height*-2 + "," + this.getBBox().height + ")rotate(-45)";
+         });
+
+    svg.append("g")
+        .attr("class", "y axis")
+        .call(yAxis)
+
+    svg.append("g")
+      .attr("class", "legendQuant")
+      .attr("transform", "translate(20,20)");
+
+    var legend = d3.legend.color()
+      //.labelFormat(d3.format(".2f"))
+      .useClass(false)
+      .scale(z);
+
+    svg.select(".legendQuant")
+      .call(legend);
+})
+
+
+
+
+</script>
+</body>
+</html>
