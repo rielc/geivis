@@ -27,7 +27,7 @@
 	"schoollevel" : {
 		"k01" : ["Grundschule","Elementarbereich","Eingangsstufe"],
 		"k02" : ["Sekundarstufe 1","Polytechnische Oberschule"	,"POS –, Allgemeinbildende zehnjährige polytechnische Oberschule der DDR","Polytechnische Oberschule", "Unterstufe","Allgemein bildende höhere Schule","(AHS) in Österreich","Neue Mittelschule","(NMS) in Österreich"],
-		"k03" : ["Sekundarstufe","Reifeprüfung","Mündliche Reifeprüfung","Schriftliche Reifeprüfung","Erweiterte Oberschule","EOS","Abiturstufe","High School","College"],
+		"k03" : ["Sekundarstufe 2","Reifeprüfung","Mündliche Reifeprüfung","Schriftliche Reifeprüfung","Erweiterte Oberschule","EOS","Abiturstufe","High School","College"],
 		"k06" : ["Tertiärbereich","Hochschulbildung","College","Erwachsenenbildung","Selbststudium","Selbstunterricht"]
 	},
 	"other" : {
