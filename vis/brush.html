@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.axis text {
+  font: 10px sans-serif;
+}
+
+.cells path {
+  fill: none;
+  pointer-events: all;
+}
+
+.cells :hover circle {
+  fill: red;
+}
+
+</style>
+
+<div class="brush"></div>
+
+<script src="js/d3.v4.0.0-alpha.35.min.js"></script>
+<script src="js/brush.js"></script>
+<script>
+
+let brushChart = new BrushChart({});
+
+</script>
