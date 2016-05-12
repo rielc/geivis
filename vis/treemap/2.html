@@ -49,8 +49,8 @@ d3.json("../../data/better-data.json", function (data) {
     .nest()
     //.key(function (d) { return d.year; })
     //.key(function (d) { return (d.schooltype==undefined) ? "no schooltype" : d.schooltype; })
-    .key(function (d) { return (d.schoollevel==undefined) ? "no schoollevel" : d.schoollevel; })
     .key(function (d) { return (d.subject==undefined) ? "no Subject" : d.subject; })
+     .key(function (d) { return (d.schoollevel==undefined) ? "no schoollevel" : d.schoollevel; })
     .entries(books);
 
   // from values and keys to children and name

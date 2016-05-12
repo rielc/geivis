@@ -27,34 +27,10 @@ var pathToDataFiles = "../data/raw2/";
 var interval;
 
 var fileNames = [];
-
-
 var books = []; // this array stores all the noramalized data
-var stringDB = {}; // this object stores all the unique strings, structured by categegories
 
 var parsedBooks = 0;
 var loadedFiles = 0;
-
-// adds the word to category and/or returns the ID of the word in category. it also creates a new dictionary if category does not exist. 
-function add(category, string) {
-	// create category
-	if (stringDB[category] == undefined) { stringDB[category] = []; }
-	// add string / get ID
-	if (stringDB[category].indexOf(string) == -1) {
-		stringDB[category].push(string);
-		return (stringDB[category].length-1);
-	} else { return stringDB[category].indexOf(string);}
-
-}
-
-
-// return the string from the chosen dictionary
-function find(category, id) { return stringDB[category][id]; }
-
-// accessor function
-function returnBookID (entry) { return entry.id;}
-
-
 
 var keywordClasses = {
 	"subject" : {
@@ -62,9 +38,14 @@ var keywordClasses = {
 		"u011" : ["Erstleseunterricht"],
 		"u020" : ["Deutschunterricht"],
 		"u030" : ["Geographieunterricht", "Erdkundeunterricht", "Landeskunde", "Regionalkunde", "Heimatkundeunterricht", "Geografieunterricht"],
+		"u031" : ["Geographieunterricht", "Atlas"],
 		"u050" : ["Geschichtsunterricht"],
+		"u051" : ["Geschichtsunterricht", "Atlas"],
 		"u060" : ["Realien"],
 		"u070" : ["Sozialkundeunterricht","Gemeinschaftskunde", "Sozialkunde <Unterricht>","Soziallehreunterricht", "Sozialunterricht","Sozialwissenschaften / Unterricht","Sozialwissenschaftlicher Unterricht","Gesellschaftslehreunterricht","Gesellschaftskunde","Politischer Unterricht","Gegenwartskunde", "Politikunterricht","Staatsbürgerkunde", "Staatskunde <Unterrichtsfach>","Politische Bildung","Politische Erziehung/ Pädagogik","Politik, Gesellschaft, Wirtschaft","Rechtskundeunterricht","Recht / Politischer Unterricht", "Rechtsunterricht","Wirtschaftslehre","Wirtschafts- und Rechtslehre","Wirtschaft und Recht <Unterrichtsfach>","Wirtschafts- und Rechtskundeunterricht"],
+		"u080" : ["u080"],
+		"u081" : ["u081"],
+		"u075" : ["Sachunterricht"],
 		"u075x": ["Sachunterricht","Sachkundeunterricht","Heimatkundeunterricht"],
 		"u09x" : ["Werterziehung","Lebensgestaltung – Ethik – Religionskunde","Humanistische Lebenskunde","Natur-Mensch-Mitwelt"],	
 		"u091" : ["Ethikunterricht"],
@@ -87,14 +68,17 @@ var keywordClasses = {
 		"k01" : ["Grundschule","Elementarbereich","Eingangsstufe"],
 		"k02" : ["Sekundarstufe 1","Polytechnische Oberschule"	,"POS –, Allgemeinbildende zehnjährige polytechnische Oberschule der DDR","Polytechnische Oberschule", "Unterstufe","Allgemein bildende höhere Schule","(AHS) in Österreich","Neue Mittelschule","(NMS) in Österreich"],
 		"k03" : ["Sekundarstufe 2","Reifeprüfung","Mündliche Reifeprüfung","Schriftliche Reifeprüfung","Erweiterte Oberschule","EOS","Abiturstufe","High School","College"],
+		"k04" : ["k04"],
 		"k05" : ["Berufliche Bildungsgänge","Berufsbildende Schule", "Berufsbildende Höhere Schule", "Berufsbildende Mittlere Schule", "Berufsfachschule", "Berufsgrundbildungsjahr", "Berufliches Gymnasium", "Berufskolleg", "Berufsoberschule", "Berufsschule", "Fachoberschule", "Fortbildungsschule", "Gewerbeschule", "Gewerbliche Berufsfachschule", "Gewerbliche Fortbildungsschule", "Heeres-Unteroffiziervorschule", "Handelsakademie (HAK)", "Handelsschule (HAS)", "Höhere Berufsfachschule", "Höhere Handelsschule", "Höhere Lehranstalt für wirtschaftliche Berufe (HLW)", "Höhere Lehranstalt für Tourismus (HLT)", "Höhere technische Lehranstalt (HTL)", "Kaufmännische Fortbildungsschule", "Marineschule", "Militärschule", "Technikerschule (Technikum)", "Technisches Gymnasium", "Wirtschaftsgymnasium"],
-		"k06" : ["Tertiärbereich","Hochschulbildung","College","Erwachsenenbildung","Selbststudium","Selbstunterricht"]
+		"k06" : ["Tertiärbereich","Hochschulbildung","College","Erwachsenenbildung","Selbststudium","Selbstunterricht"],
+		"k07" : ["k07"],
+		"k08" : ["k08"],
+		"k09" : ["k09"]
 	},
 	"keyword" : {
 		"all" : ["Audiovisuelle Medien","Aufgabe","Beurteilung","Bildung","Bildungsinhalt","Bildungskanon","Bildungspolitik","Bildungsstandard","Bildungswesen","Bildungssystem","Computerunterstützer Unterricht","Computerunterstützes Lernen","Curriculum","Curriculumentwicklung","Curriculumforschung","Curriculumplanung","Curriculumreform","Didaktik","E-Learning","Elektronische Bibliothek","Fähigkeit (Kompetenz)","Hausunterricht („Homeschooling“)","Interaktive Medien","Jahrgangsübergreifender Unterricht","Klassenlektüre","Kompetenzorientierter Unterricht","Lehrbuch","Lehrerhandbuch","Lehrplan","Lehrplanentwicklung","Lehrplanforschung","Lehrplanreform","Leistungsbeurteilung","Lernaufgabe","Lerngruppe","Lernmittelfreiheit","Lernprogramm","Mündliche Prüfung","Mündliche Reifeprüfung","Neue Medien","Online-Medien","Open educational Resources","Paratext","Schlüsselqualifikation","Schriftliche Prüfung","Schriftliche Reifeprüfung","Schule","Schulbildung","Schüler","Einstellung","Selbstgesteuertes Lernen","Selbstunterricht","Sprachlehrbuch","Stoffverteilungsplan","Unterricht","Unterrichtsfilm","Elektronisches Buch","Interaktive Medien","OER – Open Educational Resources","E-Learning","Open Source","Access","Fibel","Lehrbuch","Lehrmittel","Lesebuch","Schulatlas","Schulbuch","Auswahl","Autor","Buchproduktion","Entwicklung","Gestaltung","Illustration","Bild","Bildsprache","Reproduktion","Schulbuchverlag","Textverstehen","Verwendung","Historische Bildungsforschung","Unterrichtsforschung","Kontroverse","Kriterium","Methode","Methodologie","Schulbuch","Schulbuchanalyse","Schulbuchempfehlung","Schulbuchforschung","Schulbuchrevision","Schulbuchzulassung","Genehmigungsverfahren","Vergleich","Wirkung","Christentum","Demokratie","Deutschlandbild","Deutschlandbild Bundesrepublik","Deutschlandbild DDR","Drittes Reich","Erinnerung","Ethnische Identität","Europabild","Faschismus","Feindbild","Fremdbild","Geschichte","Geschichtsbewusstsein","Geschichtsbild","Geschichtsschreibung","Geschlechterbeziehung","Geschlechterrolle","Geschlechterstereotyp","Geschlechtsunterschied","Globalisierung","Grenzüberschreitende Kooperation","Islam","Islambild","Kollektives Gedächtnis","Kompetenzorientierung","Fähigkeit","Lernziel","Schlüsselqualifikation","Konflikt","Konfliktregelung","Mediation","Menschenrecht","Narrativität","Nation","Nationenbildung","Nationale (Ethnische) Minderheit","Nationalbewusstsein","Nationalismus","Nationalsozialismus","Osteuropabild","Politische Identität (Nationale Identität)","Postkommunismus","Regionale Identität","Schreib- und Lesefähgkeit","Schwarze","Selbstbild","Sprachanalyse","Türkeibild","Vergangenheitsbewältigung","Versöhnung","Völkerverständigung","Vorurteil","Council of Europe","UNESCO"]
 	}
 };
-
 
 function updateClassification(tag, book) {
   for (var classification in keywordClasses ) {
@@ -102,10 +86,12 @@ function updateClassification(tag, book) {
       for (var detail in keywordClasses[classification] ) {
       	if (detail == tag) {
       		book[classification] = keywordClasses[classification][detail][0];
+      		return true;
       	}
       }
     }
   }
+  return false;
 }
 
 // finishes the program once all files are loaded/parsed
@@ -113,7 +99,7 @@ function loop() {
 	if (loadedFiles == fileNames.length-1) {
 		var total = books;
 		fs.writeFile("../data/better-data.json", JSON.stringify(total), function () { clearInterval(interval);});
-		console.log("Finished!");
+		console.log("Finished!");		
 	}
 }
 
@@ -161,6 +147,12 @@ function parseFile (content, file) {
 				/* if (type == "003@") { newBook.id = subfield[0]._; } */ // ID
 				if (type == "010@") { newBook.language = subfield[0]._; } // language
 				if (type == "011@") { newBook.year = subfield[0]._; } // year
+				if (type == "028A") { newBook.author = subfield[0]._ + " " + subfield[1]._; } // year
+				if (type == "021A") { newBook.title = subfield[0]._; } // year
+
+
+
+
 
 				// city (?) + publisher
 				if (type == "033A") { 
@@ -174,22 +166,31 @@ function parseFile (content, file) {
 				if (type == "145Z") {
 					if (subfield[0]._ != "" && subfield[0]._ != undefined) {
 						if ( !updateClassification( subfield[0]._, newBook) ) {
-							if (newBook.unknownlocaleTags == undefined) { newBook.unknownLocalTags = []; }
-							newBook.unknownLocalTags.push(subfield[0]._);
+							if ( ["z200","z100", "l000"].indexOf( subfield[0]._ ) == -1 ) { 
+								if (newBook.unknownlocaleTags == undefined) { newBook.unknownLocalTags = []; }
+								newBook.unknownLocalTags.push(subfield[0]._);
+							}
 						}
 					}
 				}
-				/*
+
+				// singular tags "Einzelschlagwort"
+				if (type == "044L") {
+					if (newBook.singularTag == undefined) { newBook.singularTag = []; }
+					newBook.singularTag.push(subfield[0]._);
+				}
+				
 				// tags
 				if (type == "044K") {
 					// the tags are organized in subfields ... 
 					subfield.forEach( function (tField) {
-						if (tField['$'].code == 'a') { 
-							newBook.t.push( add( "t", tField._.trim() ) ); 
+						if (tField['$'].code == "a") {
+							if (newBook.RSWKTag == undefined) { newBook.RSWKTag = []; }
+							newBook.RSWKTag.push( tField._.trim() );
 						}
 					});
 				}
-				*/
+				
 			});
 
 			// adding the books based on their uniqueness inside the list … needs ID!
