@@ -92,7 +92,7 @@ d3.json("../data/data.json", function (data) {
   var classifications = getClassificationList(data);
   console.log(classifications);
 
-  var filtered = data.filter(function(d){ return d.year && d.year <= 1920; });
+  var filtered = data.filter(function(d){ return d.year && d.year <= 1920 && d.year >= 1720; });
 
   filtered.forEach(function(d) {
     d.date = format.parse(d.year);
