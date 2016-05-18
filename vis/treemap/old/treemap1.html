@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+
+text {
+  font: 10px sans-serif;
+}
+
+tspan:last-child {
+  font-size: 9px;
+  fill-opacity: 0.8;
+}
+
+.node rect {
+  shape-rendering: crispEdges;
+}
+
+.node--hover rect {
+  stroke: #000;
+}
+
+</style>
+<body>
+Erste Ebene 
+  <select id="nest-level-0">
+    <option selected="true" value="schooltype">Schultyp</option>
+    <option value="schoollevel">Schullevel</option>
+    <option value="publishercity">Veröffentlichungsort</option>
+  </select>
+  Zweite Ebene 
+  <select id="nest-level-1">
+    <option value="schooltype">Schultyp</option>
+    <option value="schoollevel">Schullevel</option>
+    <option value="publishercity">Veröffentlichungsort</option>
+  </select>
+<svg width="1400" height="900"></svg>
+</body>
+<script src="//d3js.org/d3.v4.0.0-alpha.35.min.js"></script>
+<script>
+
+
+</script>
