@@ -37,9 +37,9 @@ export var nestedTreemap = (function() {
 
 		treemap = d3.treemap()
 			.size([width, height])
-			.paddingOuter(3)
-			.paddingTop(15)
-			.paddingInner(3)
+			.paddingOuter(10)
+			.paddingTop(30)
+			.paddingInner(5)
 			.round(false);
 
 	};
