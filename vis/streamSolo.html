@@ -76,23 +76,13 @@ var area = d3.svg.area()
     .y1(function(d) { return y(d.y0 + d.y); });
 
 
-function getClassificationList(data){
-  var classification = {};
-  data.forEach(function(d){
-    d3.keys(d.classification).forEach(function(d){
-      classification[d] = true;
-    });
-  })
-  return d3.keys(classification);
-}
 
 var format = d3.time.format("%Y");
+var visTypes = ["subject", "schoollevel", "keyword", "schooltype"];
 
 d3.json("../data/data.json", function (data) {
   console.log(data, data[0]);
 
-  var classifications = getClassificationList(data);
-  console.log(classifications);
 
   var filtered = data.filter(function(d){ return d.year && d.year <= 1920 && d.year >= 1720; });
 
@@ -106,14 +96,13 @@ d3.json("../data/data.json", function (data) {
   x.domain(extent).nice(d3.time.year)
 
  
-  classifications.forEach(function(c){
-    makeGraph(data, c, function(d){ return d.classification[c] || "none"});
-  })
+  makeGraph(data, function(d){ return d.classification["subject"] || "none"});
+
 
 })
 
 
-function makeGraph(data,name, key){
+function makeGraph(data, key){
   var nest = d3.nest()
     .key(key)
     .entries(data);
@@ -121,28 +110,24 @@ function makeGraph(data,name, key){
   nest.forEach(function(d,i){
     d.histo = d3.layout.histogram()
       .value(function(d){ return d.date; })
-      .bins(x.ticks(d3.time.year, 1))
-      (d.values);
+      .bins(x.ticks(d3.time.year, 1))(d.values);
 
   })
-  var s = stack(nest);
+  stack(nest);
 
-  var max = d3.max(s, function(d){ return d3.max(d.histo, function(d){ return d.y + d.y0; })});
+  var max = d3.max(nest, function(d){ return d3.max(d.histo, function(d){ return d.y + d.y0; })});
+  
   y.domain([0.1, max]).nice()
-  // y.domain([0.1, d3.max(s, function(d){ return d3.max(d.histo, function(d){ return d.y; })})*2]).nice()
-  // y.domain([0, 50])
-  z.domain([0, s.length])
+  z.domain([0, nest.length])
 
-  d3.select("body").append("h2").text(name);
-
-  var svg = d3.select("body").append("svg")
+  var svg = d3.select(".vis").append("svg")
       .attr("width", width + margin.left + margin.right)
       .attr("height", height + margin.top + margin.bottom)
     .append("g")
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
   svg.selectAll("path")
-      .data(s)
+      .data(nest)
     .enter().append("path")
       .attr("d", function(d){ return area(d.histo)})
       .style("fill", function(d, i) { return z(i); });

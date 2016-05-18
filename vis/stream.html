@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title></title>
+  <style>
+
+  body {
+    font: 10px sans-serif;
+  }
+
+  .axis path,
+  .axis line {
+    fill: none;
+    stroke: #000;
+    shape-rendering: crispEdges;
+  }
+
+
+  .list {
+    width: 100%;
+    padding: 10px;
+    margin: 10px;
+    clear: left;
+  }
+  .list .item {
+    padding: 10px;
+    margin: 10px;
+    float: left;
+    background: #eee;
+    cursor: pointer;
+  }
+
+  </style>
+  <script src="js/d3.js"></script>
+  <!-- <script src="js/d3.v4.0.0-alpha.35.min.js"></script> -->
+  <script src="js/legend.js"></script>
+</head>
+<body>
+
+<div class="stream"></div>
+<div class="typeList list"></div>
+<div class="debug list"></div>
+
+
+<script>
+
+class StreamGraph {
+
+  constructor(){
+    this.key = "subject";
+
+    this.outerWidth = 800;
+    this.outerHeight = 500;
+    this.margin = {top: 20, right: 30, bottom: 30, left: 40};
+    
+    this.x = d3.time.scale();
+    this.y = d3.scale.linear();
+    this.color = d3.scale.linear()
+      .range(["#0AA4E4","#BEE6F9"])
+      .range(["#036D99","#E0F5FF"])
+      .interpolate(d3.interpolateHcl);
+
+    this.xAxis = d3.svg.axis()
+      .orient("bottom")
+      .ticks(d3.time.years, 20)
+
+    this.yAxis = d3.svg.axis()
+      .ticks(5, "1f")
+      .orient("left");
+        
+    this.stack = d3.layout.stack()
+      .offset("zero")
+      .y(d => d.length)
+      .values(d => d.histo)
+      // .offset("expand")
+      .offset("silhouette")
+      .order("inside-out");
+
+    this.area = d3.svg.area()
+      .x(d=> this.x(d.x) )
+      .y0(d=> this.y(d.y0) )
+      .y1(d=> this.y(d.y0 + d.y) );
+
+    this.svg = d3.select(".stream").append("svg");
+    this.g = this.svg.append("g");
+    this.gXaxis = this.g.append("g").attr("class", "x axis");
+    this.gYaxis = this.g.append("g").attr("class", "y axis")
+    this.gGraph = this.g.append("g").attr("class", "graph");
+
+    this.nest = d3.nest();
+    this.data = [];
+
+    // this.width = function(_) {
+    //   if (!arguments.length) return width;
+    //   width = _;
+    //   return this;
+    // };
+
+    // this.height = function(_) {
+    //   if (!arguments.length) return height;
+    //   height = _;
+    //   return this;
+    // };
+
+    return this;
+  }
+
+  init(){
+    this.width = this.outerWidth - this.margin.left - this.margin.right,
+    this.height = this.outerHeight - this.margin.top - this.margin.bottom;
+
+    this.x.range([0, this.width]);
+    this.y.range([this.height, 0]).clamp(true);
+
+    this.xAxis.scale(this.x);
+    this.yAxis.scale(this.y);
+
+    this.svg
+      .attr("width", this.outerWidth)
+      .attr("height", this.outerHeight)
+
+    this.g
+      .attr(
+        "transform", 
+        "translate(" + this.margin.left + "," + this.margin.top + ")"
+      );
+
+    return this;
+  }
+
+  load(_data){
+    // console.log(_data[0], this.key);
+
+    this.data = d3.nest()
+      .key(d => d.classification[this.key] || "none")
+      .entries(_data);
+
+    this.data.forEach((d,i)=>{
+      d.histo = d3.layout.histogram()
+        .value(d=> d.date)
+        .bins(this.x.ticks(d3.time.year, 1))(d.values);
+    })
+
+    this.stack(this.data);
+
+    const max = d3.max(this.data, d=>d3.max(d.histo, d=>(d.y + d.y0)));
+      
+    this.y.domain([0.1, max]).nice()
+    this.color.domain([0, this.data.length])
+
+    return this;
+  }
+
+  render(){
+    let s = this.gGraph.selectAll("path")
+      .data(this.data)
+    
+    s.enter().append("path");
+    s.exit().remove();
+        
+    s
+      .transition()
+      .attr("d", d => this.area(d.histo))
+      .style("fill", (d, i)=> this.color(i));
+
+    this.gXaxis
+      .attr("transform", "translate(0," + this.height + ")")
+      .call(this.xAxis)
+      .selectAll("text")
+      .attr("transform", function(d) {
+           return "translate(" + this.getBBox().height*-2 + "," + this.getBBox().height + ")rotate(-45)";
+       });
+
+    this.gYaxis
+      .call(this.yAxis)
+
+  }
+
+}
+
+class DataBase {
+
+  constructor(){
+    this.data = [];
+    this.formater = d3.time.format("%Y");
+    this.extent = [0,0];
+  }
+
+  load(_data){
+    this.data = _data.filter(d=>d.year && d.year <= 1920 && d.year >= 1720);
+
+    this.data.forEach(d =>
+      d.date = this.formater.parse(d.year)
+    )
+
+    this.extent = d3.extent(this.data, d => d.date);
+
+    return this;
+  }
+}
+
+class VisTypesList {
+
+  constructor(){
+    this.types = ["subject", "schoollevel", "keyword", "schooltype"];
+    this.container = d3.select(".typeList");
+
+    return this;
+  }
+
+  render(){
+    let s = this.container.selectAll(".item").data(this.types);
+    s.enter()
+      .append("div")
+      .classed("item", true)
+      .on("click", this.clickHandler)
+
+    s.text(d=> d);
+
+    return this;
+  }
+
+  clickHandler(d){
+    console.log(d);
+
+    stream.key = d;
+    stream.load(db.data).render();
+  }
+
+}
+
+class VisDebugList {
+
+  constructor(){
+    this.types = ["silhouette", "wiggle", "expand", "zero"];
+    this.container = d3.select(".debug");
+
+    return this;
+  }
+
+  render(){
+    let s = this.container.selectAll(".item").data(this.types);
+    s.enter()
+      .append("div")
+      .classed("item", true)
+      .on("click", this.clickHandler)
+
+    s.text(d=> d);
+
+    return this;
+  }
+
+  clickHandler(d){
+    console.log(d);
+
+    stream.stack.offset(d);
+    stream.load(db.data).render();
+  }
+
+}
+
+let stream = new StreamGraph().init();
+let db = new DataBase();
+let visList = new VisTypesList().render();
+let debugList = new VisDebugList().render();
+
+d3.json("../data/data.json", function (data) {
+  console.log(data, data[0]);
+
+  db.load(data);
+
+  stream.x.domain(db.extent).nice(d3.time.year);
+  stream.load(db.data).render();
+
+})
+
+
+
+
+</script>
+</body>
+</html>
