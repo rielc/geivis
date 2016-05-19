@@ -16,6 +16,26 @@
     shape-rendering: crispEdges;
   }
 
+  .graph:hover path {
+    fill-opacity: 0.4;
+    stroke-opacity: 0.1;
+  }
+  .graph:hover path:hover{
+    fill-opacity: 1;
+    stroke-opacity: 1;
+  }
+  .graph path {
+    cursor: pointer;
+    stroke:#ACE0F6;
+    fill:#BEE6F9;
+  }
+
+  .brush {
+    fill: aliceblue;
+    opacity: 0.5;
+    /*pointer-events: auto !important;*/
+  }
+ 
 
   .list {
     width: 100%;
@@ -39,6 +59,7 @@
 <body>
 
 <div class="stream"></div>
+<div class="test list"></div>
 <div class="typeList list"></div>
 <div class="debug list"></div>
 
@@ -58,7 +79,8 @@ class StreamGraph {
     this.y = d3.scale.linear();
     this.color = d3.scale.linear()
       .range(["#0AA4E4","#BEE6F9"])
-      .range(["#036D99","#E0F5FF"])
+      .range(["#BEE6F9","#BEE6F9"])
+      // .range(["#036D99","#E0F5FF"])
       .interpolate(d3.interpolateHcl);
 
     this.xAxis = d3.svg.axis()
@@ -75,7 +97,8 @@ class StreamGraph {
       .values(d => d.histo)
       // .offset("expand")
       .offset("silhouette")
-      .order("inside-out");
+      //.order("inside-out")
+      //.order("reverse");
 
     this.area = d3.svg.area()
       .x(d=> this.x(d.x) )
@@ -87,9 +110,14 @@ class StreamGraph {
     this.gXaxis = this.g.append("g").attr("class", "x axis");
     this.gYaxis = this.g.append("g").attr("class", "y axis")
     this.gGraph = this.g.append("g").attr("class", "graph");
+    this.gBrush = this.g.append("g").attr("class", "brush");
 
     this.nest = d3.nest();
     this.data = [];
+
+    this.brush = d3.svg.brush()
+      .x(this.x)
+      .on("brush", this.brushmove.bind(this));
 
     // this.width = function(_) {
     //   if (!arguments.length) return width;
@@ -104,6 +132,12 @@ class StreamGraph {
     // };
 
     return this;
+  }
+
+  brushmove() {
+    const s = this.brush.extent();
+    state.push({ brushStart: s[0], brushEnd: s[1], year: s[0].getFullYear() });
+    // console.log(s);
   }
 
   init(){
@@ -125,6 +159,15 @@ class StreamGraph {
         "transform", 
         "translate(" + this.margin.left + "," + this.margin.top + ")"
       );
+
+    this.gBrush.call(this.brush);
+
+    // this.gBrush.selectAll(".resize").append("path")
+    //     .attr("transform", "translate(0," +  this.height / 2 + ")")
+    //     .attr("d", arc);
+
+    this.gBrush.selectAll("rect")
+        .attr("height", this.height);
 
     return this;
   }
@@ -160,9 +203,8 @@ class StreamGraph {
     s.exit().remove();
         
     s
-      .transition()
       .attr("d", d => this.area(d.histo))
-      .style("fill", (d, i)=> this.color(i));
+      // .style("fill", (d, i)=> this.color(i));
 
     this.gXaxis
       .attr("transform", "translate(0," + this.height + ")")
@@ -175,6 +217,78 @@ class StreamGraph {
     this.gYaxis
       .call(this.yAxis)
 
+  }
+
+}
+
+class StateMachine {
+
+  constructor(){
+    this.state = {
+      brushStart:null,
+      brushEnd:null,
+      selected:null
+    }
+    this.history = [];
+    this.history.push(Object.assign({}, this.state));
+    this.size = 10;
+    this.listener = [];
+  }
+
+  push(state){
+    if(this.history.length >= this.size){
+      this.history.pop();
+    }
+    this.lastState = this.history[0];
+    const newState = Object.assign(this.state, state);
+    this.history.unshift(newState);
+    this.state = Object.assign({}, newState);
+    this.broadcast();
+  }
+
+  listen(func){
+    this.listener.push(func);
+  }
+
+  broadcast(){
+    this.listener.forEach(func => func(this.state, this.lastState));
+  }
+}
+
+class Test {
+
+  constructor(){
+    this.container = d3.select(".test");
+    this.data = [];
+    this.key = "subject";
+
+    state.listen(this.stateChange.bind(this));
+
+    return this;
+  }
+
+  stateChange(next, last){
+    this.state = next;
+    if(next.brushStart !== last.brushStart){
+      this.render();
+    }
+    // console.log(next.brushStart, last.brushStart);
+  }
+
+  load(_data){
+    this.data = _data;
+  }
+
+  render(){
+    const startYear = this.state.brushStart.getFullYear();
+    const endYear = this.state.brushEnd.getFullYear();
+    const data = this.data.filter(d => d.year >= startYear && d.year <= endYear );
+    const nest = d3.nest().key(d => d.classification[this.key]).entries(data);
+    //console.log(nest);
+
+    this.container.text(data.length);
+    
+    return this;
   }
 
 }
@@ -264,11 +378,17 @@ let stream = new StreamGraph().init();
 let db = new DataBase();
 let visList = new VisTypesList().render();
 let debugList = new VisDebugList().render();
+let state = new StateMachine();
+let test = new Test();
 
 d3.json("../data/data.json", function (data) {
   console.log(data, data[0]);
 
   db.load(data);
+
+  test.load(data);
+
+  state.push({ brushStart: db.extent[0], brushEnd: db.extent[1] })
 
   stream.x.domain(db.extent).nice(d3.time.year);
   stream.load(db.data).render();
