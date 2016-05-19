@@ -54,6 +54,7 @@
   </style>
   <script src="js/d3.js"></script>
   <!-- <script src="js/d3.v4.0.0-alpha.35.min.js"></script> -->
+  <script src="js/crossfilter.min.js"></script>
   <script src="js/legend.js"></script>
 </head>
 <body>
@@ -280,11 +281,19 @@ class Test {
   }
 
   render(){
+    console.time("simple");
     const startYear = this.state.brushStart.getFullYear();
     const endYear = this.state.brushEnd.getFullYear();
     const data = this.data.filter(d => d.year >= startYear && d.year <= endYear );
     const nest = d3.nest().key(d => d.classification[this.key]).entries(data);
     //console.log(nest);
+    console.timeEnd("simple");
+
+    console.time("crossfilter");
+    db.date.filterRange([this.state.brushStart, this.state.brushEnd]);
+    const group = db.subjects.all();
+    // console.log(group);
+    console.timeEnd("crossfilter");
 
     this.container.text(data.length);
     
@@ -299,16 +308,25 @@ class DataBase {
     this.data = [];
     this.formater = d3.time.format("%Y");
     this.extent = [0,0];
+    this.crossfilter = [];
   }
 
   load(_data){
     this.data = _data.filter(d=>d.year && d.year <= 1920 && d.year >= 1720);
 
-    this.data.forEach(d =>
-      d.date = this.formater.parse(d.year)
-    )
-
+    this.data.forEach(d => {
+      d.date = this.formater.parse(d.year);
+      d.year = parseInt(d.year);
+    })
     this.extent = d3.extent(this.data, d => d.date);
+
+    this.crossfilter = crossfilter(this.data);
+    this.year = this.crossfilter.dimension(d => d.year);
+    this.years = this.year.group();
+    this.date = this.crossfilter.dimension(d => d.date);
+    this.dates = this.date.group(d3.time.year);
+    this.subject = this.crossfilter.dimension(d => d.classification.subject);
+    this.subjects = this.subject.group();
 
     return this;
   }
@@ -381,12 +399,14 @@ let debugList = new VisDebugList().render();
 let state = new StateMachine();
 let test = new Test();
 
+
 d3.json("../data/data.json", function (data) {
   console.log(data, data[0]);
 
   db.load(data);
 
   test.load(data);
+
 
   state.push({ brushStart: db.extent[0], brushEnd: db.extent[1] })
 
