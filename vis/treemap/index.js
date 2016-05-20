@@ -1,21 +1,20 @@
+console.log("is there someone");
 
-// import my module
-import {nestedTreemap as ntr} from "./src/nestedTreemap.js";
-console.log(ntr);
+import nestedTreemap from './src/nestedTreemap';
 
 // define the initial nesting values
-ntr.setLevelA("Schultyp");
-ntr.setLevelB("Schullevel");
+nestedTreemap.setLevelA("Schultyp");
+nestedTreemap.setLevelB("Schullevel");
 
 // add the nestings and accessor functions
-ntr.addNesting("Schulfach", function (d) { return (d.subject==undefined) ? "Schulfach unbekannt" : d.subject });
-ntr.addNesting("Schultyp", function levelA(d) { return (d.schooltype==undefined) ? "Schultyp unbekannt" : d.schooltype; });
-ntr.addNesting("Schullevel", function (d) { return (d.schoollevel==undefined) ? "Schullevel unbekannt" : d.schoollevel });
-ntr.addNesting("Ort", function (d) { return (d.publisher_city==undefined) ? "Ort unbekannt" : d.publisher_city; });
-ntr.addNesting("Verlag", function (d) { return (d.publisher==undefined) ? "Verlag unbekannt" : d.publisher; });
+nestedTreemap.addNesting("Schulfach", function (d) { return (d.subject==undefined) ? "Schulfach unbekannt" : d.subject });
+nestedTreemap.addNesting("Schultyp", function levelA(d) { return (d.schooltype==undefined) ? "Schultyp unbekannt" : d.schooltype; });
+nestedTreemap.addNesting("Schullevel", function (d) { return (d.schoollevel==undefined) ? "Schullevel unbekannt" : d.schoollevel });
+nestedTreemap.addNesting("Ort", function (d) { return (d.publisher_city==undefined) ? "Ort unbekannt" : d.publisher_city; });
+nestedTreemap.addNesting("Verlag", function (d) { return (d.publisher==undefined) ? "Verlag unbekannt" : d.publisher; });
 
 // initialize with the selector of the parent element
-ntr.init("#treemap");
+nestedTreemap.init("#treemap");
 
 // load the data 
-ntr.loadData("../../data/better-data.json");
+nestedTreemap.loadData("../../data/better-data.json");

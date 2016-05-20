@@ -1,68 +1,66 @@
-export var nestedTreemap = (function() {
- 
+export default class NestedTreemap {
 
- 	var container = {};
-	var svg = {};
-	var root = {};
-	var data;
-	var treemap = {};
-	var nested = {};
-	var nestings = {};
-	var url = {};
-	var width = {};
-	var height = {};
-	var dropdownA = {};
-	var dropdownB = {};
-	var levelA = "";
-	var levelB = "";
-	var format;
-	var color;
+	constructor() {
+	 	this.container = {};
+		this.svg = {};
+		this.root = {};
+		this.data;
+		this.treemap = {};
+		this.nested = {};
+		this.nestings = {};
+		this.url = {};
+		this.width = {};
+		this.height = {};
+		this.dropdownA = {};
+		this.dropdownB = {};
+		this.levelA = "";
+		this.levelB = "";
+		this.format;
+		this.color;
+	}
 
-
-	var init = function (containerSelector) {
+	init(containerSelector) {
 		
-		container = d3.select(containerSelector);
-	    createSelectors();
+		this.container = d3.select(containerSelector);
+	    this.createSelectors();
 
-		svg = container
+		this.svg = this.container
 			.append("svg")
 			.attr("id", "treemap-visualization")
 			.attr("width", window.innerWidth)
 			.attr("height", window.innerHeight);
 
-	    width = +svg.attr("width"),
-	    height = +svg.attr("height");
-		format = d3.format(",d");
-		color = d3.scaleMagma().domain([-1, 4]);
+	    this.width = +this.svg.attr("width"),
+	    this.height = +this.svg.attr("height");
+		this.format = d3.format(",d");
+		this.color = d3.scaleMagma().domain([-1, 4]);
 
-		treemap = d3.treemap()
-			.size([width, height])
+		this.treemap = d3.treemap()
+			.size([this.width, this.height])
 			.paddingOuter(10)
 			.paddingTop(30)
 			.paddingInner(5)
 			.round(false);
-
-	};
-
-
-	var setLevelA = (string) => levelA = string;
-	var setLevelB = (string) => levelB = string;
+	}
 
 
-	var update = function() {
+	setLevelA (string) { this.levelA = string; }
+	setLevelB (string) { this.levelB = string; }
 
-		nested = d3.nest()
-			.key( nestings[levelA] )
-			.key( nestings[levelB] )
-			.rollup( function (leaves) { return {"size" : leaves.length } ; } )
-			.entries( data );
+	update() {
+
+		this.nested = d3.nest()
+			.key( this.nestings[this.levelA] )
+			.key( this.nestings[this.levelB] )
+			.rollup( (leaves) => { return {"size" : leaves.length } ; } )
+			.entries( this.data );
 
 		// from values and keys to children and name
-		nested = JSON.parse( JSON.stringify(nested).replace(/"key":/gi, '"name":').replace(/"values":/gi, '"children":') );
+		this.nested = JSON.parse( JSON.stringify(this.nested).replace(/"key":/gi, '"name":').replace(/"values":/gi, '"children":') );
 
 		// get the size of each cell
-		nested.forEach( function (major) {
-			var majorSize = 0;
+		this.nested.forEach( function (major) {
+			let majorSize = 0;
 			major.children.forEach( function(minor) {
 				//majorSize += minor.children.size;
 				minor.size = minor.children.size;
@@ -71,47 +69,48 @@ export var nestedTreemap = (function() {
 			major.size = majorSize;
 		});
 
-		//console.log(nested);
+		this.root = d3
+			.hierarchy(
+				{
+					"name" : "root", 
+					"children" : this.nested, 
+					"size" : 0
+				}, (d) => { return d.children; }
+			)
+			.sum( (d) => { return d.size; })
+			.sort( (a, b) => { return b.height - a.height || b.data.size - a.data.value; });
 
-		root = d3
-			.hierarchy({
-				"name" : "root", 
-				"children" : nested, 
-				"size" : 0
-			}, function(d) { return d.children; })
-			.sum(function(d) { return d.size; })
-			.sort(function(a, b) { return b.height - a.height || b.data.size - a.data.value; });
+		this.treemap(this.root);
 
-		treemap(root);
+		let that = this;
 
 		function updateNode (s) {
 			//console.log(s);
-			s.attr("transform", function(d) { return "translate(" + d.x0 + "," + d.y0 + ")"; })
+			s.attr("transform", (d) => { return "translate(" + d.x0 + "," + d.y0 + ")"; })
 		}
 
 		function updateCell (s) {
-			//console.log(s);
 			s
-			.attr("width", function(d) { return d.x1 - d.x0; })
-			.attr("height", function(d) { return d.y1 - d.y0; })
-			.style("fill", function(d) {return color(d.depth); })
+			.attr("width", (d) => { return d.x1 - d.x0; } )
+			.attr("height", (d) => { return d.y1 - d.y0; } )
+			.style("fill", (d) => { return that.color(d.depth); } )
 		}
 
-		svg.selectAll(".node").remove();
+		this.svg.selectAll(".node").remove();
 
-		var nodes = svg.selectAll(".node");
+		this.nodes = this.svg.selectAll(".node");
 
-		nodes
-			.data(root.descendants())
+		this.nodes
+			.data(this.root.descendants())
 			.call(updateNode);
 
-		nodes
-			.data(root.descendants())
+		this.nodes
+			.data(this.root.descendants())
 			.enter().append("g")
 			.classed("node", true)
 			//.attr("id", function(d) { return "rect-" + d.data.name; })
-			.each(function (d) { d.node = this; })
-			.on("mouseover", function(d) { console.log(d.data.name); })
+			.each( (d) => { d.node = this; })
+			.on("mouseover", (d) => { console.log(d.data.name); })
 			.call(updateNode)
 			//.select("rect")
 			//.data(function (d) { console.log(d); })
@@ -119,8 +118,8 @@ export var nestedTreemap = (function() {
 			//.attr("id", function(d) { console.log(d); return "rect-" + d.id; })
 			.call(updateCell);
 
-		nodes
-			.data(root.descendants())
+		this.nodes
+			.data(this.root.descendants())
 			.exit()
 			.remove();
 
@@ -150,60 +149,36 @@ export var nestedTreemap = (function() {
 		//nodes.append("title").text(function(d) { return d.id + "\n" + format(d.value); });
 		
 
-  };
+  }
 
 
-	var createSelectors = function () {
-		var n = d3.keys(nestings);
-
-		dropdownA = container.append("select").attr("id", "dropdown-a");
-		dropdownB = container.append("select").attr("id", "dropdown-b");
-		dropdownA.on("change", function() { levelA = d3.select(this).property("value"); update(); });
-		dropdownB.on("change", function() { levelB = d3.select(this).property("value"); update(); });
-
-		dropdownA
+	createSelectors () {
+		var n = d3.keys(this.nestings);
+		this.dropdownA = this.container.append("select").attr("id", "dropdown-a");
+		this.dropdownB = this.container.append("select").attr("id", "dropdown-b");
+		this.dropdownA.on("change", (sel) => { this.levelA = this.dropdownA.property("value"); this.update(); });
+		this.dropdownB.on("change", (sel) => { this.levelB = this.dropdownB.property("value"); this.update(); });
+		this.dropdownA
 			.selectAll("option")
 			.data(n)
 			.enter()
 			.append("option")
-			.attr("value", d => { return d; })
-			.text( d => { return d; });
-
-		dropdownB
+			.attr("value", (d) => { return d; })
+			.text( (d) => { return d; });
+		this.dropdownB
 			.selectAll("option")
 			.data(n)
 			.enter()
 			.append("option")
-			.attr("value", d => { return d; })
-			.text(d => { return d; });
-	};
+			.attr("value", (d) => { return d; })
+			.text( (d) => { return d; });
+	}
 
 
-	var addNesting = function (name, f) { nestings[name] = f; };
-	
+	addNesting (name, f) { this.nestings[name] = f; }
 
-	var loadData = function (dataURL) {
-		d3.json(dataURL, result => { 
-			data = result;
-			update();
-		});
-	};
+	loadData (dataURL) {
+		d3.json(dataURL, (result) => { this.data = result; this.update(); } );
+	}
 
-
-  	return {
-	    levelA : levelA,
-	    levelB : levelB,
-	    nested : nested,
-	    nestings : nestings,
-
-	    init : init,
-	    update : update,
-	    loadData : loadData,
-	    createSelectors : createSelectors,
-
-	    addNesting : addNesting,
-	    setLevelA : setLevelA,
-	    setLevelB : setLevelB
-	};
-
-}());
+}

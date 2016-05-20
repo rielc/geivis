@@ -34,6 +34,13 @@ select {
 }
 
 </style>
-<div id="treemap"></div>
+<body>
+  <div id="treemap"></div>
+</body>
+<script src="./jspm_packages/system.js"></script>
+<script src="./config.js"></script>
 <script src="//d3js.org/d3.v4.0.0-alpha.35.min.js"></script>
-<script src="d3-treemap.js"></script>
+<script>
+  //console.log(System);
+  System.import("./main.js");
+</script>

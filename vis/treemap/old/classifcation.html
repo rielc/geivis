@@ -65,7 +65,7 @@ function getClassification (keywords) {
         if (tmp.classification == "keyword") {
           if (cl["keyword"] == undefined) {
             cl["keyword"] = [];
-            console.log("added keyword");
+            //console.log("added keyword");
           }
           cl["keyword"].push(k);
         } else {
@@ -77,7 +77,7 @@ function getClassification (keywords) {
       }
     })
   }
-  if (cl.subject!= undefined) { if (cl.subject == 0) { console.log(keywords); } }
+  //if (cl.subject != undefined) { if (cl.subject == 0) { console.log(keywords); } }
   return cl;
 };
 
@@ -105,6 +105,7 @@ d3.json("../data/keyword-classes.json", function (content) {
           "year" : fields.y[d.y],
           "lang" : fields.l[d.l], 
           "tags" : d.t.map(function (t) { return fields.t[t]; }),
+          "publisher" : fields.p[d.p], 
           "classification" : getClassification( d.t.map( function (t) { return fields.t[t]; }) )
         }; 
       });
