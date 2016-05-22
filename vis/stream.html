@@ -258,18 +258,19 @@ class StateMachine {
 
 class Test {
 
-  constructor(){
+  constructor(state, db){
     this.container = d3.select(".test");
     this.data = [];
     this.key = "subject";
+    this.state = state;
+    this.db = db;
 
-    state.listen(this.stateChange.bind(this));
+    this.state.listen(this.stateChange.bind(this));
 
     return this;
   }
 
   stateChange(next, last){
-    this.state = next;
     if(next.brushStart !== last.brushStart){
       this.render();
     }
@@ -281,21 +282,16 @@ class Test {
   }
 
   render(){
-    console.time("simple");
-    const startYear = this.state.brushStart.getFullYear();
-    const endYear = this.state.brushEnd.getFullYear();
-    const data = this.data.filter(d => d.year >= startYear && d.year <= endYear );
-    const nest = d3.nest().key(d => d.classification[this.key]).entries(data);
-    //console.log(nest);
-    console.timeEnd("simple");
 
-    console.time("crossfilter");
-    db.date.filterRange([this.state.brushStart, this.state.brushEnd]);
-    const group = db.subjects.all();
-    // console.log(group);
-    console.timeEnd("crossfilter");
+    const group = this.db.subjects.all();
 
-    this.container.text(data.length);
+    let s = this.container.selectAll(".item").data(group);
+    s.enter()
+      .append("div")
+      .classed("item", true)
+    s.text(d => `${ d.key } ${ d.value }` )
+    s.exit().remove();
+    // this.container.text(data.length);
     
     return this;
   }
@@ -308,7 +304,10 @@ class DataBase {
     this.data = [];
     this.formater = d3.time.format("%Y");
     this.extent = [0,0];
-    this.crossfilter = [];
+    this.crossfilter = {};
+
+    state.listen(this.stateChange.bind(this));
+
   }
 
   load(_data){
@@ -329,6 +328,25 @@ class DataBase {
     this.subjects = this.subject.group();
 
     return this;
+  }
+
+  stateChange(next, curr){
+    if(next.brushStart !== curr.brushStart){
+      this.date.filterRange([next.brushStart, next.brushEnd]);
+    }
+
+    // console.time("simple");
+    // const startYear = this.state.brushStart.getFullYear();
+    // const endYear = this.state.brushEnd.getFullYear();
+    // const data = this.data.filter(d => d.year >= startYear && d.year <= endYear );
+    // const nest = d3.nest().key(d => d.classification[this.key]).entries(data);
+    // //console.log(nest);
+    // console.timeEnd("simple");
+
+    // console.time("crossfilter");
+    // db.date.filterRange([this.state.brushStart, this.state.brushEnd]);
+    // // console.log(group);
+    // console.timeEnd("crossfilter");
   }
 }
 
@@ -392,12 +410,12 @@ class VisDebugList {
 
 }
 
+let state = new StateMachine();
 let stream = new StreamGraph().init();
 let db = new DataBase();
 let visList = new VisTypesList().render();
 let debugList = new VisDebugList().render();
-let state = new StateMachine();
-let test = new Test();
+let test = new Test(state, db);
 
 
 d3.json("../data/data.json", function (data) {
