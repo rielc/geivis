@@ -3,55 +3,7 @@
 <head>
   <meta charset="utf-8">
   <title></title>
-  <style>
-
-  body {
-    font: 10px sans-serif;
-  }
-
-  .axis path,
-  .axis line {
-    fill: none;
-    stroke: #000;
-    shape-rendering: crispEdges;
-  }
-
-  .graph:hover path {
-    fill-opacity: 0.4;
-    stroke-opacity: 0.1;
-  }
-  .graph:hover path:hover{
-    fill-opacity: 1;
-    stroke-opacity: 1;
-  }
-  .graph path {
-    cursor: pointer;
-    stroke:#ACE0F6;
-    fill:#BEE6F9;
-  }
-
-  .brush {
-    fill: aliceblue;
-    opacity: 0.5;
-    /*pointer-events: auto !important;*/
-  }
- 
-
-  .list, .totals {
-    width: 100%;
-    padding: 10px;
-    margin: 10px;
-    clear: left;
-  }
-  .list .item {
-    padding: 10px;
-    margin: 10px;
-    float: left;
-    background: #eee;
-    cursor: pointer;
-  }
-
-  </style>
+  <link rel="stylesheet" href="css/style.css"></link>
   <script src="js/d3.js"></script>
   <!-- <script src="js/d3.v4.0.0-alpha.35.min.js"></script> -->
   <script src="js/crossfilter.min.js"></script>
@@ -61,7 +13,7 @@
 
 <div class="stream"></div>
 <div class="totals"><span id="active">-</span> of <span id="total">-</span> books selected.</div>
-<div class="test list"></div>
+<div class="entities"></div>
 <div class="typeList list"></div>
 <div class="debug list"></div>
 
@@ -74,6 +26,9 @@ class StreamGraph {
     this.key = "subject";
     this.state = state;
     this.db = db;
+
+    this.state.listen(this.stateChange.bind(this));
+
 
     this.outerWidth = 800;
     this.outerHeight = 500;
@@ -139,8 +94,8 @@ class StreamGraph {
   }
 
   brushmove() {
-    const s = this.brush.extent();
-    state.push({ brushStart: s[0], brushEnd: s[1], year: s[0].getFullYear() });
+    let s = this.brush.empty() ? this.db.extent : this.brush.extent();
+    state.push({ brushStart: s[0], brushEnd: s[1] });
     // console.log(s);
   }
 
@@ -179,8 +134,9 @@ class StreamGraph {
   load(_data){
     // console.log(_data[0], this.key);
 
+    let k = this.state.state.active.substring(0,this.state.state.active.length-1);
     this.data = d3.nest()
-      .key(d => d.classification[this.key] || "none")
+      .key(d => d.classification[k] || null)
       .entries(_data);
 
     this.data.forEach((d,i)=>{
@@ -199,6 +155,17 @@ class StreamGraph {
     return this;
   }
 
+  stateChange(next, last){
+    // console.log(next);
+    if(next.hover !== last.hover){
+      this.render();
+    }
+    if(next.active !== last.active){
+      this.load(this.db.data).render();
+    }
+    // console.log(next.brushStart, last.brushStart);
+  }
+
   render(){
     let s = this.gGraph.selectAll("path")
       .data(this.data)
@@ -208,6 +175,7 @@ class StreamGraph {
         
     s
       .attr("d", d => this.area(d.histo))
+      .classed("active", d => this.state.state.hover == d.key)
       // .style("fill", (d, i)=> this.color(i));
 
     this.gXaxis
@@ -231,7 +199,7 @@ class StateMachine {
     this.state = {
       brushStart:null,
       brushEnd:null,
-      selected:null
+      active:"subjects"
     }
     this.history = [];
     this.history.push(Object.assign({}, this.state));
@@ -262,13 +230,19 @@ class StateMachine {
 class Test {
 
   constructor(state, db){
-    this.container = d3.select(".test").append("div");
+    this.container = d3.select(".entities").append("div").classed("entity", true);
+    this.container.append("div").classed("title", true).text(this.key);
+    this.items = this.container.append("div").classed("items", true);
     this.data = [];
     this.key = "subjects";
     this.state = state;
     this.db = db;
 
     this.state.listen(this.stateChange.bind(this));
+
+    this.container.on("click", ()=> {
+      this.state.push({ active: this.key });
+    })
 
     return this;
   }
@@ -280,22 +254,38 @@ class Test {
   }
 
   stateChange(next, last){
-    if(next.brushStart !== last.brushStart){
-      this.render();
-    }
+    // if(next.brushStart !== last.brushStart){
+    //   this.render();
+    // }
+    this.render();
     // console.log(next.brushStart, last.brushStart);
   }
 
   render(){
-    console.time("filter");
+    //console.log( this.state.state);
+    this.container.select(".title").text(this.key);
+    this.container.classed("active", this.state.state.active === this.key);
+    // this.container.classed("hover", this.state.state.hover === this.key);
+    // console.time("filter");
+   // console.log(this.key);
     const group = this.db[this.key].top(10);
-    console.timeEnd("filter");
+    // console.timeEnd("filter");
 
-    let s = this.container.selectAll(".item").data(group);
+    let s = this.items.selectAll(".item").data(group, d=>d.key);
     s.enter()
       .append("div")
       .classed("item", true)
-    s.text(d => `${ d.key } ${ d.value }` )
+      .on("mouseenter", (d)=>{
+        this.state.push({ hover: d.key });
+      })
+      .on("mouseleave", ()=>{
+        this.state.push({ hover: null });
+      })
+
+    s
+      .text(d => `${ d.key } ${ d.value }` )
+      .classed("hover", d=> this.state.state.hover === d.key)
+
     s.exit().remove();
     // this.container.text(data.length);
     
@@ -336,8 +326,13 @@ class DataBase {
 
     this.subject = this.crossfilter.dimension(d => d.classification.subject || null);
     this.subjects = this.subject.group();
+    
     this.schoollevel = this.crossfilter.dimension(d => d.classification.schoollevel || null);
-    this.schoollevels = this.subject.group();
+    this.schoollevels = this.schoollevel.group();
+
+    this.lang = this.crossfilter.dimension(d => d.lang || null);
+    this.langs = this.lang.group();
+    
     this.publisher = this.crossfilter.dimension(d => d.publisher || null);
     this.publishers = this.publisher.group();
 
@@ -346,7 +341,11 @@ class DataBase {
 
   stateChange(next, curr){
     if(next.brushStart !== curr.brushStart){
-      this.date.filterRange([next.brushStart, next.brushEnd]);
+      if(next.brushStart*1 === next.brushEnd*1){
+        this.date.filterAll();
+      } else {
+        this.date.filterRange([next.brushStart, next.brushEnd]);
+      }
 
       d3.select("#total").text(this.crossfilter.size());
       d3.select("#active").text(this.all.value());
@@ -428,19 +427,20 @@ class VisDebugList {
 }
 
 let state = new StateMachine();
-let stream = new StreamGraph().init();
 let db = new DataBase();
-let visList = new VisTypesList().render();
+
+let stream = new StreamGraph(state, db).init();
 let debugList = new VisDebugList().render();
+
 let test = new Test(state, db);
 let test2 = new Test(state, db).Key("schoollevels");
-let test3 = new Test(state, db).Key("publishers");
+let test3 = new Test(state, db).Key("langs");
+let test4 = new Test(state, db).Key("publishers");
 
 d3.json("../data/data.json", function (data) {
   console.log(data, data[0]);
 
   db.load(data);
-
 
   state.push({ brushStart: db.extent[0], brushEnd: db.extent[1] })
 
