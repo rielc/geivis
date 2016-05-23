@@ -1,3 +1,5 @@
+import * as d4 from "./d4.js";
+
 export default class NestedTreemap {
 
 	constructor( props ) {
@@ -23,7 +25,7 @@ export default class NestedTreemap {
 
 	init(containerSelector) {
 		
-		this.container = d3.select(containerSelector);
+		this.container = d4.select(containerSelector);
 	    this.createSelectors();
 
 		this.svg = this.container
@@ -34,10 +36,10 @@ export default class NestedTreemap {
 
 	    this.width = +this.svg.attr("width"),
 	    this.height = +this.svg.attr("height");
-		this.format = d3.format(",d");
-		this.color = d3.scaleMagma().domain([-1, 4]);
+		this.format = d4.format(",d");
+		this.color = d4.scaleMagma().domain([-1, 4]);
 
-		this.treemap = d3.treemap()
+		this.treemap = d4.treemap()
 			.size([this.width, this.height])
 			.paddingOuter(5)
 			.paddingTop(20)
@@ -54,7 +56,7 @@ export default class NestedTreemap {
 
 	update() {
 
-		this.nested = d3.nest()
+		this.nested = d4.nest()
 			.key( this.nestings[this.levelA] )
 			.key( this.nestings[this.levelB] )
 			.rollup( (leaves) => { return {"size" : leaves.length } ; } )
@@ -74,7 +76,7 @@ export default class NestedTreemap {
 			major.size = majorSize;
 		});
 
-		this.root = d3
+		this.root = d4
 			.hierarchy(
 				{
 					"name" : "root", 
@@ -135,7 +137,7 @@ export default class NestedTreemap {
 
 
 	createSelectors () {
-		var n = d3.keys(this.nestings);
+		var n = d4.keys(this.nestings);
 		
 		this.dropdownA = this.container.append("select").attr("id", "dropdown-a");
 		this.dropdownB = this.container.append("select").attr("id", "dropdown-b");
@@ -171,7 +173,7 @@ export default class NestedTreemap {
 	}
 
 	loadData (dataURL) {
-		d3.json(dataURL, (result) => { this.data = result; this.filteredData = this.data; this.update(); } );
+		d4.json(dataURL, (result) => { this.data = result; this.filteredData = this.data; this.update(); } );
 		return this;
 	}
 

@@ -1,25 +1,28 @@
 // global variables
+
 $red: #b00046;
 $blue: #009ee0;
 $grey: desaturate($blue, 100%);
 
 
-// import the reset
+// import the style for the modules
+
 @import "_reset.scss";
 @import "_nested-treemap.scss";
 
-
-
 // global styles
+
 
 @font-face {
     font-family: "gravurcondensed-regular";
     src: url("gravurcondensed-regular.woff") format('woff');
 }
+
 @font-face {
     font-family: "gravurcondensed-bold";
     src: url("gravurcondensed-bold.woff") format('woff');
 }
+
 @font-face {
     font-family: "egyptienne";
     src: url("egyptienne.woff") format('woff');

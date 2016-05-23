@@ -1,4 +1,4 @@
-class StreamGraph {
+export class StreamGraph {
 
   constructor(state, db){
     this.key = "subject";
@@ -73,7 +73,8 @@ class StreamGraph {
 
   brushmove() {
     let s = this.brush.empty() ? this.db.extent : this.brush.extent();
-    state.push({ brushStart: s[0], brushEnd: s[1] });
+
+    this.state.push({ brushStart: s[0], brushEnd: s[1] });
     // console.log(s);
   }
 
@@ -114,7 +115,7 @@ class StreamGraph {
 
     let k = this.state.state.active.substring(0,this.state.state.active.length-1);
     this.data = d3.nest()
-      .key(d => d.classification[k] || null)
+      .key(d => d[k] || null)
       .entries(_data);
 
     this.data.forEach((d,i)=>{
@@ -171,7 +172,7 @@ class StreamGraph {
 
 }
 
-class StateMachine {
+export class StateMachine {
 
   constructor(){
     this.state = {
@@ -205,7 +206,7 @@ class StateMachine {
   }
 }
 
-class Test {
+export class Test {
 
   constructor(state, db){
     this.container = d3.select(".entities").append("div").classed("entity", true);
@@ -272,15 +273,15 @@ class Test {
 
 }
 
-class DataBase {
+export class DataBase {
 
-  constructor(){
+  constructor(_state){
     this.data = [];
     this.formater = d3.time.format("%Y");
     this.extent = [0,0];
     this.crossfilter = {};
-
-    state.listen(this.stateChange.bind(this));
+    this.state = _state;
+    this.state.listen(this.stateChange.bind(this));
 
   }
 
@@ -290,7 +291,7 @@ class DataBase {
     this.data.forEach(d => {
       d.date = this.formater.parse(d.year);
       d.year = parseInt(d.year);
-      d.publisher = d.publisher ? d.publisher.split(",")[1] : "none";
+      d.publisher = d.publisher;
     })
     this.extent = d3.extent(this.data, d => d.date);
 
@@ -302,10 +303,10 @@ class DataBase {
     this.date = this.crossfilter.dimension(d => d.date);
     this.dates = this.date.group(d3.time.year);
 
-    this.subject = this.crossfilter.dimension(d => d.classification.subject || null);
+    this.subject = this.crossfilter.dimension(d => d.subject || null);
     this.subjects = this.subject.group();
     
-    this.schoollevel = this.crossfilter.dimension(d => d.classification.schoollevel || null);
+    this.schoollevel = this.crossfilter.dimension(d => d.schoollevel || null);
     this.schoollevels = this.schoollevel.group();
 
     this.lang = this.crossfilter.dimension(d => d.lang || null);
@@ -344,7 +345,7 @@ class DataBase {
   }
 }
 
-class VisTypesList {
+export class VisTypesList {
 
   constructor(){
     this.types = ["subject", "schoollevel", "keyword", "schooltype"];
@@ -374,7 +375,7 @@ class VisTypesList {
 
 }
 
-class VisDebugList {
+export class VisDebugList {
 
   constructor(){
     this.types = ["silhouette", "wiggle", "expand", "zero"];
