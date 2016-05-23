@@ -6,6 +6,10 @@
     font-family: "gravurcondensed-bold";
     src: url("gravurcondensed-bold.woff") format('woff');
 }
+@font-face {
+    font-family: "egyptienne";
+    src: url("egyptienne.woff") format('woff');
+}
 
 body {
   font: 10px "gravurcondensed-regular", sans-serif;
@@ -32,7 +36,8 @@ body {
   fill:#BEE6F9;
 }
 .graph path.active {
-  fill:red;
+  fill:#b00046;
+  stroke:#BEE6F9;
 }
 
 .brush {
@@ -75,6 +80,9 @@ body {
 }
 .entities .entity .item {
   margin: 4px;
+}
+.entities .entity .hover.item {
+  color:#b00046;
 }
 .entities .entity .title {
   font-family: "gravurcondensed-bold";
