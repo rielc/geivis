@@ -29,6 +29,9 @@ ntr
   .addNesting("Verlag", function (d) { return (d.publisher==undefined) ? "Verlag unbekannt" : d.publisher; });
 
 ntr
+  .setState(state, db);
+
+ntr
   .init("#treemap")
   .loadData("../data/better-data.json");
 

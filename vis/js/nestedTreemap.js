@@ -21,7 +21,35 @@ export default class NestedTreemap {
 		this.levelB = "";
 		this.format;
 		this.color;
+		this.state;
 	}
+
+
+
+	setState(state, db) {
+		this.state = state;
+		this.db = db;
+    	this.state.listen(this.stateChange.bind(this));
+	}
+
+
+	stateChange(next, last){
+    	// if(next.brushStart !== last.brushStart){
+    	//   this.render();
+    	// }
+    	//console.log();
+    	//console.log(this.db);
+
+    	// i know that i could use crossfilter … but im very lazy!
+
+    	this.filterData( 
+    		function (e) { 
+    			return ( e.year >= next.brushStart.getFullYear() && e.year <= next.brushEnd.getFullYear() ); 
+			}
+		);
+    	this.update();
+    	// console.log(next.brushStart, last.brushStart);
+  }
 
 	init(containerSelector) {
 		
