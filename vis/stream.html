@@ -287,8 +287,9 @@ class Test {
   }
 
   render(){
-
-    const group = this.db[this.key].top(8);
+    console.time("filter");
+    const group = this.db[this.key].top(10);
+    console.timeEnd("filter");
 
     let s = this.container.selectAll(".item").data(group);
     s.enter()
@@ -333,11 +334,11 @@ class DataBase {
     this.date = this.crossfilter.dimension(d => d.date);
     this.dates = this.date.group(d3.time.year);
 
-    this.subject = this.crossfilter.dimension(d => d.classification.subject);
+    this.subject = this.crossfilter.dimension(d => d.classification.subject || null);
     this.subjects = this.subject.group();
-    this.schoollevel = this.crossfilter.dimension(d => d.classification.schoollevel);
+    this.schoollevel = this.crossfilter.dimension(d => d.classification.schoollevel || null);
     this.schoollevels = this.subject.group();
-    this.publisher = this.crossfilter.dimension(d => d.publisher);
+    this.publisher = this.crossfilter.dimension(d => d.publisher || null);
     this.publishers = this.publisher.group();
 
     return this;
