@@ -1,0 +1,85 @@
+@font-face {
+    font-family: "gravurcondensed-regular";
+    src: url("gravurcondensed-regular.woff") format('woff');
+}
+@font-face {
+    font-family: "gravurcondensed-bold";
+    src: url("gravurcondensed-bold.woff") format('woff');
+}
+
+body {
+  font: 10px "gravurcondensed-regular", sans-serif;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.graph:hover path {
+  fill-opacity: 0.4;
+  stroke-opacity: 0.1;
+}
+.graph:hover path:hover{
+  fill-opacity: 1;
+  stroke-opacity: 1;
+}
+.graph path {
+  cursor: pointer;
+  stroke:#ACE0F6;
+  fill:#BEE6F9;
+}
+.graph path.active {
+  fill:red;
+}
+
+.brush {
+  fill: azure;
+  opacity: 0.5;
+  /*pointer-events: auto !important;*/
+}
+
+
+.list, .totals {
+  width: 100%;
+  padding: 10px;
+  margin: 10px;
+  clear: left;
+}
+.list .item {
+  padding: 10px;
+  margin: 10px;
+  float: left;
+  background: #eee;
+  cursor: pointer;
+}
+
+.entities .entity {
+  /* padding: 5px; */
+  float: left;
+  width: 270px;
+  margin: 10px;
+  background: rgba(190, 230, 249, 0.26);
+  cursor: pointer;
+}
+.entities .entity.active {
+  background: rgb(190, 230, 249);
+}
+.entities .entity.hover {
+  background: rgb(190, 230, 249);
+}
+.entities .entity .items {
+   margin: 10px;
+}
+.entities .entity .item {
+  margin: 4px;
+}
+.entities .entity .title {
+  font-family: "gravurcondensed-bold";
+  font-size: 12px;
+  text-transform: uppercase;
+  margin: 14px;
+  /* padding-bottom: 5px; */
+}
