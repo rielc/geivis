@@ -9,14 +9,15 @@ System.config({
     ]
   },
   paths: {
-    "github:*": "treemap/jspm_packages/github/*",
-    "npm:*": "treemap/jspm_packages/npm/*"
+    "github:*": "vis/jspm_packages/github/*",
+    "npm:*": "vis/jspm_packages/npm/*"
   },
 
   map: {
     "babel": "npm:babel-core@5.8.38",
     "babel-runtime": "npm:babel-runtime@5.8.38",
     "core-js": "npm:core-js@1.2.6",
+    "d3-zoom": "npm:d3-zoom@0.0.2",
     "github:jspm/nodelibs-assert@0.1.0": {
       "assert": "npm:assert@1.4.0"
     },
@@ -58,6 +59,23 @@ System.config({
       "path": "github:jspm/nodelibs-path@0.1.0",
       "process": "github:jspm/nodelibs-process@0.1.2",
       "systemjs-json": "github:systemjs/plugin-json@0.1.2"
+    },
+    "npm:d3-interpolate@0.7.0": {
+      "d3-color": "npm:d3-color@0.4.2"
+    },
+    "npm:d3-transition@0.2.9": {
+      "d3-color": "npm:d3-color@0.4.2",
+      "d3-dispatch": "npm:d3-dispatch@0.4.3",
+      "d3-ease": "npm:d3-ease@0.7.0",
+      "d3-interpolate": "npm:d3-interpolate@0.7.0",
+      "d3-selection": "npm:d3-selection@0.7.2",
+      "d3-timer": "npm:d3-timer@0.4.4"
+    },
+    "npm:d3-zoom@0.0.2": {
+      "d3-dispatch": "npm:d3-dispatch@0.4.3",
+      "d3-interpolate": "npm:d3-interpolate@0.7.0",
+      "d3-selection": "npm:d3-selection@0.7.2",
+      "d3-transition": "npm:d3-transition@0.2.9"
     },
     "npm:inherits@2.0.1": {
       "util": "github:jspm/nodelibs-util@0.1.0"

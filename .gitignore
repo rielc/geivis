@@ -2,3 +2,5 @@
 data/raw/
 vis/treemap/jspm_packages/
 vis/treemap/node_modules/
+vis/jspm_packages/
+vis/node_modules/

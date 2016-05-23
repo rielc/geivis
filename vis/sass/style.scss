@@ -1,3 +1,17 @@
+// global variables
+$red: #b00046;
+$blue: #009ee0;
+$grey: desaturate($blue, 100%);
+
+
+// import the reset
+@import "_reset.scss";
+@import "_nested-treemap.scss";
+
+
+
+// global styles
+
 @font-face {
     font-family: "gravurcondensed-regular";
     src: url("gravurcondensed-regular.woff") format('woff');
@@ -14,6 +28,11 @@
 body {
   font: 10px "gravurcondensed-regular", sans-serif;
 }
+
+
+
+
+// streamgraph and stuff to sort out
 
 .axis path,
 .axis line {
@@ -91,3 +110,14 @@ body {
   margin: 14px;
   /* padding-bottom: 5px; */
 }
+
+text {
+  font: 10px sans-serif;
+}
+
+tspan:last-child {
+  font-size: 9px;
+  fill-opacity: 0.8;
+}
+
+

@@ -1,10 +1,12 @@
 export default class NestedTreemap {
 
-	constructor() {
+	constructor( props ) {
+		this.props = props;
 	 	this.container = {};
 		this.svg = {};
 		this.root = {};
 		this.data;
+		this.filteredData = {};
 		this.treemap = {};
 		this.nested = {};
 		this.nestings = {};
@@ -37,15 +39,18 @@ export default class NestedTreemap {
 
 		this.treemap = d3.treemap()
 			.size([this.width, this.height])
-			.paddingOuter(10)
-			.paddingTop(30)
-			.paddingInner(5)
-			.round(false);
+			.paddingOuter(5)
+			.paddingTop(20)
+			.paddingInner(1)
+			.round(true);
+
+
+		return this;
 	}
 
 
-	setLevelA (string) { this.levelA = string; }
-	setLevelB (string) { this.levelB = string; }
+	setLevelA (string) { this.levelA = string; return this; }
+	setLevelB (string) { this.levelB = string; return this; }
 
 	update() {
 
@@ -53,7 +58,7 @@ export default class NestedTreemap {
 			.key( this.nestings[this.levelA] )
 			.key( this.nestings[this.levelB] )
 			.rollup( (leaves) => { return {"size" : leaves.length } ; } )
-			.entries( this.data );
+			.entries( this.filteredData );
 
 		// from values and keys to children and name
 		this.nested = JSON.parse( JSON.stringify(this.nested).replace(/"key":/gi, '"name":').replace(/"values":/gi, '"children":') );
@@ -85,7 +90,6 @@ export default class NestedTreemap {
 		let that = this;
 
 		function updateNode (s) {
-			//console.log(s);
 			s.attr("transform", (d) => { return "translate(" + d.x0 + "," + d.y0 + ")"; })
 		}
 
@@ -93,71 +97,52 @@ export default class NestedTreemap {
 			s
 			.attr("width", (d) => { return d.x1 - d.x0; } )
 			.attr("height", (d) => { return d.y1 - d.y0; } )
-			.style("fill", (d) => { return that.color(d.depth); } )
+			//.style("fill", (d) => { return that.color(d.depth); } )
 		}
 
 		this.svg.selectAll(".node").remove();
 
-		this.nodes = this.svg.selectAll(".node");
+		this.nodes = this.svg.selectAll(".node").data(this.root.descendants());
+
+		this.nodes.call(updateNode)
 
 		this.nodes
-			.data(this.root.descendants())
-			.call(updateNode);
-
-		this.nodes
-			.data(this.root.descendants())
-			.enter().append("g")
+			.enter()
+			.append("g")
 			.classed("node", true)
 			//.attr("id", function(d) { return "rect-" + d.data.name; })
 			.each( (d) => { d.node = this; })
 			.on("mouseover", (d) => { console.log(d.data.name); })
 			.call(updateNode)
-			//.select("rect")
-			//.data(function (d) { console.log(d); })
 			.append("rect")
+			.attr("class", (d) => ("cell level-" + d.depth) )
 			//.attr("id", function(d) { console.log(d); return "rect-" + d.id; })
-			.call(updateCell);
+			.call(updateCell)
+
+		this.svg.selectAll(".node")
+			.append("text")
+			.attr("x", 0)
+			.attr("y", 0)
+			.text( d => { return d.data.name; })
 
 		this.nodes
-			.data(this.root.descendants())
 			.exit()
 			.remove();
 
-		
-		//cells.append("clipPath")
-		//.attr("id", function(d) { return "clip-" + d.id; })
-		//.append("use")
-		//.attr("xlink:href", function(d) { return "#rect-" + d.id + ""; });
-		
-		
-		
-		// var label = nodes
-		// .append("text")
-		// .attr("clip-path", function(d) { return "url(#clip-" + d.id + ")"; });
-
-		// label = nodes
-		// 	.selectAll("text")
-		// 	.data(function(d) {
-		// 		return d.data.name;
-		// 		//.id.substring(d.id.lastIndexOf(".") + 1).split(/(?=[A-Z][^A-Z])/g).concat("\xa0" + format(d.value));
-		// 	})
-		// 	.enter().append("text")
-		// 	.attr("x", (d, i) => { return i ? null : 4; })
-		// 	.attr("y", 13)
-		// 	.text( d => { return d; });
-
-		//nodes.append("title").text(function(d) { return d.id + "\n" + format(d.value); });
-		
+		return this;
 
   }
 
 
 	createSelectors () {
 		var n = d3.keys(this.nestings);
+		
 		this.dropdownA = this.container.append("select").attr("id", "dropdown-a");
 		this.dropdownB = this.container.append("select").attr("id", "dropdown-b");
+		
 		this.dropdownA.on("change", (sel) => { this.levelA = this.dropdownA.property("value"); this.update(); });
 		this.dropdownB.on("change", (sel) => { this.levelB = this.dropdownB.property("value"); this.update(); });
+		
 		this.dropdownA
 			.selectAll("option")
 			.data(n)
@@ -172,13 +157,28 @@ export default class NestedTreemap {
 			.append("option")
 			.attr("value", (d) => { return d; })
 			.text( (d) => { return d; });
+
+		return this;
 	}
 
 
-	addNesting (name, f) { this.nestings[name] = f; }
+	addNesting (name, f) { this.nestings[name] = f; return this;}
+
+	updateData (data) {
+		this.data = data;
+		this.update();
+		return this;
+	}
 
 	loadData (dataURL) {
-		d3.json(dataURL, (result) => { this.data = result; this.update(); } );
+		d3.json(dataURL, (result) => { this.data = result; this.filteredData = this.data; this.update(); } );
+		return this;
+	}
+
+	filterData( evaluation ) {
+		this.filteredData = this.data.filter(evaluation);
+		this.update();
+		return this;
 	}
 
 }
