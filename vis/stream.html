@@ -340,7 +340,9 @@ class DataBase {
     this.data.forEach(d => {
       d.date = this.formater.parse(d.year);
       d.year = parseInt(d.year);
-      d.publisher = d.publisher ? d.publisher.split(",")[0] : "none";
+      var p = d.publisher ? d.publisher.split(",") : ["none", "none"];
+      d.publisher = p[1];
+      d.place = p[0];
     })
     this.extent = d3.extent(this.data, d => d.date);
 
@@ -363,6 +365,9 @@ class DataBase {
     
     this.publisher = this.crossfilter.dimension(d => d.publisher || null);
     this.publishers = this.publisher.group();
+
+    this.place = this.crossfilter.dimension(d => d.place || null);
+    this.places = this.place.group();
 
     return this;
   }
@@ -462,8 +467,9 @@ let debugList = new VisDebugList().render();
 
 let test = new Test(state, db);
 let test2 = new Test(state, db).Key("schoollevels");
-let test3 = new Test(state, db).Key("langs");
+// let test3 = new Test(state, db).Key("langs");
 let test4 = new Test(state, db).Key("publishers");
+let test5 = new Test(state, db).Key("places");
 
 d3.json("../data/data.json", function (data) {
   console.log(data, data[0]);
