@@ -340,7 +340,7 @@ class DataBase {
     this.data.forEach(d => {
       d.date = this.formater.parse(d.year);
       d.year = parseInt(d.year);
-      d.publisher = d.publisher ? d.publisher.split(",")[1] : "none";
+      d.publisher = d.publisher ? d.publisher.split(",")[0] : "none";
     })
     this.extent = d3.extent(this.data, d => d.date);
 
