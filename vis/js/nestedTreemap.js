@@ -42,12 +42,15 @@ export default class NestedTreemap {
 
     	// i know that i could use crossfilter … but im very lazy!
 
-    	this.filterData( 
-    		function (e) { 
-    			return ( e.year >= next.brushStart.getFullYear() && e.year <= next.brushEnd.getFullYear() ); 
-			}
-		);
-    	this.update();
+  //   	this.filterData( 
+  //   		function (e) { 
+  //   			return ( e.year >= next.brushStart.getFullYear() && e.year <= next.brushEnd.getFullYear() ); 
+		// 	}
+		// );
+		if(next.brushStart !== last.brushStart){
+			this.filteredData = this.db.date.top(Infinity);
+	    	this.update();
+	    }
     	// console.log(next.brushStart, last.brushStart);
   }
 
