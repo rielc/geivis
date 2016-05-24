@@ -269,8 +269,9 @@ body {
 
 .graph path {
   cursor: pointer;
-  stroke: #ACE0F6;
-  fill: #BEE6F9; }
+  /* stroke: #ACE0F6; */
+  fill: #BEE6F9;
+  }
 
 .graph path.active {
   fill: #b00046;
