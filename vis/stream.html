@@ -285,7 +285,7 @@ class Test {
     // this.container.classed("hover", this.state.state.hover === this.key);
     // console.time("filter");
    // console.log(this.key);
-    const group = this.db[this.key].top(10);
+    const group = this.db[this.key].top(30);
     const max = d3.max(group, d => d.value);
     // console.timeEnd("filter");
 
