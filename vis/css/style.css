@@ -211,9 +211,9 @@ select {
   color: #fff;
   border-radius: 0; }
 
-rect {
+#treemap rect {
   fill: #009ee0; }
-  rect:hover {
+#treemap rect:hover {
     fill: #009ee0; }
 
 .text {
@@ -246,19 +246,26 @@ rect {
 body {
   font: 10px "gravurcondensed-regular", sans-serif; }
 
-.axis path,
-.axis line {
+.stream .axis path,
+.stream .axis line {
   fill: none;
-  stroke: #000;
-  shape-rendering: crispEdges; }
+  stroke: #DEE8EE;
+  shape-rendering: crispEdges;
+  }
+.stream .axis .domain {
+  stroke:none;
+}
+.stream .y.axis {
+  display: none;
+}
 
-.graph:hover path {
-  fill-opacity: 0.4;
-  stroke-opacity: 0.1; }
+// .graph:hover path {
+//   fill-opacity: 0.4;
+//   stroke-opacity: 0.1; }
 
-.graph:hover path:hover {
-  fill-opacity: 1;
-  stroke-opacity: 1; }
+// .graph:hover path:hover {
+//   fill-opacity: 1;
+//   stroke-opacity: 1; }
 
 .graph path {
   cursor: pointer;
@@ -270,9 +277,10 @@ body {
   stroke: #BEE6F9; }
 
 .brush {
-  fill: azure;
+  fill: #EEF3F6;
   opacity: 0.5;
-  /*pointer-events: auto !important;*/ }
+  /*pointer-events: auto !important;*/
+  }
 
 .list, .totals {
   width: 100%;
@@ -288,12 +296,14 @@ body {
   cursor: pointer; }
 
 .entities .entity {
+  padding: 10px;
   /* padding: 5px; */
   float: left;
   width: 270px;
   margin: 10px;
   background: rgba(190, 230, 249, 0.26);
-  cursor: pointer; }
+  cursor: pointer;
+  }
 
 .entities .entity.active {
   background: #bee6f9; }
@@ -302,20 +312,50 @@ body {
   background: #bee6f9; }
 
 .entities .entity .items {
-  margin: 10px; }
+  float: left;
+  padding: 10px;
+  width: 100%;
+  }
 
 .entities .entity .item {
-  margin: 4px; }
+  clear: left;
+  margin: 1px;
+  float: left;
+  width: 100%;
+  }
+
+.entities .entity .item .left {
+  float: left;
+  width: 50%;
+  padding-right: 5px;
+}
+.entities .entity .item .left .bar {
+  background: #3C7C9B;
+  float: right;
+  color: #FFF;
+  padding: 2px;
+}
+.entities .entity .hover.item .left .bar {
+  background: #b00046;
+}
+
+.entities .entity .item .right {
+  float: right;
+  width: 50%;
+}
 
 .entities .entity .hover.item {
   color: #b00046; }
 
 .entities .entity .title {
   font-family: "gravurcondensed-bold";
-  font-size: 12px;
+  font-size: 15px;
+  /* left: 0%; */
+  /* position: relative; */
   text-transform: uppercase;
-  margin: 14px;
-  /* padding-bottom: 5px; */ }
+  padding: 10px;
+  /* padding-bottom: 5px; */
+  }
 
 text {
   font: 10px sans-serif; }

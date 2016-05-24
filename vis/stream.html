@@ -67,9 +67,9 @@ class StreamGraph {
     this.svg = d3.select(".stream").append("svg");
     this.g = this.svg.append("g");
     this.gXaxis = this.g.append("g").attr("class", "x axis");
-    this.gYaxis = this.g.append("g").attr("class", "y axis")
-    this.gGraph = this.g.append("g").attr("class", "graph");
+    this.gYaxis = this.g.append("g").attr("class", "y axis");
     this.gBrush = this.g.append("g").attr("class", "brush");
+    this.gGraph = this.g.append("g").attr("class", "graph");
 
     this.nest = d3.nest();
     this.data = [];
@@ -106,7 +106,7 @@ class StreamGraph {
     this.x.range([0, this.width]);
     this.y.range([this.height, 0]).clamp(true);
 
-    this.xAxis.scale(this.x);
+    this.xAxis.scale(this.x).tickSize(-this.height);
     this.yAxis.scale(this.y);
 
     this.svg
@@ -120,6 +120,9 @@ class StreamGraph {
       );
 
     this.gBrush.call(this.brush);
+    this.gBrush.selectAll(".resize rect")
+      .style("visibility", "inherit")
+      .style("fill", "#EEE")
 
     // this.gBrush.selectAll(".resize").append("path")
     //     .attr("transform", "translate(0," +  this.height / 2 + ")")
@@ -170,7 +173,15 @@ class StreamGraph {
     let s = this.gGraph.selectAll("path")
       .data(this.data)
     
-    s.enter().append("path");
+    s.enter()
+      .append("path")
+      .on("mouseenter", d=>{
+        this.state.push({ hover: d.key });
+      })
+      .on("mouseleave", d=>{
+        this.state.push({ hover: null });
+      })
+
     s.exit().remove();
         
     s
@@ -181,10 +192,16 @@ class StreamGraph {
     this.gXaxis
       .attr("transform", "translate(0," + this.height + ")")
       .call(this.xAxis)
+
+    this.gXaxis
       .selectAll("text")
-      .attr("transform", function(d) {
-           return "translate(" + this.getBBox().height*-2 + "," + this.getBBox().height + ")rotate(-45)";
-       });
+      .attr("dy", "1em")
+
+    // this.gXaxis
+    //   .selectAll("text")
+    //   .attr("transform", function(d) {
+    //        return "translate(" + this.getBBox().height*-2 + "," + this.getBBox().height + ")rotate(-45)";
+    //    });
 
     this.gYaxis
       .call(this.yAxis)
@@ -269,10 +286,11 @@ class Test {
     // console.time("filter");
    // console.log(this.key);
     const group = this.db[this.key].top(10);
+    const max = d3.max(group, d => d.value);
     // console.timeEnd("filter");
 
     let s = this.items.selectAll(".item").data(group, d=>d.key);
-    s.enter()
+    let e = s.enter()
       .append("div")
       .classed("item", true)
       .on("mouseenter", (d)=>{
@@ -282,9 +300,19 @@ class Test {
         this.state.push({ hover: null });
       })
 
+    e.append("div").classed("left", true).append("div").classed("bar", true)
+    e.append("div").classed("right", true)
+
     s
-      .text(d => `${ d.key } ${ d.value }` )
       .classed("hover", d=> this.state.state.hover === d.key)
+    
+    s.select(".bar")
+      .text(d => `${ d.value }` )
+      .style("width", d=> `${ (d.value / max)*100 }%`);
+
+    s.select(".right")
+      .text(d => `${ d.key }` )
+      
 
     s.exit().remove();
     // this.container.text(data.length);
