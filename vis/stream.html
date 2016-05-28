@@ -146,7 +146,7 @@ class StreamGraph {
 
     let k = this.state.state.active.substring(0,this.state.state.active.length-1);
     this.data = d3.nest()
-      .key(d => d.classification[k] || null)
+      .key(d => d[k] || null)
       .entries(_data);
 
     this.data.forEach((d,i)=>{
@@ -287,7 +287,8 @@ class Test {
 
   render(){
     //console.log( this.state.state);
-    this.container.select(".title").text(this.key);
+    const size = this.db[this.key].size();
+    this.container.select(".title").text(this.key + " " +size);
     this.container.classed("active", this.state.state.active === this.key);
     // this.container.classed("hover", this.state.state.hover === this.key);
     // console.time("filter");
@@ -349,9 +350,7 @@ class DataBase {
     this.data.forEach(d => {
       d.date = this.formater.parse(d.year);
       d.year = parseInt(d.year);
-      var p = d.publisher ? d.publisher.split(",") : ["none", "none"];
-      d.publisher = p[1];
-      d.place = p[0];
+      d.place = d.publisher_city;
     })
     this.extent = d3.extent(this.data, d => d.date);
 
@@ -363,10 +362,10 @@ class DataBase {
     this.date = this.crossfilter.dimension(d => d.date);
     this.dates = this.date.group(d3.time.year);
 
-    this.subject = this.crossfilter.dimension(d => d.classification.subject || null);
+    this.subject = this.crossfilter.dimension(d => d.subject || null);
     this.subjects = this.subject.group();
     
-    this.schoollevel = this.crossfilter.dimension(d => d.classification.schoollevel || null);
+    this.schoollevel = this.crossfilter.dimension(d => d.schoollevel || null);
     this.schoollevels = this.schoollevel.group();
 
     this.lang = this.crossfilter.dimension(d => d.lang || null);
@@ -480,7 +479,7 @@ let test2 = new Test(state, db).Key("schoollevels");
 let test4 = new Test(state, db).Key("publishers");
 let test5 = new Test(state, db).Key("places");
 
-d3.json("../data/data.json", function (data) {
+d3.json("../data/better-data.json", function (data) {
   console.log(data, data[0]);
 
   db.load(data);
