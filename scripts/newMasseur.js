@@ -1,24 +1,3 @@
-/*
-
-Gives a normalized output which looks something like:
-
-{ 
-	books: [book-with-normalized-fields], 
-	fields : { categorys:[fields-in-category] }
-}
-
-More Detail:
-                                          BOOK
-{
-	books : [ … , {"l":12,"y":76,"p":[8271],"t":[1,20,454,2]}, … ],
-	fields : { …, "t": ["Weltkrieg","Geschichtsunterricht","Schulbuch","Deutschunterricht",…] , …}
-}
-							TAGs defined in dictionary "t"	
-
-	Currenty Dictionaries: ID (omitted) , l-anguage , y-ear , p-ublisher , t-ags
-
-*/
-
 // debugger;
 
 var fs = require("fs");
@@ -98,7 +77,8 @@ function updateClassification(tag, book) {
 function loop() {
 	if (loadedFiles == fileNames.length-1) {
 		var total = books;
-		fs.writeFile("../data/better-data.json", JSON.stringify(total), function () { clearInterval(interval);});
+
+		fs.writeFile("../data/better-data.json", JSON.stringify(total), function () { clearInterval(interval); console.log("fuck!!!! " + digicount);});
 		console.log("Finished!");		
 	}
 }
@@ -116,6 +96,7 @@ function loadFiles (error, fn) {
 // closure for reading files with given string
 function rfClosure (file) { fs.readFile(pathToDataFiles+file, 'utf8', function (error,data) { parseFile(data, file); });}
 
+var digicount = 0;
 // callback which parses the content of the loaded file
 function parseFile (content, file) {
 
@@ -138,27 +119,36 @@ function parseFile (content, file) {
 
 			// iteratate through all facets
 			book.forEach( function (facet) {
-
-				//console.log(facet);
+				// console.log(facet);
 
 				var type = facet['$'].tag;
 				var subfield = facet.subfield;
 				
 				/* if (type == "003@") { newBook.id = subfield[0]._; } */ // ID
 				if (type == "010@") { newBook.language = subfield[0]._; } // language
-				if (type == "011@") { newBook.year = subfield[0]._; } // year
-				if (type == "028A") { newBook.author = subfield[0]._ + " " + subfield[1]._; } // year
-				if (type == "021A") { newBook.title = subfield[0]._; } // year
+				if (type == "011@") { newBook.year = subfield[0]._; } 
+				if (type == "028A") { newBook.author = subfield[0]._ + " " + subfield[1]._; } 
+				if (type == "021A") { newBook.title = subfield[0]._; } 
 
 
-
-
+				subfield.map(d=>d._).filter(d => d ? d.match("http") : null).forEach(d => console.log(d))
 
 				// city (?) + publisher
 				if (type == "033A") { 
 					newBook.publisher_city = subfield[0]._;
 					if (subfield[1] != undefined) {
 						newBook.publisher = subfield[1]._;
+					}
+				}
+
+
+				// online resource
+				if (type.match("009")) { 
+					if (subfield[1] != undefined) {
+						digicount++;
+						// console.log(digicount);
+						// console.log(type, subfield[1]._);
+						//newBook.publisher = subfield[1]._;
 					}
 				}
 
@@ -178,6 +168,7 @@ function parseFile (content, file) {
 				if (type == "044L") {
 					if (newBook.singularTag == undefined) { newBook.singularTag = []; }
 					newBook.singularTag.push(subfield[0]._);
+					//console.log(subfield[0]._);
 				}
 				
 				// tags
