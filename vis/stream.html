@@ -76,7 +76,8 @@ class StreamGraph {
 
     this.brush = d3.svg.brush()
       .x(this.x)
-      .on("brush", this.brushmove.bind(this));
+      .on("brush", this.brushmove.bind(this))
+      .on("brushend", this.brushend.bind(this));
 
     // this.width = function(_) {
     //   if (!arguments.length) return width;
@@ -95,7 +96,13 @@ class StreamGraph {
 
   brushmove() {
     let s = this.brush.empty() ? this.db.extent : this.brush.extent();
-    state.push({ brushStart: s[0], brushEnd: s[1] });
+    state.push({ brushStart: s[0], brushEnd: s[1], keyframe: false });
+    // console.log(s);
+  }
+
+  brushend() {
+    let s = this.brush.empty() ? this.db.extent : this.brush.extent();
+    state.push({ brushStart: s[0], brushEnd: s[1], keyframe: true });
     // console.log(s);
   }
 
@@ -303,8 +310,10 @@ class Test {
     e.append("div").classed("left", true).append("div").classed("bar", true)
     e.append("div").classed("right", true)
 
-    s
-      .classed("hover", d=> this.state.state.hover === d.key)
+    if(this.state.state.keyframe){
+      s.sort((a,b) => b.value - a.value)
+    }
+    s.classed("hover", d=> this.state.state.hover === d.key)
     
     s.select(".bar")
       .text(d => `${ d.value }` )
@@ -476,7 +485,7 @@ d3.json("../data/data.json", function (data) {
 
   db.load(data);
 
-  state.push({ brushStart: db.extent[0], brushEnd: db.extent[1] })
+  state.push({ brushStart: db.extent[0], brushEnd: db.extent[1], keyframe:true })
 
   stream.x.domain(db.extent).nice(d3.time.year);
   stream.load(db.data).render();
