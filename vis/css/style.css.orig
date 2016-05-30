@@ -230,14 +230,21 @@ select {
   fill: #000000;
   stroke: #ffffff;
   stroke-width: 0.25px; }
-
+<<<<<<< Updated upstream
 
 .node {
   fill: #ffffff;
   stroke: #707070;
   stroke-weight: 1px; }
 
+=======
 
+.node {
+  fill: #ffffff;
+  stroke: #707070;
+  stroke-weight: 1px; }
+
+>>>>>>> Stashed changes
 .link {
   fill: none;
   stroke: #707070;
@@ -286,12 +293,6 @@ body {
   stroke: #000;
   shape-rendering: crispEdges; }
 
-.stream .axis path,
-.stream .axis line {
-  fill: none;
-  stroke: #eee;
-  shape-rendering: crispEdges; }
-
 .graph:hover path {
   fill-opacity: 0.4;
   stroke-opacity: 0.1; }
@@ -330,7 +331,15 @@ body {
 .entities .entity {
   /* padding: 5px; */
   float: left;
+<<<<<<< Updated upstream
+  width: 270px;
+=======
+<<<<<<< HEAD
   width: 240px;
+=======
+  width: 270px;
+>>>>>>> origin/gh-pages
+>>>>>>> Stashed changes
   margin: 10px;
   background: rgba(190, 230, 249, 0.26);
   cursor: pointer; }
@@ -342,7 +351,15 @@ body {
   background: #bee6f9; }
 
 .entities .entity .items {
+<<<<<<< Updated upstream
+  margin: 10px; }
 
+.entities .entity .item {
+  margin: 4px; }
+
+.entities .entity .hover.item {
+=======
+<<<<<<< HEAD
   float: left;
   padding: 10px;
   width: 100%;
@@ -377,6 +394,15 @@ body {
 }
 
 .entities .entity .hover.item, .entities .entity .active.item {
+=======
+  margin: 10px; }
+
+.entities .entity .item {
+  margin: 4px; }
+
+.entities .entity .hover.item {
+>>>>>>> origin/gh-pages
+>>>>>>> Stashed changes
   color: #b00046; }
 
 .entities .entity .title {

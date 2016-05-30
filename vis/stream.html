@@ -14,6 +14,8 @@
 <div class="stream"></div>
 <div class="totals"><span id="active">-</span> of <span id="total">-</span> books selected.</div>
 <div class="entities"></div>
+<div class="map"></div>
+  
 <div class="typeList list"></div>
 <div class="debug list"></div>
 
@@ -30,7 +32,7 @@ class StreamGraph {
     this.state.listen(this.stateChange.bind(this));
 
 
-    this.outerWidth = window.innerWidth;
+    this.outerWidth = 1060;
     this.outerHeight = 300;
     this.margin = {top: 20, right: 30, bottom: 30, left: 40};
     
@@ -244,6 +246,86 @@ class StreamGraph {
 
 }
 
+class Map {
+
+  constructor(state, db){
+    this.key = "subject";
+    this.state = state;
+    this.db = db;
+
+    this.state.listen(this.stateChange.bind(this));
+   
+    this.outerWidth = 1060;
+    this.outerHeight = 800;
+    this.margin = {top: 20, right: 20, bottom: 20, left: 20};
+
+    this.projection = d3.geo.mercator()
+      .scale(600)
+      .translate([outerHeight / 2, outerHeight / 2])
+      .center([13.320255,52.52831499])
+
+    this.path = d3.geo.path().projection(this.projection);
+
+    this.force = d3.layout.force().size([outerWidth, outerHeight]);
+    
+    this.svg = d3.select(".map").append("svg");
+    this.g = this.svg.append("g");
+   
+    return this;
+  }
+
+  init(){
+    this.width = this.outerWidth - this.margin.left - this.margin.right,
+    this.height = this.outerHeight - this.margin.top - this.margin.bottom;
+
+    this.svg
+      .attr("width", this.outerWidth)
+      .attr("height", this.outerHeight)
+
+    this.g
+      .attr(
+        "transform", 
+        "translate(" + this.margin.left + "," + this.margin.top + ")"
+      );
+
+    return this;
+  }
+
+
+  stateChange(next, last){
+    //this.render();
+  }
+
+  render(){
+    let places = this.db["places"].top(100);
+
+    places
+    .forEach(d => {
+      const geo = this.db.geocode.find(g => g.name === d.key);
+      d.lat = geo ? geo.lat : 0;
+      d.lon = geo ? geo.lon : 0;
+    })
+
+    let s = this.g.selectAll("g").data(places);
+
+    s.enter()
+      .append("g")
+      .append("circle")
+
+    s
+      .attr("transform", d=> {
+        const p = this.projection([d.lat,d.lon]);
+        console.log(p)
+        return `translate(${p[0]},${p[1]})`;
+      })
+      .select("circle")
+      .attr("r", 4);
+
+    s.exit().remove();
+  }
+
+}
+
 class StateMachine {
 
   constructor(){
@@ -377,13 +459,21 @@ class DataBase {
 
   }
 
-  load(_data){
+  load(_data, _geocode){
     this.data = _data.filter(d=>d.year && d.year <= 1920 && d.year >= 1720);
 
     this.data.forEach(d => {
       d.date = this.formater.parse(d.year);
       d.year = parseInt(d.year);
       d.place = d.publisher_city;
+        // .replace(" [u.a.]", "")
+        // .replace(" a. S.", "")
+        // .replace(" a. d. S.", "")
+        // .replace(" i.W.", "");
+
+      const geo = _geocode.find(g => g.name === d.place);
+      d.lat = geo ? geo.lat : null;
+      d.lon = geo ? geo.lon : null;
     })
     this.extent = d3.extent(this.data, d => d.date);
 
@@ -410,6 +500,11 @@ class DataBase {
     this.place = this.crossfilter.dimension(d => d.place || null);
     this.places = this.place.group();
 
+    return this;
+  }
+
+  add(name, data){
+    this[name] = data;
     return this;
   }
 
@@ -516,16 +611,23 @@ let test2 = new Test(state, db).Key("schoollevels");
 let test4 = new Test(state, db).Key("publishers");
 let test5 = new Test(state, db).Key("places");
 
-d3.json("../data/better-data.json", function (data) {
+let map = new Map(state, db).init();
+
+// d3.json("../data/better-data.json", function (data) {
+d3.csv("../data/data.csv", function (data) {
+d3.csv("../data/geocode.csv", function (geocode) {
   console.log(data, data[0]);
 
-  db.load(data);
+  db.add("geocode", geocode);
+  db.load(data, geocode);
+  
 
   state.push({ brushStart: db.extent[0], brushEnd: db.extent[1], keyframe:true })
 
   stream.x.domain(db.extent).nice(d3.time.year);
   stream.load(db.data).render();
 
+})
 })
 
 
