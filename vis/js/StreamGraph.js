@@ -8,8 +8,8 @@ export class StreamGraph {
     this.state.listen(this.stateChange.bind(this));
 
 
-    this.outerWidth = 800;
-    this.outerHeight = 500;
+    this.outerWidth = window.innerWidth;
+    this.outerHeight = 120;
     this.margin = {top: 20, right: 30, bottom: 30, left: 40};
     
     this.x = d3.time.scale();

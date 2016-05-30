@@ -1,37 +1,37 @@
-#treemap { height:90vh; }
+#treemap { 
+	height:90vh;
+	position:relative;
+}
 
 select {
-	-webkit-appearance: none;
-	-moz-appearance: none;
-	appearance: none;
 	padding:10px;
 	margin:10px;
 	position:relative;
 	z-index:10;
-	border:none;
-	background-color: $blue;
-	font-size: 14px;
-	color:#fff;
+	border:$grey;
+	color:$grey;
+	background-color: #fff;
+	font-size: 20px;
 	border-radius:0;
 }
 
-rect {
-	fill:$blue;
-	&:hover { fill:$blue; }
+.node {
+	position:absolute;
+	overflow:hidden;
+
+	&.active {
+		background-color:$blue;
+	}
 }
 
-.text {
-	pointer-interaction:none;
+.level-0 {
+	background-color: #fff;
 }
 
-.level-0 { fill: #fff }
-.level-1 { fill: lighten($grey, 10%); }
-.level-2 { fill: lighten($grey, 20%); }
-
-.node rect {
-  shape-rendering: crispEdges;
+.level-1 {
+	background-color: lighten($grey, 40%);
 }
 
-.node--hover rect {
-  stroke: #000;
+.level-2 {
+	background-color: $bluelighter;
 }

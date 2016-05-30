@@ -2,13 +2,18 @@
 
 $red: #b00046;
 $blue: #009ee0;
+$bluelight: lighten($blue, 25%);
+$bluelighter: lighten($blue, 50%);
 $grey: desaturate($blue, 100%);
+
+$padding: 10px;
 
 
 // import the style for the modules
 
 @import "_reset.scss";
 @import "_nested-treemap.scss";
+@import "_circular-network.scss";
 
 // global styles
 
@@ -30,9 +35,40 @@ $grey: desaturate($blue, 100%);
 
 body {
   font: 10px "gravurcondensed-regular", sans-serif;
+
+  margin:0;
+  padding:0;
 }
 
 
+
+#viewport-wrap {
+
+  display: flex;
+  width:100%;
+  overflow: scroll;
+  flex-direction:column;
+  margin:0;
+
+  .viewport {
+    width:100vw;
+    min-height:100vh;
+    //padding: $padding;
+  }
+
+}
+
+
+.control {
+  width:100%;
+  svg {
+    background-color:#fff;
+    .grid-background {
+      fill:rgba(190, 230, 249, 0.26);
+    }
+  }
+
+}
 
 
 // streamgraph and stuff to sort out
@@ -103,7 +139,7 @@ body {
 .entities .entity .item {
   margin: 4px;
 }
-.entities .entity .hover.item, .entities .entity .active.item {
+.entities .entity .hover.item {
   color:#b00046;
 }
 .entities .entity .title {
