@@ -256,7 +256,6 @@ body {
   stroke:none;
 }
 .stream .y.axis {
-  display: none;
 }
 
 // .graph:hover path {
@@ -300,7 +299,7 @@ body {
   padding: 10px;
   /* padding: 5px; */
   float: left;
-  width: 270px;
+  width: 280px;
   margin: 10px;
   background: rgba(190, 230, 249, 0.26);
   cursor: pointer;
@@ -336,7 +335,7 @@ body {
   color: #FFF;
   padding: 2px;
 }
-.entities .entity .hover.item .left .bar {
+.entities .entity .hover.item .left .bar, .entities .entity .active.item .left .bar {
   background: #b00046;
 }
 
@@ -345,7 +344,7 @@ body {
   width: 50%;
 }
 
-.entities .entity .hover.item {
+.entities .entity .hover.item, .entities .entity .active.item {
   color: #b00046; }
 
 .entities .entity .title {

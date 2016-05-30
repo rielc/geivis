@@ -103,7 +103,7 @@ body {
 .entities .entity .item {
   margin: 4px;
 }
-.entities .entity .hover.item {
+.entities .entity .hover.item, .entities .entity .active.item {
   color:#b00046;
 }
 .entities .entity .title {
