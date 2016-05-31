@@ -340,10 +340,13 @@ body {
   fill: #b00046;
   stroke: #BEE6F9; }
 
-.brush {
-  fill: azure;
-  opacity: 0.5;
-  /*pointer-events: auto !important;*/ }
+.brush .extent {
+  fill:rgba(176, 0, 70, 0.76);
+  /*pointer-events: auto !important;*/
+  }
+.brush .resize rect {
+  fill:#b00046;
+}
 
 .list, .totals {
   left: 30px;
