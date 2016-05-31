@@ -12,8 +12,9 @@
 <body>
 
 <div class="container">
-  <div class="stream">
-    <div class="totals"><span id="active">-</span> of <span id="total">-</span> books selected.</div>
+  <div class="outer">
+    <div class="totals"><span id="active">-</span> of <span id="total">-</span> books selected.</div> 
+    <div class="stream"></div>
   </div>
   <div class="page">
     <div class="entities"></div>
@@ -96,7 +97,7 @@ class StreamGraph {
         this.outerHeight = diff;
         this.init().render();
       }
-      
+      d3.select(".stream").classed("dropshadow", diff < 100);      
 
     })
 

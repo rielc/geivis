@@ -259,9 +259,11 @@ select {
   font-family: "egyptienne";
   src: url("egyptienne.woff") format("woff"); }
 body {
+  /* background: #F2F2F2; */
   font: 10px "gravurcondensed-regular", sans-serif;
   margin: 0;
-  padding: 0; }
+  padding: 0;
+  }
 
 #viewport-wrap {
   display: flex;
@@ -288,17 +290,38 @@ body {
 
 
 .container {
-  padding: 20px;
+  /* z-index: 100; */
+  width: 1080px;
+  margin: 20px;
+  overflow: hidden;
+  /* background: #FFF; */
 }
 
-.stream {
-  background: #FFF;
+.outer {
+  padding-bottom: 10px;
+  overflow: hidden;
+  /* z-index: 2; */
+  /* background: #FFF; */
   top: 0;
   position: fixed;
 }
 
+.map {
+  padding-top: 40px;
+}
+
 .page {
   margin-top: 290px;
+}
+
+.stream {
+  background: #FFF;
+}
+
+.stream.dropshadow {
+  -webkit-box-shadow: 0px 0px 15px 4px rgba(0,0,0,0.11);
+  -moz-box-shadow: 0px 0px 15px 4px rgba(0,0,0,0.11);
+  box-shadow: 0px 0px 15px 4px rgba(0,0,0,0.11);
 }
 
 .stream .axis path,
@@ -323,9 +346,10 @@ body {
   /*pointer-events: auto !important;*/ }
 
 .list, .totals {
+  left: 30px;
   position: absolute;
-  left: 20px;
-  width: 100%;
+  /* left: 20px; */
+  /* width: 100%; */
   padding: 10px;
   margin: 10px;
   clear: left;
