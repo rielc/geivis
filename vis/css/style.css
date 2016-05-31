@@ -286,19 +286,27 @@ body {
   stroke: #000;
   shape-rendering: crispEdges; }
 
+
+.container {
+  padding: 20px;
+}
+
+.stream {
+  background: #FFF;
+  top: 0;
+  position: fixed;
+}
+
+.page {
+  margin-top: 290px;
+}
+
 .stream .axis path,
 .stream .axis line {
   fill: none;
   stroke: #eee;
   shape-rendering: crispEdges; }
 
-.graph:hover path {
-  fill-opacity: 0.4;
-  stroke-opacity: 0.1; }
-
-.graph:hover path:hover {
-  fill-opacity: 1;
-  stroke-opacity: 1; }
 
 .graph path {
   cursor: pointer;
@@ -315,10 +323,13 @@ body {
   /*pointer-events: auto !important;*/ }
 
 .list, .totals {
+  position: absolute;
+  left: 20px;
   width: 100%;
   padding: 10px;
   margin: 10px;
-  clear: left; }
+  clear: left;
+  }
 
 .list .item {
   padding: 10px;

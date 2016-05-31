@@ -11,14 +11,18 @@
 </head>
 <body>
 
-<div class="stream"></div>
-<div class="totals"><span id="active">-</span> of <span id="total">-</span> books selected.</div>
-<div class="entities"></div>
-<div class="map"></div>
+<div class="container">
+  <div class="stream">
+    <div class="totals"><span id="active">-</span> of <span id="total">-</span> books selected.</div>
+  </div>
+  <div class="page">
+    <div class="entities"></div>
+    <div class="map"></div>
 
-<div class="typeList list"></div>
-<div class="debug list"></div>
-
+    <div class="typeList list"></div>
+    <div class="debug list"></div>
+  </div>
+</div>
 
 <script>
 
@@ -34,6 +38,7 @@ class StreamGraph {
 
     this.outerWidth = 1060;
     this.outerHeight = 300;
+    this.outerHeightInitial = this.outerHeight;
     this.margin = {top: 20, right: 30, bottom: 30, left: 40};
     
     this.x = d3.time.scale();
@@ -84,6 +89,16 @@ class StreamGraph {
       .x(this.x)
       .on("brush", this.brushmove.bind(this))
       .on("brushend", this.brushend.bind(this));
+
+    window.addEventListener('scroll', (e) => {
+      const diff = this.outerHeightInitial - window.scrollY;
+      if(diff > 100){
+        this.outerHeight = diff;
+        this.init().render();
+      }
+      
+
+    })
 
     // this.width = function(_) {
     //   if (!arguments.length) return width;
@@ -219,7 +234,7 @@ class StreamGraph {
         
     s
       .classed("active", d => this.state.state.hover == d.key)
-      .transition()
+     // .transition()
       .attr("d", d => this.area(d.histo))
       .style("opacity", 1)
       // .style("fill", (d, i)=> this.color(i));
@@ -239,7 +254,7 @@ class StreamGraph {
     //    });
 
     this.gYaxis
-      .transition()
+     // .transition()
       .call(this.yAxis)
 
   }
