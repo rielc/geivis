@@ -95,7 +95,7 @@ class StreamGraph {
       const diff = this.outerHeightInitial - window.scrollY;
       if(diff > 100){
         this.outerHeight = diff;
-        this.init().render();
+        this.init().render(true);
       }
       d3.select(".stream").classed("dropshadow", diff < 100);      
 
@@ -171,6 +171,25 @@ class StreamGraph {
       .key(d => d[k] || null)
       .entries(_data);
 
+    this.data.sort((a,b) => (b.values.length-a.values.length));
+
+    if(this.data.length > 20){
+      const cutoff = 100;
+      let filtered = this.data.filter(d => d.values.length > cutoff);
+      let other = { key: "other", values: []};
+
+      this.data.forEach((d,i)=>{
+        if(d.values.length <= cutoff){
+          d.values.forEach(d=> other.values.push(d));
+        }
+      })
+      filtered.push(other);
+      console.log(filtered, other);
+
+      this.data = filtered;
+    }
+   
+
     this.data.forEach((d,i)=>{
       d.histo = d3.layout.histogram()
         .value(d=> d.date)
@@ -212,7 +231,7 @@ class StreamGraph {
     // console.log(next.brushStart, last.brushStart);
   }
 
-  render(){
+  render(notransition){
 
     let s = this.gGraph.selectAll("path")
       .data(this.data, (d) => d.key)
@@ -235,7 +254,8 @@ class StreamGraph {
         
     s
       .classed("active", d => this.state.state.hover == d.key)
-     // .transition()
+      .transition()
+      .duration(notransition ? 0 : 800)
       .attr("d", d => this.area(d.histo))
       .style("opacity", 1)
       // .style("fill", (d, i)=> this.color(i));
@@ -255,7 +275,8 @@ class StreamGraph {
     //    });
 
     this.gYaxis
-     // .transition()
+      .transition()
+      .duration(notransition ? 0 : 800)
       .call(this.yAxis)
 
   }
@@ -366,7 +387,7 @@ class StateMachine {
     this.state = {
       brushStart:null,
       brushEnd:null,
-      active:"subjects",
+      active:"publishers",
       activeItem:null
     }
     this.history = [];
