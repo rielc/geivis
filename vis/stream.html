@@ -15,7 +15,7 @@
 <div class="totals"><span id="active">-</span> of <span id="total">-</span> books selected.</div>
 <div class="entities"></div>
 <div class="map"></div>
-  
+
 <div class="typeList list"></div>
 <div class="debug list"></div>
 
@@ -260,9 +260,10 @@ class Map {
     this.margin = {top: 20, right: 20, bottom: 20, left: 20};
 
     this.projection = d3.geo.mercator()
-      .scale(600)
-      .translate([outerHeight / 2, outerHeight / 2])
-      .center([13.320255,52.52831499])
+      .center([15, 49])
+      .scale(4000)
+      .translate([outerWidth / 2, outerHeight / 2])
+      
 
     this.path = d3.geo.path().projection(this.projection);
 
@@ -270,6 +271,8 @@ class Map {
     
     this.svg = d3.select(".map").append("svg");
     this.g = this.svg.append("g");
+
+    this.scale = d3.scale.linear().range([1,20]);
    
     return this;
   }
@@ -293,11 +296,16 @@ class Map {
 
 
   stateChange(next, last){
-    //this.render();
+    this.render();
   }
 
   render(){
     let places = this.db["places"].top(100);
+    let max = d3.max(places, d=>d.value);
+
+    this.scale.domain([0.1, max]).clamp(true);
+
+    // console.log(d3.max(places, d=>d.value))
 
     places
     .forEach(d => {
@@ -306,20 +314,30 @@ class Map {
       d.lon = geo ? geo.lon : 0;
     })
 
-    let s = this.g.selectAll("g").data(places);
+    let s = this.g.selectAll("g").data(places, d => d.key);
 
-    s.enter()
+    let e = s.enter()
       .append("g")
-      .append("circle")
+      
+      e.append("circle")
+      e.append("text")
+        .attr("dx", d=>(this.scale(d.value)+2)+"px")
+        .attr("dy", d=>(this.scale(d.value)+2)+"px")
+        .text(d => d.key)
 
     s
       .attr("transform", d=> {
-        const p = this.projection([d.lat,d.lon]);
-        console.log(p)
+        const p = this.projection([d.lon,d.lat]);
         return `translate(${p[0]},${p[1]})`;
       })
-      .select("circle")
-      .attr("r", 4);
+    
+    s.select("text")
+      .attr("dx", d=>(this.scale(d.value)+2)+"px")
+      .attr("dy", d=>(this.scale(d.value)+2)+"px")
+      .style("opacity", d=>((d.value/max)*3))
+
+    s.select("circle")
+      .attr("r", d => this.scale(d.value));
 
     s.exit().remove();
   }
