@@ -368,7 +368,8 @@ body {
   width: 240px;
   margin: 10px;
   background: rgba(190, 230, 249, 0.26);
-  cursor: pointer; }
+  cursor: pointer;
+  }
 
 .entities .entity.active {
   background: #bee6f9; }

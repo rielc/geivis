@@ -374,7 +374,10 @@ class Map {
       .style("opacity", d=>((d.value/max)*3))
 
     s.select("circle")
-      .attr("r", d => this.scale(d.value));
+      .attr("fill", d=> "#3C7C9B")
+      .attr("r", d => this.scale(d.value))
+      // .style("opacity", d=>((d.value/max)*4))
+
 
     s.exit().remove();
   }
