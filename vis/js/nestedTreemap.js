@@ -1,5 +1,8 @@
+export let __hotReload = true
+
 import * as d4 from "./d4.js";
 //import * as d3 from "./d3.js";
+
 
 export default class NestedTreemap {
 
@@ -25,7 +28,6 @@ export default class NestedTreemap {
 		this.state;
 		this.layout = "SliceDice";
 	}
-
 
 	// TODO: Put Utils in extra Class
 

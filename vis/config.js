@@ -1,3 +1,4 @@
+System.trace = true;
 System.config({
   baseURL: "../",
   defaultJSExtensions: true,

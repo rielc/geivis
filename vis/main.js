@@ -1,3 +1,5 @@
+export let __hotReload = true
+
 // import the modules 
 
 import { StateMachine, DataBase, StreamGraph, VisDebugList, VisTypesList, Test } from './js/StreamGraph'
@@ -43,3 +45,4 @@ d3.json("../data/better-data.json", (data) =>  {
   stream.x.domain(db.extent).nice(d3.time.year);
   stream.load(db.data).render();
 })
+
