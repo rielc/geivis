@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title></title>
+  <link rel="stylesheet" href="css/style.css"></link>
+  <script src="js/d3.js"></script>
+  <script src="js/crossfilter.min.js"></script>
+  <script src="js/stream/StateMachine.js"></script>
+  <script src="js/stream/DataBase.js"></script>
+  <script src="js/stream/Map.js"></script>
+  <script src="js/stream/StreamGraph.js"></script>
+  <script src="js/stream/BarList.js"></script>
+</head>
+<body>
+
+<div class="container">
+  <div class="outer">
+    <div class="totals"><span id="active">-</span> of <span id="total">-</span> books selected.</div> 
+    <div class="stream"></div>
+  </div>
+  <div class="page">
+    <div class="entities"></div>
+    <div class="map"></div>
+
+    <div class="typeList list"></div>
+    <div class="debug list"></div>
+  </div>
+</div>
+
+<script>
+
+
+let state = new StateMachine();
+let db = new DataBase();
+
+let stream = new StreamGraph(state, db).init();
+// let debugList = new VisDebugList().render();
+
+let list1 = new BarList(state, db);
+let list2 = new BarList(state, db).Key("schoollevels");
+let list3 = new BarList(state, db).Key("publishers");
+let list4 = new BarList(state, db).Key("places");
+
+let map = new Map(state, db).init();
+
+// d3.json("../data/better-data.json", function (data) {
+d3.csv("../data/data.csv", function (data) {
+d3.csv("../data/geocode.csv", function (geocode) {
+  console.log(data, data[0]);
+
+  db.add("geocode", geocode);
+  db.load(data, geocode);
+  
+
+  state.push({ brushStart: db.extent[0], brushEnd: db.extent[1], keyframe:true })
+
+  stream.x.domain(db.extent).nice(d3.time.year);
+  stream.load(db.data).render();
+
+})
+})
+
+
+
+
+</script>
+</body>
+</html>
