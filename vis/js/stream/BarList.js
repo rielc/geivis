@@ -1,6 +1,8 @@
-class BarList {
+export let __hotReload = true
+export class BarList {
 
   constructor(state, db){
+
     this.container = d3.select(".entities").append("div").classed("entity", true);
     this.container.append("div").classed("title", true).text(this.key);
     this.items = this.container.append("div").classed("items", true);

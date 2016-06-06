@@ -82,5 +82,19 @@
   },
   "npm:d3-color@0.4.2": {},
   "npm:d3-selection@0.7.2": {},
-  "npm:d3-ease@0.7.0": {}
+  "npm:d3-ease@0.7.0": {},
+  "npm:d3-brush@0.1.4": {
+    "d3-dispatch": "npm:d3-dispatch@~0.4.3",
+    "d3-drag": "npm:d3-drag@~0.2.0",
+    "d3-interpolate": "npm:d3-interpolate@~0.8.0",
+    "d3-selection": "npm:d3-selection@~0.7.2",
+    "d3-transition": "npm:d3-transition@~0.2.8"
+  },
+  "npm:d3-drag@0.2.2": {
+    "d3-dispatch": "npm:d3-dispatch@~0.4.3",
+    "d3-selection": "npm:d3-selection@~0.7.2"
+  },
+  "npm:d3-interpolate@0.8.0": {
+    "d3-color": "npm:d3-color@~0.4.0"
+  }
 }

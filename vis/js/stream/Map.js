@@ -1,4 +1,5 @@
-class Map {
+export let __hotReload = true
+export class Map {
 
   constructor(state, db){
     this.key = "subject";
@@ -21,6 +22,8 @@ class Map {
 
     this.force = d3.layout.force().size([outerWidth, outerHeight]);
     
+    d3.select(".map").selectAll("*").remove() // temp fix
+
     this.svg = d3.select(".map").append("svg");
     this.g = this.svg.append("g");
 

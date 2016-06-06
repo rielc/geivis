@@ -1,20 +1,21 @@
-class DataBase {
+export let __hotReload = true
+export class DataBase {
 
-  constructor(){
+  constructor(state){
     this.data = [];
-    this.formater = d3.time.format("%Y");
+    this.formater = d3.timeParse("%Y");
     this.extent = [0,0];
     this.crossfilter = {};
+    this.state = state;
 
-    state.listen(this.stateChange.bind(this));
-
+    this.state.listen(this.stateChange.bind(this));
   }
 
   load(_data, _geocode){
     this.data = _data.filter(d=>d.year && d.year <= 1920 && d.year >= 1720);
 
     this.data.forEach(d => {
-      d.date = this.formater.parse(d.year);
+      d.date = this.formater(d.year);
       d.year = parseInt(d.year);
       d.place = d.publisher_city;
 
@@ -30,7 +31,7 @@ class DataBase {
     this.year = this.crossfilter.dimension(d => d.year);
     this.years = this.year.group();
     this.date = this.crossfilter.dimension(d => d.date);
-    this.dates = this.date.group(d3.time.year);
+    this.dates = this.date.group(d3.timeYear);
 
     this.subject = this.crossfilter.dimension(d => d.subject || null);
     this.subjects = this.subject.group();

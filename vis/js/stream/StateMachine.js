@@ -1,4 +1,5 @@
-class StateMachine {
+export let __hotReload = true
+export class StateMachine {
 
   constructor(){
     this.state = {

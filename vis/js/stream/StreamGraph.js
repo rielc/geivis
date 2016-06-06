@@ -1,4 +1,7 @@
-class StreamGraph {
+export let __hotReload = true
+import d3_brush from 'd3-brush';
+
+export class StreamGraph {
 
   constructor(state, db){
     this.key = "subject";
@@ -7,32 +10,36 @@ class StreamGraph {
 
     this.state.listen(this.stateChange.bind(this));
 
-
     this.outerWidth = 1060;
     this.outerHeight = 300;
     this.outerHeightInitial = this.outerHeight;
     this.margin = {top: 20, right: 30, bottom: 30, left: 40};
     
-    this.x = d3.time.scale();
-    this.y = d3.scale.linear();
-    this.color = d3.scale.linear()
+    this.x = d3.scaleTime();
+    this.y = d3.scaleLinear();
+    this.color = d3.scaleLinear()
       .range(["#0AA4E4","#BEE6F9"])
       .range(["#BEE6F9","#BEE6F9"])
       // .range(["#036D99","#E0F5FF"])
       .interpolate(d3.interpolateHcl);
 
-    this.xAxis = d3.svg.axis()
-      .orient("bottom")
-      .ticks(d3.time.years, 20)
+    this.xAxis = d3.axisBottom()
+      // .orient("bottom")
+      // .ticks(d3.time.years, 20)
 
-    this.yAxis = d3.svg.axis()
+    this.yAxis = d3.axisLeft()
       .ticks(5, "1f")
-      .orient("left");
-        
-    this.stack = d3.layout.stack()
-      .offset("zero")
-      .y(d => d.length)
-      .values(d => d.histo)
+      // .orient("left");
+    
+    this.stack = d3.stack()
+      // .offset("zero")
+      .value(d => d.length)
+      // .values(d => d.histo)
+
+    // this.stack = d3.layout.stack()
+    //   .offset("zero")
+    //   .y(d => d.length)
+    //   .values(d => d.histo)
       // .offset("expand")
       // .offset("silhouette")
       // .order(data => {
@@ -42,10 +49,12 @@ class StreamGraph {
       //.order("inside-out")
       //.order("reverse");
 
-    this.area = d3.svg.area()
+    this.area = d3.area()
       .x(d=> this.x(d.x) )
       .y0(d=> this.y(d.y0) )
       .y1(d=> this.y(d.y0 + d.y) );
+
+    d3.select(".stream").selectAll("*").remove() // temp fix
 
     this.svg = d3.select(".stream").append("svg");
     this.g = this.svg.append("g");
@@ -57,10 +66,19 @@ class StreamGraph {
     this.nest = d3.nest();
     this.data = [];
 
-    this.brush = d3.svg.brush()
-      .x(this.x)
-      .on("brush", this.brushmove.bind(this))
-      .on("brushend", this.brushend.bind(this));
+    // this.brush = d3.svg.brush()
+    //   .x(this.x)
+    //   .on("brush", this.brushmove.bind(this))
+    //   .on("brushend", this.brushend.bind(this));
+
+
+    this.brush = d3_brush.brushX()
+      // .brushX(this.x)
+      // .on("start brush", this.brushmove.bind(this))
+      .on("brush", ()=> {
+        console.log(d3.event);
+      })
+      // .on("end", this.brushend.bind(this));
 
     window.addEventListener('scroll', (e) => {
       const diff = this.outerHeightInitial - window.scrollY;
@@ -89,13 +107,13 @@ class StreamGraph {
 
   brushmove() {
     let s = this.brush.empty() ? this.db.extent : this.brush.extent();
-    state.push({ brushStart: s[0], brushEnd: s[1], keyframe: false });
+    this.state.push({ brushStart: s[0], brushEnd: s[1], keyframe: false });
     // console.log(s);
   }
 
   brushend() {
     let s = this.brush.empty() ? this.db.extent : this.brush.extent();
-    state.push({ brushStart: s[0], brushEnd: s[1], keyframe: true });
+    this.state.push({ brushStart: s[0], brushEnd: s[1], keyframe: true });
     // console.log(s);
   }
 
@@ -161,19 +179,27 @@ class StreamGraph {
     }
    
 
+    // this.data.forEach((d,i)=>{
+    //   d.histo = d3.layout.histogram()
+    //     .value(d=> d.date)
+    //     .bins(this.x.ticks(d3.time.year, 1))(d.values);
+    // })
+
     this.data.forEach((d,i)=>{
-      d.histo = d3.layout.histogram()
-        .value(d=> d.date)
-        .bins(this.x.ticks(d3.time.year, 1))(d.values);
+      d.histo = d3.histogram()
+        .value(d=> d.date)(d.values)
+        // .thresholds(this.x.ticks(d3.timeYear, 1))(d.values);
     })
 
     this.data.sort((a,b) => (b.values.length-a.values.length));
 
-    this.stack(this.data);
+    console.log(this.data);
 
-    const max = d3.max(this.data, d=>d3.max(d.histo, d=>(d.y + d.y0)));
+    //this.stack(this.data);
+
+    // const max = d3.max(this.data, d=>d3.max(d.histo, d=>(d.y + d.y0)));
       
-    this.y.domain([0.1, max]).nice()
+    // this.y.domain([0.1, max]).nice()
     this.color.domain([0, this.data.length])
 
     return this;
