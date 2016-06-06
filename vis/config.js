@@ -1,6 +1,5 @@
-System.trace = true;
 System.config({
-  baseURL: "../",
+  baseURL: "/",
   defaultJSExtensions: true,
   transpiler: "babel",
   babelOptions: {
@@ -10,14 +9,16 @@ System.config({
     ]
   },
   paths: {
-    "github:*": "vis/jspm_packages/github/*",
-    "npm:*": "vis/jspm_packages/npm/*"
+    "github:*": "jspm_packages/github/*",
+    "npm:*": "jspm_packages/npm/*"
   },
+  trace: true,
 
   map: {
     "babel": "npm:babel-core@5.8.38",
     "babel-runtime": "npm:babel-runtime@5.8.38",
     "core-js": "npm:core-js@1.2.6",
+    "d3-brush": "npm:d3-brush@0.1.4",
     "d3-zoom": "npm:d3-zoom@0.0.2",
     "github:jspm/nodelibs-assert@0.1.0": {
       "assert": "npm:assert@1.4.0"
@@ -61,7 +62,21 @@ System.config({
       "process": "github:jspm/nodelibs-process@0.1.2",
       "systemjs-json": "github:systemjs/plugin-json@0.1.2"
     },
+    "npm:d3-brush@0.1.4": {
+      "d3-dispatch": "npm:d3-dispatch@0.4.3",
+      "d3-drag": "npm:d3-drag@0.2.2",
+      "d3-interpolate": "npm:d3-interpolate@0.8.0",
+      "d3-selection": "npm:d3-selection@0.7.2",
+      "d3-transition": "npm:d3-transition@0.2.9"
+    },
+    "npm:d3-drag@0.2.2": {
+      "d3-dispatch": "npm:d3-dispatch@0.4.3",
+      "d3-selection": "npm:d3-selection@0.7.2"
+    },
     "npm:d3-interpolate@0.7.0": {
+      "d3-color": "npm:d3-color@0.4.2"
+    },
+    "npm:d3-interpolate@0.8.0": {
       "d3-color": "npm:d3-color@0.4.2"
     },
     "npm:d3-transition@0.2.9": {
