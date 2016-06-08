@@ -72,12 +72,12 @@ export class StreamGraph {
     //   .on("brushend", this.brushend.bind(this));
 
 
-    this.brush = d3_brush.brushX()
+    this.brush = d3.brushX()
       // .brushX(this.x)
-      // .on("start brush", this.brushmove.bind(this))
-      .on("brush", ()=> {
-        console.log(d3.event);
-      })
+      .on("start brush", this.brushmove.bind(this))
+      // .on("brush", ()=> {
+      //   console.log(d3.event);
+      // })
       // .on("end", this.brushend.bind(this));
 
     window.addEventListener('scroll', (e) => {
@@ -106,9 +106,12 @@ export class StreamGraph {
   }
 
   brushmove() {
-    let s = this.brush.empty() ? this.db.extent : this.brush.extent();
-    this.state.push({ brushStart: s[0], brushEnd: s[1], keyframe: false });
-    // console.log(s);
+    // let s = this.brush.empty() ? this.db.extent : this.brush.extent();
+    let s = d3.event.selection;
+    console.log(d3.event);
+    let v0 = this.x.invert(s[0]);
+    let v1 = this.x.invert(s[1]);
+    this.state.push({ brushStart: v0, brushEnd: v1, keyframe: false });
   }
 
   brushend() {
@@ -138,16 +141,16 @@ export class StreamGraph {
       );
 
     this.gBrush.call(this.brush);
-    this.gBrush.selectAll(".resize rect")
-      .style("visibility", "inherit")
-      // .style("fill", "#EEE")
+    // this.gBrush.selectAll(".resize rect")
+    //   .style("visibility", "inherit")
+    //   // .style("fill", "#EEE")
 
-    // this.gBrush.selectAll(".resize").append("path")
-    //     .attr("transform", "translate(0," +  this.height / 2 + ")")
-    //     .attr("d", arc);
+    // // this.gBrush.selectAll(".resize").append("path")
+    // //     .attr("transform", "translate(0," +  this.height / 2 + ")")
+    // //     .attr("d", arc);
 
-    this.gBrush.selectAll("rect")
-        .attr("height", this.height);
+    // this.gBrush.selectAll("rect")
+    //     .attr("height", this.height);
 
     return this;
   }
