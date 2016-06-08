@@ -319,97 +319,96 @@ tspan:last-child {
   margin: 20px;
   overflow: hidden;
   /* background: #FFF; */ }
-
-#stream .outer {
-  padding-bottom: 10px;
-  overflow: hidden;
-  /* z-index: 2; */
-  /* background: #FFF; */
-  top: 0;
-  position: fixed; }
-#stream .map {
-  padding-top: 40px; }
-#stream .page {
-  margin-top: 290px; }
-#stream .stream {
-  background: #FFF; }
-#stream .stream.dropshadow {
-  -webkit-box-shadow: 0px 0px 15px 4px rgba(0, 0, 0, 0.11);
-  -moz-box-shadow: 0px 0px 15px 4px rgba(0, 0, 0, 0.11);
-  box-shadow: 0px 0px 15px 4px rgba(0, 0, 0, 0.11); }
-#stream .stream .axis path,
-#stream .stream .axis line {
-  fill: none;
-  stroke: #eee;
-  shape-rendering: crispEdges; }
-#stream .graph path {
-  cursor: pointer;
-  stroke: #ACE0F6;
-  fill: #BEE6F9; }
-#stream .graph path.active {
-  fill: #b00046;
-  stroke: #BEE6F9; }
-#stream .brush .extent {
-  fill: rgba(176, 0, 70, 0.76);
-  /*pointer-events: auto !important;*/ }
-#stream .brush .resize rect {
-  fill: #b00046; }
-#stream .list, #stream .totals {
-  left: 30px;
-  position: absolute;
-  /* left: 20px; */
-  /* width: 100%; */
-  padding: 10px;
-  margin: 10px;
-  clear: left; }
-#stream .list .item {
-  padding: 10px;
-  margin: 10px;
-  float: left;
-  background: #eee;
-  cursor: pointer; }
-#stream .entities .entity {
-  /* padding: 5px; */
-  float: left;
-  width: 240px;
-  margin: 10px;
-  background: rgba(190, 230, 249, 0.26);
-  cursor: pointer; }
-#stream .entities .entity.active {
-  background: #bee6f9; }
-#stream .entities .entity.hover {
-  background: #bee6f9; }
-#stream .entities .entity .items {
-  float: left;
-  padding: 10px;
-  width: 100%;
-  height: 200px; }
-#stream .entities .entity .item {
-  clear: left;
-  margin: 1px;
-  float: left;
-  width: 100%; }
-#stream .entities .entity .item .left {
-  float: left;
-  width: 40%;
-  padding-right: 5px; }
-#stream .entities .entity .item .left .bar {
-  background: #3C7C9B;
-  float: right;
-  color: #FFF;
-  padding: 2px; }
-#stream .entities .entity .hover.item .left .bar, #stream .entities .entity .active.item .left .bar {
-  background: #b00046; }
-#stream .entities .entity .item .right {
-  float: right;
-  width: 60%; }
-#stream .entities .entity .hover.item, #stream .entities .entity .active.item {
-  color: #b00046; }
-#stream .entities .entity .title {
-  font-family: "gravurcondensed-bold";
-  font-size: 12px;
-  text-transform: uppercase;
-  margin: 14px;
-  /* padding-bottom: 5px; */ }
+  .container .outer {
+    padding-bottom: 10px;
+    overflow: hidden;
+    /* z-index: 2; */
+    /* background: #FFF; */
+    top: 0;
+    position: fixed; }
+  .container .map {
+    padding-top: 40px; }
+  .container .page {
+    margin-top: 290px; }
+  .container .stream {
+    background: #FFF; }
+  .container .stream.dropshadow {
+    -webkit-box-shadow: 0px 0px 15px 4px rgba(0, 0, 0, 0.11);
+    -moz-box-shadow: 0px 0px 15px 4px rgba(0, 0, 0, 0.11);
+    box-shadow: 0px 0px 15px 4px rgba(0, 0, 0, 0.11); }
+  .container .stream .axis path,
+  .container .stream .axis line {
+    fill: none;
+    stroke: #eee;
+    shape-rendering: crispEdges; }
+  .container .graph path {
+    cursor: pointer;
+    stroke: #ACE0F6;
+    fill: #BEE6F9; }
+  .container .graph path.active {
+    fill: #b00046;
+    stroke: #BEE6F9; }
+  .container .brush .extent {
+    fill: rgba(176, 0, 70, 0.76);
+    /*pointer-events: auto !important;*/ }
+  .container .brush .resize rect {
+    fill: #b00046; }
+  .container .list, .container .totals {
+    left: 30px;
+    position: absolute;
+    /* left: 20px; */
+    /* width: 100%; */
+    padding: 10px;
+    margin: 10px;
+    clear: left; }
+  .container .list .item {
+    padding: 10px;
+    margin: 10px;
+    float: left;
+    background: #eee;
+    cursor: pointer; }
+  .container .entities .entity {
+    /* padding: 5px; */
+    float: left;
+    width: 240px;
+    margin: 10px;
+    background: rgba(190, 230, 249, 0.26);
+    cursor: pointer; }
+  .container .entities .entity.active {
+    background: #bee6f9; }
+  .container .entities .entity.hover {
+    background: #bee6f9; }
+  .container .entities .entity .items {
+    float: left;
+    padding: 10px;
+    width: 100%;
+    height: 200px; }
+  .container .entities .entity .item {
+    clear: left;
+    margin: 1px;
+    float: left;
+    width: 100%; }
+  .container .entities .entity .item .left {
+    float: left;
+    width: 40%;
+    padding-right: 5px; }
+  .container .entities .entity .item .left .bar {
+    background: #3C7C9B;
+    float: right;
+    color: #FFF;
+    padding: 2px; }
+  .container .entities .entity .hover.item .left .bar, .container .entities .entity .active.item .left .bar {
+    background: #b00046; }
+  .container .entities .entity .item .right {
+    float: right;
+    width: 60%; }
+  .container .entities .entity .hover.item, .container .entities .entity .active.item {
+    color: #b00046; }
+  .container .entities .entity .title {
+    font-family: "gravurcondensed-bold";
+    font-size: 12px;
+    text-transform: uppercase;
+    margin: 14px;
+    /* padding-bottom: 5px; */ }
 
 /*# sourceMappingURL=style.css.map */

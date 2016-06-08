@@ -5,3 +5,5 @@ vis/jspm_packages/github/
 vis/jspm_packages/npm/
 vis/node_modules/
 *.log
+
+vis/jspm_packages/.dependencies.json

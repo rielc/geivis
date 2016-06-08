@@ -1,10 +1,5 @@
 {
   "jspm": {
-    "directories": {
-      "baseURL": ".",
-      "packages": "jspm_packages"
-    },
-    "configFile": "config.js",
     "dependencies": {
       "d3-zoom": "npm:d3-zoom@^0.0.2"
     },
