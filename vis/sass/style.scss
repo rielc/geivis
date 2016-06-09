@@ -73,31 +73,6 @@ body {
 
 // streamgraph and stuff to sort out
 
-.axis path,
-.axis line {
-  fill: none;
-  stroke: #000;
-  shape-rendering: crispEdges;
-}
-
-.graph:hover path {
-  fill-opacity: 0.4;
-  stroke-opacity: 0.1;
-}
-.graph:hover path:hover{
-  fill-opacity: 1;
-  stroke-opacity: 1;
-}
-.graph path {
-  cursor: pointer;
-  stroke:#ACE0F6;
-  fill:#BEE6F9;
-}
-.graph path.active {
-  fill:#b00046;
-  stroke:#BEE6F9;
-}
-
 text {
   font: 10px sans-serif;
 }
@@ -159,12 +134,12 @@ tspan:last-child {
 
   .graph path {
     cursor: pointer;
-    stroke: #ACE0F6;
+    
     fill: #BEE6F9; }
 
   .graph path.active {
     fill: #b00046;
-    stroke: #BEE6F9; }
+    }
 
   // .brush .extent {
   //   fill:rgba(176, 0, 70, 0.76);

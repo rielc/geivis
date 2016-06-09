@@ -48,19 +48,13 @@ export class StreamGraph {
 
     window.addEventListener('scroll', (e) => {
       const diff = this.outerHeightInitial - window.scrollY;
-      if(diff > 100){
-        this.outerHeight = diff;
-        this.init();
-
-        const b0 = this.state.state.brushStart;
-        const b1 = this.state.state.brushEnd;
-
-        if(b0){
-          //this.brush.move(this.gBrush, [this.x(b0) , this.x(b1)])
-        }
-        this.render(true);
+      const height = this.outerHeightInitial + diff;
+      // console.log(diff, height)
+      if(diff < 0 && height > 100){
+        this.outerHeight = height;
+        this.init().render(true);
       }
-      d3.select(".stream").classed("dropshadow", diff < 100);      
+      d3.select(".stream").classed("dropshadow", diff < this.outerHeightInitial);      
     })
 
     return this;
@@ -73,6 +67,7 @@ export class StreamGraph {
 
   brushend() {
     let s = d3.event.selection ? d3.event.selection.map(d=> this.x.invert(d)) : this.db.extent;
+    console.log(s)
     this.state.push({ brushStart: s[0], brushEnd: s[1], keyframe: true });
   }
 
@@ -97,6 +92,7 @@ export class StreamGraph {
       );
     this.brush.extent([[0, 0], [this.width, this.height]])
     this.gBrush.call(this.brush);
+    this.gBrush.selectAll("rect").attr("height", this.height);
 
     // this.gBrush.selectAll(".resize rect")
     //   .style("visibility", "inherit")
