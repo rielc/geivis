@@ -47,7 +47,7 @@ export class DataBase {
 
     this.stack = d3.stack()
       .value((d,k)=>d.value[k])
-      .order(d3.stackOrderNone)
+      .order(d3.stackOrderAscending)
       .offset(d3.stackOffsetNone);
 
     return this;
@@ -81,7 +81,8 @@ export class DataBase {
     const histogram = this.dates.reduce(reduceAdd, reduceRemove, reduceInitial).all();
     // console.log(histogram);
 
-    const stack = this.stack.keys(keys.map((d,i) => i))(histogram);
+    let stack = this.stack.keys(keys.map((d,i) => i))(histogram);
+    stack.forEach(d => { d.key = keys[d.key]; })
     // console.log(stack);
     
     return stack;

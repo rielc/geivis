@@ -27,7 +27,8 @@ export class StreamGraph {
     this.area = d3.area()
       .x(d=> this.x(d.data.key) )
       .y0(d=> this.y(d[0]) )
-      .y1(d=> this.y(d[1]) );
+      .y1(d=> this.y(d[1]) )
+      .curve(d3.curveCardinal)
 
     d3.select(".stream").selectAll("*").remove() // temp fix
 
@@ -176,7 +177,7 @@ export class StreamGraph {
     s.exit().remove();
         
     s
-      // .classed("active", d => this.state.state.hover == d.key)
+      .classed("active", d => this.state.state.hover == d.key)
       // .transition()
       // .duration(notransition ? 0 : 800)
       .attr("d", this.area)
