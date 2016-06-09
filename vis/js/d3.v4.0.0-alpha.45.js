@@ -12495,7 +12495,7 @@
                 .attr("y", extent[0][1])
                 .attr("width", extent[1][0] - extent[0][0])
                 .attr("height", extent[1][1] - extent[0][1]);
-          });
+          })
 
       group.selectAll(".selection")
         .data([type$1("selection")])
@@ -12506,6 +12506,19 @@
           .attr("fill-opacity", 0.3)
           .attr("stroke", "#fff")
           .attr("shape-rendering", "crispEdges");
+
+      // group.selectAll(".selection")
+      //   .data([type$1("selection")])
+      //   .each(function() {
+      //     var extent = local$1(this).extent;
+      //     var selection = local$1(this).selection;
+      //     if(!selection) return;
+      //     console.log(extent, selection)
+
+      //     select(this)
+      //         // .attr("width", (selection[1][0] > extent[1][0] ? extent[1][0] : selection[1][0]) - selection[0][0])
+      //         .attr("height", (selection[1][1] > extent[1][1] ? extent[1][1] : selection[1][1] )- selection[0][1])
+      //   })
 
       var handle = group.selectAll(".handle")
         .data(dim.handles, function(d) { return d.type; });

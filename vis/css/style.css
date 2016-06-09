@@ -301,11 +301,6 @@ body {
   fill: #b00046;
   stroke: #BEE6F9; }
 
-.brush {
-  fill: azure;
-  opacity: 0.5;
-  /*pointer-events: auto !important;*/ }
-
 text {
   font: 10px sans-serif; }
 
@@ -330,7 +325,9 @@ tspan:last-child {
 #stream .map {
   padding-top: 40px; }
 #stream .page {
-  margin-top: 290px; }
+  margin-top: 290px;
+  float: left;
+  padding-bottom: 500px; }
 #stream .stream {
   background: #FFF; }
 #stream .stream.dropshadow {
@@ -349,11 +346,6 @@ tspan:last-child {
 #stream .graph path.active {
   fill: #b00046;
   stroke: #BEE6F9; }
-#stream .brush .extent {
-  fill: rgba(176, 0, 70, 0.76);
-  /*pointer-events: auto !important;*/ }
-#stream .brush .resize rect {
-  fill: #b00046; }
 #stream .list, #stream .totals {
   left: 30px;
   position: absolute;

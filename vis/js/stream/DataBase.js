@@ -33,20 +33,22 @@ export class DataBase {
     this.date = this.crossfilter.dimension(d => d.date);
     this.dates = this.date.group(d3.timeYear);
 
-    this.subject = this.crossfilter.dimension(d => d.subject || null);
+    this.subject = this.crossfilter.dimension(d => d.subject || "none");
     this.subjects = this.subject.group();
     
-    this.schoollevel = this.crossfilter.dimension(d => d.schoollevel || null);
+    this.schoollevel = this.crossfilter.dimension(d => d.schoollevel || "none");
     this.schoollevels = this.schoollevel.group();
-
-    this.lang = this.crossfilter.dimension(d => d.lang || null);
-    this.langs = this.lang.group();
     
-    this.publisher = this.crossfilter.dimension(d => d.publisher || null);
+    this.publisher = this.crossfilter.dimension(d => d.publisher || "none");
     this.publishers = this.publisher.group();
 
-    this.place = this.crossfilter.dimension(d => d.place || null);
+    this.place = this.crossfilter.dimension(d => d.place || "none");
     this.places = this.place.group();
+
+    this.stack = d3.stack()
+      .value((d,k)=>d.value[k])
+      .order(d3.stackOrderNone)
+      .offset(d3.stackOffsetNone);
 
     return this;
   }
@@ -54,6 +56,54 @@ export class DataBase {
   add(name, data){
     this[name] = data;
     return this;
+  }
+
+  stackedHistogram(){
+    const key = this.state.state.active.substring(0,this.state.state.active.length-1);
+    const keys = this[this.state.state.active].all().map(d => d.key);
+
+    console.log(keys);
+
+    function reduceAdd(p, v, nf) {
+      ++p[keys.indexOf(v[key])]
+      return p;
+    }
+
+    function reduceRemove(p, v, nf) {
+      --p[keys.indexOf(v[key])]
+      return p;
+    }
+
+    function reduceInitial() {
+      return keys.map(d => 0);
+    }
+
+    const histogram = this.dates.reduce(reduceAdd, reduceRemove, reduceInitial).all();
+    // console.log(histogram);
+
+    const stack = this.stack.keys(keys.map((d,i) => i))(histogram);
+    // console.log(stack);
+    
+    return stack;
+  }
+
+  d3histogram(){
+    // const bins = this.x.ticks(d3.timeYear);
+
+    // console.time("histo")
+    // let histo = d3.histogram()
+    //     .value(d=> { return d.date})
+    //     .domain(this.x.domain())
+    //     .thresholds(bins)(_data);
+    // console.timeEnd("histo")
+
+    
+
+    // histo.forEach(bin => {
+    //   bin.nest = d3.nest()
+    //     .key(d => d[k] || null)
+    //     .entries(bin);
+    // })
   }
 
   stateChange(next, curr){
@@ -70,7 +120,7 @@ export class DataBase {
 
     if(next.activeItem !== curr.activeItem){
       let k = next.active.substring(0,next.active.length-1);
-      this[k].filterExact(next.activeItem);
+      //this[k].filterExact(next.activeItem);
     }
 
     // console.time("simple");

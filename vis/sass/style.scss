@@ -98,12 +98,6 @@ body {
   stroke:#BEE6F9;
 }
 
-.brush {
-  fill: azure;
-  opacity: 0.5;
-  /*pointer-events: auto !important;*/
-}
-
 text {
   font: 10px sans-serif;
 }
@@ -141,6 +135,9 @@ tspan:last-child {
 
   .page {
     margin-top: 290px;
+    float: left;
+    padding-bottom: 500px;
+    
   }
 
   .stream {
@@ -169,13 +166,13 @@ tspan:last-child {
     fill: #b00046;
     stroke: #BEE6F9; }
 
-  .brush .extent {
-    fill:rgba(176, 0, 70, 0.76);
-    /*pointer-events: auto !important;*/
-    }
-  .brush .resize rect {
-    fill:#b00046;
-  }
+  // .brush .extent {
+  //   fill:rgba(176, 0, 70, 0.76);
+  //   /*pointer-events: auto !important;*/
+  //   }
+  // .brush .resize rect {
+  //   fill:#b00046;
+  // }
 
   .list, .totals {
     left: 30px;

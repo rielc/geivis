@@ -1,5 +1,11 @@
 export let __hotReload = true
 
+// bookshelf on side
+// scroll runter oberkante 2te vis -> schrumpfen
+// sub filter nur in eigener vis
+// kleine circle hellblau
+// stream unterscheidung nein (border weg)
+
 // import the modules 
 
 import {StateMachine} from './js/stream/StateMachine'
@@ -30,11 +36,12 @@ d3.csv("../data/geocode.csv", function (geocode) {
 
   db.add("geocode", geocode);
   db.load(data, geocode);
-  
-  state.push({ brushStart: db.extent[0], brushEnd: db.extent[1], keyframe:true })
 
-  stream.x.domain(db.extent).nice(d3.timeYear);
-  stream.load(db.data).render();
+  state.push({ brushStart: db.extent[0], brushEnd: db.extent[1], keyframe:true })
+  
+  stream.x.domain(db.extent);
+  stream.load().render();
+
 
 })
 })

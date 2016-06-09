@@ -9,7 +9,7 @@
     <script src="js/d3.v4.0.0-alpha.45.js"></script>
 <!--     <script src="https://d3js.org/d3-brush.v0.1.min.js"></script>
  -->
-    <script src="js/crossfilter.min.js"></script>
+    <script src="js/crossfilter.js"></script>
     <script src="js/legend.js"></script>
     <script>System.import("./streamMain.js");</script>
     <!-- <script>System.import("./sass/style.scss!");</script> -->
@@ -17,12 +17,17 @@
   <body>
     <div id="head">GEIVIS PROTOTYPE</div>
     <div id="stream">
-      <div class="stream"></div>
-      <div class="totals"><span id="active">-</span> of <span id="total">-</span> books selected.</div>
-      <div class="entities"></div>
-      <div class="typeList list"></div>
-      <div class="debug list"></div>
+      <div class="outer">
+        <div class="totals"><span id="active">-</span> of <span id="total">-</span> books selected.</div> 
+        <div class="stream"></div>
+      </div>
+      <div class="page">
+        <div class="entities"></div>
+        <div class="map"></div>
+
+        <div class="typeList list"></div>
+        <div class="debug list"></div>
+      </div>
     </div>
-    <div id="treemap"></div>
   </body>
 </html>
