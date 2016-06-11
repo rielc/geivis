@@ -29,6 +29,7 @@ export class StreamGraph {
       .y0(d=> this.y(d[0]) )
       .y1(d=> this.y(d[1]) )
       .curve(d3.curveCardinal)
+      // .curve(d3.curveStepAfter)
 
     d3.select(".stream").selectAll("*").remove() // temp fix
 
@@ -145,10 +146,11 @@ export class StreamGraph {
         // this.stack.offset("silhouette");
         this.load().render();
       } else {
-        let k = this.state.state.active.substring(0,this.state.state.active.length-1);
-        let data = this.db.data.filter(d => d[k] === next.activeItem);
-        this.stack.offset("zero");
-        this.load(data).render();
+        this.load().render();
+        // let k = this.state.state.active.substring(0,this.state.state.active.length-1);
+        // let data = this.db.data.filter(d => d[k] === next.activeItem);
+        // this.stack.offset("zero");
+        // this.load(data).render();
       }
     }
     // console.log(next.brushStart, last.brushStart);
@@ -157,7 +159,7 @@ export class StreamGraph {
   render(notransition){
 
     let s = this.gGraph.selectAll("path")
-      .data(this.data, (d) => d.key)
+      .data(this.data, (d) => { return d.key})
     
     s.enter()
       .append("path")
@@ -172,7 +174,10 @@ export class StreamGraph {
         this.state.push({ activeItem: active ? null : d.key });
       })
       .attr("d", this.area)
-      // .style("opacity", 0)
+      .style("opacity", 0)
+      // .transition()
+      // .duration(notransition ? 0 : 800)
+      .style("opacity", 1)
 
     s.exit().remove();
         

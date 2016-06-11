@@ -42,7 +42,7 @@ export class BarList {
     // this.container.classed("hover", this.state.state.hover === this.key);
     // console.time("filter");
    // console.log(this.key);
-    const group = this.db[this.key].top(10);
+    const group = this.db[this.key].top(20);
     const max = d3.max(group, d => d.value);
     // console.timeEnd("filter");
 
@@ -67,17 +67,18 @@ export class BarList {
     if(this.state.state.keyframe){
       s.sort((a,b) => b.value - a.value)
     }
+
     s.classed("hover", d=> this.state.state.hover === d.key)
     s.classed("active", d=> this.state.state.activeItem === d.key)
     
     s.select(".bar")
       .text(d => `${ d.value }` )
+      // .transition()
       .style("width", d=> `${ (d.value / max)*100 }%`);
 
     s.select(".right")
       .text(d => `${ d.key }` )
       
-
     s.exit().remove();
     // this.container.text(data.length);
     

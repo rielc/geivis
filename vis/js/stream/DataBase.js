@@ -59,10 +59,13 @@ export class DataBase {
   }
 
   stackedHistogram(){
+    const activeItem = this.state.state.activeItem;
+
     const key = this.state.state.active.substring(0,this.state.state.active.length-1);
-    const keys = this[this.state.state.active].all().map(d => d.key);
+    const keys = activeItem ? [activeItem] : this[this.state.state.active].top(20).map(d => d.key);
 
     console.log(keys);
+    console.log(this[this.state.state.active].all());
 
     function reduceAdd(p, v, nf) {
       ++p[keys.indexOf(v[key])]
@@ -79,11 +82,17 @@ export class DataBase {
     }
 
     const histogram = this.dates.reduce(reduceAdd, reduceRemove, reduceInitial).all();
-    // console.log(histogram);
+    console.log(histogram);
+    
+    // console.time("sum");
+    // const sum = histogram.reduce((prev, curr) => curr.value.map((d,i)=>d+prev[i]) , keys.map(d => 0));
+    // console.timeEnd("sum");
+    // console.log(sum);
+
 
     let stack = this.stack.keys(keys.map((d,i) => i))(histogram);
     stack.forEach(d => { d.key = keys[d.key]; })
-    // console.log(stack);
+    //console.log(stack);
     
     return stack;
   }
@@ -121,7 +130,7 @@ export class DataBase {
 
     if(next.activeItem !== curr.activeItem){
       let k = next.active.substring(0,next.active.length-1);
-      //this[k].filterExact(next.activeItem);
+      this[k].filterExact(next.activeItem);
     }
 
     // console.time("simple");

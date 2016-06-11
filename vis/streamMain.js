@@ -13,6 +13,7 @@ import {StreamGraph} from './js/stream/StreamGraph'
 import {DataBase} from './js/stream/DataBase'
 // import {Map} from './js/stream/Map'
 import {BarList} from './js/stream/BarList'
+import {Bookshelf} from './js/stream/Bookshelf'
 
 // initiate and connect the modules
 let state = new StateMachine();
@@ -26,6 +27,8 @@ let list1 = new BarList(state, db);
 let list2 = new BarList(state, db).Key("schoollevels");
 let list3 = new BarList(state, db).Key("publishers");
 let list4 = new BarList(state, db).Key("places");
+
+let bookshelf = new Bookshelf(state, db);
 
 // let map = new Map(state, db).init();
 
