@@ -26,7 +26,7 @@ export class Bookshelf {
     //console.log( this.state.state);
     const data = this.db.date.top(50);
 
-    console.log(data);
+    // console.log(data);
 
     let s = this.container.selectAll(".book").data(data);
 

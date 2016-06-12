@@ -32,13 +32,14 @@ let bookshelf = new Bookshelf(state, db);
 
 // let map = new Map(state, db).init();
 
-// d3.json("../data/better-data.json", function (data) {
+// d3.json("../data/better-data.json", function (data2) {
 d3.csv("../data/data.csv", function (data) {
 d3.csv("../data/geocode.csv", function (geocode) {
-  console.log(data, data[0]);
+  // console.log(data[0], data2[0]);
 
   db.add("geocode", geocode);
   db.load(data, geocode);
+  // db.merge(data, data2);
 
   state.push({ brushStart: db.extent[0], brushEnd: db.extent[1], keyframe:true })
   
@@ -46,5 +47,8 @@ d3.csv("../data/geocode.csv", function (geocode) {
   stream.load().render();
 
 
+
+
 })
 })
+// })

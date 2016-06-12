@@ -75,7 +75,7 @@ function updateClassification(tag, book) {
 
 // finishes the program once all files are loaded/parsed
 function loop() {
-	if (loadedFiles == fileNames.length-1) {
+	if (loadedFiles == fileNames.length) {
 		var total = books;
 
 		fs.writeFile("../data/better-data.json", JSON.stringify(total), function () { clearInterval(interval); console.log("fuck!!!! " + digicount);});
@@ -115,7 +115,7 @@ function parseFile (content, file) {
 
 			// these fields hold the values for the new generated book-data
 			// ID (omitted) , l-anguage , y-ear , p-ublisher , t-ags
-			var newBook = { };
+			var newBook = { RSWKTag: [] };
 
 			// iteratate through all facets
 			book.forEach( function (facet) {
@@ -131,7 +131,7 @@ function parseFile (content, file) {
 				if (type == "021A") { newBook.title = subfield[0]._; } 
 
 
-				subfield.map(d=>d._).filter(d => d ? d.match("http") : null).forEach(d => console.log(d))
+				//subfield.map(d=>d._).filter(d => d ? d.match("http") : null).forEach(d => console.log(d))
 
 				// city (?) + publisher
 				if (type == "033A") { 
@@ -141,7 +141,11 @@ function parseFile (content, file) {
 					}
 				}
 
-
+				if(type.match("006Y")) {
+					var id = subfield[0]._;
+					if(id == "") console.log("leer")
+					newBook.id = id;
+				}
 				// online resource
 				if (type.match("009")) { 
 					if (subfield[1] != undefined) {
@@ -158,7 +162,7 @@ function parseFile (content, file) {
 						if ( !updateClassification( subfield[0]._, newBook) ) {
 							if ( ["z200","z100", "l000"].indexOf( subfield[0]._ ) == -1 ) { 
 								if (newBook.unknownlocaleTags == undefined) { newBook.unknownLocalTags = []; }
-								newBook.unknownLocalTags.push(subfield[0]._);
+								//newBook.unknownLocalTags.push(subfield[0]._);
 							}
 						}
 					}
@@ -167,7 +171,7 @@ function parseFile (content, file) {
 				// singular tags "Einzelschlagwort"
 				if (type == "044L") {
 					if (newBook.singularTag == undefined) { newBook.singularTag = []; }
-					newBook.singularTag.push(subfield[0]._);
+					//newBook.singularTag.push(subfield[0]._);
 					//console.log(subfield[0]._);
 				}
 				
@@ -184,6 +188,8 @@ function parseFile (content, file) {
 				
 			});
 
+			newBook.RSWKTag = newBook.RSWKTag.toString();
+
 			// adding the books based on their uniqueness inside the list … needs ID!
 			/* if (books.map(returnBookID).indexOf(newBook.id) == -1 ) { books.push(newBook); } */
 
@@ -193,8 +199,10 @@ function parseFile (content, file) {
 		});
 	}
 	loadedFiles++;
+
+	loop();
 }
 
 // ready, set... go!
-interval = setInterval(loop, 100);
+// interval = setInterval(loop, 100);
 fs.readdir(pathToDataFiles, loadFiles);

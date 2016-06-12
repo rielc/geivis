@@ -106,7 +106,7 @@ export class StreamGraph {
     // console.log(_data[0], this.key);
 
     this.data = this.db.stackedHistogram()
-    console.log(this.data);
+    // console.log(this.data);
 
     const max = d3.max(this.data, d=>d3.max(d, d=>(d[1]))); // do it better
     this.y.domain([0.1, max]).nice()
