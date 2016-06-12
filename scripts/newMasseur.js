@@ -161,7 +161,7 @@ function parseFile (content, file) {
 					if (subfield[0]._ != "" && subfield[0]._ != undefined) {
 						if ( !updateClassification( subfield[0]._, newBook) ) {
 							if ( ["z200","z100", "l000"].indexOf( subfield[0]._ ) == -1 ) { 
-								if (newBook.unknownlocaleTags == undefined) { newBook.unknownLocalTags = []; }
+								// if (newBook.unknownlocaleTags == undefined) { newBook.unknownLocalTags = []; }
 								//newBook.unknownLocalTags.push(subfield[0]._);
 							}
 						}

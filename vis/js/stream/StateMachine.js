@@ -1,4 +1,8 @@
 export let __hotReload = true
+
+// import objectAssign from 'object-assign';
+// objectAssign({}, state, action.state);
+
 export class StateMachine {
 
   constructor(){
@@ -23,6 +27,7 @@ export class StateMachine {
     this.history.unshift(newState);
     this.state = Object.assign({}, newState);
     this.broadcast();
+    // console.log(newState);
   }
 
   listen(func){

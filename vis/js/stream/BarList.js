@@ -31,7 +31,7 @@ export class BarList {
     //   this.render();
     // }
     this.render();
-    // console.log(next.brushStart, last.brushStart);
+    // console.log(next.filter);
   }
 
   render(){
@@ -57,8 +57,9 @@ export class BarList {
         this.state.push({ active: this.key, hover: null });
       })
       .on("click", (d)=>{
-        let active = this.state.state.activeItem === d.key;
-        this.state.push({ active: this.key, activeItem: active ? null : d.key });
+        let activeItem = this.state.state.activeItem === d.key;
+        this.state.push({ active: this.key, activeItem: activeItem ? null : d.key });
+        this.state.push({ filter: { [this.key] : d.key }});
       })
 
     e.append("div").classed("left", true).append("div").classed("bar", true)
