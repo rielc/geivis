@@ -11,8 +11,21 @@ export class DataBase {
     this.state.listen(this.stateChange.bind(this));
   }
 
+  merge(_data, _dataRaw){
+    console.log(this.data[0], _dataRaw[0])
+
+    _data.forEach((d,i) => {
+      const a = _dataRaw.find(d2 => (d2.title == d.title && d2.year == d.year && d2.subject == d.subject));
+      if(!a){
+        console.log(d);
+      }
+    })
+  }
+
   load(_data, _geocode){
     this.data = _data.filter(d=>d.year && d.year <= 1920 && d.year >= 1720);
+    // this.data = _data.filter(d=>d.year);
+    // this.data = _data.filter(d=>true);
 
     this.data.forEach(d => {
       d.date = this.formater(d.year);
@@ -20,9 +33,13 @@ export class DataBase {
       d.place = d.publisher_city;
 
       const geo = _geocode.find(g => g.name === d.place);
-      d.lat = geo ? geo.lat : null;
-      d.lon = geo ? geo.lon : null;
+      d.lat = geo ? +geo.lat : null;
+      d.lon = geo ? +geo.lon : null;
+
+      d.RSWKTag = d.RSWKTag.split(",");
     })
+
+    console.log(this.data[0])
     this.extent = d3.extent(this.data, d => d.date);
 
     this.crossfilter = crossfilter(this.data);
@@ -45,12 +62,39 @@ export class DataBase {
     this.place = this.crossfilter.dimension(d => d.place || "none");
     this.places = this.place.group();
 
+    this.tag = this.crossfilter.dimension(d => d.RSWKTag || [], true);
+    this.tags2 = this.crossfilter.dimension(d => d.RSWKTag || [], true).group();
+    this.tags = this.tag.group();
+
     this.stack = d3.stack()
       .value((d,k)=>d.value[k])
       .order(d3.stackOrderAscending)
       .offset(d3.stackOffsetNone);
 
+    //this.filterTag("Deutschland")
+
+
     return this;
+  }
+
+  filterTag(tag){
+    // let data = this.date.top(Infinity);
+    // console.log(data[0]);
+
+    console.time("tags");
+    this.tag.filter(tag)
+    let tags = this.tags2.all() //.all().sort((b,a) => a.value - b.value)
+    console.timeEnd("tags");
+
+    // console.log(tags);
+
+    // let childs = {};
+    // data.forEach(d => d.RSWKTag.forEach(t => childs[t] = 0));
+    // console.time("tags");
+    // data.forEach(d => d.RSWKTag.forEach(t => ++childs[t]));
+    // console.timeEnd("tags");
+
+    // console.log(childs);
   }
 
   add(name, data){
@@ -64,8 +108,8 @@ export class DataBase {
     const key = this.state.state.active.substring(0,this.state.state.active.length-1);
     const keys = activeItem ? [activeItem] : this[this.state.state.active].top(20).map(d => d.key);
 
-    console.log(keys);
-    console.log(this[this.state.state.active].all());
+    // console.log(keys);
+    // console.log(this[this.state.state.active].all());
 
     function reduceAdd(p, v, nf) {
       ++p[keys.indexOf(v[key])]
@@ -82,7 +126,7 @@ export class DataBase {
     }
 
     const histogram = this.dates.reduce(reduceAdd, reduceRemove, reduceInitial).all();
-    console.log(histogram);
+    // console.log(histogram);
     
     // console.time("sum");
     // const sum = histogram.reduce((prev, curr) => curr.value.map((d,i)=>d+prev[i]) , keys.map(d => 0));
