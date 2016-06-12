@@ -45,21 +45,19 @@ export class DataBase {
     this.crossfilter = crossfilter(this.data);
     this.all = this.crossfilter.groupAll();
 
-    this.year = this.crossfilter.dimension(d => d.year);
-    this.years = this.year.group();
     this.date = this.crossfilter.dimension(d => d.date);
     this.dates = this.date.group(d3.timeYear);
 
-    this.subject = this.crossfilter.dimension(d => d.subject || "none");
+    this.subject = this.crossfilter.dimension(d => d.subject);
     this.subjects = this.subject.group();
     
-    this.schoollevel = this.crossfilter.dimension(d => d.schoollevel || "none");
+    this.schoollevel = this.crossfilter.dimension(d => d.schoollevel);
     this.schoollevels = this.schoollevel.group();
     
-    this.publisher = this.crossfilter.dimension(d => d.publisher || "none");
+    this.publisher = this.crossfilter.dimension(d => d.publisher);
     this.publishers = this.publisher.group();
 
-    this.place = this.crossfilter.dimension(d => d.place || "none");
+    this.place = this.crossfilter.dimension(d => d.place);
     this.places = this.place.group();
 
     this.tag = this.crossfilter.dimension(d => d.RSWKTag || [], true);
@@ -106,18 +104,24 @@ export class DataBase {
     const activeItem = this.state.state.activeItem;
 
     const key = this.state.state.active.substring(0,this.state.state.active.length-1);
-    const keys = activeItem ? [activeItem] : this[this.state.state.active].top(20).map(d => d.key);
+    let keys = this[this.state.state.active].top(20).map(d => d.key);
+    keys.push("other");
+    const other = keys.length-1;
 
-    // console.log(keys);
-    // console.log(this[this.state.state.active].all());
-
+    // console.log(activeItem, key, keys)
+    // console.log(this[this.state.state.active].top(20))
+    
     function reduceAdd(p, v, nf) {
-      ++p[keys.indexOf(v[key])]
+      const i = keys.indexOf(v[key]);
+      // ++p[i+1 ? i : other];
+      ++p[i+1 ? i : other];
       return p;
     }
 
     function reduceRemove(p, v, nf) {
-      --p[keys.indexOf(v[key])]
+      const i = keys.indexOf(v[key]);
+      // --p[i+1 ? i : other];
+      --p[i+1 ? i : other];
       return p;
     }
 
@@ -173,8 +177,15 @@ export class DataBase {
     }
 
     if(next.activeItem !== curr.activeItem){
+      let k2 = curr.active.substring(0,curr.active.length-1);
+      this[k2].filterExact(null);
+
+
       let k = next.active.substring(0,next.active.length-1);
       this[k].filterExact(next.activeItem);
+
+      console.log(curr.active, next.active)
+
     }
 
     // console.time("simple");
