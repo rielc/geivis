@@ -1,0 +1,91 @@
+MultipleErrors: /Users/edlnrd/.jspm/packages/npm/d3-zoom@0.0.2/build/package.js:1:1: Unexpected reserved word export
+/Users/edlnrd/.jspm/packages/npm/d3-zoom@0.0.2/build/package.js:1:8: Semi-colon expected
+/Users/edlnrd/.jspm/packages/npm/d3-zoom@0.0.2/build/package.js:2:1: Unexpected reserved word export
+/Users/edlnrd/.jspm/packages/npm/d3-zoom@0.0.2/build/package.js:2:8: Semi-colon expected
+/Users/edlnrd/.jspm/packages/npm/d3-zoom@0.0.2/build/package.js:3:1: Unexpected reserved word export
+/Users/edlnrd/.jspm/packages/npm/d3-zoom@0.0.2/build/package.js:3:8: Semi-colon expected
+/Users/edlnrd/.jspm/packages/npm/d3-zoom@0.0.2/build/package.js:4:1: Unexpected reserved word export
+/Users/edlnrd/.jspm/packages/npm/d3-zoom@0.0.2/build/package.js:4:8: Semi-colon expected
+/Users/edlnrd/.jspm/packages/npm/d3-zoom@0.0.2/build/package.js:5:1: Unexpected reserved word export
+/Users/edlnrd/.jspm/packages/npm/d3-zoom@0.0.2/build/package.js:5:8: Semi-colon expected
+/Users/edlnrd/.jspm/packages/npm/d3-zoom@0.0.2/build/package.js:6:1: Unexpected reserved word export
+/Users/edlnrd/.jspm/packages/npm/d3-zoom@0.0.2/build/package.js:6:8: Semi-colon expected
+/Users/edlnrd/.jspm/packages/npm/d3-zoom@0.0.2/build/package.js:7:1: Unexpected reserved word export
+/Users/edlnrd/.jspm/packages/npm/d3-zoom@0.0.2/build/package.js:7:8: Semi-colon expected
+/Users/edlnrd/.jspm/packages/npm/d3-zoom@0.0.2/build/package.js:8:1: Unexpected reserved word export
+/Users/edlnrd/.jspm/packages/npm/d3-zoom@0.0.2/build/package.js:8:8: Semi-colon expected
+/Users/edlnrd/.jspm/packages/npm/d3-zoom@0.0.2/build/package.js:9:1: Unexpected reserved word export
+/Users/edlnrd/.jspm/packages/npm/d3-zoom@0.0.2/build/package.js:9:8: Semi-colon expected
+/Users/edlnrd/.jspm/packages/npm/d3-zoom@0.0.2/build/package.js:10:1: Unexpected reserved word export
+/Users/edlnrd/.jspm/packages/npm/d3-zoom@0.0.2/build/package.js:10:8: Semi-colon expected
+/Users/edlnrd/.jspm/packages/npm/d3-zoom@0.0.2/build/package.js:11:1: Unexpected reserved word export
+/Users/edlnrd/.jspm/packages/npm/d3-zoom@0.0.2/build/package.js:11:8: Semi-colon expected
+/Users/edlnrd/.jspm/packages/npm/d3-zoom@0.0.2/build/package.js:12:1: Unexpected reserved word export
+/Users/edlnrd/.jspm/packages/npm/d3-zoom@0.0.2/build/package.js:12:8: Semi-colon expected
+
+MultipleErrors: /Users/edlnrd/.jspm/packages/npm/d3-zoom@0.0.2/src/constant.js:1:1: Unexpected reserved word export
+/Users/edlnrd/.jspm/packages/npm/d3-zoom@0.0.2/src/constant.js:1:8: Semi-colon expected
+/Users/edlnrd/.jspm/packages/npm/d3-zoom@0.0.2/src/constant.js:1:8: Unexpected reserved word default
+/Users/edlnrd/.jspm/packages/npm/d3-zoom@0.0.2/src/constant.js:1:16: Semi-colon expected
+/Users/edlnrd/.jspm/packages/npm/d3-zoom@0.0.2/src/constant.js:1:24: Unexpected token (
+/Users/edlnrd/.jspm/packages/npm/d3-zoom@0.0.2/src/constant.js:1:25: Unexpected token x
+
+MultipleErrors: /Users/edlnrd/.jspm/packages/npm/d3-zoom@0.0.2/src/event.js:1:1: Unexpected reserved word export
+/Users/edlnrd/.jspm/packages/npm/d3-zoom@0.0.2/src/event.js:1:8: Semi-colon expected
+/Users/edlnrd/.jspm/packages/npm/d3-zoom@0.0.2/src/event.js:1:8: Unexpected reserved word default
+/Users/edlnrd/.jspm/packages/npm/d3-zoom@0.0.2/src/event.js:1:16: Semi-colon expected
+
+MultipleErrors: /Users/edlnrd/.jspm/packages/npm/d3-zoom@0.0.2/src/transform.js:1:1: Unexpected reserved word export
+/Users/edlnrd/.jspm/packages/npm/d3-zoom@0.0.2/src/transform.js:1:8: Semi-colon expected
+/Users/edlnrd/.jspm/packages/npm/d3-zoom@0.0.2/src/transform.js:26:1: Unexpected reserved word export
+/Users/edlnrd/.jspm/packages/npm/d3-zoom@0.0.2/src/transform.js:26:8: Semi-colon expected
+/Users/edlnrd/.jspm/packages/npm/d3-zoom@0.0.2/src/transform.js:30:1: Unexpected reserved word export
+/Users/edlnrd/.jspm/packages/npm/d3-zoom@0.0.2/src/transform.js:30:8: Semi-colon expected
+/Users/edlnrd/.jspm/packages/npm/d3-zoom@0.0.2/src/transform.js:30:8: Unexpected reserved word default
+/Users/edlnrd/.jspm/packages/npm/d3-zoom@0.0.2/src/transform.js:30:16: Semi-colon expected
+
+MultipleErrors: /Users/edlnrd/.jspm/packages/npm/d3-zoom@0.0.2/src/zoom.js:1:1: Unexpected reserved word import
+/Users/edlnrd/.jspm/packages/npm/d3-zoom@0.0.2/src/zoom.js:1:8: Semi-colon expected
+/Users/edlnrd/.jspm/packages/npm/d3-zoom@0.0.2/src/zoom.js:1:24: Semi-colon expected
+/Users/edlnrd/.jspm/packages/npm/d3-zoom@0.0.2/src/zoom.js:2:1: Unexpected reserved word import
+/Users/edlnrd/.jspm/packages/npm/d3-zoom@0.0.2/src/zoom.js:2:8: Semi-colon expected
+/Users/edlnrd/.jspm/packages/npm/d3-zoom@0.0.2/src/zoom.js:2:31: Semi-colon expected
+/Users/edlnrd/.jspm/packages/npm/d3-zoom@0.0.2/src/zoom.js:3:1: Unexpected reserved word import
+/Users/edlnrd/.jspm/packages/npm/d3-zoom@0.0.2/src/zoom.js:3:8: Semi-colon expected
+/Users/edlnrd/.jspm/packages/npm/d3-zoom@0.0.2/src/zoom.js:3:49: Semi-colon expected
+/Users/edlnrd/.jspm/packages/npm/d3-zoom@0.0.2/src/zoom.js:4:1: Unexpected reserved word import
+/Users/edlnrd/.jspm/packages/npm/d3-zoom@0.0.2/src/zoom.js:4:8: Semi-colon expected
+/Users/edlnrd/.jspm/packages/npm/d3-zoom@0.0.2/src/zoom.js:4:37: Semi-colon expected
+/Users/edlnrd/.jspm/packages/npm/d3-zoom@0.0.2/src/zoom.js:5:1: Unexpected reserved word import
+/Users/edlnrd/.jspm/packages/npm/d3-zoom@0.0.2/src/zoom.js:5:8: Semi-colon expected
+/Users/edlnrd/.jspm/packages/npm/d3-zoom@0.0.2/src/zoom.js:5:17: Semi-colon expected
+/Users/edlnrd/.jspm/packages/npm/d3-zoom@0.0.2/src/zoom.js:5:22: Semi-colon expected
+/Users/edlnrd/.jspm/packages/npm/d3-zoom@0.0.2/src/zoom.js:6:1: Unexpected reserved word import
+/Users/edlnrd/.jspm/packages/npm/d3-zoom@0.0.2/src/zoom.js:6:8: Semi-colon expected
+/Users/edlnrd/.jspm/packages/npm/d3-zoom@0.0.2/src/zoom.js:6:18: Semi-colon expected
+/Users/edlnrd/.jspm/packages/npm/d3-zoom@0.0.2/src/zoom.js:6:23: Semi-colon expected
+/Users/edlnrd/.jspm/packages/npm/d3-zoom@0.0.2/src/zoom.js:7:1: Unexpected reserved word import
+/Users/edlnrd/.jspm/packages/npm/d3-zoom@0.0.2/src/zoom.js:7:8: Semi-colon expected
+/Users/edlnrd/.jspm/packages/npm/d3-zoom@0.0.2/src/zoom.js:7:35: Semi-colon expected
+/Users/edlnrd/.jspm/packages/npm/d3-zoom@0.0.2/src/zoom.js:24:1: Unexpected reserved word export
+/Users/edlnrd/.jspm/packages/npm/d3-zoom@0.0.2/src/zoom.js:24:8: Semi-colon expected
+/Users/edlnrd/.jspm/packages/npm/d3-zoom@0.0.2/src/zoom.js:24:8: Unexpected reserved word default
+/Users/edlnrd/.jspm/packages/npm/d3-zoom@0.0.2/src/zoom.js:24:16: Semi-colon expected
+/Users/edlnrd/.jspm/packages/npm/d3-zoom@0.0.2/src/zoom.js:24:24: Unexpected token (
+/Users/edlnrd/.jspm/packages/npm/d3-zoom@0.0.2/src/zoom.js:24:25: Unexpected token started
+
+MultipleErrors: /Users/edlnrd/.jspm/packages/npm/d3-zoom@0.0.2/index.js:1:1: Unexpected reserved word export
+/Users/edlnrd/.jspm/packages/npm/d3-zoom@0.0.2/index.js:1:8: Semi-colon expected
+/Users/edlnrd/.jspm/packages/npm/d3-zoom@0.0.2/index.js:1:23: Semi-colon expected
+/Users/edlnrd/.jspm/packages/npm/d3-zoom@0.0.2/index.js:2:1: Unexpected reserved word export
+/Users/edlnrd/.jspm/packages/npm/d3-zoom@0.0.2/index.js:2:8: Semi-colon expected
+/Users/edlnrd/.jspm/packages/npm/d3-zoom@0.0.2/index.js:2:9: Unexpected reserved word default
+/Users/edlnrd/.jspm/packages/npm/d3-zoom@0.0.2/index.js:2:17: Semi-colon expected
+/Users/edlnrd/.jspm/packages/npm/d3-zoom@0.0.2/index.js:2:20: Semi-colon expected
+/Users/edlnrd/.jspm/packages/npm/d3-zoom@0.0.2/index.js:2:31: Semi-colon expected
+/Users/edlnrd/.jspm/packages/npm/d3-zoom@0.0.2/index.js:3:1: Unexpected reserved word export
+/Users/edlnrd/.jspm/packages/npm/d3-zoom@0.0.2/index.js:3:8: Semi-colon expected
+/Users/edlnrd/.jspm/packages/npm/d3-zoom@0.0.2/index.js:3:9: Unexpected reserved word default
+/Users/edlnrd/.jspm/packages/npm/d3-zoom@0.0.2/index.js:3:17: Semi-colon expected
+/Users/edlnrd/.jspm/packages/npm/d3-zoom@0.0.2/index.js:3:20: Semi-colon expected
+/Users/edlnrd/.jspm/packages/npm/d3-zoom@0.0.2/index.js:3:40: Semi-colon expected

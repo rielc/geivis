@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="css/style.css"> 
+    <script src="./jspm_packages/system.js"></script>
+    <script src="./config.js"></script>
+    <!-- <script src="js/d3.js"></script> -->
+    <!-- <script src="js/d3.v4.0.0-alpha.35.min.js"></script>-->
+    <script src="js/d3.v4.0.0-alpha.45.js"></script>
+<!--     <script src="https://d3js.org/d3-brush.v0.1.min.js"></script>
+ -->
+    <script src="js/crossfilter.js"></script>
+    <script src="js/legend.js"></script>
+    <script>System.import("./streamMain.js");</script>
+    <!-- <script>System.import("./sass/style.scss!");</script> -->
+  </head>
+  <body>
+    <div id="head">GEIVIS PROTOTYPE</div>
+    <div id="stream">
+      <div class="outer">
+        <div class="totals"><span id="active">-</span> of <span id="total">-</span> books selected.</div> 
+        <div class="stream"></div>
+      </div>
+      <div class="page">
+        <div class="entities"></div>
+        <div class="bookshelf"></div>
+        <div>
+          <p>Before Universe, exploring and filtering large datasets in javascript meant constant data looping, complicated indexing, and countless lines of code to dissect your data.</p>
+        </div>
+        <div class="map"></div>
+
+        <div class="typeList list"></div>
+        <div class="debug list"></div>
+      </div>
+    </div>
+  </body>
+</html>

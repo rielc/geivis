@@ -1,0 +1,38 @@
+#treemap { 
+	height:90vh;
+	position:relative;
+}
+
+select {
+	padding:10px;
+	margin:10px;
+	position:relative;
+	z-index:10;
+	border:$grey;
+	color:$grey;
+	background-color: #fff;
+	font-size: 20px;
+	border-radius:0;
+}
+
+.node {
+	z-index:1;
+	position:absolute;
+	overflow:hidden;
+
+	&.active {
+		background-color:$blue;
+	}
+}
+
+.level-0 {
+	background-color: #fff;
+}
+
+.level-1 {
+	background-color: lighten($grey, 40%);
+}
+
+.level-2 {
+	background-color: $bluelighter;
+}

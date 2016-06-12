@@ -1,0 +1,17 @@
+MultipleErrors: /Users/edlnrd/.jspm/packages/npm/d3-dispatch@0.4.3/build/version.js:1:1: Unexpected reserved word export
+/Users/edlnrd/.jspm/packages/npm/d3-dispatch@0.4.3/build/version.js:1:8: Semi-colon expected
+
+MultipleErrors: /Users/edlnrd/.jspm/packages/npm/d3-dispatch@0.4.3/src/dispatch.js:83:1: Unexpected reserved word export
+/Users/edlnrd/.jspm/packages/npm/d3-dispatch@0.4.3/src/dispatch.js:83:8: Semi-colon expected
+/Users/edlnrd/.jspm/packages/npm/d3-dispatch@0.4.3/src/dispatch.js:83:8: Unexpected reserved word default
+/Users/edlnrd/.jspm/packages/npm/d3-dispatch@0.4.3/src/dispatch.js:83:16: Semi-colon expected
+
+MultipleErrors: /Users/edlnrd/.jspm/packages/npm/d3-dispatch@0.4.3/index.js:1:1: Unexpected reserved word export
+/Users/edlnrd/.jspm/packages/npm/d3-dispatch@0.4.3/index.js:1:8: Semi-colon expected
+/Users/edlnrd/.jspm/packages/npm/d3-dispatch@0.4.3/index.js:1:23: Semi-colon expected
+/Users/edlnrd/.jspm/packages/npm/d3-dispatch@0.4.3/index.js:2:1: Unexpected reserved word export
+/Users/edlnrd/.jspm/packages/npm/d3-dispatch@0.4.3/index.js:2:8: Semi-colon expected
+/Users/edlnrd/.jspm/packages/npm/d3-dispatch@0.4.3/index.js:2:9: Unexpected reserved word default
+/Users/edlnrd/.jspm/packages/npm/d3-dispatch@0.4.3/index.js:2:17: Semi-colon expected
+/Users/edlnrd/.jspm/packages/npm/d3-dispatch@0.4.3/index.js:2:20: Semi-colon expected
+/Users/edlnrd/.jspm/packages/npm/d3-dispatch@0.4.3/index.js:2:35: Semi-colon expected
