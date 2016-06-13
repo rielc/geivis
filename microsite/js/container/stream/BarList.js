@@ -6,14 +6,14 @@ export class BarList extends StateDb {
   constructor(state, db, div){
     super(state,db);
 
-    this.container = div.append("div").classed("entity", true);
-    this.container.append("div").classed("title", true).text(this.key);
-    this.items = this.container.append("div").classed("items", true);
+    this.div = div.append("div").classed("entity", true);
+    this.div.append("div").classed("title", true).text(this.key);
+    this.items = this.div.append("div").classed("items", true);
     this.data = [];
     this.key = "subjects";
     
 
-    this.container.on("click", ()=> {
+    this.div.on("click", ()=> {
       this.state.push({ active: this.key });
     })
 
@@ -40,8 +40,8 @@ export class BarList extends StateDb {
   render(){
     //console.log( this.state.state);
     const size = this.db[this.key].size();
-    this.container.select(".title").text(this.key);
-    this.container.classed("active", this.state.state.active === this.key);
+    this.div.select(".title").text(this.key);
+    this.div.classed("active", this.state.state.active === this.key);
     // this.container.classed("hover", this.state.state.hover === this.key);
     // console.time("filter");
    // console.log(this.key);

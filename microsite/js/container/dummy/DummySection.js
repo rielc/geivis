@@ -13,6 +13,9 @@ export class DummySection extends Section {
 
   stateChange(next, last){
 
+    // console.log("dummy",next);
+
+
   	if(next.loaded == !last.loaded){
   	   console.log("init dummy");
   	}

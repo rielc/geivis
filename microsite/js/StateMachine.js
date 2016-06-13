@@ -30,7 +30,8 @@ export class StateMachine {
             rect.top <= height 
           )
 
-          // console.log(s.name, visible)
+          s.visible = visible;
+          //console.log(s);
         }
       })
     })
@@ -56,6 +57,6 @@ export class StateMachine {
 
   broadcast(){
     // console.log(this.subscriber);
-    this.subscriber.forEach(c => c.stateChange(this.state, this.lastState));
+    this.subscriber.forEach(s => s.stateChange(this.state, this.lastState));
   }
 }

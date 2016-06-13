@@ -74,7 +74,6 @@ export class StreamGraph extends StateDb {
 
   brushend() {
     let s = d3.event.selection ? d3.event.selection.map(d=> this.x.invert(d)) : this.db.extent;
-    console.log(s)
     this.state.push({ brushStart: s[0], brushEnd: s[1], keyframe: true });
   }
 
@@ -138,7 +137,13 @@ export class StreamGraph extends StateDb {
   }
 
   stateChange(next, last){
-    // console.log(next);
+    //console.log(next);
+    
+    if(next.loaded == !last.loaded){
+      this.x.domain(this.db.extent);
+      this.load().render();
+    }
+
     if(next.hover !== last.hover){
       this.render();
     }
