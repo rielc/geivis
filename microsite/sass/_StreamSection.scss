@@ -42,6 +42,7 @@
 
   .stream {
     background: #FFF;
+    position: fixed;
   }
 
   .stream.dropshadow {
@@ -93,6 +94,9 @@
     background: #eee;
     cursor: pointer; }
 
+  .entities {
+    margin-top: 300px; 
+  }
   .entities .entity {
     /* padding: 5px; */
     float: left;

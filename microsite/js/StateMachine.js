@@ -30,7 +30,7 @@ export class StateMachine {
             rect.top <= height 
           )
 
-          //console.log(s.name, visible)
+          // console.log(s.name, visible)
         }
       })
     })

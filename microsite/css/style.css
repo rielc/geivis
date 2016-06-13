@@ -298,7 +298,8 @@ select {
     display: list-item;
     margin-left: 40px; }
 #StreamSection .stream {
-  background: #FFF; }
+  background: #FFF;
+  position: fixed; }
 #StreamSection .stream.dropshadow {
   box-shadow: 0 9px 7px -6px rgba(0, 0, 0, 0.18); }
 #StreamSection .stream .axis path,
@@ -325,6 +326,8 @@ select {
   float: left;
   background: #eee;
   cursor: pointer; }
+#StreamSection .entities {
+  margin-top: 300px; }
 #StreamSection .entities .entity {
   /* padding: 5px; */
   float: left;
