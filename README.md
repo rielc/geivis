@@ -10,8 +10,11 @@ a webbased visualization of schoolbooks for the Georg-Eckert-Institut
 - `jspm init`
 - `cd ..`
 - `jspm-server`
-- 
 
-##
+## build
+
+`jspm bundle index --inject `
+
+## hotreloading
 
 put `export let __hotReload = true` in the js to enable hot reloading
