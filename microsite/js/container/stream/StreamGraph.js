@@ -1,13 +1,14 @@
 export let __hotReload = true
 
-export class StreamGraph {
+import {StateDb} from '../../StateDb';
+
+export class StreamGraph extends StateDb {
 
   constructor(state, db, div){
-    this.key = "subject";
-    this.state = state;
-    this.db = db;
+    super(state,db);
 
-    this.state.listen(this.stateChange.bind(this));
+    this.key = "subject";
+    
 
     this.outerWidth = 1060;
     this.outerHeight = 300;

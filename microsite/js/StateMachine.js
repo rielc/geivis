@@ -17,7 +17,7 @@ export class StateMachine {
     this.history = [];
     this.history.push(objectAssign({}, this.state));
     this.size = 10;
-    this.listener = [];
+    this.subscriber = [];
   }
 
   push(state){
@@ -33,11 +33,11 @@ export class StateMachine {
     // console.log(newState);
   }
 
-  listen(func){
-    this.listener.push(func);
+  subscribe(c){
+    this.subscriber.push(c);
   }
 
   broadcast(){
-    this.listener.forEach(func => func(this.state, this.lastState));
+    this.subscriber.forEach(c => c.stateChange(this.state, this.lastState));
   }
 }

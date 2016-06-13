@@ -270,48 +270,48 @@ select {
     .node.inactive > .count {
       display: none !important; }
 
-#StreamContainer .outer {
+#StreamSection .outer {
   padding-bottom: 10px;
   overflow: hidden;
   /* z-index: 2; */
   /* background: #FFF; */
   top: 0;
   position: fixed; }
-#StreamContainer .map {
+#StreamSection .map {
   padding-top: 40px; }
-#StreamContainer .page {
+#StreamSection .page {
   margin-top: 240px;
   float: left;
   padding-bottom: 800px; }
-  #StreamContainer .page > div {
+  #StreamSection .page > div {
     padding-top: 30px;
     padding-bottom: 30px;
     float: left; }
-#StreamContainer .bookshelf {
+#StreamSection .bookshelf {
   height: 340px;
   margin-left: 20px;
   overflow: hidden; }
-  #StreamContainer .bookshelf .book {
+  #StreamSection .bookshelf .book {
     float: left;
     width: 200px;
     padding: 2px;
     display: list-item;
     margin-left: 40px; }
-#StreamContainer .stream {
+#StreamSection .stream {
   background: #FFF; }
-#StreamContainer .stream.dropshadow {
+#StreamSection .stream.dropshadow {
   box-shadow: 0 9px 7px -6px rgba(0, 0, 0, 0.18); }
-#StreamContainer .stream .axis path,
-#StreamContainer .stream .axis line {
+#StreamSection .stream .axis path,
+#StreamSection .stream .axis line {
   fill: none;
   stroke: #eee;
   shape-rendering: crispEdges; }
-#StreamContainer .graph path {
+#StreamSection .graph path {
   cursor: pointer;
   fill: #BEE6F9; }
-#StreamContainer .graph path.active {
+#StreamSection .graph path.active {
   fill: #b00046; }
-#StreamContainer .list, #StreamContainer .totals {
+#StreamSection .list, #StreamSection .totals {
   left: 30px;
   position: absolute;
   /* left: 20px; */
@@ -319,13 +319,13 @@ select {
   padding: 10px;
   margin: 10px;
   clear: left; }
-#StreamContainer .list .item {
+#StreamSection .list .item {
   padding: 10px;
   margin: 10px;
   float: left;
   background: #eee;
   cursor: pointer; }
-#StreamContainer .entities .entity {
+#StreamSection .entities .entity {
   /* padding: 5px; */
   float: left;
   width: 240px;
@@ -333,38 +333,38 @@ select {
   padding: 10px;
   background: rgba(190, 230, 249, 0.26);
   cursor: pointer; }
-#StreamContainer .entities .entity.active {
+#StreamSection .entities .entity.active {
   background: #bee6f9; }
-#StreamContainer .entities .entity.hover {
+#StreamSection .entities .entity.hover {
   background: #bee6f9; }
-#StreamContainer .entities .entity .items {
+#StreamSection .entities .entity .items {
   float: left;
   overflow-y: scroll;
   overflow-x: hidden;
   width: 100%;
   height: 200px; }
-#StreamContainer .entities .entity .item {
+#StreamSection .entities .entity .item {
   clear: left;
   margin: 1px;
   float: left;
   width: 100%; }
-#StreamContainer .entities .entity .item .left {
+#StreamSection .entities .entity .item .left {
   float: left;
   width: 40%;
   padding-right: 5px; }
-#StreamContainer .entities .entity .item .left .bar {
+#StreamSection .entities .entity .item .left .bar {
   background: #3C7C9B;
   float: right;
   color: #FFF;
   padding: 2px; }
-#StreamContainer .entities .entity .hover.item .left .bar, #StreamContainer .entities .entity .active.item .left .bar {
+#StreamSection .entities .entity .hover.item .left .bar, #StreamSection .entities .entity .active.item .left .bar {
   background: #b00046; }
-#StreamContainer .entities .entity .item .right {
+#StreamSection .entities .entity .item .right {
   float: right;
   width: 60%; }
-#StreamContainer .entities .entity .hover.item, #StreamContainer .entities .entity .active.item {
+#StreamSection .entities .entity .hover.item, #StreamSection .entities .entity .active.item {
   color: #b00046; }
-#StreamContainer .entities .entity .title {
+#StreamSection .entities .entity .title {
   font-family: "gravurcondensed-bold";
   font-size: 12px;
   text-transform: uppercase;

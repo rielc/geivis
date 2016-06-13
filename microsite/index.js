@@ -1,21 +1,20 @@
 export let __hotReload = true;
 
 
-//chris imports
 import {StateMachine} from './js/StateMachine'
 import {DataBase} from './js/DataBase'
 
-import {StreamContainer} from './js/container/stream/StreamContainer'
+import {StreamSection} from './js/container/stream/StreamSection'
 
-import {DummyContainer} from './js/container/dummy/DummyContainer'
+import {DummySection} from './js/container/dummy/DummySection'
 
 
 
 let state = new StateMachine();
 let db = new DataBase(state).load();
 
-let streamContainer = new StreamContainer(state, db);
-let dummyContainer = new DummyContainer(state, db);
+let streamSection = new StreamSection(state, db);
+let dummySection = new DummySection(state, db);
 
 
 // let treemapContainer = new TreemapContainer(state, db);

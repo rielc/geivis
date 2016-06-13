@@ -1,22 +1,14 @@
 export let __hotReload = true
 
+import {Section} from '../../Section';
 import {StreamGraph} from './StreamGraph'
 import {BarList} from './BarList'
 
-export class StreamContainer {
+export class StreamSection extends Section {
 
   constructor(state, db){
-  	this.state = state;
-  	this.db = db;
+  	super(state,db);
 
-  	this.state.listen(this.stateChange.bind(this));
-
-
-  	// console.log("init", state, db)
-
-  	d3.select("#"+StreamContainer.name).remove(); //hotreload hotfix
-
-  	this.div = d3.select(".container").append("section").attr("id", StreamContainer.name);
 
   	this.divStream = this.div.append("div").attr("class", "stream");
   	this.divEntities = this.div.append("div").attr("class", "entities");

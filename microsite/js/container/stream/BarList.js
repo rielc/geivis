@@ -1,17 +1,17 @@
 export let __hotReload = true
-export class BarList {
+import {StateDb} from '../../StateDb';
+
+export class BarList extends StateDb {
 
   constructor(state, db, div){
+    super(state,db);
 
     this.container = div.append("div").classed("entity", true);
     this.container.append("div").classed("title", true).text(this.key);
     this.items = this.container.append("div").classed("items", true);
     this.data = [];
     this.key = "subjects";
-    this.state = state;
-    this.db = db;
-
-    this.state.listen(this.stateChange.bind(this));
+    
 
     this.container.on("click", ()=> {
       this.state.push({ active: this.key });

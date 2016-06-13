@@ -1,4 +1,5 @@
 export let __hotReload = true
+
 export class DataBase {
 
   constructor(state){
@@ -8,7 +9,7 @@ export class DataBase {
     this.crossfilter = {};
     this.state = state;
 
-    this.state.listen(this.stateChange.bind(this));
+    this.state.subscribe(this);
   }
 
 

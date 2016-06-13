@@ -1,7 +1,7 @@
 export let __hotReload = true
 
 
-export class DummyContainer {
+export class TreemapContainer {
 
   constructor(state, db){
     this.state = state;
@@ -9,8 +9,8 @@ export class DummyContainer {
     this.db = db;
 
 
-  	d3.select("#"+StreamContainer.name).remove(); //hotreload hotfix
-  	this.div = d3.select(".container").append("section").attr("id", StreamContainer.name);
+  	d3.select("#"+TreemapContainer.name).remove(); //hotreload hotfix
+  	this.div = d3.select(".container").append("section").attr("id", TreemapContainer.name);
 
   	this.divDummy = this.div.append("div").attr("class", "dummy");
   	
