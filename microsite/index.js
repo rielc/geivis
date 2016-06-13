@@ -7,14 +7,17 @@ import {DataBase} from './js/DataBase'
 
 import {StreamContainer} from './js/container/stream/StreamContainer'
 
+import {DummyContainer} from './js/container/dummy/DummyContainer'
+
 
 
 let state = new StateMachine();
-let db = new DataBase(state);
+let db = new DataBase(state).load();
 
 let streamContainer = new StreamContainer(state, db);
+let dummyContainer = new DummyContainer(state, db);
 
-db.load();
+
 // let treemapContainer = new TreemapContainer(state, db);
 
 

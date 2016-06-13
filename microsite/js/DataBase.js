@@ -101,8 +101,6 @@ export class DataBase {
     keys.push("other");
     const other = keys.length-1;
 
-    // console.log(activeItem, key, keys)
-    // console.log(this[this.state.state.active].top(20))
     
     function reduceAdd(p, v, nf) {
       const i = keys.indexOf(v[key]);
@@ -123,14 +121,6 @@ export class DataBase {
     }
 
     const histogram = this.dates.reduce(reduceAdd, reduceRemove, reduceInitial).all();
-    // console.log(histogram);
-    
-    // console.time("sum");
-    // const sum = histogram.reduce((prev, curr) => curr.value.map((d,i)=>d+prev[i]) , keys.map(d => 0));
-    // console.timeEnd("sum");
-    // console.log(sum);
-
-
     let stack = this.stack.keys(keys.map((d,i) => i))(histogram);
     stack.forEach(d => { d.key = keys[d.key]; })
     //console.log(stack);
