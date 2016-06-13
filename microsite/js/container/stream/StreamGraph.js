@@ -51,18 +51,18 @@ export class StreamGraph extends StateDb {
       .on("start brush", this.brushmove.bind(this))
       .on("end", this.brushend.bind(this));
 
-    window.addEventListener('scroll', (e) => {
-      const diff = this.outerHeightInitial - window.scrollY;
-      const height = this.outerHeightInitial + diff;
-      // console.log(diff, height)
-      if(diff < 0 && height > 100){
-        this.outerHeight = height;
-        this.init().render(true);
-      }
-      this.div.classed("dropshadow", diff < this.outerHeightInitial);  
+    // window.addEventListener('scroll', (e) => {
+    //   const diff = this.outerHeightInitial - window.scrollY;
+    //   const height = this.outerHeightInitial + diff;
+    //   // console.log(diff, height)
+    //   if(diff < 0 && height > 100){
+    //     this.outerHeight = height;
+    //     this.init().render(true);
+    //   }
+    //   this.div.classed("dropshadow", diff < this.outerHeightInitial);  
 
       // console.log(d3.select(".stream").node().getBoundingClientRect())    
-    })
+    //})
 
     return this;
   }

@@ -25,12 +25,13 @@ export class StreamSection extends Section {
 
 
   stateChange(next, last){
-  	// console.log(next)
+  	console.log(this.name, next)
 
   	if(next.loaded == !last.loaded){
   		this.stream.x.domain(this.db.extent);
   		this.stream.load().render();
   	}
+
   }
 
   render(){

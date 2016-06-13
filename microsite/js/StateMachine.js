@@ -1,7 +1,6 @@
 export let __hotReload = true
 
 import objectAssign from 'object-assign';
-// objectAssign({}, state, action.state);
 
 export class StateMachine {
 
@@ -18,6 +17,24 @@ export class StateMachine {
     this.history.push(objectAssign({}, this.state));
     this.size = 10;
     this.subscriber = [];
+
+    window.addEventListener('scroll', (e) => {
+      this.subscriber.forEach(s => {
+        if(s.type === "section"){
+
+          const rect = s.div.node().getBoundingClientRect();
+          const height = (window.innerHeight || document.documentElement.clientHeight);
+
+          const visible = (
+            rect.top >= -height &&
+            rect.top <= height 
+          )
+
+          //console.log(s.name, visible)
+        }
+      })
+    })
+
   }
 
   push(state){
@@ -38,6 +55,7 @@ export class StateMachine {
   }
 
   broadcast(){
+    // console.log(this.subscriber);
     this.subscriber.forEach(c => c.stateChange(this.state, this.lastState));
   }
 }
