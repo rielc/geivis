@@ -1,4 +1,8 @@
 export let __hotReload = true
+
+import objectAssign from 'object-assign';
+// objectAssign({}, state, action.state);
+
 export class StateMachine {
 
   constructor(){
@@ -6,10 +10,12 @@ export class StateMachine {
       brushStart:null,
       brushEnd:null,
       active:"subjects",
-      activeItem:null
+      activeItem:null,
+      loaded:false,
+      timestamp:null
     }
     this.history = [];
-    this.history.push(Object.assign({}, this.state));
+    this.history.push(objectAssign({}, this.state));
     this.size = 10;
     this.listener = [];
   }
@@ -19,10 +25,12 @@ export class StateMachine {
       this.history.pop();
     }
     this.lastState = this.history[0];
-    const newState = Object.assign(this.state, state);
+    let newState = objectAssign({}, this.state, state);
+    // newState.timestamp = +new Date();
     this.history.unshift(newState);
-    this.state = Object.assign({}, newState);
+    this.state = objectAssign({}, newState);
     this.broadcast();
+    // console.log(newState);
   }
 
   listen(func){

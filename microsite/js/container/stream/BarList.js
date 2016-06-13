@@ -1,9 +1,9 @@
 export let __hotReload = true
 export class BarList {
 
-  constructor(state, db){
+  constructor(state, db, div){
 
-    this.container = d3.select(".entities").append("div").classed("entity", true);
+    this.container = div.append("div").classed("entity", true);
     this.container.append("div").classed("title", true).text(this.key);
     this.items = this.container.append("div").classed("items", true);
     this.data = [];
@@ -30,8 +30,11 @@ export class BarList {
     // if(next.brushStart !== last.brushStart){
     //   this.render();
     // }
-    this.render();
-    // console.log(next.brushStart, last.brushStart);
+    if(next.loaded){
+      this.render();
+    }
+    
+    // console.log(next.filter);
   }
 
   render(){
@@ -57,8 +60,9 @@ export class BarList {
         this.state.push({ active: this.key, hover: null });
       })
       .on("click", (d)=>{
-        let active = this.state.state.activeItem === d.key;
-        this.state.push({ active: this.key, activeItem: active ? null : d.key });
+        let activeItem = this.state.state.activeItem === d.key;
+        this.state.push({ active: this.key, activeItem: activeItem ? null : d.key });
+        this.state.push({ filter: { [this.key] : d.key }});
       })
 
     e.append("div").classed("left", true).append("div").classed("bar", true)

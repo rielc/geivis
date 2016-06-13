@@ -52,6 +52,10 @@ export class CirclePackedNetwork {
     // //console.log(next.brushStart.getFullYear());
 
     console.log(this);
+    // if(next.brushStart.getFullYear() != last.brushStart.getFullYear()){
+      
+    // }
+    
     if( next.brushStart.getFullYear() != this.years[0] || next.brushEnd.getFullYear() != this.years[1] ){
       this.years = [next.brushStart.getFullYear(), next.brushEnd.getFullYear()];
       

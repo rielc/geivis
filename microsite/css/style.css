@@ -318,111 +318,112 @@ tspan:last-child {
   overflow: hidden;
   /* background: #FFF; */ }
 
-#stream {
+.container {
   position: relative;
   margin: auto auto;
   padding: 10px;
   width: 1100px; }
-  #stream .outer {
-    padding-bottom: 10px;
-    overflow: hidden;
-    /* z-index: 2; */
-    /* background: #FFF; */
-    top: 0;
-    position: fixed; }
-  #stream .map {
-    padding-top: 40px; }
-  #stream .page {
-    margin-top: 240px;
+
+#StreamContainer .outer {
+  padding-bottom: 10px;
+  overflow: hidden;
+  /* z-index: 2; */
+  /* background: #FFF; */
+  top: 0;
+  position: fixed; }
+#StreamContainer .map {
+  padding-top: 40px; }
+#StreamContainer .page {
+  margin-top: 240px;
+  float: left;
+  padding-bottom: 800px; }
+  #StreamContainer .page > div {
+    padding-top: 30px;
+    padding-bottom: 30px;
+    float: left; }
+#StreamContainer .bookshelf {
+  height: 340px;
+  margin-left: 20px;
+  overflow: hidden; }
+  #StreamContainer .bookshelf .book {
     float: left;
-    padding-bottom: 800px; }
-    #stream .page > div {
-      padding-top: 30px;
-      padding-bottom: 30px;
-      float: left; }
-  #stream .bookshelf {
-    height: 340px;
-    margin-left: 20px;
-    overflow: hidden; }
-    #stream .bookshelf .book {
-      float: left;
-      width: 200px;
-      padding: 2px;
-      display: list-item;
-      margin-left: 40px; }
-  #stream .stream {
-    background: #FFF; }
-  #stream .stream.dropshadow {
-    box-shadow: 0 9px 7px -6px rgba(0, 0, 0, 0.18); }
-  #stream .stream .axis path,
-  #stream .stream .axis line {
-    fill: none;
-    stroke: #eee;
-    shape-rendering: crispEdges; }
-  #stream .graph path {
-    cursor: pointer;
-    fill: #BEE6F9; }
-  #stream .graph path.active {
-    fill: #b00046; }
-  #stream .list, #stream .totals {
-    left: 30px;
-    position: absolute;
-    /* left: 20px; */
-    /* width: 100%; */
-    padding: 10px;
-    margin: 10px;
-    clear: left; }
-  #stream .list .item {
-    padding: 10px;
-    margin: 10px;
-    float: left;
-    background: #eee;
-    cursor: pointer; }
-  #stream .entities .entity {
-    /* padding: 5px; */
-    float: left;
-    width: 240px;
-    margin: 10px;
-    padding: 10px;
-    background: rgba(190, 230, 249, 0.26);
-    cursor: pointer; }
-  #stream .entities .entity.active {
-    background: #bee6f9; }
-  #stream .entities .entity.hover {
-    background: #bee6f9; }
-  #stream .entities .entity .items {
-    float: left;
-    overflow-y: scroll;
-    width: 100%;
-    height: 200px; }
-  #stream .entities .entity .item {
-    clear: left;
-    margin: 1px;
-    float: left;
-    width: 100%; }
-  #stream .entities .entity .item .left {
-    float: left;
-    width: 40%;
-    padding-right: 5px; }
-  #stream .entities .entity .item .left .bar {
-    background: #3C7C9B;
-    float: right;
-    color: #FFF;
-    padding: 2px; }
-  #stream .entities .entity .hover.item .left .bar, #stream .entities .entity .active.item .left .bar {
-    background: #b00046; }
-  #stream .entities .entity .item .right {
-    float: right;
-    width: 60%; }
-  #stream .entities .entity .hover.item, #stream .entities .entity .active.item {
-    color: #b00046; }
-  #stream .entities .entity .title {
-    font-family: "gravurcondensed-bold";
-    font-size: 12px;
-    text-transform: uppercase;
-    padding-bottom: 10px;
-    padding-top: 10px;
-    text-align: center; }
+    width: 200px;
+    padding: 2px;
+    display: list-item;
+    margin-left: 40px; }
+#StreamContainer .stream {
+  background: #FFF; }
+#StreamContainer .stream.dropshadow {
+  box-shadow: 0 9px 7px -6px rgba(0, 0, 0, 0.18); }
+#StreamContainer .stream .axis path,
+#StreamContainer .stream .axis line {
+  fill: none;
+  stroke: #eee;
+  shape-rendering: crispEdges; }
+#StreamContainer .graph path {
+  cursor: pointer;
+  fill: #BEE6F9; }
+#StreamContainer .graph path.active {
+  fill: #b00046; }
+#StreamContainer .list, #StreamContainer .totals {
+  left: 30px;
+  position: absolute;
+  /* left: 20px; */
+  /* width: 100%; */
+  padding: 10px;
+  margin: 10px;
+  clear: left; }
+#StreamContainer .list .item {
+  padding: 10px;
+  margin: 10px;
+  float: left;
+  background: #eee;
+  cursor: pointer; }
+#StreamContainer .entities .entity {
+  /* padding: 5px; */
+  float: left;
+  width: 240px;
+  margin: 10px;
+  padding: 10px;
+  background: rgba(190, 230, 249, 0.26);
+  cursor: pointer; }
+#StreamContainer .entities .entity.active {
+  background: #bee6f9; }
+#StreamContainer .entities .entity.hover {
+  background: #bee6f9; }
+#StreamContainer .entities .entity .items {
+  float: left;
+  overflow-y: scroll;
+  width: 100%;
+  height: 200px; }
+#StreamContainer .entities .entity .item {
+  clear: left;
+  margin: 1px;
+  float: left;
+  width: 100%; }
+#StreamContainer .entities .entity .item .left {
+  float: left;
+  width: 40%;
+  padding-right: 5px; }
+#StreamContainer .entities .entity .item .left .bar {
+  background: #3C7C9B;
+  float: right;
+  color: #FFF;
+  padding: 2px; }
+#StreamContainer .entities .entity .hover.item .left .bar, #StreamContainer .entities .entity .active.item .left .bar {
+  background: #b00046; }
+#StreamContainer .entities .entity .item .right {
+  float: right;
+  width: 60%; }
+#StreamContainer .entities .entity .hover.item, #StreamContainer .entities .entity .active.item {
+  color: #b00046; }
+#StreamContainer .entities .entity .title {
+  font-family: "gravurcondensed-bold";
+  font-size: 12px;
+  text-transform: uppercase;
+  padding-bottom: 10px;
+  padding-top: 10px;
+  text-align: center; }
 
 [data-balloon] {
   position: relative;

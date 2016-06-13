@@ -20,6 +20,7 @@ System.config({
     "core-js": "npm:core-js@1.2.6",
     "d3-brush": "npm:d3-brush@0.1.4",
     "d3-zoom": "npm:d3-zoom@0.0.2",
+    "object-assign": "npm:object-assign@4.1.0",
     "github:jspm/nodelibs-assert@0.1.0": {
       "assert": "npm:assert@1.4.0"
     },

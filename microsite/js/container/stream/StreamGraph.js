@@ -2,7 +2,7 @@ export let __hotReload = true
 
 export class StreamGraph {
 
-  constructor(state, db){
+  constructor(state, db, div){
     this.key = "subject";
     this.state = state;
     this.db = db;
@@ -28,17 +28,19 @@ export class StreamGraph {
       .x(d=> this.x(d.data.key) )
       .y0(d=> this.y(d[0]) )
       .y1(d=> this.y(d[1]) )
-      .curve(d3.curveCardinal)
+      // .curve(d3.curveCardinal)
       // .curve(d3.curveStepAfter)
 
-    d3.select(".stream").selectAll("*").remove() // temp fix
-
-    this.svg = d3.select(".stream").append("svg");
+    
+    this.div = div;
+    this.svg = this.div.append("svg");
     this.g = this.svg.append("g");
     this.gXaxis = this.g.append("g").attr("class", "x axis");
     this.gYaxis = this.g.append("g").attr("class", "y axis");
     this.gBrush = this.g.append("g").attr("class", "brush");
     this.gGraph = this.g.append("g").attr("class", "graph");
+
+    this.offset = this.div.node().offsetTop;
 
     this.nest = d3.nest();
     this.data = [];
@@ -56,7 +58,9 @@ export class StreamGraph {
         this.outerHeight = height;
         this.init().render(true);
       }
-      d3.select(".stream").classed("dropshadow", diff < this.outerHeightInitial);      
+      this.div.classed("dropshadow", diff < this.outerHeightInitial);  
+
+      // console.log(d3.select(".stream").node().getBoundingClientRect())    
     })
 
     return this;
@@ -153,6 +157,9 @@ export class StreamGraph {
         // this.load(data).render();
       }
     }
+    // if(next.brushStart.getYear() != last.brushStart.getYear()){
+
+    // }
     // console.log(next.brushStart, last.brushStart);
   }
 
@@ -177,7 +184,7 @@ export class StreamGraph {
       .style("opacity", 0)
       // .transition()
       // .duration(notransition ? 0 : 800)
-      .style("opacity", 1)
+      .style("opacity", d=> d.key=="other" ? 0.3 : 1)
 
     s.exit().remove();
         
@@ -186,7 +193,7 @@ export class StreamGraph {
       // .transition()
       // .duration(notransition ? 0 : 800)
       .attr("d", this.area)
-      .style("opacity", 1)
+      .style("opacity", d=> d.key=="other" ? 0.3 : 1)
 
     this.gXaxis
       .attr("transform", "translate(0," + this.height + ")")
