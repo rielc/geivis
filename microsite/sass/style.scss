@@ -15,6 +15,9 @@ $padding: 10px;
 @import "_nested-treemap.scss";
 @import "_circle-packed-network.scss";
 
+@import "_StreamContainer.scss";
+
+
 
 // global styles
 
@@ -47,19 +50,20 @@ p {
 
 
 
-#viewport-wrap {
+section {
 
   display: flex;
   width:100%;
   overflow: scroll;
   flex-direction:column;
   margin:0;
+  min-height:100vh;
 
-  .viewport {
-    width:100vw;
-    min-height:100vh;
-    //padding: $padding;
-  }
+  // .viewport {
+  //   width:100vw;
+  //   min-height:100vh;
+  //   //padding: $padding;
+  // }
 
 }
 
@@ -103,165 +107,6 @@ tspan:last-child {
 }
 
 
-#StreamContainer {
-
-
-  .outer {
-    padding-bottom: 10px;
-    overflow: hidden;
-    /* z-index: 2; */
-    /* background: #FFF; */
-    top: 0;
-    position: fixed;
-  }
-
-  .map {
-    padding-top: 40px;
-  }
-
-  .page {
-    margin-top: 240px;
-    float: left;
-    padding-bottom: 800px;
-    
-    >div{
-      padding-top: 30px;
-      padding-bottom: 30px;
-      float: left;
-    }
-  }
-
-  .bookshelf {
-    height: 340px;
-    margin-left: 20px;
-    overflow: hidden;
-
-    .book {
-      float: left;
-      width: 200px;
-      padding: 2px;
-      display: list-item;
-      margin-left: 40px;
-    }
-  }
-
-  .stream {
-    background: #FFF;
-  }
-
-  .stream.dropshadow {
-    // -webkit-box-shadow: 0px 0px 15px 4px rgba(0,0,0,0.11);
-    // -moz-box-shadow: 0px 0px 15px 4px rgba(0,0,0,0.11);
-    // box-shadow: 0px 0px 15px 4px rgba(0,0,0,0.11);
-
-    box-shadow: 0 9px 7px -6px rgba(0,0,0,0.18);
-  }
-
-  .stream .axis path,
-  .stream .axis line {
-    fill: none;
-    stroke: #eee;
-    shape-rendering: crispEdges; }
-
-
-  .graph path {
-    cursor: pointer;
-    
-    fill: #BEE6F9; }
-
-  .graph path.active {
-    fill: #b00046;
-    }
-
-  // .brush .extent {
-  //   fill:rgba(176, 0, 70, 0.76);
-  //   /*pointer-events: auto !important;*/
-  //   }
-  // .brush .resize rect {
-  //   fill:#b00046;
-  // }
-
-  .list, .totals {
-    left: 30px;
-    position: absolute;
-    /* left: 20px; */
-    /* width: 100%; */
-    padding: 10px;
-    margin: 10px;
-    clear: left;
-    }
-
-  .list .item {
-    padding: 10px;
-    margin: 10px;
-    float: left;
-    background: #eee;
-    cursor: pointer; }
-
-  .entities .entity {
-    /* padding: 5px; */
-    float: left;
-    width: 240px;
-    margin: 10px;
-    padding: 10px;
-    background: rgba(190, 230, 249, 0.26);
-    cursor: pointer;
-    }
-
-  .entities .entity.active {
-    background: #bee6f9; }
-
-  .entities .entity.hover {
-    background: #bee6f9; }
-
-  .entities .entity .items {
-
-    float: left;
-    overflow-y: scroll;
-    width: 100%;
-    height: 200px;
-    }
-
-  .entities .entity .item {
-    clear: left;
-    margin: 1px;
-    float: left;
-    width: 100%;
-    }
-
-  .entities .entity .item .left {
-    float: left;
-    width: 40%;
-    padding-right: 5px;
-  }
-  .entities .entity .item .left .bar {
-    background: #3C7C9B;
-    float: right;
-    color: #FFF;
-    padding: 2px;
-  }
-  .entities .entity .hover.item .left .bar, .entities .entity .active.item .left .bar {
-    background: #b00046;
-  }
-
-  .entities .entity .item .right {
-    float: right;
-    width: 60%;
-  }
-
-  .entities .entity .hover.item, .entities .entity .active.item {
-    color: #b00046; }
-
-  .entities .entity .title {
-    font-family: "gravurcondensed-bold";
-    font-size: 12px;
-    text-transform: uppercase;
-    padding-bottom: 10px;
-    padding-top: 10px;
-    text-align: center;
- }
-
-}
 
 
 // tooltips
