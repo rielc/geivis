@@ -1,4 +1,8 @@
-System.registerDynamic("npm:object-assign@4.1.0/index.js", [], true, function($__require, exports, module) {
+!function(e){function r(e,r,o){return 4===arguments.length?t.apply(this,arguments):void n(e,{declarative:!0,deps:r,declare:o})}function t(e,r,t,o){n(e,{declarative:!1,deps:r,executingRequire:t,execute:o})}function n(e,r){r.name=e,e in g||(g[e]=r),r.normalizedDeps=r.deps}function o(e,r){if(r[e.groupIndex]=r[e.groupIndex]||[],-1==m.call(r[e.groupIndex],e)){r[e.groupIndex].push(e);for(var t=0,n=e.normalizedDeps.length;n>t;t++){var a=e.normalizedDeps[t],u=g[a];if(u&&!u.evaluated){var d=e.groupIndex+(u.declarative!=e.declarative);if(void 0===u.groupIndex||u.groupIndex<d){if(void 0!==u.groupIndex&&(r[u.groupIndex].splice(m.call(r[u.groupIndex],u),1),0==r[u.groupIndex].length))throw new TypeError("Mixed dependency cycle detected");u.groupIndex=d}o(u,r)}}}}function a(e){var r=g[e];r.groupIndex=0;var t=[];o(r,t);for(var n=!!r.declarative==t.length%2,a=t.length-1;a>=0;a--){for(var u=t[a],i=0;i<u.length;i++){var s=u[i];n?d(s):l(s)}n=!n}}function u(e){return D[e]||(D[e]={name:e,dependencies:[],exports:{},importers:[]})}function d(r){if(!r.module){var t=r.module=u(r.name),n=r.module.exports,o=r.declare.call(e,function(e,r){if(t.locked=!0,"object"==typeof e)for(var o in e)n[o]=e[o];else n[e]=r;for(var a=0,u=t.importers.length;u>a;a++){var d=t.importers[a];if(!d.locked)for(var i=0;i<d.dependencies.length;++i)d.dependencies[i]===t&&d.setters[i](n)}return t.locked=!1,r},r.name);t.setters=o.setters,t.execute=o.execute;for(var a=0,i=r.normalizedDeps.length;i>a;a++){var l,s=r.normalizedDeps[a],c=g[s],f=D[s];f?l=f.exports:c&&!c.declarative?l=c.esModule:c?(d(c),f=c.module,l=f.exports):l=v(s),f&&f.importers?(f.importers.push(t),t.dependencies.push(f)):t.dependencies.push(null),t.setters[a]&&t.setters[a](l)}}}function i(e){var r,t=g[e];if(t)t.declarative?p(e,[]):t.evaluated||l(t),r=t.module.exports;else if(r=v(e),!r)throw new Error("Unable to load dependency "+e+".");return(!t||t.declarative)&&r&&r.__useDefault?r["default"]:r}function l(r){if(!r.module){var t={},n=r.module={exports:t,id:r.name};if(!r.executingRequire)for(var o=0,a=r.normalizedDeps.length;a>o;o++){var u=r.normalizedDeps[o],d=g[u];d&&l(d)}r.evaluated=!0;var c=r.execute.call(e,function(e){for(var t=0,n=r.deps.length;n>t;t++)if(r.deps[t]==e)return i(r.normalizedDeps[t]);throw new TypeError("Module "+e+" not declared as a dependency.")},t,n);c&&(n.exports=c),t=n.exports,t&&t.__esModule?r.esModule=t:r.esModule=s(t)}}function s(e){var r={};if("object"==typeof e||"function"==typeof e){var t=e&&e.hasOwnProperty;if(h)for(var n in e)f(r,e,n)||c(r,e,n,t);else for(var n in e)c(r,e,n,t)}return r["default"]=e,y(r,"__useDefault",{value:!0}),r}function c(e,r,t,n){(!n||r.hasOwnProperty(t))&&(e[t]=r[t])}function f(e,r,t){try{var n;return(n=Object.getOwnPropertyDescriptor(r,t))&&y(e,t,n),!0}catch(o){return!1}}function p(r,t){var n=g[r];if(n&&!n.evaluated&&n.declarative){t.push(r);for(var o=0,a=n.normalizedDeps.length;a>o;o++){var u=n.normalizedDeps[o];-1==m.call(t,u)&&(g[u]?p(u,t):v(u))}n.evaluated||(n.evaluated=!0,n.module.execute.call(e))}}function v(e){if(I[e])return I[e];if("@node/"==e.substr(0,6))return _(e.substr(6));var r=g[e];if(!r)throw"Module "+e+" not present.";return a(e),p(e,[]),g[e]=void 0,r.declarative&&y(r.module.exports,"__esModule",{value:!0}),I[e]=r.declarative?r.module.exports:r.esModule}var g={},m=Array.prototype.indexOf||function(e){for(var r=0,t=this.length;t>r;r++)if(this[r]===e)return r;return-1},h=!0;try{Object.getOwnPropertyDescriptor({a:0},"a")}catch(x){h=!1}var y;!function(){try{Object.defineProperty({},"a",{})&&(y=Object.defineProperty)}catch(e){y=function(e,r,t){try{e[r]=t.value||t.get.call(e)}catch(n){}}}}();var D={},_="undefined"!=typeof System&&System._nodeRequire||"undefined"!=typeof require&&require.resolve&&"undefined"!=typeof process&&require,I={"@empty":{}};return function(e,n,o){return function(a){a(function(a){for(var u={_nodeRequire:_,register:r,registerDynamic:t,get:v,set:function(e,r){I[e]=r},newModule:function(e){return e}},d=0;d<n.length;d++)(function(e,r){r&&r.__esModule?I[e]=r:I[e]=s(r)})(n[d],arguments[d]);o(u);var i=v(e[0]);if(e.length>1)for(var d=1;d<e.length;d++)v(e[d]);return i.__useDefault?i["default"]:i})}}}("undefined"!=typeof self?self:global)
+
+(["1"], [], function($__System) {
+var require = this.require, exports = this.exports, module = this.module;
+$__System.registerDynamic("2", [], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -69,25 +73,25 @@ System.registerDynamic("npm:object-assign@4.1.0/index.js", [], true, function($_
   return module.exports;
 });
 
-System.registerDynamic("npm:object-assign@4.1.0.js", ["npm:object-assign@4.1.0/index.js"], true, function($__require, exports, module) {
+$__System.registerDynamic("3", ["2"], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
       GLOBAL = this;
-  module.exports = $__require('npm:object-assign@4.1.0/index.js');
+  module.exports = $__require('2');
   return module.exports;
 });
 
-System.register('js/StateMachine.js', ['npm:babel-runtime@5.8.38/helpers/create-class.js', 'npm:babel-runtime@5.8.38/helpers/class-call-check.js', 'npm:object-assign@4.1.0.js'], function (_export) {
-  var _createClass, _classCallCheck, objectAssign, __hotReload, StateMachine;
+$__System.register('4', ['3', '5', '6'], function (_export) {
+  var objectAssign, _createClass, _classCallCheck, __hotReload, StateMachine;
 
   return {
-    setters: [function (_npmBabelRuntime5838HelpersCreateClassJs) {
-      _createClass = _npmBabelRuntime5838HelpersCreateClassJs['default'];
-    }, function (_npmBabelRuntime5838HelpersClassCallCheckJs) {
-      _classCallCheck = _npmBabelRuntime5838HelpersClassCallCheckJs['default'];
-    }, function (_npmObjectAssign410Js) {
-      objectAssign = _npmObjectAssign410Js['default'];
+    setters: [function (_3) {
+      objectAssign = _3['default'];
+    }, function (_) {
+      _createClass = _['default'];
+    }, function (_2) {
+      _classCallCheck = _2['default'];
     }],
     execute: function () {
       'use strict';
@@ -168,14 +172,14 @@ System.register('js/StateMachine.js', ['npm:babel-runtime@5.8.38/helpers/create-
     }
   };
 });
-System.register("js/DataBase.js", ["npm:babel-runtime@5.8.38/helpers/create-class.js", "npm:babel-runtime@5.8.38/helpers/class-call-check.js"], function (_export) {
+$__System.register("7", ["5", "6"], function (_export) {
   var _createClass, _classCallCheck, __hotReload, DataBase;
 
   return {
-    setters: [function (_npmBabelRuntime5838HelpersCreateClassJs) {
-      _createClass = _npmBabelRuntime5838HelpersCreateClassJs["default"];
-    }, function (_npmBabelRuntime5838HelpersClassCallCheckJs) {
-      _classCallCheck = _npmBabelRuntime5838HelpersClassCallCheckJs["default"];
+    setters: [function (_) {
+      _createClass = _["default"];
+    }, function (_2) {
+      _classCallCheck = _2["default"];
     }],
     execute: function () {
       "use strict";
@@ -425,20 +429,20 @@ System.register("js/DataBase.js", ["npm:babel-runtime@5.8.38/helpers/create-clas
     }
   };
 });
-System.register("js/container/stream/StreamGraph.js", ["npm:babel-runtime@5.8.38/helpers/get.js", "npm:babel-runtime@5.8.38/helpers/inherits.js", "npm:babel-runtime@5.8.38/helpers/create-class.js", "npm:babel-runtime@5.8.38/helpers/class-call-check.js", "js/StateDb.js"], function (_export) {
-  var _get, _inherits, _createClass, _classCallCheck, StateDb, __hotReload, StreamGraph;
+$__System.register("8", ["5", "6", "9", "a", "b"], function (_export) {
+  var _createClass, _classCallCheck, StateDb, _get, _inherits, __hotReload, StreamGraph;
 
   return {
-    setters: [function (_npmBabelRuntime5838HelpersGetJs) {
-      _get = _npmBabelRuntime5838HelpersGetJs["default"];
-    }, function (_npmBabelRuntime5838HelpersInheritsJs) {
-      _inherits = _npmBabelRuntime5838HelpersInheritsJs["default"];
-    }, function (_npmBabelRuntime5838HelpersCreateClassJs) {
-      _createClass = _npmBabelRuntime5838HelpersCreateClassJs["default"];
-    }, function (_npmBabelRuntime5838HelpersClassCallCheckJs) {
-      _classCallCheck = _npmBabelRuntime5838HelpersClassCallCheckJs["default"];
-    }, function (_jsStateDbJs) {
-      StateDb = _jsStateDbJs.StateDb;
+    setters: [function (_) {
+      _createClass = _["default"];
+    }, function (_2) {
+      _classCallCheck = _2["default"];
+    }, function (_3) {
+      StateDb = _3.StateDb;
+    }, function (_a) {
+      _get = _a["default"];
+    }, function (_b) {
+      _inherits = _b["default"];
     }],
     execute: function () {
       "use strict";
@@ -491,7 +495,7 @@ System.register("js/container/stream/StreamGraph.js", ["npm:babel-runtime@5.8.38
           this.gBrush = this.g.append("g").attr("class", "brush");
           this.gGraph = this.g.append("g").attr("class", "graph");
 
-          this.offset = this.div.node().offsetTop;
+          // this.offset = this.div.node().offsetTop;
 
           this.nest = d3.nest();
           this.data = [];
@@ -677,13 +681,13 @@ System.register("js/container/stream/StreamGraph.js", ["npm:babel-runtime@5.8.38
     }
   };
 });
-System.registerDynamic("npm:babel-runtime@5.8.38/helpers/define-property.js", ["npm:babel-runtime@5.8.38/core-js/object/define-property.js"], true, function($__require, exports, module) {
+$__System.registerDynamic("c", ["d"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
       global = this,
       GLOBAL = this;
-  var _Object$defineProperty = $__require('npm:babel-runtime@5.8.38/core-js/object/define-property.js')["default"];
+  var _Object$defineProperty = $__require('d')["default"];
   exports["default"] = function(obj, key, value) {
     if (key in obj) {
       _Object$defineProperty(obj, key, {
@@ -701,22 +705,22 @@ System.registerDynamic("npm:babel-runtime@5.8.38/helpers/define-property.js", ["
   return module.exports;
 });
 
-System.register("js/container/stream/BarList.js", ["npm:babel-runtime@5.8.38/helpers/get.js", "npm:babel-runtime@5.8.38/helpers/inherits.js", "npm:babel-runtime@5.8.38/helpers/create-class.js", "npm:babel-runtime@5.8.38/helpers/class-call-check.js", "npm:babel-runtime@5.8.38/helpers/define-property.js", "js/StateDb.js"], function (_export) {
-  var _get, _inherits, _createClass, _classCallCheck, _defineProperty, StateDb, __hotReload, BarList;
+$__System.register("e", ["5", "6", "9", "a", "b", "c"], function (_export) {
+  var _createClass, _classCallCheck, StateDb, _get, _inherits, _defineProperty, __hotReload, BarList;
 
   return {
-    setters: [function (_npmBabelRuntime5838HelpersGetJs) {
-      _get = _npmBabelRuntime5838HelpersGetJs["default"];
-    }, function (_npmBabelRuntime5838HelpersInheritsJs) {
-      _inherits = _npmBabelRuntime5838HelpersInheritsJs["default"];
-    }, function (_npmBabelRuntime5838HelpersCreateClassJs) {
-      _createClass = _npmBabelRuntime5838HelpersCreateClassJs["default"];
-    }, function (_npmBabelRuntime5838HelpersClassCallCheckJs) {
-      _classCallCheck = _npmBabelRuntime5838HelpersClassCallCheckJs["default"];
-    }, function (_npmBabelRuntime5838HelpersDefinePropertyJs) {
-      _defineProperty = _npmBabelRuntime5838HelpersDefinePropertyJs["default"];
-    }, function (_jsStateDbJs) {
-      StateDb = _jsStateDbJs.StateDb;
+    setters: [function (_2) {
+      _createClass = _2["default"];
+    }, function (_3) {
+      _classCallCheck = _3["default"];
+    }, function (_4) {
+      StateDb = _4.StateDb;
+    }, function (_a) {
+      _get = _a["default"];
+    }, function (_b) {
+      _inherits = _b["default"];
+    }, function (_c) {
+      _defineProperty = _c["default"];
     }],
     execute: function () {
       "use strict";
@@ -840,24 +844,24 @@ System.register("js/container/stream/BarList.js", ["npm:babel-runtime@5.8.38/hel
     }
   };
 });
-System.register('js/container/stream/StreamSection.js', ['npm:babel-runtime@5.8.38/helpers/get.js', 'npm:babel-runtime@5.8.38/helpers/inherits.js', 'npm:babel-runtime@5.8.38/helpers/create-class.js', 'npm:babel-runtime@5.8.38/helpers/class-call-check.js', 'js/Section.js', 'js/container/stream/StreamGraph.js', 'js/container/stream/BarList.js'], function (_export) {
-  var _get, _inherits, _createClass, _classCallCheck, Section, StreamGraph, BarList, __hotReload, StreamSection;
+$__System.register('f', ['5', '6', '8', '10', 'a', 'b', 'e'], function (_export) {
+  var _createClass, _classCallCheck, StreamGraph, Section, _get, _inherits, BarList, __hotReload, StreamSection;
 
   return {
-    setters: [function (_npmBabelRuntime5838HelpersGetJs) {
-      _get = _npmBabelRuntime5838HelpersGetJs['default'];
-    }, function (_npmBabelRuntime5838HelpersInheritsJs) {
-      _inherits = _npmBabelRuntime5838HelpersInheritsJs['default'];
-    }, function (_npmBabelRuntime5838HelpersCreateClassJs) {
-      _createClass = _npmBabelRuntime5838HelpersCreateClassJs['default'];
-    }, function (_npmBabelRuntime5838HelpersClassCallCheckJs) {
-      _classCallCheck = _npmBabelRuntime5838HelpersClassCallCheckJs['default'];
-    }, function (_jsSectionJs) {
-      Section = _jsSectionJs.Section;
-    }, function (_jsContainerStreamStreamGraphJs) {
-      StreamGraph = _jsContainerStreamStreamGraphJs.StreamGraph;
-    }, function (_jsContainerStreamBarListJs) {
-      BarList = _jsContainerStreamBarListJs.BarList;
+    setters: [function (_) {
+      _createClass = _['default'];
+    }, function (_2) {
+      _classCallCheck = _2['default'];
+    }, function (_4) {
+      StreamGraph = _4.StreamGraph;
+    }, function (_3) {
+      Section = _3.Section;
+    }, function (_a) {
+      _get = _a['default'];
+    }, function (_b) {
+      _inherits = _b['default'];
+    }, function (_e) {
+      BarList = _e.BarList;
     }],
     execute: function () {
       'use strict';
@@ -909,7 +913,7 @@ System.register('js/container/stream/StreamSection.js', ['npm:babel-runtime@5.8.
     }
   };
 });
-System.registerDynamic("npm:core-js@1.2.6/library/modules/$.cof.js", [], true, function($__require, exports, module) {
+$__System.registerDynamic("11", [], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
@@ -921,19 +925,19 @@ System.registerDynamic("npm:core-js@1.2.6/library/modules/$.cof.js", [], true, f
   return module.exports;
 });
 
-System.registerDynamic("npm:core-js@1.2.6/library/modules/$.iobject.js", ["npm:core-js@1.2.6/library/modules/$.cof.js"], true, function($__require, exports, module) {
+$__System.registerDynamic("12", ["11"], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
       GLOBAL = this;
-  var cof = $__require('npm:core-js@1.2.6/library/modules/$.cof.js');
+  var cof = $__require('11');
   module.exports = Object('z').propertyIsEnumerable(0) ? Object : function(it) {
     return cof(it) == 'String' ? it.split('') : Object(it);
   };
   return module.exports;
 });
 
-System.registerDynamic("npm:core-js@1.2.6/library/modules/$.defined.js", [], true, function($__require, exports, module) {
+$__System.registerDynamic("13", [], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
@@ -946,20 +950,20 @@ System.registerDynamic("npm:core-js@1.2.6/library/modules/$.defined.js", [], tru
   return module.exports;
 });
 
-System.registerDynamic("npm:core-js@1.2.6/library/modules/$.to-iobject.js", ["npm:core-js@1.2.6/library/modules/$.iobject.js", "npm:core-js@1.2.6/library/modules/$.defined.js"], true, function($__require, exports, module) {
+$__System.registerDynamic("14", ["12", "13"], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
       GLOBAL = this;
-  var IObject = $__require('npm:core-js@1.2.6/library/modules/$.iobject.js'),
-      defined = $__require('npm:core-js@1.2.6/library/modules/$.defined.js');
+  var IObject = $__require('12'),
+      defined = $__require('13');
   module.exports = function(it) {
     return IObject(defined(it));
   };
   return module.exports;
 });
 
-System.registerDynamic("npm:core-js@1.2.6/library/modules/$.fails.js", [], true, function($__require, exports, module) {
+$__System.registerDynamic("15", [], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
@@ -974,14 +978,14 @@ System.registerDynamic("npm:core-js@1.2.6/library/modules/$.fails.js", [], true,
   return module.exports;
 });
 
-System.registerDynamic("npm:core-js@1.2.6/library/modules/$.object-sap.js", ["npm:core-js@1.2.6/library/modules/$.export.js", "npm:core-js@1.2.6/library/modules/$.core.js", "npm:core-js@1.2.6/library/modules/$.fails.js"], true, function($__require, exports, module) {
+$__System.registerDynamic("16", ["17", "18", "15"], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
       GLOBAL = this;
-  var $export = $__require('npm:core-js@1.2.6/library/modules/$.export.js'),
-      core = $__require('npm:core-js@1.2.6/library/modules/$.core.js'),
-      fails = $__require('npm:core-js@1.2.6/library/modules/$.fails.js');
+  var $export = $__require('17'),
+      core = $__require('18'),
+      fails = $__require('15');
   module.exports = function(KEY, exec) {
     var fn = (core.Object || {})[KEY] || Object[KEY],
         exp = {};
@@ -993,13 +997,13 @@ System.registerDynamic("npm:core-js@1.2.6/library/modules/$.object-sap.js", ["np
   return module.exports;
 });
 
-System.registerDynamic("npm:core-js@1.2.6/library/modules/es6.object.get-own-property-descriptor.js", ["npm:core-js@1.2.6/library/modules/$.to-iobject.js", "npm:core-js@1.2.6/library/modules/$.object-sap.js"], true, function($__require, exports, module) {
+$__System.registerDynamic("19", ["14", "16"], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
       GLOBAL = this;
-  var toIObject = $__require('npm:core-js@1.2.6/library/modules/$.to-iobject.js');
-  $__require('npm:core-js@1.2.6/library/modules/$.object-sap.js')('getOwnPropertyDescriptor', function($getOwnPropertyDescriptor) {
+  var toIObject = $__require('14');
+  $__require('16')('getOwnPropertyDescriptor', function($getOwnPropertyDescriptor) {
     return function getOwnPropertyDescriptor(it, key) {
       return $getOwnPropertyDescriptor(toIObject(it), key);
     };
@@ -1007,38 +1011,38 @@ System.registerDynamic("npm:core-js@1.2.6/library/modules/es6.object.get-own-pro
   return module.exports;
 });
 
-System.registerDynamic("npm:core-js@1.2.6/library/fn/object/get-own-property-descriptor.js", ["npm:core-js@1.2.6/library/modules/$.js", "npm:core-js@1.2.6/library/modules/es6.object.get-own-property-descriptor.js"], true, function($__require, exports, module) {
+$__System.registerDynamic("1a", ["1b", "19"], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
       GLOBAL = this;
-  var $ = $__require('npm:core-js@1.2.6/library/modules/$.js');
-  $__require('npm:core-js@1.2.6/library/modules/es6.object.get-own-property-descriptor.js');
+  var $ = $__require('1b');
+  $__require('19');
   module.exports = function getOwnPropertyDescriptor(it, key) {
     return $.getDesc(it, key);
   };
   return module.exports;
 });
 
-System.registerDynamic("npm:babel-runtime@5.8.38/core-js/object/get-own-property-descriptor.js", ["npm:core-js@1.2.6/library/fn/object/get-own-property-descriptor.js"], true, function($__require, exports, module) {
+$__System.registerDynamic("1c", ["1a"], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
       GLOBAL = this;
   module.exports = {
-    "default": $__require('npm:core-js@1.2.6/library/fn/object/get-own-property-descriptor.js'),
+    "default": $__require('1a'),
     __esModule: true
   };
   return module.exports;
 });
 
-System.registerDynamic("npm:babel-runtime@5.8.38/helpers/get.js", ["npm:babel-runtime@5.8.38/core-js/object/get-own-property-descriptor.js"], true, function($__require, exports, module) {
+$__System.registerDynamic("a", ["1c"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
       global = this,
       GLOBAL = this;
-  var _Object$getOwnPropertyDescriptor = $__require('npm:babel-runtime@5.8.38/core-js/object/get-own-property-descriptor.js')["default"];
+  var _Object$getOwnPropertyDescriptor = $__require('1c')["default"];
   exports["default"] = function get(_x, _x2, _x3) {
     var _again = true;
     _function: while (_again) {
@@ -1076,31 +1080,31 @@ System.registerDynamic("npm:babel-runtime@5.8.38/helpers/get.js", ["npm:babel-ru
   return module.exports;
 });
 
-System.registerDynamic("npm:core-js@1.2.6/library/fn/object/create.js", ["npm:core-js@1.2.6/library/modules/$.js"], true, function($__require, exports, module) {
+$__System.registerDynamic("1d", ["1b"], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
       GLOBAL = this;
-  var $ = $__require('npm:core-js@1.2.6/library/modules/$.js');
+  var $ = $__require('1b');
   module.exports = function create(P, D) {
     return $.create(P, D);
   };
   return module.exports;
 });
 
-System.registerDynamic("npm:babel-runtime@5.8.38/core-js/object/create.js", ["npm:core-js@1.2.6/library/fn/object/create.js"], true, function($__require, exports, module) {
+$__System.registerDynamic("1e", ["1d"], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
       GLOBAL = this;
   module.exports = {
-    "default": $__require('npm:core-js@1.2.6/library/fn/object/create.js'),
+    "default": $__require('1d'),
     __esModule: true
   };
   return module.exports;
 });
 
-System.registerDynamic("npm:core-js@1.2.6/library/modules/$.global.js", [], true, function($__require, exports, module) {
+$__System.registerDynamic("1f", [], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
@@ -1111,14 +1115,14 @@ System.registerDynamic("npm:core-js@1.2.6/library/modules/$.global.js", [], true
   return module.exports;
 });
 
-System.registerDynamic("npm:core-js@1.2.6/library/modules/$.export.js", ["npm:core-js@1.2.6/library/modules/$.global.js", "npm:core-js@1.2.6/library/modules/$.core.js", "npm:core-js@1.2.6/library/modules/$.ctx.js"], true, function($__require, exports, module) {
+$__System.registerDynamic("17", ["1f", "18", "20"], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
       GLOBAL = this;
-  var global = $__require('npm:core-js@1.2.6/library/modules/$.global.js'),
-      core = $__require('npm:core-js@1.2.6/library/modules/$.core.js'),
-      ctx = $__require('npm:core-js@1.2.6/library/modules/$.ctx.js'),
+  var global = $__require('1f'),
+      core = $__require('18'),
+      ctx = $__require('20'),
       PROTOTYPE = 'prototype';
   var $export = function(type, name, source) {
     var IS_FORCED = type & $export.F,
@@ -1160,7 +1164,7 @@ System.registerDynamic("npm:core-js@1.2.6/library/modules/$.export.js", ["npm:co
   return module.exports;
 });
 
-System.registerDynamic("npm:core-js@1.2.6/library/modules/$.is-object.js", [], true, function($__require, exports, module) {
+$__System.registerDynamic("21", [], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
@@ -1171,12 +1175,12 @@ System.registerDynamic("npm:core-js@1.2.6/library/modules/$.is-object.js", [], t
   return module.exports;
 });
 
-System.registerDynamic("npm:core-js@1.2.6/library/modules/$.an-object.js", ["npm:core-js@1.2.6/library/modules/$.is-object.js"], true, function($__require, exports, module) {
+$__System.registerDynamic("22", ["21"], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
       GLOBAL = this;
-  var isObject = $__require('npm:core-js@1.2.6/library/modules/$.is-object.js');
+  var isObject = $__require('21');
   module.exports = function(it) {
     if (!isObject(it))
       throw TypeError(it + ' is not an object!');
@@ -1185,7 +1189,7 @@ System.registerDynamic("npm:core-js@1.2.6/library/modules/$.an-object.js", ["npm
   return module.exports;
 });
 
-System.registerDynamic("npm:core-js@1.2.6/library/modules/$.a-function.js", [], true, function($__require, exports, module) {
+$__System.registerDynamic("23", [], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
@@ -1198,12 +1202,12 @@ System.registerDynamic("npm:core-js@1.2.6/library/modules/$.a-function.js", [], 
   return module.exports;
 });
 
-System.registerDynamic("npm:core-js@1.2.6/library/modules/$.ctx.js", ["npm:core-js@1.2.6/library/modules/$.a-function.js"], true, function($__require, exports, module) {
+$__System.registerDynamic("20", ["23"], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
       GLOBAL = this;
-  var aFunction = $__require('npm:core-js@1.2.6/library/modules/$.a-function.js');
+  var aFunction = $__require('23');
   module.exports = function(fn, that, length) {
     aFunction(fn);
     if (that === undefined)
@@ -1229,14 +1233,14 @@ System.registerDynamic("npm:core-js@1.2.6/library/modules/$.ctx.js", ["npm:core-
   return module.exports;
 });
 
-System.registerDynamic("npm:core-js@1.2.6/library/modules/$.set-proto.js", ["npm:core-js@1.2.6/library/modules/$.js", "npm:core-js@1.2.6/library/modules/$.is-object.js", "npm:core-js@1.2.6/library/modules/$.an-object.js", "npm:core-js@1.2.6/library/modules/$.ctx.js"], true, function($__require, exports, module) {
+$__System.registerDynamic("24", ["1b", "21", "22", "20"], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
       GLOBAL = this;
-  var getDesc = $__require('npm:core-js@1.2.6/library/modules/$.js').getDesc,
-      isObject = $__require('npm:core-js@1.2.6/library/modules/$.is-object.js'),
-      anObject = $__require('npm:core-js@1.2.6/library/modules/$.an-object.js');
+  var getDesc = $__require('1b').getDesc,
+      isObject = $__require('21'),
+      anObject = $__require('22');
   var check = function(O, proto) {
     anObject(O);
     if (!isObject(proto) && proto !== null)
@@ -1245,7 +1249,7 @@ System.registerDynamic("npm:core-js@1.2.6/library/modules/$.set-proto.js", ["npm
   module.exports = {
     set: Object.setPrototypeOf || ('__proto__' in {} ? function(test, buggy, set) {
       try {
-        set = $__require('npm:core-js@1.2.6/library/modules/$.ctx.js')(Function.call, getDesc(Object.prototype, '__proto__').set, 2);
+        set = $__require('20')(Function.call, getDesc(Object.prototype, '__proto__').set, 2);
         set(test, []);
         buggy = !(test instanceof Array);
       } catch (e) {
@@ -1265,17 +1269,17 @@ System.registerDynamic("npm:core-js@1.2.6/library/modules/$.set-proto.js", ["npm
   return module.exports;
 });
 
-System.registerDynamic("npm:core-js@1.2.6/library/modules/es6.object.set-prototype-of.js", ["npm:core-js@1.2.6/library/modules/$.export.js", "npm:core-js@1.2.6/library/modules/$.set-proto.js"], true, function($__require, exports, module) {
+$__System.registerDynamic("25", ["17", "24"], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
       GLOBAL = this;
-  var $export = $__require('npm:core-js@1.2.6/library/modules/$.export.js');
-  $export($export.S, 'Object', {setPrototypeOf: $__require('npm:core-js@1.2.6/library/modules/$.set-proto.js').set});
+  var $export = $__require('17');
+  $export($export.S, 'Object', {setPrototypeOf: $__require('24').set});
   return module.exports;
 });
 
-System.registerDynamic("npm:core-js@1.2.6/library/modules/$.core.js", [], true, function($__require, exports, module) {
+$__System.registerDynamic("18", [], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
@@ -1286,36 +1290,36 @@ System.registerDynamic("npm:core-js@1.2.6/library/modules/$.core.js", [], true, 
   return module.exports;
 });
 
-System.registerDynamic("npm:core-js@1.2.6/library/fn/object/set-prototype-of.js", ["npm:core-js@1.2.6/library/modules/es6.object.set-prototype-of.js", "npm:core-js@1.2.6/library/modules/$.core.js"], true, function($__require, exports, module) {
+$__System.registerDynamic("26", ["25", "18"], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
       GLOBAL = this;
-  $__require('npm:core-js@1.2.6/library/modules/es6.object.set-prototype-of.js');
-  module.exports = $__require('npm:core-js@1.2.6/library/modules/$.core.js').Object.setPrototypeOf;
+  $__require('25');
+  module.exports = $__require('18').Object.setPrototypeOf;
   return module.exports;
 });
 
-System.registerDynamic("npm:babel-runtime@5.8.38/core-js/object/set-prototype-of.js", ["npm:core-js@1.2.6/library/fn/object/set-prototype-of.js"], true, function($__require, exports, module) {
+$__System.registerDynamic("27", ["26"], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
       GLOBAL = this;
   module.exports = {
-    "default": $__require('npm:core-js@1.2.6/library/fn/object/set-prototype-of.js'),
+    "default": $__require('26'),
     __esModule: true
   };
   return module.exports;
 });
 
-System.registerDynamic("npm:babel-runtime@5.8.38/helpers/inherits.js", ["npm:babel-runtime@5.8.38/core-js/object/create.js", "npm:babel-runtime@5.8.38/core-js/object/set-prototype-of.js"], true, function($__require, exports, module) {
+$__System.registerDynamic("b", ["1e", "27"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
       global = this,
       GLOBAL = this;
-  var _Object$create = $__require('npm:babel-runtime@5.8.38/core-js/object/create.js')["default"];
-  var _Object$setPrototypeOf = $__require('npm:babel-runtime@5.8.38/core-js/object/set-prototype-of.js')["default"];
+  var _Object$create = $__require('1e')["default"];
+  var _Object$setPrototypeOf = $__require('27')["default"];
   exports["default"] = function(subClass, superClass) {
     if (typeof superClass !== "function" && superClass !== null) {
       throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
@@ -1333,7 +1337,7 @@ System.registerDynamic("npm:babel-runtime@5.8.38/helpers/inherits.js", ["npm:bab
   return module.exports;
 });
 
-System.registerDynamic("npm:core-js@1.2.6/library/modules/$.js", [], true, function($__require, exports, module) {
+$__System.registerDynamic("1b", [], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
@@ -1354,37 +1358,37 @@ System.registerDynamic("npm:core-js@1.2.6/library/modules/$.js", [], true, funct
   return module.exports;
 });
 
-System.registerDynamic("npm:core-js@1.2.6/library/fn/object/define-property.js", ["npm:core-js@1.2.6/library/modules/$.js"], true, function($__require, exports, module) {
+$__System.registerDynamic("28", ["1b"], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
       GLOBAL = this;
-  var $ = $__require('npm:core-js@1.2.6/library/modules/$.js');
+  var $ = $__require('1b');
   module.exports = function defineProperty(it, key, desc) {
     return $.setDesc(it, key, desc);
   };
   return module.exports;
 });
 
-System.registerDynamic("npm:babel-runtime@5.8.38/core-js/object/define-property.js", ["npm:core-js@1.2.6/library/fn/object/define-property.js"], true, function($__require, exports, module) {
+$__System.registerDynamic("d", ["28"], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
       GLOBAL = this;
   module.exports = {
-    "default": $__require('npm:core-js@1.2.6/library/fn/object/define-property.js'),
+    "default": $__require('28'),
     __esModule: true
   };
   return module.exports;
 });
 
-System.registerDynamic("npm:babel-runtime@5.8.38/helpers/create-class.js", ["npm:babel-runtime@5.8.38/core-js/object/define-property.js"], true, function($__require, exports, module) {
+$__System.registerDynamic("5", ["d"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
       global = this,
       GLOBAL = this;
-  var _Object$defineProperty = $__require('npm:babel-runtime@5.8.38/core-js/object/define-property.js')["default"];
+  var _Object$defineProperty = $__require('d')["default"];
   exports["default"] = (function() {
     function defineProperties(target, props) {
       for (var i = 0; i < props.length; i++) {
@@ -1408,7 +1412,7 @@ System.registerDynamic("npm:babel-runtime@5.8.38/helpers/create-class.js", ["npm
   return module.exports;
 });
 
-System.registerDynamic("npm:babel-runtime@5.8.38/helpers/class-call-check.js", [], true, function($__require, exports, module) {
+$__System.registerDynamic("6", [], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -1423,14 +1427,14 @@ System.registerDynamic("npm:babel-runtime@5.8.38/helpers/class-call-check.js", [
   return module.exports;
 });
 
-System.register("js/StateDb.js", ["npm:babel-runtime@5.8.38/helpers/create-class.js", "npm:babel-runtime@5.8.38/helpers/class-call-check.js"], function (_export) {
+$__System.register("9", ["5", "6"], function (_export) {
 	var _createClass, _classCallCheck, __hotReload, StateDb;
 
 	return {
-		setters: [function (_npmBabelRuntime5838HelpersCreateClassJs) {
-			_createClass = _npmBabelRuntime5838HelpersCreateClassJs["default"];
-		}, function (_npmBabelRuntime5838HelpersClassCallCheckJs) {
-			_classCallCheck = _npmBabelRuntime5838HelpersClassCallCheckJs["default"];
+		setters: [function (_) {
+			_createClass = _["default"];
+		}, function (_2) {
+			_classCallCheck = _2["default"];
 		}],
 		execute: function () {
 			"use strict";
@@ -1463,18 +1467,18 @@ System.register("js/StateDb.js", ["npm:babel-runtime@5.8.38/helpers/create-class
 		}
 	};
 });
-System.register("js/Section.js", ["npm:babel-runtime@5.8.38/helpers/get.js", "npm:babel-runtime@5.8.38/helpers/inherits.js", "npm:babel-runtime@5.8.38/helpers/class-call-check.js", "js/StateDb.js"], function (_export) {
-	var _get, _inherits, _classCallCheck, StateDb, __hotReload, Section;
+$__System.register("10", ["6", "9", "a", "b"], function (_export) {
+	var _classCallCheck, StateDb, _get, _inherits, __hotReload, Section;
 
 	return {
-		setters: [function (_npmBabelRuntime5838HelpersGetJs) {
-			_get = _npmBabelRuntime5838HelpersGetJs["default"];
-		}, function (_npmBabelRuntime5838HelpersInheritsJs) {
-			_inherits = _npmBabelRuntime5838HelpersInheritsJs["default"];
-		}, function (_npmBabelRuntime5838HelpersClassCallCheckJs) {
-			_classCallCheck = _npmBabelRuntime5838HelpersClassCallCheckJs["default"];
-		}, function (_jsStateDbJs) {
-			StateDb = _jsStateDbJs.StateDb;
+		setters: [function (_) {
+			_classCallCheck = _["default"];
+		}, function (_2) {
+			StateDb = _2.StateDb;
+		}, function (_a) {
+			_get = _a["default"];
+		}, function (_b) {
+			_inherits = _b["default"];
 		}],
 		execute: function () {
 			"use strict";
@@ -1503,20 +1507,20 @@ System.register("js/Section.js", ["npm:babel-runtime@5.8.38/helpers/get.js", "np
 		}
 	};
 });
-System.register("js/container/dummy/DummySection.js", ["npm:babel-runtime@5.8.38/helpers/get.js", "npm:babel-runtime@5.8.38/helpers/inherits.js", "npm:babel-runtime@5.8.38/helpers/create-class.js", "npm:babel-runtime@5.8.38/helpers/class-call-check.js", "js/Section.js"], function (_export) {
-  var _get, _inherits, _createClass, _classCallCheck, Section, __hotReload, DummySection;
+$__System.register("29", ["5", "6", "10", "a", "b"], function (_export) {
+  var _createClass, _classCallCheck, Section, _get, _inherits, __hotReload, DummySection;
 
   return {
-    setters: [function (_npmBabelRuntime5838HelpersGetJs) {
-      _get = _npmBabelRuntime5838HelpersGetJs["default"];
-    }, function (_npmBabelRuntime5838HelpersInheritsJs) {
-      _inherits = _npmBabelRuntime5838HelpersInheritsJs["default"];
-    }, function (_npmBabelRuntime5838HelpersCreateClassJs) {
-      _createClass = _npmBabelRuntime5838HelpersCreateClassJs["default"];
-    }, function (_npmBabelRuntime5838HelpersClassCallCheckJs) {
-      _classCallCheck = _npmBabelRuntime5838HelpersClassCallCheckJs["default"];
-    }, function (_jsSectionJs) {
-      Section = _jsSectionJs.Section;
+    setters: [function (_) {
+      _createClass = _["default"];
+    }, function (_2) {
+      _classCallCheck = _2["default"];
+    }, function (_3) {
+      Section = _3.Section;
+    }, function (_a) {
+      _get = _a["default"];
+    }, function (_b) {
+      _inherits = _b["default"];
     }],
     execute: function () {
       "use strict";
@@ -1556,20 +1560,20 @@ System.register("js/container/dummy/DummySection.js", ["npm:babel-runtime@5.8.38
     }
   };
 });
-System.register('index.js', ['js/StateMachine.js', 'js/DataBase.js', 'js/container/stream/StreamSection.js', 'js/container/dummy/DummySection.js'], function (_export) {
+$__System.register('1', ['4', '7', '29', 'f'], function (_export) {
   'use strict';
 
-  var StateMachine, DataBase, StreamSection, DummySection, __hotReload, state, db, streamSection, dummySection;
+  var StateMachine, DataBase, DummySection, StreamSection, __hotReload, state, db, streamSection, dummySection;
 
   return {
-    setters: [function (_jsStateMachineJs) {
-      StateMachine = _jsStateMachineJs.StateMachine;
-    }, function (_jsDataBaseJs) {
-      DataBase = _jsDataBaseJs.DataBase;
-    }, function (_jsContainerStreamStreamSectionJs) {
-      StreamSection = _jsContainerStreamStreamSectionJs.StreamSection;
-    }, function (_jsContainerDummyDummySectionJs) {
-      DummySection = _jsContainerDummyDummySectionJs.DummySection;
+    setters: [function (_) {
+      StateMachine = _.StateMachine;
+    }, function (_2) {
+      DataBase = _2.DataBase;
+    }, function (_3) {
+      DummySection = _3.DummySection;
+    }, function (_f) {
+      StreamSection = _f.StreamSection;
     }],
     execute: function () {
       __hotReload = true;
@@ -1656,5 +1660,9 @@ System.register('index.js', ['js/StateMachine.js', 'js/DataBase.js', 'js/contain
       // })
     }
   };
+});
+})
+(function(factory) {
+  factory();
 });
 //# sourceMappingURL=build.js.map

@@ -41,7 +41,7 @@ export class StreamGraph extends StateDb {
     this.gBrush = this.g.append("g").attr("class", "brush");
     this.gGraph = this.g.append("g").attr("class", "graph");
 
-    this.offset = this.div.node().offsetTop;
+    // this.offset = this.div.node().offsetTop;
 
     this.nest = d3.nest();
     this.data = [];
