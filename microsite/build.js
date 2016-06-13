@@ -208,8 +208,8 @@ $__System.register("7", ["5", "6"], function (_export) {
 
             this.state.push({ loading: true });
 
-            d3.csv("../data/data.csv", function (data) {
-              d3.csv("../data/geocode.csv", function (geocode) {
+            d3.csv("data/data.csv", function (data) {
+              d3.csv("data/geocode.csv", function (geocode) {
 
                 _this.init(data, geocode);
                 _this.state.push({ loaded: true, brushStart: _this.extent[0], brushEnd: _this.extent[1], keyframe: true });

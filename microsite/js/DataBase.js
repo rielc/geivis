@@ -16,8 +16,8 @@ export class DataBase {
   load(){
     this.state.push({ loading: true });
 
-    d3.csv("../data/data.csv", (data)=> {
-    d3.csv("../data/geocode.csv", (geocode)=> {
+    d3.csv("data/data.csv", (data)=> {
+    d3.csv("data/geocode.csv", (geocode)=> {
 
       this.init(data,geocode);
       this.state.push({ loaded: true, brushStart: this.extent[0], brushEnd: this.extent[1], keyframe:true })
