@@ -11,14 +11,18 @@ export class DummySection extends Section {
   }
 
 
-  stateChange(next, last){
-
+  stateChange(next, pev){
+    if(!next.visible.DummySection) return;
     // console.log("dummy",next);
 
 
-  	if(next.loaded == !last.loaded){
+  	if(next.loaded == !pev.loaded){
   	   console.log("init dummy");
   	}
+
+    if(next.visible.DummySection != pev.visible.DummySection){
+      console.log("dummy visible", next.visible.DummySection);
+    }
   }
 
   render(){

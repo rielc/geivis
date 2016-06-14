@@ -17,25 +17,6 @@ export class StateMachine {
     this.history.push(objectAssign({}, this.state));
     this.size = 10;
     this.subscriber = [];
-
-    window.addEventListener('scroll', (e) => {
-      this.subscriber.forEach(s => {
-        if(s.type === "section"){
-
-          const rect = s.div.node().getBoundingClientRect();
-          const height = (window.innerHeight || document.documentElement.clientHeight);
-
-          const visible = (
-            rect.top >= -height &&
-            rect.top <= height 
-          )
-
-          s.visible = visible;
-          //console.log(s);
-        }
-      })
-    })
-
   }
 
   push(state){

@@ -27,6 +27,7 @@ export class BarList extends StateDb {
   }
 
   stateChange(next, last){
+    if(!next.visible.StreamSection) return;
     // if(next.brushStart !== last.brushStart){
     //   this.render();
     // }
@@ -38,7 +39,7 @@ export class BarList extends StateDb {
   }
 
   render(){
-    //console.log( this.state.state);
+    console.log("render barlist");
     const size = this.db[this.key].size();
     this.div.select(".title").text(this.key);
     this.div.classed("active", this.state.state.active === this.key);

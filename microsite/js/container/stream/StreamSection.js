@@ -27,8 +27,6 @@ export class StreamSection extends Section {
   stateChange(next, last){
   	// console.log(this.name, next)
 
-  	
-
     //console.log(this.db.date.top(Infinity));
 
   }
