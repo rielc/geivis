@@ -54,22 +54,23 @@ export class NestedTreemap {
 			.style("height", this.height );
 
 		this.format = d3.format(",d");
-		//this.color = d3.scaleMagma().domain([-1, 4]);
 
-		this.treemap = d3.layout.treemap()
+		this.hierarchy = d3.hierarchy()
+			.sum( d => d.size )
+			.sort( (a, b) => { return Math.max(0, a.dx - 1) - Math.max(0, b.dx - 1) || a.value - b.value; } );
+
+		this.treemap = d3.treemap()
 			.size([this.width, this.height])
-			.mode("slice-dice")
-			.value( d => d.size )
-			.sort( (a, b) => { return Math.max(0, a.dx - 1) - Math.max(0, b.dx - 1) || a.value - b.value; } )
+			.tile("slice-dice")
 			.round(false)
 			.padding( (d) => {
-				//console.log(d.dy);
 				switch(d.depth) {
 					case 0: return [0, 0, 0, 0];
 					case 1: return [30, 0, 0, 0];
 					case 2: return [0 , 0, 0, 0];
 				}
 			} );
+
 
 		return this;
 	}

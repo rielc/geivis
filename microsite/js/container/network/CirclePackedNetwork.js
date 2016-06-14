@@ -1,6 +1,6 @@
 export let __hotReload = true;
 
-import * as GeiVisUtils from "../lib/GeiVisUtils.js";
+import * as GeiVisUtils from "../../lib/GeiVisUtils.js";
 
 export class CirclePackedNetwork {
 
@@ -18,19 +18,10 @@ export class CirclePackedNetwork {
     return this;
   }
 
-
-  bindStateMachine (stateMachine) {
-    this.stateMachine = stateMachine;
-    this.stateMachine.listen(this.stateChange.bind(this));
-    return this;
-  }
-
-  bindDatabase (database) {
-    this.database = database;
-    return this;
-  }
-
   stateChange (next, last) {
+
+    console.log(next);
+
 
     //console.log(next, last);
 
@@ -43,15 +34,17 @@ export class CirclePackedNetwork {
     //   this.load().render();
     // }
 
-    //console.log(this.database.year.top(Infinity));
+    //console.log(this.db.year.top(Infinity));
 
-    //console.log(this.database);
-    //this.updateData(this.database.year.top(Infinity));
+    //console.log(this.db);
+    //this.updateData(this.db.year.top(Infinity));
     //this.render();
 
     // //console.log(next.brushStart.getFullYear());
 
     console.log(this);
+
+
     // if(next.brushStart.getFullYear() != last.brushStart.getFullYear()){
       
     // }
@@ -59,9 +52,9 @@ export class CirclePackedNetwork {
     if( next.brushStart.getFullYear() != this.years[0] || next.brushEnd.getFullYear() != this.years[1] ){
       this.years = [next.brushStart.getFullYear(), next.brushEnd.getFullYear()];
       
-      let data = this.database.year.top(Infinity);
+      let data = this.db.dates.top(Infinity);
       if (data.length>0) {
-        this.updateData(this.database.year.top(Infinity));
+        this.updateData(this.db.date.top(Infinity));
         this.render();
       }
     }
@@ -70,11 +63,8 @@ export class CirclePackedNetwork {
   }
 
   append (selector) {
-    this.containerName = 
-      d3.select(selector)
-      .attr("id");
-
-    this.parentContainer = d3.select(selector);
+    this.containerName = selector.attr("id");
+    this.parentContainer = selector;
   
     this.width = parseInt( this.parentContainer.style("width") ) - this.properties.margin.left - this.properties.margin.right;
     this.height = parseInt( this.parentContainer.style("height") ) - this.properties.margin.top - this.properties.margin.bottom;
@@ -86,7 +76,7 @@ export class CirclePackedNetwork {
 
 
     this.container = 
-      d3.select(selector)
+      selector
       .append("div")
       .classed("container", true)
       .attr("id", this.containerName+"-visualization")
