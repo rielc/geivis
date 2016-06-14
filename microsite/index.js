@@ -11,10 +11,16 @@ import {NetworkSection} from './js/container/network/NetworkSection'
 //import {TreemapSection} from './js/container/treemap/TreemapSection'
 
 let state = new StateMachine();
-let scroll = new ScrollListener(state);
-let db = new DataBase(state).load();
+let db = new DataBase(state);
+let scroll = new ScrollListener(state)
 
 let streamSection = new StreamSection(state, db);
+
 let networkSection = new NetworkSection(state, db);
 //let treemapSection = new TreemapSection(state, db);
 //let dummySection = new DummySection(state, db);
+
+
+let dummySection = new DummySection(state, db);
+
+db.load()

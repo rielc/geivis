@@ -11,7 +11,8 @@ export class StateMachine {
       active:"subjects",
       activeItem:null,
       loaded:false,
-      timestamp:null
+      timestamp:null,
+      visible: {}
     }
     this.history = [];
     this.history.push(objectAssign({}, this.state));
@@ -20,16 +21,18 @@ export class StateMachine {
   }
 
   push(state){
+    //console.log("push");
     if(this.history.length >= this.size){
       this.history.pop();
     }
-    this.lastState = this.history[0];
-    let newState = objectAssign({}, this.state, state);
-    // newState.timestamp = +new Date();
+    const lastState = this.history[0];
+    const newState = objectAssign({}, this.state, state);
     this.history.unshift(newState);
-    this.state = objectAssign({}, newState);
+    // this.state = objectAssign({}, newState);
+    this.lastState = lastState;
+    this.state = newState;
+    // console.log(newState)
     this.broadcast();
-    // console.log(newState);
   }
 
   subscribe(c){
@@ -37,7 +40,14 @@ export class StateMachine {
   }
 
   broadcast(){
+    // console.log("broadcast", this.state.brushEnd, this.state.brushEnd);
     // console.log(this.subscriber);
-    this.subscriber.forEach(s => s.stateChange(this.state, this.lastState));
+    const lastState = this.lastState;
+    const newState = this.state;
+
+    this.subscriber.map(s => {
+      //console.log("broadcast", s.name)
+      s.stateChange(newState, lastState)
+    });
   }
 }

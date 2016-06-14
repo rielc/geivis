@@ -8,9 +8,12 @@ import {debounce, fromPairs} from 'lodash'
 export class ScrollListener {
 
   constructor(state){
+    this.name = this.constructor.name;
     this.state = state;
+    this.state.subscribe(this);
     window.addEventListener('scroll', debounce(this.check, 150).bind(this));
-    this.check();
+    //this.check();
+
   }
 
   check(){
@@ -27,6 +30,12 @@ export class ScrollListener {
     // this.state.push({visible});
     this.state.push({ visible: fromPairs(visible) });
     // console.log();
+  }
+
+  stateChange(next, prev){
+    if(next.loaded == !prev.loaded){
+       this.check();
+    }
   }
 
 }

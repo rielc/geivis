@@ -69,12 +69,14 @@ export class StreamGraph extends StateDb {
 
   brushmove() {
     let s = d3.event.selection.map(d=> this.x.invert(d));
-    this.state.push({ brushStart: s[0], brushEnd: s[1], keyframe: false });
+    console.log("bs")
+    this.state.push({ brushStart: s[0], brushEnd: s[1], event: "brushmove" });
   }
 
   brushend() {
     let s = d3.event.selection ? d3.event.selection.map(d=> this.x.invert(d)) : this.db.extent;
-    this.state.push({ brushStart: s[0], brushEnd: s[1], keyframe: true });
+    console.log("be")
+    this.state.push({ brushStart: s[0], brushEnd: s[1], event: "brushend" });
   }
 
   init(){
@@ -137,32 +139,34 @@ export class StreamGraph extends StateDb {
   }
 
   stateChange(next, last){
-    //console.log(next);
+    // console.log("stream", last.loaded, next.loaded);
     
     if(next.loaded == !last.loaded){
       this.x.domain(this.db.extent);
       this.load().render();
+      console.log("load1")
     }
 
     if(next.hover !== last.hover){
       this.render();
     }
-    if(next.active !== last.active){
+    if(next.active !== last.active || next.activeItem !== last.activeItem){
       // let data = this.db.date.top(Infinity);
+      console.log("load2")
       this.load().render();
     }
-    if(next.activeItem !== last.activeItem){
-      if(!next.activeItem) {
-        // this.stack.offset("silhouette");
-        this.load().render();
-      } else {
-        this.load().render();
-        // let k = this.state.state.active.substring(0,this.state.state.active.length-1);
-        // let data = this.db.data.filter(d => d[k] === next.activeItem);
-        // this.stack.offset("zero");
-        // this.load(data).render();
-      }
-    }
+    // if(next.activeItem !== last.activeItem){
+    //   if(!next.activeItem) {
+    //     // this.stack.offset("silhouette");
+    //     this.load().render();
+    //   } else {
+    //     this.load().render();
+    //     // let k = this.state.state.active.substring(0,this.state.state.active.length-1);
+    //     // let data = this.db.data.filter(d => d[k] === next.activeItem);
+    //     // this.stack.offset("zero");
+    //     // this.load(data).render();
+    //   }
+    // }
     // if(next.brushStart.getYear() != last.brushStart.getYear()){
 
     // }
@@ -170,6 +174,8 @@ export class StreamGraph extends StateDb {
   }
 
   render(notransition){
+
+    //console.log("render stream")
 
     let s = this.gGraph.selectAll("path")
       .data(this.data, (d) => { return d.key})

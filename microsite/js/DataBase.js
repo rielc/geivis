@@ -8,19 +8,20 @@ export class DataBase {
     this.extent = [0,0];
     this.crossfilter = {};
     this.state = state;
+    this.name = this.constructor.name;
 
     this.state.subscribe(this);
   }
 
 
   load(){
-    this.state.push({ loading: true });
+    // this.state.push({ loading: true });
 
     d3.csv("data/data.csv", (data)=> {
     d3.csv("data/geocode.csv", (geocode)=> {
 
       this.init(data,geocode);
-      this.state.push({ loaded: true, brushStart: this.extent[0], brushEnd: this.extent[1], keyframe:true })
+
     })
     })
 
@@ -40,6 +41,11 @@ export class DataBase {
       d.lon = geo ? +geo.lon : null;
 
       d.RSWKTag = d.RSWKTag.split(",");
+
+      d.publisher = d.publisher || "none";
+      d.schoollevel = d.schoollevel || "none";
+      d.subject = d.subject || "none";
+      d.place = d.place || "none";
     })
 
     console.log(this.data[0])
@@ -73,6 +79,8 @@ export class DataBase {
       .offset(d3.stackOffsetNone);
 
     //this.filterTag("Deutschland")
+
+    this.state.push({ loaded: true, keyframe:true })
 
 
     return this;

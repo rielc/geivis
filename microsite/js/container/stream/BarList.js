@@ -28,18 +28,20 @@ export class BarList extends StateDb {
 
   stateChange(next, last){
     if(!next.visible.StreamSection) return;
-    // if(next.brushStart !== last.brushStart){
-    //   this.render();
-    // }
-    if(next.loaded){
+    // console.log(next,last);
+    if(next.brushStart !== last.brushStart
+      || next.brushEnd !== last.brushEnd
+      || next.active !== last.active
+      || next.activeItem !== last.activeItem
+      || next.hover !== last.hover
+    ){
       this.render();
     }
-    
-    // console.log(next.filter);
+
   }
 
   render(){
-    //console.log("render barlist");
+
     const size = this.db[this.key].size();
     this.div.select(".title").text(this.key);
     this.div.classed("active", this.state.state.active === this.key);
@@ -50,27 +52,34 @@ export class BarList extends StateDb {
     const max = d3.max(group, d => d.value);
     // console.timeEnd("filter");
 
+    // console.log(group);
+
     let s = this.items.selectAll(".item").data(group, d=>d.key);
     let e = s.enter()
       .append("div")
       .classed("item", true)
       .on("mouseenter", (d)=>{
-        this.state.push({ active: this.key, hover: d.key });
+        this.state.push({ event: "enter", active: this.key, hover: d.key });
       })
       .on("mouseleave", ()=>{
-        this.state.push({ active: this.key, hover: null });
+        this.state.push({ event: "leave", active: this.key, hover: null });
       })
       .on("click", (d)=>{
         let activeItem = this.state.state.activeItem === d.key;
-        this.state.push({ active: this.key, activeItem: activeItem ? null : d.key });
-        this.state.push({ filter: { [this.key] : d.key }});
+        this.state.push({ event: "click", active: this.key, activeItem: activeItem ? null : d.key });
+        // this.state.push({ filter: { [this.key] : d.key }});
       })
 
-    e.append("div").classed("left", true).append("div").classed("bar", true)
-    e.append("div").classed("right", true)
+    e.append("div").classed("left", true).append("div")
+      .classed("bar", true).text(d => `${ d.value }` )
+      .style("width", d=> `${ (d.value / max)*100 }%`)
 
-    if(this.state.state.keyframe){
-      s.sort((a,b) => b.value - a.value)
+    e.append("div").classed("right", true)
+      .text(d => `${ d.key }` )
+
+    if(this.state.state.event != "brushmove"){
+      // console.log(s.data())
+      this.items.selectAll(".item").sort((a,b) => b.value - a.value)
     }
 
     s.classed("hover", d=> this.state.state.hover === d.key)
