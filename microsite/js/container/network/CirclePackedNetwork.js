@@ -5,6 +5,7 @@ import * as GeiVisUtils from "../../lib/GeiVisUtils.js";
 export class CirclePackedNetwork {
 
   constructor (properties) {
+    this.povNode = null;
     this.properties = properties;
     this.blacklist = [];
     this.years = [0,0];
@@ -18,49 +19,6 @@ export class CirclePackedNetwork {
     return this;
   }
 
-  stateChange (next, last) {
-
-    console.log(next);
-
-
-    //console.log(next, last);
-
-
-    // if(next.hover !== last.hover){
-    //   this.render();
-    // }
-
-    // if(next.active !== last.active){
-    //   this.load().render();
-    // }
-
-    //console.log(this.db.year.top(Infinity));
-
-    //console.log(this.db);
-    //this.updateData(this.db.year.top(Infinity));
-    //this.render();
-
-    // //console.log(next.brushStart.getFullYear());
-
-    console.log(this);
-
-
-    // if(next.brushStart.getFullYear() != last.brushStart.getFullYear()){
-      
-    // }
-    
-    if( next.brushStart.getFullYear() != this.years[0] || next.brushEnd.getFullYear() != this.years[1] ){
-      this.years = [next.brushStart.getFullYear(), next.brushEnd.getFullYear()];
-      
-      let data = this.db.dates.top(Infinity);
-      if (data.length>0) {
-        this.updateData(this.db.date.top(Infinity));
-        this.render();
-      }
-    }
-
-
-  }
 
   append (selector) {
     this.containerName = selector.attr("id");
@@ -86,10 +44,6 @@ export class CirclePackedNetwork {
       .style("margin", "0")
       .style("padding", "0")
       .style("transform",  d => `translate(${this.properties.margin.left}px,${this.properties.margin.top}px)`);
-      
-    this.nodes = 
-        this.container
-        .selectAll(".nodes");
 
     this.pack = 
       d3.pack()
@@ -273,59 +227,59 @@ export class CirclePackedNetwork {
     let that = this;
 
 
-  function switchToMonad (data) {
+    function switchToMonad (data) {
 
-  // if (that.monad) {
-  //   that.monad = false;
-  //   that.renderNodes();
-  //   return true;
-  // }
+    // if (that.monad) {
+    //   that.monad = false;
+    //   that.renderNodes();
+    //   return true;
+    // }
 
-    that.monad = true;
+      that.monad = true;
 
-        d3
-          .selectAll(".node");
-          //.style("opacity", 0);
+          d3
+            .selectAll(".node");
+            //.style("opacity", 0);
 
-    let center = [that.width/2,that.height/2];
+      let center = [that.width/2,that.height/2];
 
-    let d = data.data;
+      let d = data.data;
 
-    d3.select(this)
-      .style("opacity", 1)
-      //.style("box-shadow", "0 0 10px 0 rgba(0,0,0,0.25)")
-      .style("transform",  d => `translate3d(${center[0]}px,${center[1]}px,0px)`);
+      d3.select(this)
+        .style("opacity", 1)
+        //.style("box-shadow", "0 0 10px 0 rgba(0,0,0,0.25)")
+        .style("transform",  d => `translate3d(${center[0]}px,${center[1]}px,0px)`);
 
-    let linkedNodes = that.transformedData.links
-      .filter( l => (l.source.name == d.name || l.target.name == d.name) )
-      .map(l => {
-        if (l.source.name == d.name) { return { "strength" : l.strength, "node":l.target }; }
-        if (l.target.name == d.name) { return { "strength" : l.strength, "node":l.source }; }
+      let linkedNodes = that.transformedData.links
+        .filter( l => (l.source.name == d.name || l.target.name == d.name) )
+        .map(l => {
+          if (l.source.name == d.name) { return { "strength" : l.strength, "node":l.target }; }
+          if (l.target.name == d.name) { return { "strength" : l.strength, "node":l.source }; }
+        });
+
+      let linkMax = d3.max(linkedNodes, l=>l.strength);
+      let linkMin = d3.min(linkedNodes, l=>l.strength);
+
+      let indexToPolar = d3.scaleLinear().domain([0,linkedNodes.length-1]).range([0, Math.PI*2]);
+      let occurenceToProximity = d3.scaleLinear().domain([linkMax,linkMin]).range([30, that.width/3]);
+
+      linkedNodes.forEach( (l,i) => {
+        let x = center[0]+Math.sin(indexToPolar(i))*occurenceToProximity(l.strength);
+        let y = center[1]+Math.cos(indexToPolar(i))*occurenceToProximity(l.strength);
+        let n = d3.select( "#"+GeiVisUtils.makeSafeForCSS( l.node.name ) ).style("opacity", 1);
+        
+        n
+          .transition()
+          .duration(300)
+          .delay((d,i) => i*10)
+          .style("width", "20px")
+          .style("height", "20px")
+          .style("border-radius", "10px")
+          .style("transform", d => `translate3d(${x-10}px,${y-10}px,0px)`);
+
       });
 
-    let linkMax = d3.max(linkedNodes, l=>l.strength);
-    let linkMin = d3.min(linkedNodes, l=>l.strength);
-
-    let indexToPolar = d3.scaleLinear().domain([0,linkedNodes.length-1]).range([0, Math.PI*2]);
-    let occurenceToProximity = d3.scaleLinear().domain([linkMax,linkMin]).range([30, that.width/3]);
-
-    linkedNodes.forEach( (l,i) => {
-      let x = center[0]+Math.sin(indexToPolar(i))*occurenceToProximity(l.strength);
-      let y = center[1]+Math.cos(indexToPolar(i))*occurenceToProximity(l.strength);
-      let n = d3.select( "#"+GeiVisUtils.makeSafeForCSS( l.node.name ) ).style("opacity", 1);
-      
-      n
-        .transition()
-        .duration(300)
-        .delay((d,i) => i*10)
-        .style("width", "20px")
-        .style("height", "20px")
-        .style("border-radius", "10px")
-        .style("transform", d => `translate3d(${x-10}px,${y-10}px,0px)`);
-
-    });
-
-  }
+    }
 
     // sets the visual props of a node
     function setNodeProperties (selection) {
@@ -391,22 +345,21 @@ export class CirclePackedNetwork {
         });
     }
 
-    d3.selectAll(".node").remove();
+    //d3.selectAll(".node").remove();
+
+    this.nodes = 
+        this.container
+        .selectAll(".node")
+        .data(this.root.children, e=>GeiVisUtils.makeSafeForCSS(e.data.name) );
 
 
- 
-    // select & join
-    this.nodes = this.nodes
-      .data(this.root.children, e=>(e.data.name) );
-
-    // exit
+    // update
     this.nodes
-      .exit()
-      //.transition()
-      //.duration(300)
-      //.style("width", '0px')
-      //.style("height", '0px')
-      .remove();
+      // .transition()
+      // .duration(300)
+      // .delay( (d,i)=>i*10 )
+      .call(setNodeProperties);
+
 
     // enter
     let enteredNodes = this.nodes
@@ -419,9 +372,6 @@ export class CirclePackedNetwork {
       .attr("class", "node")
       .style("transform-origin", "center center")
       .style("transform",  d => `translate3d(${d.x-d.r}px,${d.y-d.r}px,0)`)
-      //.transition()
-      //.duration(300)
-      //.delay( (d,i)=>i*10 )
       .call(setNodeProperties);
 
     enteredNodes
@@ -434,13 +384,6 @@ export class CirclePackedNetwork {
       .classed("count", true)
       .text(d => d.data.occurrence);
 
-    // update
-    this.nodes
-      // .transition()
-      // .duration(300)
-      // .delay( (d,i)=>i*10 )
-      .call(setNodeProperties);
-
     enteredNodes
       .each( function (d) { 
         let el = d3.select(this);
@@ -448,10 +391,20 @@ export class CirclePackedNetwork {
         el.classed(overflow, true);
         if (overflow == "overflow" || overflow == "partial-overflow") {
           el.attr("data-balloon", d=>d.data.name+": "+d.data.occurrence);
-          el.attr("data-balloon-pos", "up");
+          el.attr("data-balloon-pos", "down");
         }
       });
 
+
+    let exitedNodes = this.nodes.exit();
+
+    // exit
+    exitedNodes
+      // .transition()
+      // .duration(300)
+      // .style("width", '0px')
+      // .style("height", '0px')
+      .remove();
 
 
     return this;

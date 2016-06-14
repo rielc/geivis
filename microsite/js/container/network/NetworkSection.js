@@ -21,7 +21,7 @@ export class NetworkSection extends Section {
     });
   });
 
-    this.margin = {'top':180,'right':50,'bottom':50,'left':50};
+    this.margin = {'top':300,'right':50,'bottom':50,'left':50};
 
     this.network = new
       CirclePackedNetwork( {'margin':this.margin} )
@@ -32,24 +32,17 @@ export class NetworkSection extends Section {
 
   }
 
-
   stateChange(next, last){
-    if( next.brushStart.getFullYear() != last.brushStart.getFullYear() ) {
-      //this.years = [next.brushStart.getFullYear(), next.brushEnd.getFullYear()];
-      
-      let data = this.db.dates.top(Infinity);
+
+    if (!next.visible.NetworkSection) return;
+
+    if (next.brushStart.getFullYear() != last.brushStart.getFullYear() || 
+      next.brushEnd.getFullYear() != last.brushEnd.getFullYear()) {
+      let data = this.db.date.top(Infinity);
       if (data.length>0) {
-        this.network.updateData(this.db.date.top(Infinity));
+        this.network.updateData(data);
         this.network.render();
       }
-    //}
-
-    //console.log(next);
-  	// console.log(next)
-
-  	// if(next.loaded == !last.loaded){
-  	// 	this.stream.x.domain(this.db.extent);
-  	// 	this.stream.load().render();
   	}
   }
 

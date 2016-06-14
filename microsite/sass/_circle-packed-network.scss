@@ -5,7 +5,7 @@
     box-sizing: border-box;
     background-color: $blue;
     cursor: pointer;
-    z-index:0;
+    z-index:0 !important;
 
     &:hover {
         background-color: $red !important;
@@ -36,17 +36,18 @@
     &.partial-overflow {
         > .label { display:none !important }
         overflow:visible;
+        z-index:0 !important;
     }
 
     &.overflow {
         > .label { display:none !important }
         > .count { display:none !important }
         overflow:visible;
+        z-index:0 !important;
     }
 
     &.inactive {
         z-index:0 !important;
-
         opacity: 0.125 !important;
         > .label { display:none !important }
         > .count { display:none !important }

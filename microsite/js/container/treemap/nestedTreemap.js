@@ -1,3 +1,7 @@
+export let __hotReload = true;
+
+import * as GeiVisUtils from "../../lib/GeiVisUtils.js";
+
 export class NestedTreemap {
 
 	constructor( props ) {
@@ -23,25 +27,9 @@ export class NestedTreemap {
 		this.layout = "SliceDice";
 	}
 
-
-	setState(state, db) {
-		this.state = state;
-		this.db = db;
-    	this.state.listen(this.stateChange.bind(this));
-	}
-
-
-	stateChange(next, last) {
-		if(next.brushStart !== last.brushStart){
-			this.filteredData = this.db.date.top(Infinity);
-	    	this.update();
-	    }
-  	}
-
-
-	appendTo(selector) {
+	appendTo (selector) {
 		
-		this.container = d3.select(selector);
+		this.container = selector;
 	    this.createDropdowns();
 
 	    this.width = parseInt( this.container.style("width") ) - this.properties.margin.left - this.properties.margin.right,
@@ -52,25 +40,6 @@ export class NestedTreemap {
 			.attr("class", "visualization")
 			.style("width", this.width )
 			.style("height", this.height );
-
-		this.format = d3.format(",d");
-
-		this.hierarchy = d3.hierarchy()
-			.sum( d => d.size )
-			.sort( (a, b) => { return Math.max(0, a.dx - 1) - Math.max(0, b.dx - 1) || a.value - b.value; } );
-
-		this.treemap = d3.treemap()
-			.size([this.width, this.height])
-			.tile("slice-dice")
-			.round(false)
-			.padding( (d) => {
-				switch(d.depth) {
-					case 0: return [0, 0, 0, 0];
-					case 1: return [30, 0, 0, 0];
-					case 2: return [0 , 0, 0, 0];
-				}
-			} );
-
 
 		return this;
 	}
@@ -84,8 +53,7 @@ export class NestedTreemap {
 		d3.scaleLinear.domain([-1.0, 0.0, 1.0]).range(["#ff0000, #cccccc", "#00ff00"]);
 	}
 
-
-	update() {
+	updateData(data) {
 
 		let nesting = d3.nest(); 
 
@@ -96,89 +64,121 @@ export class NestedTreemap {
 			nesting.key( this.nestings[this.levelA] )
 		}
 
+		nesting.rollup( (d) => { return d.length; })
+
+
 		// do the nesting and then remap the values
-		this.nested = nesting.entries( this.filteredData );
-		this.nested = GeiVisUtils.remap({"key": "All Books", "values" : this.nested });
+		//this.nested = nesting.entries( data );
+		//this.nested = GeiVisUtils.remap({"key": "All Books", "values" : this.nested });
 
 
-		//var threshold = 5;
 
-		// TODO: Use a histogram to generate the "other" bin in Treemap
-		// Generate a histogram using twenty uniformly-spaced bins.
-		// var hist = d3.layout.histogram()
-		//     .bins(10)
-		//     .value(d => d.size)
-		//     (this.nested);
+		//this.format = d3.format(",d");
 
+		console.log("nested", this.nested);
+
+		this.root = d3.hierarchy( nesting.entries( data ), function(d) { return d.values; })
+			.sum( d => { if (d.values) { return d.values.length} else { return d.value; } }  )
+			.sort( (a, b) => { return Math.max((a.x1-a.x0)) - Math.max((b.x1-b.x0))||(a.value - b.value); } );
+
+		//console.log("before", this.root);
+
+		this.treemap = d3.treemap()
+			.size([this.width, this.height])
+			.tile(d3.treemapSlice)
+			.round(false);
+			// .padding( (d) => {
+			// 	switch(d.depth) {
+			// 		case 0: return [0, 0, 0, 0];
+			// 		case 1: return [30, 0, 0, 0];
+			// 		case 2: return [0 , 0, 0, 0];
+			// 	}
+			// } );
 
 		this.treemap(this.root);
+
+		//console.log("result", this.treemap(this.root));
+
+		// console.log("after", this.root);
+	}
+
+
+	render() {
 
 		let that = this;
 
 		function updateNode (s) {
 
 			// position the text in the middle of all first levels
-			s.filter( d => (d.depth == 1)).style("padding-top", "10px");
+			//s.filter( d => (d.depth == 1)).style("padding-top", "10px");
 
-			s
-				.filter( d => (d.depth != 1 || d.depth != 2) )
-				.style("left", (d) => { return (that.properties.margin.left + d.x) + "px"; })
-				.style("top", (d) =>{ return (that.properties.margin.top + d.y) + "px"; })
-				.style("width", (d) => { return Math.max(0, d.dx - 1) + "px"; })
-				.style("height", (d) => { return Math.max(0, d.dy - 1) + "px"; });
+			// s
+			// 	.filter( d => (d.depth != 1 || d.depth != 2) )
+			// 	.style("left", (d) => { return (that.properties.margin.left + d.x) + "px"; })
+			// 	.style("top", (d) =>{ return (that.properties.margin.top + d.y) + "px"; })
+			// 	.style("width", (d) => { return Math.max(0, d.dx - 1) + "px"; })
+			// 	.style("height", (d) => { return Math.max(0, d.dy - 1) + "px"; });
 			
 			s
-			.filter( d => (d.depth == 2) )
-			.style("padding-top", d => (Math.max(0, d.dy - 1)/2 - 5) + "px" )
+			//.filter( d => (d.depth == 2) )
+			//.style("padding-top", d => (Math.max(0, d.dy - 1)/2 - 5) + "px" )
 			// .sort( (a,b) => { return ((a.x)+Math.max(0, a.dy - 1)) - ((b.x)+Math.max(0, b.dy - 1)) })
 			// .style("width", "0px")
 			// .style("height", (d) => { return Math.max(0, d.dy - 1) + "px"; })
 			// .transition()
 			// .duration(300)
 			// .delay( (d,i) => { return i*1.5; } )
-			.style("left", (d) => { return (that.properties.margin.left + d.x) + "px"; })
-			.style("top", (d) =>{ return (that.properties.margin.top + d.y) + "px"; })
-			.style("width", (d) => { return Math.max(0, d.dx - 1) + "px"; })
-			.style("height", (d) => { return Math.max(0, d.dy - 1) + "px"; })
-			.each(function (d) { 
-				let el = d3.select(this);
-				let overflow = checkOverflow(el[0][0], 10, 2);
-				if (overflow) { el.classed("label", true); }
-			});
+			.style("transform", d => `translate(${d.x0},px${d.y0}px)` )
+			.style("width", d => ((d.x1-d.x0)+"px"))
+  			.style("height", d => ((d.y1 - d.y0)+"px"));
+			// .each(function (d) { 
+			// 	let el = d3.select(this);
+			// 	let overflow = checkOverflow(el[0][0], 10, 2);
+			// 	if (overflow) { el.classed("label", true); }
+			// });
 
 			// position the text in the middle of all 2nd levels
-			s.filter( d => (d.depth == 2)).style("padding-top", d => (Math.max(0, d.dy - 1)/2 - 5) + "px" );
+			//s.filter( d => (d.depth == 2)).style("padding-top", d => (Math.max(0, d.dy - 1)/2 - 5) + "px" );
 
 		}
+
+
+		console.log(this.root);
 		
-		let data = this.treemap(this.nested).filter(f => f.depth < 3);
+		let data = this.root.leaves();
 
-		this.svg.selectAll(".node").remove();
+		//this.svg.selectAll(".node").remove();
 
-		this.nodes = this.svg.selectAll(".node")
-			.data(data, d => {
-				let r = d.name;
-				if (d.parent != undefined) { r+=d.parent.name; } 
-				return r;
+		this.nodes = this.svg
+			.selectAll(".node")
+			.data(data, (d,i) => {
+
+				//console.log(d);
+				//console.log(d);
+				let r = d.data.key;
+				if (d.parent != undefined) { r+=d.parent.data.name; } 
+				//console.log(r);
+				return i;
 			})
 			.call(updateNode);
 
 		this.nodes
 			.enter()
 			.append("div")
-			.attr("id", d => {
-				let r = d.name;
-				if (d.parent != undefined) { r+=d.parent.name; } 
-				return r;
-			})
-			.attr("class", d => (makeSafeForCSS(d.name) + (" level-" + d.depth)) )
+			// .attr("id", d => {
+			// 	console.log(d);
+			// 	let r = d.data.key;
+			// 	//if (d.parent != undefined) { r+=d.parent.data.key; } 
+			// 	return GeiVisUtils.makeSafeForCSS(r);
+			// })
+			// .attr("class", d => (GeiVisUtils.makeSafeForCSS(d.data.key) + (" level-" + d.depth)) )
 			.classed("node", true)
-			.on("mouseover", function (d) {
-				// TODO: Implement custom relative Color-Scale
-				d3.selectAll(".node").classed("active", false);
-				d3.selectAll("." + makeSafeForCSS(d.name)).classed("active", true);
-			})
-			.text(d => d.depth!=0? d.name : null)
+			// .on("mouseover", function (d) {
+			// 	// TODO: Implement custom relative Color-Scale
+			// 	d3.selectAll(".node").classed("active", false);
+			// 	d3.selectAll("." + GeiVisUtils.makeSafeForCSS(d.data.key)).classed("active", true);
+			// })
+			// .text(d => d.depth!=0?d.data.key:null)
 			.call(updateNode);
 
 
@@ -225,19 +225,7 @@ export class NestedTreemap {
 		return this;
 	}
 
-
 	addNesting (name, f) { this.nestings[name] = f; return this;}
-
-	updateData (data) {
-		this.data = data;
-		this.update();
-		return this;
-	}
-
-	loadData (dataURL) {
-		d3.json(dataURL, (result) => { this.data = result; this.filteredData = this.data; this.update(); } );
-		return this;
-	}
 
 	filterData( evaluation ) {
 		this.filteredData = this.data.filter(evaluation);

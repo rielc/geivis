@@ -39,7 +39,7 @@ export class BarList extends StateDb {
   }
 
   render(){
-    console.log("render barlist");
+    //console.log("render barlist");
     const size = this.db[this.key].size();
     this.div.select(".title").text(this.key);
     this.div.classed("active", this.state.state.active === this.key);

@@ -1,6 +1,6 @@
 [data-balloon] {
   position: relative;
-  z-index:1000 !important;
+  //z-index:1000 !important;
 }
 [data-balloon]:before,
 [data-balloon]:after {
@@ -13,7 +13,7 @@
   bottom: 100%;
   left: 50%;
   position: absolute;
-  z-index:1000 !important;
+  //z-index:1000 !important;
   -webkit-transform: translate(-50%, 10px);
   -ms-transform: translate(-50%, 10px);
   transform: translate(-50%, 10px);

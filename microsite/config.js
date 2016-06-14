@@ -13,7 +13,6 @@ System.config({
     "npm:*": "jspm_packages/npm/*"
   },
   trace: true,
-
   map: {
     "babel": "npm:babel-core@5.8.38",
     "babel-runtime": "npm:babel-runtime@5.8.38",
