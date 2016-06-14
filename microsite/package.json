@@ -1,6 +1,7 @@
 {
   "jspm": {
     "dependencies": {
+      "lodash": "npm:lodash@^4.13.1",
       "object-assign": "npm:object-assign@^4.1.0"
     },
     "devDependencies": {
@@ -8,5 +9,8 @@
       "babel-runtime": "npm:babel-runtime@^5.8.24",
       "core-js": "npm:core-js@^1.1.4"
     }
+  },
+  "devDependencies": {
+    "jspm": "^0.16.39"
   }
 }
