@@ -30,6 +30,7 @@ export class DataBase {
 
   init(_data, _geocode){
     this.data = _data.filter(d=>d.year && d.year <= 1920 && d.year >= 1720);
+    this.geocode = _geocode;
 
     this.data.forEach(d => {
       d.date = this.formater(d.year);

@@ -1,33 +1,29 @@
 export let __hotReload = true
-export class Map {
 
-  constructor(state, db){
-    this.key = "subject";
-    this.state = state;
-    this.db = db;
+import {StateDb} from '../../StateDb';
 
-    this.state.listen(this.stateChange.bind(this));
+export class Geomap extends StateDb {
+
+  constructor(state, db, div){
+    super(state,db);
    
     this.outerWidth = 1060;
     this.outerHeight = 800;
     this.margin = {top: 20, right: 20, bottom: 20, left: 20};
 
-    this.projection = d3.geo.mercator()
+    this.projection = d3v3.geo.mercator()
       .center([15, 49])
       .scale(3500)
       .translate([outerWidth / 2, outerHeight / 2])
       
-
-    this.path = d3.geo.path().projection(this.projection);
-
-    this.force = d3.layout.force().size([outerWidth, outerHeight]);
+    this.path = d3v3.geo.path().projection(this.projection);
     
-    d3.select(".map").selectAll("*").remove() // temp fix
+    div.selectAll("*").remove() // temp fix
 
-    this.svg = d3.select(".map").append("svg");
+    this.svg = d3v3.select(div.node()).append("svg");
     this.g = this.svg.append("g");
 
-    this.scale = d3.scale.linear().range([1,20]);
+    this.scale = d3v3.scale.linear().range([1,20]);
    
     return this;
   }
@@ -51,16 +47,30 @@ export class Map {
 
 
   stateChange(next, last){
-    this.render();
+    if(!next.visible.GeomapSection) return;
+    // console.log(next)
+    
+    if(next.brushStart !== last.brushStart
+      || next.brushEnd !== last.brushEnd
+      || next.active !== last.active
+      || next.activeItem !== last.activeItem
+      || next.hover !== last.hover
+      || next.loaded !== last.loaded
+      || next.visible.GeomapSection !== last.visible.GeomapSection
+    ){
+      this.render();
+    }
   }
 
   render(){
+    // console.log("RENDER");
+
     let places = this.db["places"].top(100);
-    let max = d3.max(places, d=>d.value);
+    let max = d3v3.max(places, d=>d.value);
 
     this.scale.domain([0.1, max]).clamp(true);
 
-    // console.log(d3.max(places, d=>d.value))
+    // console.log(d3v3.max(places, d=>d.value))
 
     places
     .forEach(d => {

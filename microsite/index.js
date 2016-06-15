@@ -5,6 +5,7 @@ import {DataBase} from './js/DataBase'
 import {ScrollListener} from './js/ScrollListener'
 import {StreamSection} from './js/container/stream/StreamSection'
 import {DummySection} from './js/container/dummy/DummySection'
+import {GeomapSection} from './js/container/geomap/GeomapSection'
 
 
 import {NetworkSection} from './js/container/network/NetworkSection'
@@ -15,7 +16,11 @@ let db = new DataBase(state);
 let scroll = new ScrollListener(state)
 
 let streamSection = new StreamSection(state, db);
+let geomapSection = new GeomapSection(state, db);
+
 let networkSection = new NetworkSection(state, db);
 let treemapSection = new TreemapSection(state, db);
+let dummySection = new DummySection(state, db);
+
 
 db.load()
