@@ -11,3 +11,5 @@ microsite/node_modules/
 *.log
 
 
+
+*.map

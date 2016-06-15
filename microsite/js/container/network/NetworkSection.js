@@ -5,7 +5,6 @@ import {classificationTags} from '../../../data/classificationTags'
 import {CirclePackedNetwork} from './CirclePackedNetwork'
 
 export class NetworkSection extends Section {
-
   constructor(state, db){
     super(state,db);
 
@@ -21,7 +20,7 @@ export class NetworkSection extends Section {
     });
   });
 
-    this.margin = {'top':300,'right':50,'bottom':50,'left':50};
+    this.margin = {'top':100,'right':0,'bottom':0,'left':0};
 
     this.network = new
       CirclePackedNetwork( {'margin':this.margin} )
@@ -34,10 +33,12 @@ export class NetworkSection extends Section {
 
   stateChange(next, last){
 
+    if (next.loaded != last.loaded) this.network.updateData(this.db.date.top(Infinity)).render();
     if (!next.visible.NetworkSection) return;
 
-    if (next.brushStart.getFullYear() != last.brushStart.getFullYear() || 
-      next.brushEnd.getFullYear() != last.brushEnd.getFullYear()) {
+    console.log(next);
+
+    if (next.brushStart !== last.brushStart || next.brushEnd !== last.brushEnd) {
       let data = this.db.date.top(Infinity);
       if (data.length>0) {
         this.network.updateData(data);
@@ -49,8 +50,5 @@ export class NetworkSection extends Section {
   render(){
 
   }
-
-
-
 
 }

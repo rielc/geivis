@@ -8,7 +8,7 @@ export class TreemapSection extends Section {
   constructor(state, db){
     super(state,db);
 
-    this.margin = {'top':300,'right':50,'bottom':50,'left':50};
+    this.margin = {'top':100,'right':0,'bottom':0,'left':0};
     
     this.treemap = new NestedTreemap( {'margin':this.margin} );
     this.treemap.layout = "SliceDice";
@@ -27,18 +27,10 @@ export class TreemapSection extends Section {
 
   stateChange(next, last) {
 
-
-    if (!next.loaded != last.loaded) {
-      let data = this.db.date.top(Infinity);
-      if (data.length>0) {
-        this.treemap.updateData(data).render();
-      }
-    }
-
+    if (next.loaded != last.loaded) this.treemap.updateData(this.db.date.top(Infinity)).render();
     if (!next.visible.TreemapSection) return;
 
-    if (next.brushStart.getFullYear() != last.brushStart.getFullYear() || 
-      next.brushEnd.getFullYear() != last.brushEnd.getFullYear()) {
+    if (next.brushStart !== last.brushStart || next.brushEnd !== last.brushEnd) {
       let data = this.db.date.top(Infinity);
       if (data.length>0) {
         this.treemap.updateData(data);

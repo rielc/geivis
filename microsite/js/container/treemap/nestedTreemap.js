@@ -75,17 +75,18 @@ export class NestedTreemap {
 
 		//this.format = d3.format(",d");
 
-		console.log("nested", this.nested);
+		// console.log("nesting", nesting.entries( data ));
 
-		this.root = d3.hierarchy( nesting.entries( data ), function(d) { return d.values; })
+		this.root = d3
+			.hierarchy( { key : "all values", values : nesting.entries(data) }, function(d) { return d.values; })
 			.sum( d => d.value  )
-			.sort( (a, b) => { return Math.max((a.x1-a.x0)) - Math.max((b.x1-b.x0))||(a.value - b.value); } );
+			.sort( (b, a) => { return ( Math.abs((a.x1-a.x0)-Math.abs(b.x1-b.x0)) || (a.value - b.value) ); } );
 
 		//console.log("before", this.root);
 
 		this.treemap = d3.treemap()
 			.size([this.width, this.height])
-			.tile(d3.treemapSlice)
+			.tile(d3.treemapSliceDice)
 			.round(false);
 			// .padding( (d) => {
 			// 	switch(d.depth) {
@@ -97,7 +98,7 @@ export class NestedTreemap {
 
 		this.treemap(this.root);
 
-		console.log(this.root);
+		// console.log("root", this.root);
 
 		//console.log("result", this.treemap(this.root));
 
@@ -132,8 +133,8 @@ export class NestedTreemap {
 			// .transition()
 			// .duration(300)
 			// .delay( (d,i) => { return i*1.5; } )
-			.style("transform", d => `translate(${d.x0},px${d.y0}px)` )
-			.style("width", d => ((d.x1-d.x0)+"px"))
+			.style("transform", d => `translate(${d.x0}px,${d.y0}px)` )
+			.style("width", d => { return ((d.x1-d.x0)+"px"); })
   			.style("height", d => ((d.y1 - d.y0)+"px"));
 			// .each(function (d) { 
 			// 	let el = d3.select(this);
@@ -147,9 +148,9 @@ export class NestedTreemap {
 		}
 
 
-		console.log(this.root);
+		//console.log(this.root);
 		
-		let data = this.root.leaves();
+		let data = this.root.descendants();
 
 		//this.svg.selectAll(".node").remove();
 
@@ -157,11 +158,8 @@ export class NestedTreemap {
 			.selectAll(".node")
 			.data(data, (d,i) => {
 
-				//console.log(d);
-				//console.log(d);
 				let r = d.data.key;
-				if (d.parent != undefined) { r+=d.parent.data.name; } 
-				//console.log(r);
+				if (d.parent != undefined) { r+=d.parent.data.key; } 
 				return i;
 			})
 			.call(updateNode);
@@ -182,7 +180,7 @@ export class NestedTreemap {
 			// 	d3.selectAll(".node").classed("active", false);
 			// 	d3.selectAll("." + GeiVisUtils.makeSafeForCSS(d.data.key)).classed("active", true);
 			// })
-			// .text(d => d.depth!=0?d.data.key:null)
+			.text(d => d.depth!=0?d.data.key:null)
 			.call(updateNode);
 
 

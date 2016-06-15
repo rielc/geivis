@@ -1,38 +1,40 @@
-#treemap { 
-	height:90vh;
-	position:relative;
-}
+#TreemapSection {
 
-select {
-	padding:10px;
-	margin:10px;
-	position:relative;
-	z-index:10;
-	border:$grey;
-	color:$grey;
-	background-color: #fff;
-	font-size: 20px;
-	border-radius:0;
-}
-
-.node {
-	z-index:1;
-	position:absolute;
-	overflow:hidden;
-
-	&.active {
-		background-color:$blue;
+	.visualization {
 	}
-}
 
-.level-0 {
-	background-color: #fff;
-}
+	select {
+		padding:10px;
+		margin:10px;
+		position:relative;
+		border:$grey;
+		color:$grey;
+		background-color: #fff;
+		font-size: 20px;
+		border-radius:0;
+	}
 
-.level-1 {
-	background-color: lighten($grey, 40%);
-}
 
-.level-2 {
-	background-color: $bluelighter;
+
+
+	.node {
+		position:absolute;
+		overflow:hidden;
+		background-color:rgba($blue, 0.25);
+	}
+
+	/*
+
+	.level-0 {
+		background-color: #fff;
+	}
+
+	.level-1 {
+		background-color: lighten($grey, 40%);
+	}
+
+	.level-2 {
+		background-color: $bluelighter;
+	}*/
+
 }

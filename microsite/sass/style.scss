@@ -5,19 +5,14 @@ $blue: #009ee0;
 $bluelight: lighten($blue, 25%);
 $bluelighter: lighten($blue, 50%);
 $grey: desaturate($blue, 100%);
-
 $padding: 10px;
-
 
 // import the style for the modules
 
 @import "_reset.scss";
 @import "_nested-treemap.scss";
 @import "_circle-packed-network.scss";
-
 @import "_StreamSection.scss";
-
-
 
 // global styles
 
@@ -59,11 +54,7 @@ section {
   min-height:100vh;
   border-bottom: 5px solid #EEE;
 
-  // .viewport {
-  //   width:100vw;
-  //   min-height:100vh;
-  //   //padding: $padding;
-  // }
+  box-shadow: 0 0 5px 0 rgba(0,0,0,0.125) inset;
 
 }
 
