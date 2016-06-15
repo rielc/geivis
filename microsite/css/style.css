@@ -421,16 +421,8 @@ tspan:last-child {
   fill-opacity: 0.8; }
 
 .container {
-  /* z-index: 100; */
-  width: 1080px;
-  margin: 20px;
-  overflow: hidden;
-  /* background: #FFF; */ }
-
-.container {
   position: relative;
   margin: auto auto;
-  padding: 10px;
   width: 1200px; }
 
 [data-balloon] {

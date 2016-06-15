@@ -12,7 +12,8 @@ export class StateMachine {
       activeItem:null,
       loaded:false,
       timestamp:null,
-      visible: { StreamSection: true }
+      visible: { StreamSection: true },
+      scrollY: 300
     }
     this.history = [];
     this.history.push(objectAssign({}, this.state));

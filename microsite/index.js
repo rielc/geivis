@@ -17,8 +17,8 @@ let scroll = new ScrollListener(state)
 let streamSection = new StreamSection(state, db);
 
 //let networkSection = new NetworkSection(state, db);
-let treemapSection = new TreemapSection(state, db);
-//let dummySection = new DummySection(state, db);
+// let treemapSection = new treemapmapSection(state, db);
+let dummySection = new DummySection(state, db);
 
 
 //let dummySection = new DummySection(state, db);

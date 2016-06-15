@@ -33,7 +33,12 @@ export class ScrollListener {
   stateChange(next, prev){
     if(next.loaded == !prev.loaded){
        this.check();
+       this.scrollTo(next.scrollY);
     }
+  }
+
+  scrollTo(pos){
+    window.scrollTo(0,pos);
   }
 
 }
