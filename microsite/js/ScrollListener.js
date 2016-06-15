@@ -38,7 +38,19 @@ export class ScrollListener {
   }
 
   scrollTo(pos){
-    window.scrollTo(0,pos);
+    scrollTo(0,pos);
+
+    // d3.transition()
+    //   // .delay(0)
+    //   .duration(1000)
+    //   .tween("scroll", this.scrollTween(pos));
+  }
+
+  scrollTween(offset) {
+    return function() {
+      var i = d3.interpolateNumber(window.pageYOffset || document.documentElement.scrollTop, offset);
+      return function(t) { scrollTo(0, i(t)); };
+    };
   }
 
 }
