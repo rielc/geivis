@@ -11,7 +11,8 @@ export class ScrollListener {
     this.name = this.constructor.name;
     this.state = state;
     this.state.subscribe(this);
-    window.addEventListener('scroll', debounce(this.check, 150).bind(this));
+    // window.addEventListener('scroll', debounce(this.check, 150).bind(this));
+    window.addEventListener('scroll', this.check.bind(this));
     //this.check();
 
   }
@@ -26,10 +27,7 @@ export class ScrollListener {
       return [s.name, visible];
     });
     
-    // this.state.push({ scrollY : window.scrollY });
-    // this.state.push({visible});
-    this.state.push({ visible: fromPairs(visible) });
-    // console.log();
+    this.state.push({ scrollY: window.scrollY, visible: fromPairs(visible) });
   }
 
   stateChange(next, prev){

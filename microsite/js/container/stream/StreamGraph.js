@@ -14,6 +14,7 @@ export class StreamGraph extends StateDb {
     this.outerWidth = 1060;
     this.outerHeight = 300;
     this.outerHeightInitial = this.outerHeight;
+    this.outerHeightSmall = 100;
     this.margin = {top: 20, right: 30, bottom: 30, left: 40};
     
     this.x = d3.scaleTime();
@@ -156,7 +157,6 @@ export class StreamGraph extends StateDb {
     if(next.loaded == !last.loaded){
       this.x.domain(this.db.extent);
       this.load().render();
-      console.log("load1")
     }
 
     if(next.hover !== last.hover){
@@ -166,6 +166,30 @@ export class StreamGraph extends StateDb {
       // let data = this.db.date.top(Infinity);
       //console.log("load2")
       this.load().render();
+    }
+
+    if(next.scrollY !== last.scrollY){
+      // console.log(next.scrollY);
+
+      const diff = this.outerHeightInitial - next.scrollY;
+      const height = this.outerHeightInitial + diff;
+      // console.log(diff, height)
+      if(diff < 0 && height > this.outerHeightSmall){
+        this.outerHeight = height;
+        this.init().render(true);
+      } else {
+        if(diff < 0 && this.outerHeight != this.outerHeightSmall){
+          this.outerHeight = this.outerHeightSmall;
+          this.init().render(true);
+        }
+        if(diff > 0 && this.outerHeight != this.outerHeightInitial){
+          this.outerHeight = this.outerHeightInitial;
+          this.init().render(true);
+        }
+        // console.log(this.outerHeight, diff,  this.outerHeightInitial)
+      }
+      this.div.classed("dropshadow", diff < this.outerHeightInitial);  
+
     }
     // if(next.activeItem !== last.activeItem){
     //   if(!next.activeItem) {
@@ -217,7 +241,7 @@ export class StreamGraph extends StateDb {
         
     s
       .classed("active", d => this.state.state.hover == d.key)
-      .transition()
+      // .transition()
       // .duration(notransition ? 0 : 800)
       .attr("d", this.area)
       .style("opacity", d=> d.key=="other" ? 0.3 : 1)
@@ -237,7 +261,7 @@ export class StreamGraph extends StateDb {
     //    });
 
     this.gYaxis
-      .transition()
+      //.transition()
       // .duration(notransition ? 0 : 800)
       .call(this.yAxis)
 

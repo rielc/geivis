@@ -225,13 +225,16 @@ select {
 .level-2 {
   background-color: #e0f6ff; }
 
+section#NetworkSection {
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.25) inset; }
+
 .node {
   position: absolute;
   text-align: center;
   box-sizing: border-box;
   background-color: #009ee0;
   cursor: pointer;
-  z-index: 0; }
+  z-index: 0 !important; }
   .node:hover {
     background-color: #b00046 !important;
     opacity: 1 !important;
@@ -253,11 +256,13 @@ select {
     top: 50%;
     transform: translate(0, -50%); }
   .node.partial-overflow {
-    overflow: visible; }
+    overflow: visible;
+    z-index: 0 !important; }
     .node.partial-overflow > .label {
       display: none !important; }
   .node.overflow {
-    overflow: visible; }
+    overflow: visible;
+    z-index: 0 !important; }
     .node.overflow > .label {
       display: none !important; }
     .node.overflow > .count {
@@ -398,7 +403,8 @@ section {
   overflow: scroll;
   flex-direction: column;
   margin: 0;
-  min-height: 100vh; }
+  min-height: 100vh;
+  border-bottom: 5px solid #EEE; }
 
 .control {
   width: 100%; }
@@ -425,11 +431,10 @@ tspan:last-child {
   position: relative;
   margin: auto auto;
   padding: 10px;
-  width: 1100px; }
+  width: 1200px; }
 
 [data-balloon] {
-  position: relative;
-  z-index: 1000 !important; }
+  position: relative; }
 
 [data-balloon]:before,
 [data-balloon]:after {
@@ -442,7 +447,6 @@ tspan:last-child {
   bottom: 100%;
   left: 50%;
   position: absolute;
-  z-index: 1000 !important;
   -webkit-transform: translate(-50%, 10px);
   -ms-transform: translate(-50%, 10px);
   transform: translate(-50%, 10px);

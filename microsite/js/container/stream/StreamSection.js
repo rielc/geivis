@@ -20,7 +20,6 @@ export class StreamSection extends Section {
   	this.listPublishers = new BarList(state, db, this.divEntities).Key("publishers");
   	this.listPlaces = new BarList(state, db, this.divEntities).Key("places");
 
-
   }
 
 
