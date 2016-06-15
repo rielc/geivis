@@ -408,7 +408,12 @@ section {
   flex-direction: column;
   margin: 0;
   min-height: calc(100vh - 100px);
-  border-bottom: 5px solid #EEE; }
+  box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.125) inset; }
+  section h2.title {
+    font-size: 24px;
+    color: #707070;
+    font-weight: bold;
+    text-align: center; }
 
 .control {
   width: 100%; }

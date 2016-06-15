@@ -104,10 +104,8 @@ export class CirclePackedNetwork {
   }
   
 
-
   // this defines the accessor string to the node-array
   setNodeAccessor (nodeAccessor) { this.nodeAccessor = nodeAccessor; return this; }
-
 
 
   // this function extracts a network from if given a array with 
@@ -338,7 +336,7 @@ export class CirclePackedNetwork {
         });
     }
 
-    console.log(this.root.children);
+    //console.log(this.root.children);
 
     this.nodes = 
         this.container

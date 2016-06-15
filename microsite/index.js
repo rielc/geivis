@@ -16,7 +16,7 @@ let db = new DataBase(state);
 let scroll = new ScrollListener(state)
 
 let streamSection = new StreamSection(state, db);
-//let geomapSection = new GeomapSection(state, db);
+let geomapSection = new GeomapSection(state, db);
 
 let networkSection = new NetworkSection(state, db);
 let treemapSection = new TreemapSection(state, db);

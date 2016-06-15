@@ -29,6 +29,7 @@ export class NetworkSection extends Section {
       .setOccurrenceScale( d3.scaleLinear().domain([0,1]).range([0.5, 1.0])  )
       .append(this.div);
 
+      this.title.html(`All tags`);
   }
 
   stateChange(next, last){
@@ -37,6 +38,7 @@ export class NetworkSection extends Section {
     if (!next.visible.NetworkSection) return;
 
     if (next.brushStart !== last.brushStart || next.brushEnd !== last.brushEnd) {
+      this.title.html(`All tags from ${next.brushStart.getFullYear()} to ${next.brushEnd.getFullYear()}`);
       let data = this.db.date.top(Infinity);
       if (data.length>0) {
         this.network.updateData(data);

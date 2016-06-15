@@ -52,8 +52,16 @@ section {
   flex-direction:column;
   margin:0;
   min-height:calc(100vh - 100px);
-  border-bottom: 5px solid #EEE;
+  box-shadow:0 0 5px 0 rgba(0,0,0,0.125) inset;
 
+  h2.title {
+    //padding-top:10px;
+    font-size: 24px;
+    color:$grey;
+    font-weight: bold;
+    text-align:center;
+  }
+  
 }
 
 
