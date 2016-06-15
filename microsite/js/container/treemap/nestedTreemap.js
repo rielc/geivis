@@ -64,7 +64,7 @@ export class NestedTreemap {
 			nesting.key( this.nestings[this.levelA] )
 		}
 
-		nesting.rollup( (d) => { return d.length; })
+		nesting.rollup( (d) => { return d.length; });
 
 
 		// do the nesting and then remap the values
@@ -78,7 +78,7 @@ export class NestedTreemap {
 		console.log("nested", this.nested);
 
 		this.root = d3.hierarchy( nesting.entries( data ), function(d) { return d.values; })
-			.sum( d => { if (d.values) { return d.values.length} else { return d.value; } }  )
+			.sum( d => d.value  )
 			.sort( (a, b) => { return Math.max((a.x1-a.x0)) - Math.max((b.x1-b.x0))||(a.value - b.value); } );
 
 		//console.log("before", this.root);
@@ -97,9 +97,13 @@ export class NestedTreemap {
 
 		this.treemap(this.root);
 
+		console.log(this.root);
+
 		//console.log("result", this.treemap(this.root));
 
 		// console.log("after", this.root);
+
+		return this;
 	}
 
 

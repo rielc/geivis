@@ -22,12 +22,18 @@ export class TreemapSection extends Section {
       .addNesting("Ort", (d) => ((d.publisher_city==undefined) ? "Ort unbekannt" : d.publisher_city))
       .addNesting("Verlag", (d) => ((d.publisher==undefined) ? "Verlag unbekannt" : d.publisher ))
       .appendTo(this.div);
-
-
   }
 
 
   stateChange(next, last) {
+
+
+    if (!next.loaded != last.loaded) {
+      let data = this.db.date.top(Infinity);
+      if (data.length>0) {
+        this.treemap.updateData(data).render();
+      }
+    }
 
     if (!next.visible.TreemapSection) return;
 

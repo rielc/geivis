@@ -112,7 +112,6 @@ export class CirclePackedNetwork {
 
   // this function extracts a network from if given a array with 
   generateLinksAndNodes () {
-    //console.time("asdf");
 
     // extract ALL tags (with duplicates)
     let allTags = [];
@@ -228,12 +227,6 @@ export class CirclePackedNetwork {
 
 
     function switchToMonad (data) {
-
-    // if (that.monad) {
-    //   that.monad = false;
-    //   that.renderNodes();
-    //   return true;
-    // }
 
       that.monad = true;
 
@@ -358,7 +351,16 @@ export class CirclePackedNetwork {
       // .transition()
       // .duration(300)
       // .delay( (d,i)=>i*10 )
-      .call(setNodeProperties);
+      .call(setNodeProperties)
+      .each( function (d) { 
+        let el = d3.select(this);
+        let overflow = GeiVisUtils.checkOverflow(el._groups[0], 18);
+        el.classed(overflow, true);
+        if (overflow == "overflow" || overflow == "partial-overflow") {
+          el.attr("data-balloon", d=>d.data.name+": "+d.data.occurrence);
+          el.attr("data-balloon-pos", "down");
+        }
+      });
 
 
     // enter
@@ -384,6 +386,8 @@ export class CirclePackedNetwork {
       .classed("count", true)
       .text(d => d.data.occurrence);
 
+
+      //
     enteredNodes
       .each( function (d) { 
         let el = d3.select(this);

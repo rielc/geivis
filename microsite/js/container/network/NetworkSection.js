@@ -40,8 +40,7 @@ export class NetworkSection extends Section {
       next.brushEnd.getFullYear() != last.brushEnd.getFullYear()) {
       let data = this.db.date.top(Infinity);
       if (data.length>0) {
-        this.network.updateData(data);
-        this.network.render();
+        this.network.updateData(data).render();
       }
   	}
   }
