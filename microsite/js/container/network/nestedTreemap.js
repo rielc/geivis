@@ -3,6 +3,7 @@ export let __hotReload = true
 export default class NestedTreemap {
 
 	constructor( props ) {
+		
 		this.props = props;
 	 	this.container = {};
 		this.svg = {};

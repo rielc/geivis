@@ -7,7 +7,7 @@ import {CirclePackedNetwork} from './CirclePackedNetwork'
 export class NetworkSection extends Section {
 
   constructor(state, db){
-  	super(state,db);
+    super(state,db);
 
 
   // gabriel modules init
@@ -40,9 +40,10 @@ export class NetworkSection extends Section {
       next.brushEnd.getFullYear() != last.brushEnd.getFullYear()) {
       let data = this.db.date.top(Infinity);
       if (data.length>0) {
-        this.network.updateData(data).render();
+        this.network.updateData(data);
+        this.network.render();
       }
-  	}
+    }
   }
 
   render(){
