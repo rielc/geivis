@@ -87,7 +87,7 @@ export class StreamGraph extends StateDb {
 
   brushend() {
     let s = d3.event.selection ? d3.event.selection.map(d=> this.x.invert(d)) : this.db.extent;
-    console.log("be")
+    // console.log("be")
     this.state.push({ brushStart: s[0], brushEnd: s[1], event: "brushend" });
   }
 
@@ -164,7 +164,7 @@ export class StreamGraph extends StateDb {
     }
     if(next.active !== last.active || next.activeItem !== last.activeItem){
       // let data = this.db.date.top(Infinity);
-      console.log("load2")
+      //console.log("load2")
       this.load().render();
     }
     // if(next.activeItem !== last.activeItem){
@@ -190,17 +190,20 @@ export class StreamGraph extends StateDb {
     //console.log("render stream")
 
     let s = this.gGraph.selectAll("path")
-      .data(this.data, (d) => { return d.key})
+      .data(this.data, (d) => { return d.key; })
     
     s.enter()
       .append("path")
       .on("mouseenter", d=>{
+        if(d.key == "other") return;
         this.state.push({ hover: d.key });
       })
       .on("mouseleave", d=>{
+        if(d.key == "other") return;
         this.state.push({ hover: null });
       })
       .on("click", d=>{
+        if(d.key == "other") return;
         let active = this.state.state.activeItem === d.key;
         this.state.push({ activeItem: active ? null : d.key });
       })
@@ -214,7 +217,7 @@ export class StreamGraph extends StateDb {
         
     s
       .classed("active", d => this.state.state.hover == d.key)
-      // .transition()
+      .transition()
       // .duration(notransition ? 0 : 800)
       .attr("d", this.area)
       .style("opacity", d=> d.key=="other" ? 0.3 : 1)
@@ -234,7 +237,7 @@ export class StreamGraph extends StateDb {
     //    });
 
     this.gYaxis
-      // .transition()
+      .transition()
       // .duration(notransition ? 0 : 800)
       .call(this.yAxis)
 
