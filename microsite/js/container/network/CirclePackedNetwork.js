@@ -338,19 +338,23 @@ export class CirclePackedNetwork {
         });
     }
 
-    //d3.selectAll(".node").remove();
+    console.log(this.root.children);
 
     this.nodes = 
         this.container
         .selectAll(".node")
-        .data(this.root.children, e=>GeiVisUtils.makeSafeForCSS(e.data.name) );
-
+        .data(this.root.children, e=>e.data.name );
 
     // update
     this.nodes
-      // .transition()
-      // .duration(300)
-      // .delay( (d,i)=>i*10 )
+      .select(".label")
+      .text(d => d.data.name);
+
+    this.nodes
+      .select(".count")
+      .text(d => d.data.occurrence);
+
+    this.nodes
       .call(setNodeProperties)
       .each( function (d) { 
         let el = d3.select(this);

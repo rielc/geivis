@@ -1,54 +1,59 @@
-.node {
-    position:absolute;
-    //display:block;
-    text-align:center;
-    box-sizing: border-box;
-    background-color: $blue;
-    cursor: pointer;
-    //z-index:0 !important;
+#NetworkSection {
 
-    &:hover {
-        background-color: $red !important;
-        opacity: 1 !important;
-    }
-
-    .label {
-        color:#fff;
-        text-transform: capitalize;
-        font-size: 12px;
-        font-weight: bold;
-        display:block;
-        position:relative;
-        top:50%;
-        transform:translate(0, -50%);
-    }
-
-    .count {
-        color:#fff;
-        font-size: 14px;
-        display:block;
-        position:relative;
-        top:50%;
-        transform:translate(0, -50%);
-    }
-
-    &.partial-overflow {
-        > .label { display:none !important }
-        overflow:visible;
+    .node {
+        position:absolute;
+        //display:block;
+        text-align:center;
+        box-sizing: border-box;
+        background-color: $blue;
+        cursor: pointer;
         //z-index:0 !important;
-    }
 
-    &.overflow {
-        > .label { display:none !important }
-        > .count { display:none !important }
-        overflow:visible;
-        //z-index:0 !important;
-    }
+        &:hover {
+            background-color: $red !important;
+            opacity: 1 !important;
+        }
 
-    &.inactive {
-        //z-index:0 !important;
-        opacity: 0.125 !important;
-        > .label { display:none !important }
-        > .count { display:none !important }
+        .label {
+            color:#fff;
+            text-transform: capitalize;
+            font-size: 12px;
+            font-weight: bold;
+            display:block;
+            position:relative;
+            top:50%;
+            transform:translate(0, -50%);
+        }
+
+        .count {
+            color:#fff;
+            font-size: 14px;
+            display:block;
+            position:relative;
+            top:50%;
+            transform:translate(0, -50%);
+        }
+
+        &.partial-overflow {
+            > .label { display:none !important }
+            overflow:visible;
+            //z-index:0 !important;
+        }
+
+        &.overflow {
+            > .label { display:none !important }
+            > .count { display:none !important }
+            overflow:visible;
+            //z-index:0 !important;
+        }
+
+        &.inactive {
+            border:2px solid rgba($blue, 0.125);
+            background-color: transparent;
+            opacity: 1 !important;
+            > .label { display:none !important }
+            > .count { display:none !important }
+        }
     }
+    
 }

@@ -66,44 +66,46 @@ export class NestedTreemap {
 
 		nesting.rollup( (d) => { return d.length; });
 
-
 		// do the nesting and then remap the values
 		//this.nested = nesting.entries( data );
 		//this.nested = GeiVisUtils.remap({"key": "All Books", "values" : this.nested });
 
-
-
-		//this.format = d3.format(",d");
-
-		// console.log("nesting", nesting.entries( data ));
 
 		this.root = d3
 			.hierarchy( { key : "all values", values : nesting.entries(data) }, function(d) { return d.values; })
 			.sum( d => d.value  )
 			.sort( (b, a) => { return ( Math.abs((a.x1-a.x0)-Math.abs(b.x1-b.x0)) || (a.value - b.value) ); } );
 
-		//console.log("before", this.root);
-
 		this.treemap = d3.treemap()
 			.size([this.width, this.height])
 			.tile(d3.treemapSliceDice)
-			.round(false);
-			// .padding( (d) => {
-			// 	switch(d.depth) {
-			// 		case 0: return [0, 0, 0, 0];
-			// 		case 1: return [30, 0, 0, 0];
-			// 		case 2: return [0 , 0, 0, 0];
-			// 	}
-			// } );
+			.round(true)
+			.paddingTop( d=> {
+				switch(d.depth){
+					case 1: return 30;
+					default: return 0;
+				}
+			})
+			.paddingBottom( d=> {
+				switch(d.depth){
+					case 1: return 1;
+					default: return 0;
+				}
+			})
+			.paddingLeft( d=> {
+				switch(d.depth){
+					case 1: return 2;
+					default: return 0;
+				}
+			})
+			.paddingRight( d=> {
+				switch(d.depth){
+					case 1: return 2;
+					default: return 0;
+				}
+			});
 
 		this.treemap(this.root);
-
-		// console.log("root", this.root);
-
-		//console.log("result", this.treemap(this.root));
-
-		// console.log("after", this.root);
-
 		return this;
 	}
 
@@ -114,87 +116,59 @@ export class NestedTreemap {
 
 		function updateNode (s) {
 
-			// position the text in the middle of all first levels
-			//s.filter( d => (d.depth == 1)).style("padding-top", "10px");
-
-			// s
-			// 	.filter( d => (d.depth != 1 || d.depth != 2) )
-			// 	.style("left", (d) => { return (that.properties.margin.left + d.x) + "px"; })
-			// 	.style("top", (d) =>{ return (that.properties.margin.top + d.y) + "px"; })
-			// 	.style("width", (d) => { return Math.max(0, d.dx - 1) + "px"; })
-			// 	.style("height", (d) => { return Math.max(0, d.dy - 1) + "px"; });
-			
 			s
-			//.filter( d => (d.depth == 2) )
-			//.style("padding-top", d => (Math.max(0, d.dy - 1)/2 - 5) + "px" )
-			// .sort( (a,b) => { return ((a.x)+Math.max(0, a.dy - 1)) - ((b.x)+Math.max(0, b.dy - 1)) })
-			// .style("width", "0px")
-			// .style("height", (d) => { return Math.max(0, d.dy - 1) + "px"; })
-			// .transition()
-			// .duration(300)
-			// .delay( (d,i) => { return i*1.5; } )
 			.style("transform", d => `translate(${d.x0}px,${d.y0}px)` )
 			.style("width", d => { return ((d.x1-d.x0)+"px"); })
   			.style("height", d => ((d.y1 - d.y0)+"px"));
-			// .each(function (d) { 
-			// 	let el = d3.select(this);
-			// 	let overflow = checkOverflow(el[0][0], 10, 2);
-			// 	if (overflow) { el.classed("label", true); }
-			// });
 
-			// position the text in the middle of all 2nd levels
-			//s.filter( d => (d.depth == 2)).style("padding-top", d => (Math.max(0, d.dy - 1)/2 - 5) + "px" );
-
+			s
+			.filter( d => (d.depth == 2) )
+			.style("padding-top", d => ((d.y1 - d.y0)/2-5)+"px");
 		}
 
 
-		//console.log(this.root);
+		this.svg.selectAll(".node").remove();	
 		
 		let data = this.root.descendants();
 
-		//this.svg.selectAll(".node").remove();
-
 		this.nodes = this.svg
 			.selectAll(".node")
-			.data(data, (d,i) => {
-
-				let r = d.data.key;
-				if (d.parent != undefined) { r+=d.parent.data.key; } 
-				return i;
-			})
+			.data(data, d=>d.data.key)
 			.call(updateNode);
 
-		this.nodes
-			.enter()
+		let enteredNodes = this.nodes
+			.enter();
+
+		enteredNodes
 			.append("div")
-			// .attr("id", d => {
-			// 	console.log(d);
-			// 	let r = d.data.key;
-			// 	//if (d.parent != undefined) { r+=d.parent.data.key; } 
-			// 	return GeiVisUtils.makeSafeForCSS(r);
-			// })
-			// .attr("class", d => (GeiVisUtils.makeSafeForCSS(d.data.key) + (" level-" + d.depth)) )
-			.classed("node", true)
+			.attr("id", d => {
+				if (d.depth == 1) return GeiVisUtils.makeSafeForCSS(d.data.key);
+				if (d.depth == 2) return GeiVisUtils.makeSafeForCSS(d.parent.data.key+d.data.key);
+			})
+			.attr("class", d => GeiVisUtils.makeSafeForCSS(d.data.key) + " node " + "level-"+d.depth)
 			// .on("mouseover", function (d) {
 			// 	// TODO: Implement custom relative Color-Scale
 			// 	d3.selectAll(".node").classed("active", false);
 			// 	d3.selectAll("." + GeiVisUtils.makeSafeForCSS(d.data.key)).classed("active", true);
 			// })
-			.text(d => d.depth!=0?d.data.key:null)
-			.call(updateNode);
-
+			.text(d => d.depth!=0?d.data.key:"undefined")
+			.call(updateNode)
+			.each( function (d) {
+				let el = d3.select(this);
+				let overflow = GeiVisUtils.checkOverflow(el._groups[0], 14);
+				el.classed(overflow, true);
+				if (overflow == "overflow" || overflow == "partial-overflow") {
+				  el.attr("data-balloon", d=>d.data.key+": "+d.values);
+				  el.attr("data-balloon-pos", "down");
+				}
+			});
 
 		this.nodes
-			// .transition()
-			// .duration(100)
-			// .style("width", 0 )
-			// .style("height", 0 )
 			.exit()
 			.remove();
 
 		return this;
-
-  }
+  	}
 
 		// TODO: Make the number of levels dynamic
 

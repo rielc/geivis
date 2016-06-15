@@ -3,6 +3,8 @@
 	.visualization {
 	}
 
+
+
 	select {
 		padding:10px;
 		margin:10px;
@@ -16,25 +18,82 @@
 
 
 
-
 	.node {
 		position:absolute;
 		overflow:hidden;
-		background-color:rgba($blue, 0.25);
-	}
-
-	/*
-
-	.level-0 {
-		background-color: #fff;
+		text-align: center;
+		&.overflow {
+			color:transparent;
+		}
 	}
 
 	.level-1 {
-		background-color: lighten($grey, 40%);
+		padding-top:5px;
+		border: 0.5px solid #fff;
+		box-sizing:border-box;
+		box-shadow: 0 0 10px 0 rgba(0,0,0,0.25) inset;
+		background-color: $blue;
+		color : #ffffff !important;
+		font-size: 16px;
 	}
-
 	.level-2 {
-		background-color: $bluelighter;
-	}*/
+		background-color: lighten($blue, 50%);
+		font-size: 12px;
+		&:hover {
+			background-color:$red;
+			color:#fff;
+			z-index:100;
+		}
+	}
+	//.level-2 {´background-color: lighten($grey, 60%); }
 
 }
+
+
+	.dropdown {
+	    position: relative;
+	    display: inline-block;
+	}
+
+	.dropdown .dropdown-menu {
+	    position: absolute;
+	    top: 100%;
+	    display: none;
+	    margin: 0;
+
+	    /****************
+	     ** NEW STYLES **
+	     ****************/
+
+	    list-style: none; /** Remove list bullets */
+	    width: 100%; /** Set the width to 100% of it's parent */
+	    padding: 0;
+	}
+
+	.dropdown:hover .dropdown-menu {
+	    display: block;
+	}
+
+	/** Button Styles **/
+	.dropdown button {
+	    background: #FF6223;
+	    color: #FFFFFF;
+	    border: none;
+	    margin: 0;
+	    padding: 0.4em 0.8em;
+	    font-size: 1em;
+	}
+
+	/** List Item Styles **/
+	.dropdown a {
+	    display: block;
+	    padding: 0.2em 0.8em;
+	    text-decoration: none;
+	    background: #CCCCCC;
+	    color: #333333;
+	}
+
+	/** List Item Hover Styles **/
+	.dropdown a:hover {
+	    background: #BBBBBB;
+	}

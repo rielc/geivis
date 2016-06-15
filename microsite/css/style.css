@@ -194,44 +194,89 @@ input[type=button] {
   display: block;
   clear: both; }
 
-#TreemapSection {
-  	/*
-  
-  	.level-0 {
-  		background-color: #fff;
-  	}
-  
-  	.level-1 {
-  		background-color: lighten($grey, 40%);
-  	}
-  
-  	.level-2 {
-  		background-color: $bluelighter;
-  	}*/ }
-  #TreemapSection select {
-    padding: 10px;
-    margin: 10px;
-    position: relative;
-    border: #707070;
-    color: #707070;
-    background-color: #fff;
-    font-size: 20px;
-    border-radius: 0; }
-  #TreemapSection .node {
-    position: absolute;
-    overflow: hidden;
-    background-color: rgba(0, 158, 224, 0.25); }
+#TreemapSection select {
+  padding: 10px;
+  margin: 10px;
+  position: relative;
+  border: #707070;
+  color: #707070;
+  background-color: #fff;
+  font-size: 20px;
+  border-radius: 0; }
+#TreemapSection .node {
+  position: absolute;
+  overflow: hidden;
+  text-align: center; }
+  #TreemapSection .node.overflow {
+    color: transparent; }
+#TreemapSection .level-1 {
+  padding-top: 5px;
+  border: 0.5px solid #fff;
+  box-sizing: border-box;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.25) inset;
+  background-color: #009ee0;
+  color: #ffffff !important;
+  font-size: 16px; }
+#TreemapSection .level-2 {
+  background-color: #e0f6ff;
+  font-size: 12px; }
+  #TreemapSection .level-2:hover {
+    background-color: #b00046;
+    color: #fff;
+    z-index: 100; }
 
-.node {
+.dropdown {
+  position: relative;
+  display: inline-block; }
+
+.dropdown .dropdown-menu {
+  position: absolute;
+  top: 100%;
+  display: none;
+  margin: 0;
+  /****************
+   ** NEW STYLES **
+   ****************/
+  list-style: none;
+  /** Remove list bullets */
+  width: 100%;
+  /** Set the width to 100% of it's parent */
+  padding: 0; }
+
+.dropdown:hover .dropdown-menu {
+  display: block; }
+
+/** Button Styles **/
+.dropdown button {
+  background: #FF6223;
+  color: #FFFFFF;
+  border: none;
+  margin: 0;
+  padding: 0.4em 0.8em;
+  font-size: 1em; }
+
+/** List Item Styles **/
+.dropdown a {
+  display: block;
+  padding: 0.2em 0.8em;
+  text-decoration: none;
+  background: #CCCCCC;
+  color: #333333; }
+
+/** List Item Hover Styles **/
+.dropdown a:hover {
+  background: #BBBBBB; }
+
+#NetworkSection .node {
   position: absolute;
   text-align: center;
   box-sizing: border-box;
   background-color: #009ee0;
   cursor: pointer; }
-  .node:hover {
+  #NetworkSection .node:hover {
     background-color: #b00046 !important;
     opacity: 1 !important; }
-  .node .label {
+  #NetworkSection .node .label {
     color: #fff;
     text-transform: capitalize;
     font-size: 12px;
@@ -240,28 +285,30 @@ input[type=button] {
     position: relative;
     top: 50%;
     transform: translate(0, -50%); }
-  .node .count {
+  #NetworkSection .node .count {
     color: #fff;
     font-size: 14px;
     display: block;
     position: relative;
     top: 50%;
     transform: translate(0, -50%); }
-  .node.partial-overflow {
+  #NetworkSection .node.partial-overflow {
     overflow: visible; }
-    .node.partial-overflow > .label {
+    #NetworkSection .node.partial-overflow > .label {
       display: none !important; }
-  .node.overflow {
+  #NetworkSection .node.overflow {
     overflow: visible; }
-    .node.overflow > .label {
+    #NetworkSection .node.overflow > .label {
       display: none !important; }
-    .node.overflow > .count {
+    #NetworkSection .node.overflow > .count {
       display: none !important; }
-  .node.inactive {
-    opacity: 0.125 !important; }
-    .node.inactive > .label {
+  #NetworkSection .node.inactive {
+    border: 2px solid rgba(0, 158, 224, 0.125);
+    background-color: transparent;
+    opacity: 1 !important; }
+    #NetworkSection .node.inactive > .label {
       display: none !important; }
-    .node.inactive > .count {
+    #NetworkSection .node.inactive > .count {
       display: none !important; }
 
 #StreamSection .map {

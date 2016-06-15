@@ -20,7 +20,7 @@ export class NetworkSection extends Section {
     });
   });
 
-    this.margin = {'top':100,'right':0,'bottom':0,'left':0};
+    this.margin = {'top':100,'right':0,'bottom':100,'left':0};
 
     this.network = new
       CirclePackedNetwork( {'margin':this.margin} )
@@ -35,8 +35,6 @@ export class NetworkSection extends Section {
 
     if (next.loaded != last.loaded) this.network.updateData(this.db.date.top(Infinity)).render();
     if (!next.visible.NetworkSection) return;
-
-    //console.log(next);
 
     if (next.brushStart !== last.brushStart || next.brushEnd !== last.brushEnd) {
       let data = this.db.date.top(Infinity);
