@@ -12,7 +12,6 @@ export class BarList extends StateDb {
     this.data = [];
     this.key = "subjects";
     
-
     this.div.on("click", ()=> {
       this.state.push({ active: this.key });
     })
@@ -34,6 +33,7 @@ export class BarList extends StateDb {
       || next.active !== last.active
       || next.activeItem !== last.activeItem
       || next.hover !== last.hover
+      || next.loaded !== last.loaded
     ){
       this.render();
     }
@@ -45,7 +45,7 @@ export class BarList extends StateDb {
     const size = this.db[this.key].size();
     this.div.select(".title").text(this.key);
     this.div.classed("active", this.state.state.active === this.key);
-    // this.container.classed("hover", this.state.state.hover === this.key);
+    this.div.classed("hover", this.state.state.hover === this.key);
     // console.time("filter");
    // console.log(this.key);
     const group = this.db[this.key].top(20);
@@ -77,7 +77,7 @@ export class BarList extends StateDb {
     e.append("div").classed("right", true)
       .text(d => `${ d.key }` )
 
-    if(this.state.state.event != "brushmove"){
+    if(this.state.state.event == "brushend" || this.state.state.event == "click"){
       // console.log(s.data())
       this.items.selectAll(".item").sort((a,b) => b.value - a.value)
     }

@@ -163,7 +163,7 @@ export class DataBase {
       let k = next.active.substring(0,next.active.length-1);
       this[k].filterExact(next.activeItem);
 
-      console.log(curr.active, next.active)
+      //console.log(curr.active, next.active)
 
     }
 
