@@ -317,68 +317,50 @@ section#NetworkSection {
   fill: #BEE6F9; }
 #StreamSection .graph path.active {
   fill: #b00046; }
-#StreamSection .list, #StreamSection .totals {
-  left: 30px;
-  position: absolute;
-  /* left: 20px; */
-  /* width: 100%; */
-  padding: 10px;
-  margin: 10px;
-  clear: left; }
-#StreamSection .list .item {
-  padding: 10px;
-  margin: 10px;
-  float: left;
-  background: #eee;
-  cursor: pointer; }
 #StreamSection .entities {
   margin-top: 300px; }
-#StreamSection .entities .entity {
-  /* padding: 5px; */
-  float: left;
-  width: 240px;
-  margin: 10px;
-  padding: 10px;
-  background: rgba(190, 230, 249, 0.26);
-  cursor: pointer; }
-#StreamSection .entities .entity.active {
-  background: #bee6f9; }
-#StreamSection .entities .entity.hover {
-  background: #bee6f9; }
-#StreamSection .entities .entity .items {
-  float: left;
-  overflow-y: scroll;
-  overflow-x: hidden;
-  width: 100%;
-  height: 200px; }
-#StreamSection .entities .entity .item {
-  clear: left;
-  margin: 1px;
-  float: left;
-  width: 100%; }
-#StreamSection .entities .entity .item .left {
-  float: left;
-  width: 40%;
-  padding-right: 5px; }
-#StreamSection .entities .entity .item .left .bar {
-  background: #3C7C9B;
-  float: right;
-  color: #FFF;
-  padding: 2px; }
-#StreamSection .entities .entity .hover.item .left .bar, #StreamSection .entities .entity .active.item .left .bar {
-  background: #b00046; }
-#StreamSection .entities .entity .item .right {
-  float: right;
-  width: 60%; }
-#StreamSection .entities .entity .hover.item, #StreamSection .entities .entity .active.item {
-  color: #b00046; }
-#StreamSection .entities .entity .title {
-  font-family: "gravurcondensed-bold";
-  font-size: 12px;
-  text-transform: uppercase;
-  padding-bottom: 10px;
-  padding-top: 10px;
-  text-align: center; }
+  #StreamSection .entities .title {
+    font-family: "gravurcondensed-bold";
+    font-size: 12px;
+    text-transform: uppercase;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    text-align: center; }
+  #StreamSection .entities .entity {
+    /* padding: 5px; */
+    float: left;
+    width: 240px;
+    margin: 10px;
+    padding: 10px;
+    background: rgba(190, 230, 249, 0.26);
+    cursor: pointer; }
+    #StreamSection .entities .entity.active, #StreamSection .entities .entity.hover {
+      background: #bee6f9; }
+    #StreamSection .entities .entity .items {
+      float: left;
+      overflow-y: scroll;
+      overflow-x: hidden;
+      width: 100%;
+      height: 200px; }
+      #StreamSection .entities .entity .items .item {
+        clear: left;
+        margin: 1px;
+        float: left;
+        width: 100%; }
+        #StreamSection .entities .entity .items .item.active .left .bar, #StreamSection .entities .entity .items .item.hover .left .bar {
+          background: #b00046; }
+        #StreamSection .entities .entity .items .item .left {
+          float: left;
+          width: 40%;
+          padding-right: 5px; }
+          #StreamSection .entities .entity .items .item .left .bar {
+            background: #3C7C9B;
+            float: right;
+            color: #FFF;
+            padding: 2px; }
+        #StreamSection .entities .entity .items .item .right {
+          float: right;
+          width: 60%; }
 
 @font-face {
   font-family: "gravurcondensed-regular";
