@@ -7658,8 +7658,8 @@ $__System.register('19', ['5', '6', '9', '1b', '1c', '1a'], function (_export) {
 
           this.key = "subject";
 
-          this.outerWidth = 1060;
-          this.outerHeight = 300;
+          this.outerWidth = 1200;
+          this.outerHeight = window.innerHeight - 500;
           this.outerHeightInitial = this.outerHeight;
           this.outerHeightSmall = 100;
           this.margin = { top: 20, right: 30, bottom: 30, left: 40 };
@@ -8216,7 +8216,7 @@ $__System.register("21", ["5", "6", "1b", "1c", "1a"], function (_export) {
 
           _get(Object.getPrototypeOf(Geomap.prototype), "constructor", this).call(this, state, db);
 
-          this.outerWidth = 1060;
+          this.outerWidth = 1200;
           this.outerHeight = 800;
           this.margin = { top: 20, right: 20, bottom: 20, left: 20 };
 
@@ -8976,7 +8976,7 @@ $__System.register('2a', ['5', '6', '23', '28', '1b', '1c', '1f'], function (_ex
             if (next.loaded != last.loaded) this.network.updateData(this.db.date.top(Infinity)).render();
             if (!next.visible.NetworkSection) return;
 
-            console.log(next);
+            //console.log(next);
 
             if (next.brushStart !== last.brushStart || next.brushEnd !== last.brushEnd) {
               var data = this.db.date.top(Infinity);
