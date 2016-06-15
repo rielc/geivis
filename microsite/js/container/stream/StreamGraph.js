@@ -1,6 +1,7 @@
 export let __hotReload = true
 
 import {StateDb} from '../../StateDb';
+import {defer} from 'lodash'
 
 export class StreamGraph extends StateDb {
 
@@ -68,9 +69,20 @@ export class StreamGraph extends StateDb {
   }
 
   brushmove() {
-    let s = d3.event.selection.map(d=> this.x.invert(d));
-    console.log("bs")
-    this.state.push({ brushStart: s[0], brushEnd: s[1], event: "brushmove" });
+    if(d3.event.sourceEvent.type == "brush") return;
+
+    let domain0 = d3.event.selection.map(this.x.invert);
+    let domain1 = domain0.map(d3.timeYear.round);
+
+    // If empty when rounded, use floor & ceil instead.
+    if (domain1[0] >= domain1[1]) {
+      domain1[0] = d3.timeYear.floor(domain0[0]);
+      domain1[1] = d3.timeYear.ceil(domain0[1]);
+    }
+
+    this.gBrush.call(this.brush.move, domain1.map(this.x))
+
+    this.state.push({ brushStart: domain1[0], brushEnd: domain1[1], event: "brushmove" });
   }
 
   brushend() {

@@ -78,8 +78,6 @@ export class DataBase {
       .order(d3.stackOrderAscending)
       .offset(d3.stackOffsetNone);
 
-    //this.filterTag("Deutschland")
-
     this.state.push({ loaded: true, keyframe:true })
 
 
@@ -94,6 +92,8 @@ export class DataBase {
     this.tag.filter(tag)
     let tags = this.tags2.all() //.all().sort((b,a) => a.value - b.value)
     console.timeEnd("tags");
+    console.log(tags);
+    // console.log(this.places.all());
 
   }
 
@@ -140,6 +140,8 @@ export class DataBase {
  
 
   stateChange(next, curr){
+
+    // this.filterTag("Preußen")
 
 
     if(next.brushStart !== curr.brushStart){
