@@ -294,18 +294,18 @@ input[type=button] {
 #StreamSection .stream {
   background: #FFF;
   position: fixed; }
-#StreamSection .stream.dropshadow {
-  box-shadow: 0 9px 7px -6px rgba(0, 0, 0, 0.18); }
-#StreamSection .stream .axis path,
-#StreamSection .stream .axis line {
-  fill: none;
-  stroke: #eee;
-  shape-rendering: crispEdges; }
-#StreamSection .graph path {
-  cursor: pointer;
-  fill: #BEE6F9; }
-#StreamSection .graph path.active {
-  fill: #b00046; }
+  #StreamSection .stream.dropshadow {
+    box-shadow: 0 9px 7px -6px rgba(0, 0, 0, 0.18); }
+  #StreamSection .stream .axis path,
+  #StreamSection .stream .axis line {
+    fill: none;
+    stroke: #eee;
+    shape-rendering: crispEdges; }
+  #StreamSection .stream .graph path {
+    cursor: pointer;
+    fill: #BEE6F9; }
+    #StreamSection .stream .graph path.active {
+      fill: #b00046; }
 #StreamSection .entities {
   margin-top: 300px; }
   #StreamSection .entities .title {

@@ -82,13 +82,11 @@ export class StreamGraph extends StateDb {
     }
 
     this.gBrush.call(this.brush.move, domain1.map(this.x))
-
     this.state.push({ brushStart: domain1[0], brushEnd: domain1[1], event: "brushmove" });
   }
 
   brushend() {
     let s = d3.event.selection ? d3.event.selection.map(d=> this.x.invert(d)) : this.db.extent;
-    // console.log("be")
     this.state.push({ brushStart: s[0], brushEnd: s[1], event: "brushend" });
   }
 
@@ -170,6 +168,7 @@ export class StreamGraph extends StateDb {
 
     if(next.scrollY !== last.scrollY){
       // console.log(next.scrollY);
+      // this needs to be cleaned up
 
       const diff = this.outerHeightInitial - next.scrollY;
       const height = this.outerHeightInitial + diff;

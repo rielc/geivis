@@ -9,7 +9,6 @@ export class StreamSection extends Section {
   constructor(state, db){
   	super(state,db);
 
-    this.visible = true;
   	this.divStream = this.div.append("div").attr("class", "stream");
   	this.divEntities = this.div.append("div").attr("class", "entities");
 
@@ -24,7 +23,7 @@ export class StreamSection extends Section {
 
 
   stateChange(next, last){
-  	// console.log(this.name, next)
+  	// console.log(next.visible)
 
     //console.log(this.db.date.top(Infinity));
 
