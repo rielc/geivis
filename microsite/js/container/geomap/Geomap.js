@@ -7,7 +7,7 @@ export class Geomap extends StateDb {
   constructor(state, db, div){
     super(state,db);
    
-    this.outerWidth = 1060;
+    this.outerWidth = 1200;
     this.outerHeight = 800;
     this.margin = {top: 20, right: 20, bottom: 20, left: 20};
 

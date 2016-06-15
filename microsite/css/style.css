@@ -264,23 +264,8 @@ input[type=button] {
     .node.inactive > .count {
       display: none !important; }
 
-#StreamSection .outer {
-  padding-bottom: 10px;
-  overflow: hidden;
-  /* z-index: 2; */
-  /* background: #FFF; */
-  top: 0;
-  position: fixed; }
 #StreamSection .map {
   padding-top: 40px; }
-#StreamSection .page {
-  margin-top: 240px;
-  float: left;
-  padding-bottom: 800px; }
-  #StreamSection .page > div {
-    padding-top: 30px;
-    padding-bottom: 30px;
-    float: left; }
 #StreamSection .bookshelf {
   height: 340px;
   margin-left: 20px;
@@ -293,7 +278,8 @@ input[type=button] {
     margin-left: 40px; }
 #StreamSection .stream {
   background: #FFF;
-  position: fixed; }
+  position: fixed;
+  z-index: 100; }
   #StreamSection .stream.dropshadow {
     box-shadow: 0 9px 7px -6px rgba(0, 0, 0, 0.18); }
   #StreamSection .stream .axis path,
@@ -307,7 +293,7 @@ input[type=button] {
     #StreamSection .stream .graph path.active {
       fill: #b00046; }
 #StreamSection .entities {
-  margin-top: 300px; }
+  margin-top: calc(100vh - 400px); }
   #StreamSection .entities .title {
     font-family: "gravurcondensed-bold";
     font-size: 12px;
@@ -374,9 +360,8 @@ section {
   overflow: scroll;
   flex-direction: column;
   margin: 0;
-  min-height: 100vh;
-  border-bottom: 5px solid #EEE;
-  box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.125) inset; }
+  min-height: calc(100vh - 100px);
+  border-bottom: 5px solid #EEE; }
 
 .control {
   width: 100%; }

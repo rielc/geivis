@@ -11,8 +11,8 @@ export class StreamGraph extends StateDb {
     this.key = "subject";
     
 
-    this.outerWidth = 1060;
-    this.outerHeight = 300;
+    this.outerWidth = 1200;
+    this.outerHeight = window.innerHeight-500;
     this.outerHeightInitial = this.outerHeight;
     this.outerHeightSmall = 100;
     this.margin = {top: 20, right: 30, bottom: 30, left: 40};

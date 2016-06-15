@@ -36,7 +36,7 @@ export class NetworkSection extends Section {
     if (next.loaded != last.loaded) this.network.updateData(this.db.date.top(Infinity)).render();
     if (!next.visible.NetworkSection) return;
 
-    console.log(next);
+    //console.log(next);
 
     if (next.brushStart !== last.brushStart || next.brushEnd !== last.brushEnd) {
       let data = this.db.date.top(Infinity);
