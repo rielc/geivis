@@ -14,6 +14,12 @@ $padding: 10px;
 @import "_circle-packed-network.scss";
 @import "_StreamSection.scss";
 
+// tooltips
+
+@import "_tooltip.scss";
+@import "_balloon.scss";
+
+
 // global styles
 
 
@@ -46,13 +52,14 @@ p {
 
 
 section {
+  position:relative;
   display: flex;
   width:100%;
   overflow: scroll;
   flex-direction:column;
   margin:0;
   min-height:calc(100vh - 100px);
-  box-shadow:0 0 5px 0 rgba(0,0,0,0.125) inset;
+  box-shadow:0 0 5px 0 rgba(0,0,0,0.125);
 
   h2.title {
     padding: 25px 0;
@@ -94,10 +101,3 @@ tspan:last-child {
   margin: auto auto;
   width: 1200px;
 }
-
-
-
-
-// tooltips
-
-@import "_balloon.scss";

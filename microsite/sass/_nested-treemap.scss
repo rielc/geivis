@@ -1,10 +1,8 @@
 #TreemapSection {
-
+≈
 	.visualization {
 		position:relative;
 	}
-
-
 
 	select {
 		padding:10px;
@@ -17,15 +15,13 @@
 		border-radius:0;
 	}
 
-
-
 	.node {
 		box-sizing:border-box;
 		position:absolute;
-		overflow:hidden;
 		text-align: center;
-		&.overflow {
-			color:transparent;
+		z-index:2 !important;
+		&.overflow .label {
+			display:none;
 		}
 
 		&.related {
@@ -33,37 +29,39 @@
 			.label { color:#fff !important; }
 		}
 
-		.label {
-			position:absolute;
-			top:50%;
-			transform:translate(-50%, -50%);
-		}
-
-		.count {
-
-		}
+		.label { position:absolute; }
+		.count { }
 	}
 
 	.level-1 {
-		z-index:1;
+		z-index:1 !important;
 		padding-top:5px;
 		border: 0.5px solid #fff;
 		background-color: $blue;
+
+		.label {
+			color:#fff;
+			position:absolute;
+			transform:translate(-50%,0px);
+			font-size: 16px;
+		}
 	}
 	.level-2 {
-		z-index:2;
 		background-color: lighten($blue, 50%);
-		font-size: 12px;
 		border-bottom:1px solid #fff;
 		border-top:1px solid #fff;
 		&:hover {
+			z-index:3 !important;
 			background-color:$red;
 			color:#fff;
 			z-index:100 !important;
 		}
 		.label {
-			color : $blue !important;
-			font-size: 16px;
+			top:50%;
+			transform:translate(-50%, -50%);
+			color : $grey !important;
+			font-size: 12px;
+
 		}
 	}
 }

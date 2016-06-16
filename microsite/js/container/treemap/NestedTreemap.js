@@ -171,7 +171,7 @@ export class NestedTreemap {
 				let overflow = GeiVisUtils.checkOverflow(el._groups[0], 14);
 				el.classed(overflow, true);
 				if (overflow == "overflow" || overflow == "partial-overflow") {
-				  el.attr("data-balloon", d=>d.data.key+": "+d.values);
+				  el.attr("data-balloon", d=>d.data.key);
 				  el.attr("data-balloon-pos", "down");
 				}
 			});

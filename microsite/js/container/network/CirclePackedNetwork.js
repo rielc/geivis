@@ -30,13 +30,12 @@ export class CirclePackedNetwork {
     this.outerWidth = this.width + this.properties.margin.left + this.properties.margin.right;
     this.outerHeight = this.height + this.properties.margin.top + this.properties.margin.bottom;
 
-      //console.log(this.width, this.height);
-
+    // this.tooltip = new Tooltip('');
+    // this.tooltip.attach(selector._groups[0][0]);
 
     this.container = 
       selector
       .append("div")
-      .classed("container", true)
       .attr("id", this.containerName+"-visualization")
       .style("width", this.width+"px")
       .style("height", this.height+"px")
@@ -45,8 +44,8 @@ export class CirclePackedNetwork {
 
     this.pack = 
       d3.pack()
-      .size([this.width-2,this.height-2])
-      .padding(3);
+      .size([this.width,this.height])
+      .padding(0);
     
 
     return this;
