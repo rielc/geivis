@@ -348,6 +348,8 @@ input[type=button] {
 #GeomapSection .river {
   fill: none;
   stroke: #EEE; }
+#GeomapSection .land {
+  fill: rgba(238, 238, 238, 0.27); }
 
 #StreamSection h2.title {
   background-color: #fff;

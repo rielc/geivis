@@ -20,14 +20,17 @@ export class DataBase {
 
     d3.csv("data/data.csv", (data)=> {
     d3.csv("data/geocode.csv", (geocode)=> {
-    d3.json("data/map/topo.json", (otherriver)=> {
+    d3.json("data/map/topo.json", (rivers)=> {
+    d3.json("data/map/landbig.json", (land)=> {
 
-      this.add({otherriver})
+      this.add({rivers});
+      this.add({land});
       this.init(data,geocode);
 
       this.state.push({ loaded: true, keyframe:true })
 
 
+    })
     })
     })
     })
@@ -104,8 +107,8 @@ export class DataBase {
   }
 
   add(data){
-    this.store = { ...data};
-    console.log(this.store);
+    this.store = { ...data, ...this.store };
+    // console.log(this.store);
     return this;
   }
 
