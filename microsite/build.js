@@ -8098,6 +8098,7 @@ $__System.register('1e', ['5', '6', '19', '1b', '1c', '1f', '1d'], function (_ex
 
           this.divStream = this.div.append("div").attr("class", "stream");
           this.divEntities = this.div.append("div").attr("class", "entities");
+          this.title.html("<strong>GEORG ECKERT INSTITUTE</strong> / Visualized Collection Prototype");
 
           this.stream = new StreamGraph(state, db, this.divStream).init();
 
@@ -8503,8 +8504,6 @@ $__System.register("28", ["5", "6", "27", "29"], function (_export) {
         }, {
           key: "append",
           value: function append(selector) {
-            var _this = this;
-
             this.containerName = selector.attr("id");
             this.parentContainer = selector;
 
@@ -8516,9 +8515,8 @@ $__System.register("28", ["5", "6", "27", "29"], function (_export) {
 
             //console.log(this.width, this.height);
 
-            this.container = selector.append("div").classed("container", true).attr("id", this.containerName + "-visualization").style("width", this.width + "px").style("height", this.height + "px").style("position", "relative").style("margin", "0").style("padding", "0").style("transform", function (d) {
-              return "translate(" + _this.properties.margin.left + "px," + _this.properties.margin.top + "px)";
-            });
+            this.container = selector.append("div").classed("container", true).attr("id", this.containerName + "-visualization").style("width", this.width + "px").style("height", this.height + "px").style("position", "relative");
+            //.style("transform",  d => `translate(${this.properties.margin.left}px,${this.properties.margin.top}px)`);
 
             this.pack = d3.pack().size([this.width - 2, this.height - 2]).padding(3);
 
@@ -8535,12 +8533,12 @@ $__System.register("28", ["5", "6", "27", "29"], function (_export) {
         }, {
           key: "updateData",
           value: function updateData(data) {
-            var _this2 = this;
+            var _this = this;
 
             this.data = data;
             this.data.forEach(function (d) {
-              if (d[_this2.nodeAccessor] != undefined) {
-                d[_this2.nodeAccessor] = _this2.makeArrayUnique(d[_this2.nodeAccessor]);
+              if (d[_this.nodeAccessor] != undefined) {
+                d[_this.nodeAccessor] = _this.makeArrayUnique(d[_this.nodeAccessor]);
               }
             });
 
@@ -8555,8 +8553,8 @@ $__System.register("28", ["5", "6", "27", "29"], function (_export) {
 
             // fix graph links to map to objects instead of indices
             this.transformedData.links.forEach(function (d, i) {
-              d.source = isNaN(d.source) ? d.source : _this2.transformedData.nodes[d.source];
-              d.target = isNaN(d.target) ? d.target : _this2.transformedData.nodes[d.target];
+              d.source = isNaN(d.source) ? d.source : _this.transformedData.nodes[d.source];
+              d.target = isNaN(d.target) ? d.target : _this.transformedData.nodes[d.target];
             });
 
             this.root = d3.hierarchy({
@@ -8593,17 +8591,17 @@ $__System.register("28", ["5", "6", "27", "29"], function (_export) {
         }, {
           key: "generateLinksAndNodes",
           value: function generateLinksAndNodes() {
-            var _this3 = this;
+            var _this2 = this;
 
             // extract ALL tags (with duplicates)
             var allTags = [];
             // push all tags of every entry into the global array
             this.data.forEach(function (e) {
-              if (e[_this3.nodeAccessor] != undefined) {
-                allTags.push(e[_this3.nodeAccessor].map(function (t) {
+              if (e[_this2.nodeAccessor] != undefined) {
+                allTags.push(e[_this2.nodeAccessor].map(function (t) {
                   return t.trim().toLowerCase();
                 }).filter(function (f) {
-                  return _this3.blacklist.indexOf(f) == -1;
+                  return _this2.blacklist.indexOf(f) == -1;
                 }));
               }
             });
@@ -8626,22 +8624,22 @@ $__System.register("28", ["5", "6", "27", "29"], function (_export) {
               // this array prevent duplicate links
 
               // if the entry has tags
-              if (e[_this3.nodeAccessor] != undefined) {
+              if (e[_this2.nodeAccessor] != undefined) {
                 (function () {
 
                   var parsedLinks = [];
                   var addedTags = [];
 
-                  var tags = e[_this3.nodeAccessor].map(function (t) {
+                  var tags = e[_this2.nodeAccessor].map(function (t) {
                     return t.trim().toLowerCase();
                   }); // clean the tags again
 
                   //create a link for n-to-n connection
                   tags.filter(function (f) {
-                    return _this3.blacklist.indexOf(f) == -1;
+                    return _this2.blacklist.indexOf(f) == -1;
                   }).forEach(function (tagA) {
                     tags.filter(function (f) {
-                      return _this3.blacklist.indexOf(f) == -1;
+                      return _this2.blacklist.indexOf(f) == -1;
                     }).forEach(function (tagB) {
                       if (tagA != tagB) {
                         // sort them to prevent duplications
@@ -8843,18 +8841,22 @@ $__System.register("28", ["5", "6", "27", "29"], function (_export) {
               });
             }
 
-            //d3.selectAll(".node").remove();
+            //console.log(this.root.children);
 
             this.nodes = this.container.selectAll(".node").data(this.root.children, function (e) {
-              return GeiVisUtils.makeSafeForCSS(e.data.name);
+              return e.data.name;
             });
 
             // update
-            this.nodes
-            // .transition()
-            // .duration(300)
-            // .delay( (d,i)=>i*10 )
-            .call(setNodeProperties).each(function (d) {
+            this.nodes.select(".label").text(function (d) {
+              return d.data.name;
+            });
+
+            this.nodes.select(".count").text(function (d) {
+              return d.data.occurrence;
+            });
+
+            this.nodes.call(setNodeProperties).each(function (d) {
               var el = d3.select(this);
               var overflow = GeiVisUtils.checkOverflow(el._groups[0], 18);
               el.classed(overflow, true);
@@ -8964,9 +8966,15 @@ $__System.register('2a', ['5', '6', '23', '28', '1b', '1c', '1f'], function (_ex
             });
           });
 
-          this.margin = { 'top': 100, 'right': 0, 'bottom': 0, 'left': 0 };
+          var oh = 0;
+          oh += parseInt(this.title.style("padding-top"));
+          oh += parseInt(this.title.style("padding-bottom"));
+          oh += parseInt(this.title.style("height"));
+          this.margin = { 'top': oh, 'right': 0, 'bottom': 0, 'left': 0 };
 
           this.network = new CirclePackedNetwork({ 'margin': this.margin }).setBlacklist(this.blacklist).setNodeAccessor("RSWKTag").setOccurrenceScale(d3.scaleLinear().domain([0, 1]).range([0.5, 1.0])).append(this.div);
+
+          this.title.html('All tags');
         }
 
         _createClass(NetworkSection, [{
@@ -8976,9 +8984,8 @@ $__System.register('2a', ['5', '6', '23', '28', '1b', '1c', '1f'], function (_ex
             if (next.loaded != last.loaded) this.network.updateData(this.db.date.top(Infinity)).render();
             if (!next.visible.NetworkSection) return;
 
-            //console.log(next);
-
             if (next.brushStart !== last.brushStart || next.brushEnd !== last.brushEnd) {
+              this.title.html('All tags from ' + next.brushStart.getFullYear() + ' to ' + next.brushEnd.getFullYear());
               var data = this.db.date.top(Infinity);
               if (data.length > 0) {
                 this.network.updateData(data);
@@ -9492,6 +9499,7 @@ $__System.register("1f", ["6", "1b", "1c", "1a"], function (_export) {
 
 					d3.select("#" + this.name).remove(); //hotreload hotfix
 					this.div = d3.select(".container").append("section").attr("id", this.name);
+					this.title = this.div.append("h2").classed("title", true);
 					this.type = "section";
 				}
 
@@ -9710,7 +9718,7 @@ $__System.register("43", ["5", "6", "29"], function (_export) {
 					value: function appendTo(selector) {
 
 						this.container = selector;
-						this.createDropdowns();
+						//this.createDropdowns();
 
 						this.width = parseInt(this.container.style("width")) - this.properties.margin.left - this.properties.margin.right, this.height = parseInt(this.container.style("height")) - this.properties.margin.top - this.properties.margin.bottom;
 
@@ -9750,15 +9758,27 @@ $__System.register("43", ["5", "6", "29"], function (_export) {
 							return d.length;
 						});
 
-						// do the nesting and then remap the values
-						//this.nested = nesting.entries( data );
-						//this.nested = GeiVisUtils.remap({"key": "All Books", "values" : this.nested });
+						var hist = d3.histogram().value(function (h) {
+							return h.value;
+						}).thresholds([2]);
+						var nested = nesting.entries(data);
 
-						//this.format = d3.format(",d");
+						nested = nesting.entries(data).map(function (d) {
+							var rHist = hist(d.values);
+							if (rHist.length > 1) {
+								var rVal = d3.values(rHist[1]).filter(function (f) {
+									return typeof f === "object";
+								});
+								rVal.push({ key: "Other", value: d3.sum(rHist[0], function (s) {
+										return s.value;
+									}) });
+								return { key: d.key, values: rVal };
+							} else {
+								return d;
+							}
+						});
 
-						// console.log("nesting", nesting.entries( data ));
-
-						this.root = d3.hierarchy({ key: "all values", values: nesting.entries(data) }, function (d) {
+						this.root = d3.hierarchy({ key: "all values", values: nested }, function (d) {
 							return d.values;
 						}).sum(function (d) {
 							return d.value;
@@ -9766,25 +9786,37 @@ $__System.register("43", ["5", "6", "29"], function (_export) {
 							return Math.abs(a.x1 - a.x0 - Math.abs(b.x1 - b.x0)) || a.value - b.value;
 						});
 
-						//console.log("before", this.root);
-
-						this.treemap = d3.treemap().size([this.width, this.height]).tile(d3.treemapSliceDice).round(false);
-						// .padding( (d) => {
-						// 	switch(d.depth) {
-						// 		case 0: return [0, 0, 0, 0];
-						// 		case 1: return [30, 0, 0, 0];
-						// 		case 2: return [0 , 0, 0, 0];
-						// 	}
-						// } );
+						this.treemap = d3.treemap().size([this.width, this.height]).tile(d3.treemapSliceDice).round(true).paddingTop(function (d) {
+							switch (d.depth) {
+								case 1:
+									return 30;
+								default:
+									return 0;
+							}
+						}).paddingBottom(function (d) {
+							switch (d.depth) {
+								//case 2: return 1;
+								//case 3: return 1;
+								default:
+									return 1;
+							}
+						}).paddingLeft(function (d) {
+							switch (d.depth) {
+								case 1:
+									return 1;
+								default:
+									return 0;
+							}
+						}).paddingRight(function (d) {
+							switch (d.depth) {
+								case 1:
+									return 1;
+								default:
+									return 0;
+							}
+						});
 
 						this.treemap(this.root);
-
-						// console.log("root", this.root);
-
-						//console.log("result", this.treemap(this.root));
-
-						// console.log("after", this.root);
-
 						return this;
 					}
 				}, {
@@ -9794,82 +9826,53 @@ $__System.register("43", ["5", "6", "29"], function (_export) {
 						var that = this;
 
 						function updateNode(s) {
-
-							// position the text in the middle of all first levels
-							//s.filter( d => (d.depth == 1)).style("padding-top", "10px");
-
-							// s
-							// 	.filter( d => (d.depth != 1 || d.depth != 2) )
-							// 	.style("left", (d) => { return (that.properties.margin.left + d.x) + "px"; })
-							// 	.style("top", (d) =>{ return (that.properties.margin.top + d.y) + "px"; })
-							// 	.style("width", (d) => { return Math.max(0, d.dx - 1) + "px"; })
-							// 	.style("height", (d) => { return Math.max(0, d.dy - 1) + "px"; });
-
-							s
-							//.filter( d => (d.depth == 2) )
-							//.style("padding-top", d => (Math.max(0, d.dy - 1)/2 - 5) + "px" )
-							// .sort( (a,b) => { return ((a.x)+Math.max(0, a.dy - 1)) - ((b.x)+Math.max(0, b.dy - 1)) })
-							// .style("width", "0px")
-							// .style("height", (d) => { return Math.max(0, d.dy - 1) + "px"; })
-							// .transition()
-							// .duration(300)
-							// .delay( (d,i) => { return i*1.5; } )
-							.style("transform", function (d) {
+							s.style("transform", function (d) {
 								return "translate(" + d.x0 + "px," + d.y0 + "px)";
 							}).style("width", function (d) {
 								return d.x1 - d.x0 + "px";
 							}).style("height", function (d) {
 								return d.y1 - d.y0 + "px";
 							});
-							// .each(function (d) {
-							// 	let el = d3.select(this);
-							// 	let overflow = checkOverflow(el[0][0], 10, 2);
-							// 	if (overflow) { el.classed("label", true); }
-							// });
-
-							// position the text in the middle of all 2nd levels
-							//s.filter( d => (d.depth == 2)).style("padding-top", d => (Math.max(0, d.dy - 1)/2 - 5) + "px" );
 						}
 
-						//console.log(this.root);
+						//this.svg.selectAll(".node").remove();	
 
 						var data = this.root.descendants();
 
-						//this.svg.selectAll(".node").remove();
-
-						this.nodes = this.svg.selectAll(".node").data(data, function (d, i) {
-
-							var r = d.data.key;
-							if (d.parent != undefined) {
-								r += d.parent.data.key;
-							}
-							return i;
+						this.nodes = this.svg.selectAll(".node").data(data, function (d) {
+							return d.data.key;
 						}).call(updateNode);
 
-						this.nodes.enter().append("div")
-						// .attr("id", d => {
-						// 	console.log(d);
-						// 	let r = d.data.key;
-						// 	//if (d.parent != undefined) { r+=d.parent.data.key; }
-						// 	return GeiVisUtils.makeSafeForCSS(r);
-						// })
-						// .attr("class", d => (GeiVisUtils.makeSafeForCSS(d.data.key) + (" level-" + d.depth)) )
-						.classed("node", true)
-						// .on("mouseover", function (d) {
-						// 	// TODO: Implement custom relative Color-Scale
-						// 	d3.selectAll(".node").classed("active", false);
-						// 	d3.selectAll("." + GeiVisUtils.makeSafeForCSS(d.data.key)).classed("active", true);
-						// })
-						.text(function (d) {
+						var enteredNodes = this.nodes.enter();
+
+						var appendedNodes = enteredNodes.append("div").attr("class", function (d) {
+							return GeiVisUtils.makeSafeForCSS(d.data.key) + " node " + "level-" + d.depth;
+						}).on("mouseover", function (d) {
+							// TODO: Implement custom relative Color-Scale
+							that.svg.selectAll(".node").classed("related", false);
+							that.svg.selectAll("." + GeiVisUtils.makeSafeForCSS(d.data.key)).classed("related", true);
+						}).attr("id", function (d) {
+							if (d.depth == 1) return GeiVisUtils.makeSafeForCSS(d.data.key);
+							if (d.depth == 2) return GeiVisUtils.makeSafeForCSS(d.parent.data.key + d.data.key);
+						}).call(updateNode);
+
+						appendedNodes.append("span").classed("label", true).text(function (d) {
 							return d.depth != 0 ? d.data.key : null;
-						}).call(updateNode);
+						});
 
-						this.nodes
-						// .transition()
-						// .duration(100)
-						// .style("width", 0 )
-						// .style("height", 0 )
-						.exit().remove();
+						appendedNodes.each(function (d) {
+							var el = d3.select(this);
+							var overflow = GeiVisUtils.checkOverflow(el._groups[0], 14);
+							el.classed(overflow, true);
+							if (overflow == "overflow" || overflow == "partial-overflow") {
+								el.attr("data-balloon", function (d) {
+									return d.data.key + ": " + d.values;
+								});
+								el.attr("data-balloon-pos", "down");
+							}
+						});
+
+						this.nodes.exit().remove();
 
 						return this;
 					}
@@ -9963,22 +9966,28 @@ $__System.register('44', ['5', '6', '43', '1b', '1c', '1f'], function (_export) 
 
           _get(Object.getPrototypeOf(TreemapSection.prototype), 'constructor', this).call(this, state, db);
 
-          this.margin = { 'top': 100, 'right': 0, 'bottom': 0, 'left': 0 };
+          var oh = 0;
+          oh += parseInt(this.title.style("padding-top"));
+          oh += parseInt(this.title.style("padding-bottom"));
+          oh += parseInt(this.title.style("height"));
+          this.margin = { 'top': oh, 'right': 0, 'bottom': 0, 'left': 0 };
 
           this.treemap = new NestedTreemap({ 'margin': this.margin });
           this.treemap.layout = "SliceDice";
 
-          this.treemap.setLevelA("Schulfach").setLevelB("Ort").addNesting("Schulfach", function (d) {
-            return d.subject == undefined ? "Schulfach unbekannt" : d.subject;
-          }).addNesting("Schultyp", function (d) {
-            return d.schooltype == undefined ? "Schultyp unbekannt" : d.schooltype;
-          }).addNesting("Schullevel", function (d) {
-            return d.schoollevel == undefined ? "Schullevel unbekannt" : d.schoollevel;
-          }).addNesting("Ort", function (d) {
-            return d.publisher_city == undefined ? "Ort unbekannt" : d.publisher_city;
-          }).addNesting("Verlag", function (d) {
-            return d.publisher == undefined ? "Verlag unbekannt" : d.publisher;
+          this.treemap.setLevelA("Subject").setLevelB("Place").addNesting("Subject", function (d) {
+            return d.subject == undefined ? "Subject unknown" : d.subject;
+          }).addNesting("Schooltype", function (d) {
+            return d.schooltype == undefined ? "Schooltype unknown" : d.schooltype;
+          }).addNesting("Schoollevel", function (d) {
+            return d.schoollevel == undefined ? "Schoollevel unknown" : d.schoollevel;
+          }).addNesting("Place", function (d) {
+            return d.publisher_city == undefined ? "Place unknown" : d.publisher_city;
+          }).addNesting("Publisher", function (d) {
+            return d.publisher == undefined ? "Publisher unbekannt" : d.publisher;
           }).appendTo(this.div);
+
+          this.title.html('Comparing ' + this.treemap.levelB + 's in ' + this.treemap.levelA + 's');
         }
 
         _createClass(TreemapSection, [{
@@ -9989,11 +9998,13 @@ $__System.register('44', ['5', '6', '43', '1b', '1c', '1f'], function (_export) 
             if (!next.visible.TreemapSection) return;
 
             if (next.brushStart !== last.brushStart || next.brushEnd !== last.brushEnd) {
+
+              this.title.html('Comparing ' + this.treemap.levelB + 's in ' + this.treemap.levelA + 's from ' + next.brushStart.getFullYear() + ' to ' + next.brushEnd.getFullYear());
+
               var data = this.db.date.top(Infinity);
               if (data.length > 0) {
                 this.treemap.updateData(data);
                 this.treemap.render();
-                console.log("render done");
               }
             }
           }
@@ -10012,7 +10023,7 @@ $__System.register('44', ['5', '6', '43', '1b', '1c', '1f'], function (_export) 
 $__System.register('1', ['4', '7', '8', '20', '22', '44', '1e', '2a'], function (_export) {
   'use strict';
 
-  var StateMachine, DataBase, ScrollListener, DummySection, GeomapSection, TreemapSection, StreamSection, NetworkSection, __hotReload, state, db, scroll, streamSection, geomapSection, networkSection, treemapSection, dummySection;
+  var StateMachine, DataBase, ScrollListener, DummySection, GeomapSection, TreemapSection, StreamSection, NetworkSection, __hotReload, state, db, scroll, streamSection, geomapSection, networkSection, treemapSection;
 
   return {
     setters: [function (_) {
@@ -10044,7 +10055,6 @@ $__System.register('1', ['4', '7', '8', '20', '22', '44', '1e', '2a'], function 
       geomapSection = new GeomapSection(state, db);
       networkSection = new NetworkSection(state, db);
       treemapSection = new TreemapSection(state, db);
-      dummySection = new DummySection(state, db);
 
       db.load();
     }
