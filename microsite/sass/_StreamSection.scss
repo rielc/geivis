@@ -1,14 +1,15 @@
+#GeomapSection {
+    .river {
+        fill: none;
+        stroke: #EEE;
+    }
+}
+
 #StreamSection {
-
     h2.title {
-        background-color:#fff;
-        position:fixed;
+        background-color: #fff;
+        position: fixed;
     }
-   
-    .map {
-        padding-top: 40px;
-    }
-
     .bookshelf {
         height: 340px;
         margin-left: 20px;
@@ -31,11 +32,27 @@
             // box-shadow: 0px 0px 15px 4px rgba(0,0,0,0.11);
             box-shadow: 0 9px 7px -6px rgba(0, 0, 0, 0.18);
         }
+        text {
+            font-family: "gravurcondensed-regular";
+            font-size: 12px;
+            // text-shadow: 0px 0px 2px rgba(255,255,255,0.4), 0px 0px 2px rgba(255,255,255,0.4), 0px 0px 2px rgba(255,255,255,0.4), 0px 0px 2px rgba(255,255,255,0.4), 0px 0px 2px rgba(255,255,255,0.4), 0px 0px 1px rgba(255,255,255,0.4), 0px 0px 1px rgba(255,255,255,0.4), 0px 0px 1px rgba(255,255,255,0.4), 0px 0px 1px rgba(255,255,255,0.4), 0px 0px 1px rgba(255,255,255,0.4), 0px 0px 1px rgba(255,255,255,0.4), 0px 0px 1px rgba(255,255,255,0.4);
+        }
+        .brush {
+            .selection {
+                fill: #b00046;
+                fill-opacity: 0.3;
+                stroke: none;
+            }
+            .handle {
+                // fill:#b00046;
+            }
+        }
         .axis {
+            pointer-events: none;
             path,
             line {
                 fill: none;
-                stroke: #eee;
+                stroke: rgba(0, 0, 0, 0.1);
                 shape-rendering: crispEdges;
             }
         }
@@ -47,10 +64,8 @@
             }
         }
     }
-    
     .entities {
         margin-top: calc(92vh - 400px);
-
         .title {
             font-family: "gravurcondensed-bold";
             font-size: 12px;

@@ -1,18 +1,20 @@
 export let __hotReload = true
 
 import {StateDb} from '../../StateDb';
+// import topojson from 'topojson';
 
 export class Geomap extends StateDb {
 
   constructor(state, db, div){
     super(state,db);
-   
+    
+    this.div = div;
     this.outerWidth = 1200;
     this.outerHeight = window.innerHeight-400;
     this.margin = {top: 20, right: 20, bottom: 20, left: 20};
 
     this.projection = d3v3.geo.mercator()
-      .center([15, 49])
+      .center([18, 50])
       .scale(3500)
       .translate([outerWidth / 2, outerHeight / 2])
       
@@ -22,15 +24,18 @@ export class Geomap extends StateDb {
 
     this.svg = d3v3.select(div.node()).append("svg");
     this.g = this.svg.append("g");
+    this.rivers = this.g.append("path").attr("class","river");
 
     this.scale = d3v3.scale.linear().range([1,20]);
-   
+
     return this;
   }
 
   init(){
     this.width = this.outerWidth - this.margin.left - this.margin.right,
     this.height = this.outerHeight - this.margin.top - this.margin.bottom;
+
+    this.projection.translate([outerWidth / 2, outerHeight / 2])
 
     this.svg
       .attr("width", this.outerWidth)
@@ -47,6 +52,11 @@ export class Geomap extends StateDb {
 
 
   stateChange(next, last){
+    if(next.loaded !== last.loaded){
+      console.log(this.db.store.otherriver);
+      this.rivers.datum(topojson.mesh(this.db.store.otherriver)).attr("d", this.path);
+    }
+
     if(!next.visible.GeomapSection) return;
     // console.log(next)
     
@@ -60,10 +70,16 @@ export class Geomap extends StateDb {
     ){
       this.render();
     }
+
+
   }
 
   render(){
     // console.log("RENDER");
+    //console.log(this.db.store)
+
+    
+    // this.rivers.datum(this.db.store.otherriver).attr("d", this.path);
 
     let places = this.db["places"].top(100);
     let max = d3v3.max(places, d=>d.value);

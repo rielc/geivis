@@ -9,6 +9,7 @@ export class DataBase {
     this.crossfilter = {};
     this.state = state;
     this.name = this.constructor.name;
+    this.store = {};
 
     this.state.subscribe(this);
   }
@@ -19,9 +20,15 @@ export class DataBase {
 
     d3.csv("data/data.csv", (data)=> {
     d3.csv("data/geocode.csv", (geocode)=> {
+    d3.json("data/map/topo.json", (otherriver)=> {
 
+      this.add({otherriver})
       this.init(data,geocode);
 
+      this.state.push({ loaded: true, keyframe:true })
+
+
+    })
     })
     })
 
@@ -79,8 +86,6 @@ export class DataBase {
       .order(d3.stackOrderAscending)
       .offset(d3.stackOffsetNone);
 
-    this.state.push({ loaded: true, keyframe:true })
-
 
     return this;
   }
@@ -98,8 +103,9 @@ export class DataBase {
 
   }
 
-  add(name, data){
-    this[name] = data;
+  add(data){
+    this.store = { ...data};
+    console.log(this.store);
     return this;
   }
 
