@@ -10031,7 +10031,7 @@ $__System.register('44', ['5', '6', '43', '1b', '1c', '1f'], function (_export) 
 $__System.register('1', ['4', '7', '8', '20', '22', '44', '1e', '2a'], function (_export) {
   'use strict';
 
-  var StateMachine, DataBase, ScrollListener, DummySection, GeomapSection, TreemapSection, StreamSection, NetworkSection, __hotReload, state, db, scroll, streamSection, geomapSection;
+  var StateMachine, DataBase, ScrollListener, DummySection, GeomapSection, TreemapSection, StreamSection, NetworkSection, __hotReload, state, db, scroll, streamSection, geomapSection, networkSection, treemapSection;
 
   return {
     setters: [function (_) {
@@ -10064,8 +10064,8 @@ $__System.register('1', ['4', '7', '8', '20', '22', '44', '1e', '2a'], function 
 
       // let dummy = new DummySection(state, db);
 
-      // let networkSection = new NetworkSection(state, db);
-      // let treemapSection = new TreemapSection(state, db);
+      networkSection = new NetworkSection(state, db);
+      treemapSection = new TreemapSection(state, db);
 
       db.load();
     }
