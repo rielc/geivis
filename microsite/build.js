@@ -8864,12 +8864,11 @@ $__System.register("33", ["5", "6", "32", "34"], function (_export) {
         }, {
           key: "renderNodes",
           value: function renderNodes() {
-            var _this4 = this;
+            var _this3 = this;
 
             var that = this;
 
             function switchToMonad(data) {
-              var _this3 = this;
 
               that.monad = true;
 
@@ -8877,6 +8876,12 @@ $__System.register("33", ["5", "6", "32", "34"], function (_export) {
 
               var center = [that.width / 2, that.height / 2];
               var d = data.data;
+
+              d3.select(this).style("opacity", 1)
+              //.style("box-shadow", "0 0 10px 0 rgba(0,0,0,0.25)")
+              .style("transform", function (d) {
+                return "translate3d(" + center[0] + "px," + center[1] + "px,0px)";
+              });
 
               var linkedNodes = that.transformedData.links.filter(function (l) {
                 return l.source.name == d.name || l.target.name == d.name;
@@ -8900,7 +8905,7 @@ $__System.register("33", ["5", "6", "32", "34"], function (_export) {
               var occurenceToProximity = d3.scaleLinear().domain([linkMax, linkMin]).range([100, that.height / 3]);
 
               linkedNodes.forEach(function (l, i) {
-                var x = center[0] + Math.sin(indexToPolar(i)) * occurenceToProximity(l.strength) * 2;
+                var x = center[0] + Math.sin(indexToPolar(i)) * occurenceToProximity(l.strength);
                 var y = center[1] + Math.cos(indexToPolar(i)) * occurenceToProximity(l.strength);
 
                 var n = d3.select("#" + GeiVisUtils.makeSafeForCSS(l.node.name)).style("opacity", 1).classed("hidden", false).classed("monadic-related", true);
@@ -8942,10 +8947,6 @@ $__System.register("33", ["5", "6", "32", "34"], function (_export) {
                 //.style("transform-origin", transform)
                 .style("transform", function (d) {
                   return "translate(" + translate + ")rotate(-" + (indexToPolar(i) * 180 / Math.PI + value * sign) + "deg)";
-                });
-
-                d3.select(_this3).transtion().duration(300).delay(400).style("opacity", 1).style("box-shadow", "0 0 10px 0 rgba(0,0,0,0.25)").style("transform", function (d) {
-                  return "translate3d(" + center[0] + "px," + center[1] + "px,0px)";
                 });
               });
             }
@@ -9037,7 +9038,7 @@ $__System.register("33", ["5", "6", "32", "34"], function (_export) {
             var enteredNodes = this.nodes.enter().append("div").on("mouseover", over).on("mouseout", out).on("click", switchToMonad).attr("id", function (d) {
               return GeiVisUtils.makeSafeForCSS(d.data.name);
             }).style("transform", function (d) {
-              return "translate3d(" + (_this4.width / 2 - d.r) + "px," + (_this4.height / 2 - d.r) + "px,0px)";
+              return "translate3d(" + (_this3.width / 2 - d.r) + "px," + (_this3.height / 2 - d.r) + "px,0px)";
             }).style("opacity", 0.0).classed("node", true);
 
             enteredNodes.append("span").classed("label", true).text(function (d) {
@@ -9056,7 +9057,7 @@ $__System.register("33", ["5", "6", "32", "34"], function (_export) {
 
             // exit
             exitedNodes.transition().duration(100).style("transform", function (d) {
-              return "translate3d(" + (_this4.width / 2 - d.r) + "px," + (_this4.height / 2 - d.r) + "px,0px)";
+              return "translate3d(" + (_this3.width / 2 - d.r) + "px," + (_this3.height / 2 - d.r) + "px,0px)";
             }).style("opacity", 0.0).remove();
 
             function checkOverflow(d) {
@@ -9152,6 +9153,7 @@ $__System.register('35', ['5', '6', '27', '28', '33', '2b', '2f'], function (_ex
             if (next.loaded != last.loaded) this.network.updateData(this.db.date.top(Infinity)).render();
 
             if (!next.visible.NetworkSection) return;
+            console.log(next.keyframe);
 
             console.log("network render");
 
@@ -9160,7 +9162,7 @@ $__System.register('35', ['5', '6', '27', '28', '33', '2b', '2f'], function (_ex
               var data = this.db.date.top(Infinity);
               if (data.length > 0) {
                 this.network.updateData(data);
-                this.network.render();
+                this.network.render(next.keyframe != last.keyframe);
               }
             }
           }
