@@ -7657,6 +7657,7 @@ $__System.register('19', ['5', '6', '9', '1b', '1c', '1a'], function (_export) {
           _get(Object.getPrototypeOf(StreamGraph.prototype), 'constructor', this).call(this, state, db);
 
           this.key = "subject";
+          this.big = true;
 
           this.outerWidth = 1200;
           this.outerHeight = window.innerHeight - 500;
@@ -7825,13 +7826,16 @@ $__System.register('19', ['5', '6', '9', '1b', '1c', '1a'], function (_export) {
               // console.log(diff, height)
               if (diff < 0 && height > this.outerHeightSmall) {
                 this.outerHeight = height;
+                this.big = false;
                 this.init().render(true);
               } else {
                 if (diff < 0 && this.outerHeight != this.outerHeightSmall) {
+                  console.log("small");
                   this.outerHeight = this.outerHeightSmall;
                   this.init().render(true);
                 }
                 if (diff > 0 && this.outerHeight != this.outerHeightInitial) {
+                  this.big = true;
                   this.outerHeight = this.outerHeightInitial;
                   this.init().render(true);
                 }
@@ -7868,13 +7872,13 @@ $__System.register('19', ['5', '6', '9', '1b', '1c', '1a'], function (_export) {
             });
 
             s.enter().append("path").on("mouseenter", function (d) {
-              if (d.key == "other") return;
+              if (d.key == "other" || !_this3.big) return;
               _this3.state.push({ hover: d.key });
             }).on("mouseleave", function (d) {
-              if (d.key == "other") return;
+              if (d.key == "other" || !_this3.big) return;
               _this3.state.push({ hover: null });
             }).on("click", function (d) {
-              if (d.key == "other") return;
+              if (d.key == "other" || !_this3.big) return;
               var active = _this3.state.state.activeItem === d.key;
               _this3.state.push({ activeItem: active ? null : d.key });
             }).attr("d", this.area).style("opacity", 0)
@@ -10027,7 +10031,7 @@ $__System.register('44', ['5', '6', '43', '1b', '1c', '1f'], function (_export) 
 $__System.register('1', ['4', '7', '8', '20', '22', '44', '1e', '2a'], function (_export) {
   'use strict';
 
-  var StateMachine, DataBase, ScrollListener, DummySection, GeomapSection, TreemapSection, StreamSection, NetworkSection, __hotReload, state, db, scroll, streamSection, geomapSection, networkSection, treemapSection;
+  var StateMachine, DataBase, ScrollListener, DummySection, GeomapSection, TreemapSection, StreamSection, NetworkSection, __hotReload, state, db, scroll, streamSection, geomapSection;
 
   return {
     setters: [function (_) {
@@ -10060,8 +10064,8 @@ $__System.register('1', ['4', '7', '8', '20', '22', '44', '1e', '2a'], function 
 
       // let dummy = new DummySection(state, db);
 
-      networkSection = new NetworkSection(state, db);
-      treemapSection = new TreemapSection(state, db);
+      // let networkSection = new NetworkSection(state, db);
+      // let treemapSection = new TreemapSection(state, db);
 
       db.load();
     }

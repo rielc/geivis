@@ -9,6 +9,7 @@ export class StreamGraph extends StateDb {
     super(state,db);
 
     this.key = "subject";
+    this.big = true;
     
 
     this.outerWidth = 1200;
@@ -175,13 +176,16 @@ export class StreamGraph extends StateDb {
       // console.log(diff, height)
       if(diff < 0 && height > this.outerHeightSmall){
         this.outerHeight = height;
+        this.big = false;
         this.init().render(true);
       } else {
         if(diff < 0 && this.outerHeight != this.outerHeightSmall){
+          console.log("small");
           this.outerHeight = this.outerHeightSmall;
           this.init().render(true);
         }
         if(diff > 0 && this.outerHeight != this.outerHeightInitial){
+          this.big = true;
           this.outerHeight = this.outerHeightInitial;
           this.init().render(true);
         }
@@ -218,15 +222,15 @@ export class StreamGraph extends StateDb {
     s.enter()
       .append("path")
       .on("mouseenter", d=>{
-        if(d.key == "other") return;
+        if(d.key == "other" || !this.big) return;
         this.state.push({ hover: d.key });
       })
       .on("mouseleave", d=>{
-        if(d.key == "other") return;
+        if(d.key == "other" || !this.big) return;
         this.state.push({ hover: null });
       })
       .on("click", d=>{
-        if(d.key == "other") return;
+        if(d.key == "other" || !this.big) return;
         let active = this.state.state.activeItem === d.key;
         this.state.push({ activeItem: active ? null : d.key });
       })
