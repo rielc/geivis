@@ -7,6 +7,7 @@ $bluelighter: lighten($blue, 50%);
 $grey: desaturate($blue, 100%);
 $padding: 10px;
 
+
 // import the style for the modules
 
 @import "_reset.scss";
@@ -59,9 +60,9 @@ section {
   flex-direction:column;
   margin:0;
   min-height:calc(100vh - 100px);
-  box-shadow:0 0 5px 0 rgba(0,0,0,0.125);
-
+  box-shadow: 0 0 5px 0 rgba($grey, 0.125);  
   h2.title {
+    box-sizing:border-box;
     padding: 25px 0;
     font-size: 25px;
     color:$grey;

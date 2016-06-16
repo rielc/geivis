@@ -20,12 +20,14 @@ export class NetworkSection extends Section {
     });
   });
 
+    this.title.html(`All tags`);
+
     let oh = 0;
     oh+=parseInt(this.title.style("padding-top"));
     oh+=parseInt(this.title.style("padding-bottom"));
     oh+=parseInt(this.title.style("height"));
     this.margin = {'top':oh,'right':0,'bottom':0,'left':0};
-    
+
     this.network = new
       CirclePackedNetwork( {'margin':this.margin} )
       .setBlacklist(this.blacklist)
@@ -33,7 +35,6 @@ export class NetworkSection extends Section {
       .setOccurrenceScale( d3.scaleLinear().domain([0,1]).range([0.5, 1.0])  )
       .append(this.div);
 
-      this.title.html(`All tags`);
   }
 
   stateChange(next, last){

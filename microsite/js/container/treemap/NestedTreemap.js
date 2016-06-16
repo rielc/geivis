@@ -55,6 +55,8 @@ export class NestedTreemap {
 
 	updateData(data) {
 
+		this.rawData = data;
+
 		let nesting = d3.nest(); 
 
 		// if both nestings are of same value, just use the first
@@ -99,7 +101,7 @@ export class NestedTreemap {
 				switch(d.depth){
 					//case 2: return 1;
 					//case 3: return 1;
-					default: return 1;
+					default: return 2;
 				}
 			})
 			.paddingLeft( d=> {
@@ -133,7 +135,7 @@ export class NestedTreemap {
 		}
 
 
-		//this.svg.selectAll(".node").remove();	
+		this.svg.selectAll(".node").remove();	
 		
 		let data = this.root.descendants();
 
@@ -152,6 +154,9 @@ export class NestedTreemap {
 				// TODO: Implement custom relative Color-Scale
 				that.svg.selectAll(".node").classed("related", false);
 				that.svg.selectAll("."+GeiVisUtils.makeSafeForCSS(d.data.key)).classed("related", true);
+			})
+			.on("mouseout", function (d) {
+				that.svg.selectAll(".node").classed("related", false);
 			})
 			.attr("id", d => {
 				if (d.depth == 1) return GeiVisUtils.makeSafeForCSS(d.data.key);
@@ -185,14 +190,14 @@ export class NestedTreemap {
 
 		// TODO: Make the number of levels dynamic
 
-	createDropdowns () {
+	createDropdowns (a,b) {
+
 		var n = d3.keys(this.nestings);
+		this.dropdownA = a.append("select").attr("id", "dropdown-a");
+		this.dropdownB = b.append("select").attr("id", "dropdown-b");
 		
-		this.dropdownA = this.container.append("select").attr("id", "dropdown-a");
-		this.dropdownB = this.container.append("select").attr("id", "dropdown-b");
-		
-		this.dropdownA.on("change", (sel) => { this.levelA = this.dropdownA.property("value"); this.update(); });
-		this.dropdownB.on("change", (sel) => { this.levelB = this.dropdownB.property("value"); this.update(); });
+		this.dropdownA.on("change", (sel) => { this.levelA = this.dropdownA.property("value"); this.updateData(this.rawData).render(); });
+		this.dropdownB.on("change", (sel) => { this.levelB = this.dropdownB.property("value"); this.updateData(this.rawData).render(); });
 		
 		this.dropdownA
 			.selectAll("option")

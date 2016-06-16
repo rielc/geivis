@@ -8,6 +8,12 @@ export class TreemapSection extends Section {
   constructor(state, db){
     super(state,db);
 
+    this.title.append("span").classed("verb", true).text("Comparing");
+    this.title.append("span").classed("dropdown-b", true);
+    this.title.append("span").classed("in", true).text("in");
+    this.title.append("span").classed("dropdown-a", true);
+    this.title.append("span").classed("years", true);
+
     let oh = 0;
     oh+=parseInt(this.title.style("padding-top"));
     oh+=parseInt(this.title.style("padding-bottom"));
@@ -27,7 +33,7 @@ export class TreemapSection extends Section {
       .addNesting("Publisher", (d) => ((d.publisher==undefined) ? "Publisher unbekannt" : d.publisher ))
       .appendTo(this.div);
 
-    this.title.html(`Comparing ${this.treemap.levelB}s in ${this.treemap.levelA}s`);
+    this.treemap.createDropdowns(this.title.select(".dropdown-a"), this.title.select(".dropdown-b"));
   }
 
 
@@ -39,7 +45,7 @@ export class TreemapSection extends Section {
 
     if (next.brushStart !== last.brushStart || next.brushEnd !== last.brushEnd) {
       
-      this.title.html(`Comparing ${this.treemap.levelB}s in ${this.treemap.levelA}s from ${next.brushStart.getFullYear()} to ${next.brushEnd.getFullYear()}`);
+      this.title.select(".years").text(` from ${next.brushStart.getFullYear()} to ${next.brushEnd.getFullYear()}`);
 
       let data = this.db.date.top(Infinity);
       if (data.length>0) {

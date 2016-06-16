@@ -335,6 +335,9 @@ export class CirclePackedNetwork {
 
     //console.log(this.root.children);
 
+    this.container
+        .selectAll(".node").remove()
+
     this.nodes = 
         this.container
         .selectAll(".node")

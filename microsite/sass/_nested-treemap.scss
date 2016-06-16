@@ -1,18 +1,36 @@
 #TreemapSection {
-≈
+
 	.visualization {
 		position:relative;
 	}
 
-	select {
-		padding:10px;
-		margin:10px;
-		position:relative;
-		border:$grey;
-		color:$grey;
-		background-color: #fff;
-		font-size: 20px;
-		border-radius:0;
+	.title {
+
+		span {
+			display:inline;
+		}
+		select {
+			margin-left:10px;
+			padding:0;
+			text-align:center;
+			color:$blue;
+    		font-size: 25px;
+    		width:200px;
+    		background-color:transparent;
+			font-family:"gravurcondensed-regular";
+			-webkit-appearance: none;
+			-moz-appearance: none;
+			appearance: none;
+			border-radius:0;
+			border:none;
+			border-bottom: 2px solid $bluelight;
+			background-image:url(../assets/arrow-down.svg);
+			background-size: 10px;
+			background-repeat:no-repeat;
+			background-position:90% 50%;
+			display:inline;
+
+		}
 	}
 
 	.node {
