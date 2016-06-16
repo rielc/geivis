@@ -40,10 +40,8 @@ export class CirclePackedNetwork {
       .attr("id", this.containerName+"-visualization")
       .style("width", this.width+"px")
       .style("height", this.height+"px")
-      .style("position", "relative")
-      .style("margin", "0")
-      .style("padding", "0")
-      .style("transform",  d => `translate(${this.properties.margin.left}px,${this.properties.margin.top}px)`);
+      .style("position", "relative");
+      //.style("transform",  d => `translate(${this.properties.margin.left}px,${this.properties.margin.top}px)`);
 
     this.pack = 
       d3.pack()

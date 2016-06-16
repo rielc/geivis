@@ -20,8 +20,12 @@ export class NetworkSection extends Section {
     });
   });
 
-    this.margin = {'top':100,'right':0,'bottom':100,'left':0};
-
+    let oh = 0;
+    oh+=parseInt(this.title.style("padding-top"));
+    oh+=parseInt(this.title.style("padding-bottom"));
+    oh+=parseInt(this.title.style("height"));
+    this.margin = {'top':oh,'right':0,'bottom':0,'left':0};
+    
     this.network = new
       CirclePackedNetwork( {'margin':this.margin} )
       .setBlacklist(this.blacklist)

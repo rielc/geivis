@@ -30,7 +30,7 @@ export class NestedTreemap {
 	appendTo (selector) {
 		
 		this.container = selector;
-	    this.createDropdowns();
+	    //this.createDropdowns();
 
 	    this.width = parseInt( this.container.style("width") ) - this.properties.margin.left - this.properties.margin.right,
 	    this.height = parseInt( this.container.style("height") ) - this.properties.margin.top - this.properties.margin.bottom;
@@ -64,15 +64,24 @@ export class NestedTreemap {
 			nesting.key( this.nestings[this.levelA] )
 		}
 
-		nesting.rollup( (d) => { return d.length; });
+		nesting.rollup(d=>d.length);
 
-		// do the nesting and then remap the values
-		//this.nested = nesting.entries( data );
-		//this.nested = GeiVisUtils.remap({"key": "All Books", "values" : this.nested });
+		let hist = d3.histogram().value(h=>h.value).thresholds([2])
+		let nested = nesting.entries(data);
 
+		nested = nesting.entries(data).map( d=> {
+			let rHist = hist(d.values);
+			if (rHist.length>1) {
+				let rVal = d3.values(rHist[1]).filter(f=> typeof f === "object");
+				rVal.push({key:"Other", value : d3.sum(rHist[0], s=>s.value)});
+				return { key:d.key, values: rVal };
+			} else {
+				return d;
+			}
+		});	
 
 		this.root = d3
-			.hierarchy( { key : "all values", values : nesting.entries(data) }, function(d) { return d.values; })
+			.hierarchy( { key : "all values", values : nested }, function(d) { return d.values; })
 			.sum( d => d.value  )
 			.sort( (b, a) => { return ( Math.abs((a.x1-a.x0)-Math.abs(b.x1-b.x0)) || (a.value - b.value) ); } );
 
@@ -88,19 +97,20 @@ export class NestedTreemap {
 			})
 			.paddingBottom( d=> {
 				switch(d.depth){
-					case 1: return 1;
-					default: return 0;
+					//case 2: return 1;
+					//case 3: return 1;
+					default: return 1;
 				}
 			})
 			.paddingLeft( d=> {
 				switch(d.depth){
-					case 1: return 2;
+					case 1: return 1;
 					default: return 0;
 				}
 			})
 			.paddingRight( d=> {
 				switch(d.depth){
-					case 1: return 2;
+					case 1: return 1;
 					default: return 0;
 				}
 			});
@@ -115,19 +125,15 @@ export class NestedTreemap {
 		let that = this;
 
 		function updateNode (s) {
-
 			s
 			.style("transform", d => `translate(${d.x0}px,${d.y0}px)` )
 			.style("width", d => { return ((d.x1-d.x0)+"px"); })
   			.style("height", d => ((d.y1 - d.y0)+"px"));
 
-			s
-			.filter( d => (d.depth == 2) )
-			.style("padding-top", d => ((d.y1 - d.y0)/2-5)+"px");
 		}
 
 
-		this.svg.selectAll(".node").remove();	
+		//this.svg.selectAll(".node").remove();	
 		
 		let data = this.root.descendants();
 
@@ -139,20 +145,27 @@ export class NestedTreemap {
 		let enteredNodes = this.nodes
 			.enter();
 
-		enteredNodes
+		let appendedNodes = enteredNodes
 			.append("div")
+			.attr("class", d => GeiVisUtils.makeSafeForCSS(d.data.key) + " node " + "level-"+d.depth)
+			.on("mouseover", function (d) {
+				// TODO: Implement custom relative Color-Scale
+				that.svg.selectAll(".node").classed("related", false);
+				that.svg.selectAll("."+GeiVisUtils.makeSafeForCSS(d.data.key)).classed("related", true);
+			})
 			.attr("id", d => {
 				if (d.depth == 1) return GeiVisUtils.makeSafeForCSS(d.data.key);
 				if (d.depth == 2) return GeiVisUtils.makeSafeForCSS(d.parent.data.key+d.data.key);
 			})
-			.attr("class", d => GeiVisUtils.makeSafeForCSS(d.data.key) + " node " + "level-"+d.depth)
-			// .on("mouseover", function (d) {
-			// 	// TODO: Implement custom relative Color-Scale
-			// 	d3.selectAll(".node").classed("active", false);
-			// 	d3.selectAll("." + GeiVisUtils.makeSafeForCSS(d.data.key)).classed("active", true);
-			// })
-			.text(d => d.depth!=0?d.data.key:"undefined")
-			.call(updateNode)
+			.call(updateNode);
+
+
+		appendedNodes
+			.append("span")
+			.classed("label", true)
+			.text(d => d.depth!=0?d.data.key:null);
+
+		appendedNodes
 			.each( function (d) {
 				let el = d3.select(this);
 				let overflow = GeiVisUtils.checkOverflow(el._groups[0], 14);
