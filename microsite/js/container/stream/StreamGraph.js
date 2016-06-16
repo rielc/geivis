@@ -16,7 +16,7 @@ export class StreamGraph extends StateDb {
     this.outerHeight = window.innerHeight-500;
     this.outerHeightInitial = this.outerHeight;
     this.outerHeightSmall = 100;
-    this.margin = {top: 20, right: 30, bottom: 30, left: 40};
+    this.margin = {top: 20, right: 20, bottom: 10, left: 20};
     
     this.x = d3.scaleTime();
     this.y = d3.scaleLinear();

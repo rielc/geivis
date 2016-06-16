@@ -122,7 +122,7 @@ export class Geomap extends StateDb {
     s.select("circle")
       .attr("fill", d=> "#3C7C9B")
       .attr("r", d => this.scale(d.value))
-      // .style("opacity", d=>((d.value/max)*4))
+      .style("opacity", d=>d.value ? 1: 0)
 
 
     s.exit().remove();

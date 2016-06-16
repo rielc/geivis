@@ -195,13 +195,15 @@ input[type=button] {
   clear: both; }
 
 header {
+  /* position: relative; */
   padding-top: 20px;
   padding-bottom: 20px;
   float: left;
-  width: 100%;
+  width: 1200px;
   position: fixed;
   z-index: 500;
-  background: #FFF; }
+  background: #FFF;
+  }
   header .logo {
     width: 200px;
     float: left;
@@ -848,7 +850,8 @@ section {
   flex-direction: column;
   margin: 0;
   min-height: calc(100vh - 100px);
-  box-shadow: 0 0 5px 0 rgba(112, 112, 112, 0.125); }
+  /* box-shadow: 0 0 5px 0 rgba(112, 112, 112, 0.125); */
+  }
   section h2.title {
     font-face: "gravurcondensed-bold";
     box-sizing: border-box;
