@@ -13,7 +13,7 @@ a webbased visualization of schoolbooks for the Georg-Eckert-Institut
 
 ## build
 
-`jspm bundle index --inject `
+`jspm bundle-sfx index` for build.js standalone
 
 ## hotreloading
 
