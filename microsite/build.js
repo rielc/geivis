@@ -1,6 +1,6 @@
-!function(e){function r(e,r,o){return 4===arguments.length?t.apply(this,arguments):void n(e,{declarative:!0,deps:r,declare:o})}function t(e,r,t,o){n(e,{declarative:!1,deps:r,executingRequire:t,execute:o})}function n(e,r){r.name=e,e in v||(v[e]=r),r.normalizedDeps=r.deps}function o(e,r){if(r[e.groupIndex]=r[e.groupIndex]||[],-1==g.call(r[e.groupIndex],e)){r[e.groupIndex].push(e);for(var t=0,n=e.normalizedDeps.length;n>t;t++){var a=e.normalizedDeps[t],u=v[a];if(u&&!u.evaluated){var d=e.groupIndex+(u.declarative!=e.declarative);if(void 0===u.groupIndex||u.groupIndex<d){if(void 0!==u.groupIndex&&(r[u.groupIndex].splice(g.call(r[u.groupIndex],u),1),0==r[u.groupIndex].length))throw new TypeError("Mixed dependency cycle detected");u.groupIndex=d}o(u,r)}}}}function a(e){var r=v[e];r.groupIndex=0;var t=[];o(r,t);for(var n=!!r.declarative==t.length%2,a=t.length-1;a>=0;a--){for(var u=t[a],i=0;i<u.length;i++){var s=u[i];n?d(s):l(s)}n=!n}}function u(e){return y[e]||(y[e]={name:e,dependencies:[],exports:{},importers:[]})}function d(r){if(!r.module){var t=r.module=u(r.name),n=r.module.exports,o=r.declare.call(e,function(e,r){if(t.locked=!0,"object"==typeof e)for(var o in e)n[o]=e[o];else n[e]=r;for(var a=0,u=t.importers.length;u>a;a++){var d=t.importers[a];if(!d.locked)for(var i=0;i<d.dependencies.length;++i)d.dependencies[i]===t&&d.setters[i](n)}return t.locked=!1,r},r.name);t.setters=o.setters,t.execute=o.execute;for(var a=0,i=r.normalizedDeps.length;i>a;a++){var l,s=r.normalizedDeps[a],c=v[s],f=y[s];f?l=f.exports:c&&!c.declarative?l=c.esModule:c?(d(c),f=c.module,l=f.exports):l=p(s),f&&f.importers?(f.importers.push(t),t.dependencies.push(f)):t.dependencies.push(null),t.setters[a]&&t.setters[a](l)}}}function i(e){var r,t=v[e];if(t)t.declarative?f(e,[]):t.evaluated||l(t),r=t.module.exports;else if(r=p(e),!r)throw new Error("Unable to load dependency "+e+".");return(!t||t.declarative)&&r&&r.__useDefault?r["default"]:r}function l(r){if(!r.module){var t={},n=r.module={exports:t,id:r.name};if(!r.executingRequire)for(var o=0,a=r.normalizedDeps.length;a>o;o++){var u=r.normalizedDeps[o],d=v[u];d&&l(d)}r.evaluated=!0;var c=r.execute.call(e,function(e){for(var t=0,n=r.deps.length;n>t;t++)if(r.deps[t]==e)return i(r.normalizedDeps[t]);throw new TypeError("Module "+e+" not declared as a dependency.")},t,n);c&&(n.exports=c),t=n.exports,t&&t.__esModule?r.esModule=t:r.esModule=s(t)}}function s(r){var t={};if(("object"==typeof r||"function"==typeof r)&&r!==e)if(m)for(var n in r)"default"!==n&&c(t,r,n);else{var o=r&&r.hasOwnProperty;for(var n in r)"default"===n||o&&!r.hasOwnProperty(n)||(t[n]=r[n])}return t["default"]=r,x(t,"__useDefault",{value:!0}),t}function c(e,r,t){try{var n;(n=Object.getOwnPropertyDescriptor(r,t))&&x(e,t,n)}catch(o){return e[t]=r[t],!1}}function f(r,t){var n=v[r];if(n&&!n.evaluated&&n.declarative){t.push(r);for(var o=0,a=n.normalizedDeps.length;a>o;o++){var u=n.normalizedDeps[o];-1==g.call(t,u)&&(v[u]?f(u,t):p(u))}n.evaluated||(n.evaluated=!0,n.module.execute.call(e))}}function p(e){if(I[e])return I[e];if("@node/"==e.substr(0,6))return D(e.substr(6));var r=v[e];if(!r)throw"Module "+e+" not present.";return a(e),f(e,[]),v[e]=void 0,r.declarative&&x(r.module.exports,"__esModule",{value:!0}),I[e]=r.declarative?r.module.exports:r.esModule}var v={},g=Array.prototype.indexOf||function(e){for(var r=0,t=this.length;t>r;r++)if(this[r]===e)return r;return-1},m=!0;try{Object.getOwnPropertyDescriptor({a:0},"a")}catch(h){m=!1}var x;!function(){try{Object.defineProperty({},"a",{})&&(x=Object.defineProperty)}catch(e){x=function(e,r,t){try{e[r]=t.value||t.get.call(e)}catch(n){}}}}();var y={},D="undefined"!=typeof System&&System._nodeRequire||"undefined"!=typeof require&&require.resolve&&"undefined"!=typeof process&&require,I={"@empty":{}};return function(e,n,o,a){return function(u){u(function(u){for(var d={_nodeRequire:D,register:r,registerDynamic:t,get:p,set:function(e,r){I[e]=r},newModule:function(e){return e}},i=0;i<n.length;i++)(function(e,r){r&&r.__esModule?I[e]=r:I[e]=s(r)})(n[i],arguments[i]);a(d);var l=p(e[0]);if(e.length>1)for(var i=1;i<e.length;i++)p(e[i]);return o?l["default"]:l})}}}("undefined"!=typeof self?self:global)
+!function(e){function r(e,r,o){return 4===arguments.length?t.apply(this,arguments):void n(e,{declarative:!0,deps:r,declare:o})}function t(e,r,t,o){n(e,{declarative:!1,deps:r,executingRequire:t,execute:o})}function n(e,r){r.name=e,e in g||(g[e]=r),r.normalizedDeps=r.deps}function o(e,r){if(r[e.groupIndex]=r[e.groupIndex]||[],-1==m.call(r[e.groupIndex],e)){r[e.groupIndex].push(e);for(var t=0,n=e.normalizedDeps.length;n>t;t++){var a=e.normalizedDeps[t],u=g[a];if(u&&!u.evaluated){var d=e.groupIndex+(u.declarative!=e.declarative);if(void 0===u.groupIndex||u.groupIndex<d){if(void 0!==u.groupIndex&&(r[u.groupIndex].splice(m.call(r[u.groupIndex],u),1),0==r[u.groupIndex].length))throw new TypeError("Mixed dependency cycle detected");u.groupIndex=d}o(u,r)}}}}function a(e){var r=g[e];r.groupIndex=0;var t=[];o(r,t);for(var n=!!r.declarative==t.length%2,a=t.length-1;a>=0;a--){for(var u=t[a],i=0;i<u.length;i++){var s=u[i];n?d(s):l(s)}n=!n}}function u(e){return D[e]||(D[e]={name:e,dependencies:[],exports:{},importers:[]})}function d(r){if(!r.module){var t=r.module=u(r.name),n=r.module.exports,o=r.declare.call(e,function(e,r){if(t.locked=!0,"object"==typeof e)for(var o in e)n[o]=e[o];else n[e]=r;for(var a=0,u=t.importers.length;u>a;a++){var d=t.importers[a];if(!d.locked)for(var i=0;i<d.dependencies.length;++i)d.dependencies[i]===t&&d.setters[i](n)}return t.locked=!1,r},r.name);t.setters=o.setters,t.execute=o.execute;for(var a=0,i=r.normalizedDeps.length;i>a;a++){var l,s=r.normalizedDeps[a],c=g[s],f=D[s];f?l=f.exports:c&&!c.declarative?l=c.esModule:c?(d(c),f=c.module,l=f.exports):l=v(s),f&&f.importers?(f.importers.push(t),t.dependencies.push(f)):t.dependencies.push(null),t.setters[a]&&t.setters[a](l)}}}function i(e){var r,t=g[e];if(t)t.declarative?p(e,[]):t.evaluated||l(t),r=t.module.exports;else if(r=v(e),!r)throw new Error("Unable to load dependency "+e+".");return(!t||t.declarative)&&r&&r.__useDefault?r["default"]:r}function l(r){if(!r.module){var t={},n=r.module={exports:t,id:r.name};if(!r.executingRequire)for(var o=0,a=r.normalizedDeps.length;a>o;o++){var u=r.normalizedDeps[o],d=g[u];d&&l(d)}r.evaluated=!0;var c=r.execute.call(e,function(e){for(var t=0,n=r.deps.length;n>t;t++)if(r.deps[t]==e)return i(r.normalizedDeps[t]);throw new TypeError("Module "+e+" not declared as a dependency.")},t,n);c&&(n.exports=c),t=n.exports,t&&t.__esModule?r.esModule=t:r.esModule=s(t)}}function s(e){var r={};if("object"==typeof e||"function"==typeof e){var t=e&&e.hasOwnProperty;if(h)for(var n in e)f(r,e,n)||c(r,e,n,t);else for(var n in e)c(r,e,n,t)}return r["default"]=e,y(r,"__useDefault",{value:!0}),r}function c(e,r,t,n){(!n||r.hasOwnProperty(t))&&(e[t]=r[t])}function f(e,r,t){try{var n;return(n=Object.getOwnPropertyDescriptor(r,t))&&y(e,t,n),!0}catch(o){return!1}}function p(r,t){var n=g[r];if(n&&!n.evaluated&&n.declarative){t.push(r);for(var o=0,a=n.normalizedDeps.length;a>o;o++){var u=n.normalizedDeps[o];-1==m.call(t,u)&&(g[u]?p(u,t):v(u))}n.evaluated||(n.evaluated=!0,n.module.execute.call(e))}}function v(e){if(I[e])return I[e];if("@node/"==e.substr(0,6))return _(e.substr(6));var r=g[e];if(!r)throw"Module "+e+" not present.";return a(e),p(e,[]),g[e]=void 0,r.declarative&&y(r.module.exports,"__esModule",{value:!0}),I[e]=r.declarative?r.module.exports:r.esModule}var g={},m=Array.prototype.indexOf||function(e){for(var r=0,t=this.length;t>r;r++)if(this[r]===e)return r;return-1},h=!0;try{Object.getOwnPropertyDescriptor({a:0},"a")}catch(x){h=!1}var y;!function(){try{Object.defineProperty({},"a",{})&&(y=Object.defineProperty)}catch(e){y=function(e,r,t){try{e[r]=t.value||t.get.call(e)}catch(n){}}}}();var D={},_="undefined"!=typeof System&&System._nodeRequire||"undefined"!=typeof require&&require.resolve&&"undefined"!=typeof process&&require,I={"@empty":{}};return function(e,n,o){return function(a){a(function(a){for(var u={_nodeRequire:_,register:r,registerDynamic:t,get:v,set:function(e,r){I[e]=r},newModule:function(e){return e}},d=0;d<n.length;d++)(function(e,r){r&&r.__esModule?I[e]=r:I[e]=s(r)})(n[d],arguments[d]);o(u);var i=v(e[0]);if(e.length>1)for(var d=1;d<e.length;d++)v(e[d]);return i.__useDefault?i["default"]:i})}}}("undefined"!=typeof self?self:global)
 
-(["1"], [], false, function($__System) {
+(["1"], [], function($__System) {
 var require = this.require, exports = this.exports, module = this.module;
 $__System.registerDynamic("2", [], true, function($__require, exports, module) {
   "use strict";
@@ -8787,7 +8787,7 @@ $__System.register("28", ["5", "6", "27", "29"], function (_export) {
             }
 
             function out() {
-              var n = d3.selectAll(".node").classed("inactive", false).style("opacity", null);
+              var n = that.container.selectAll(".node").classed("inactive", false).style("opacity", null);
               n.select('.count').text(function (d) {
                 return d.data.occurrence;
               });
@@ -8804,7 +8804,7 @@ $__System.register("28", ["5", "6", "27", "29"], function (_export) {
 
             function over(data) {
 
-              d3.selectAll(".node").classed("inactive", true);
+              that.container.selectAll(".node").classed("inactive", true);
               d3.select(this).classed("inactive", false);
 
               var d = data.data;
@@ -8850,6 +8850,8 @@ $__System.register("28", ["5", "6", "27", "29"], function (_export) {
             }
 
             //console.log(this.root.children);
+
+            this.container.selectAll(".node").remove();
 
             this.nodes = this.container.selectAll(".node").data(this.root.children, function (e) {
               return e.data.name;
@@ -8974,6 +8976,8 @@ $__System.register('2a', ['5', '6', '23', '28', '1b', '1c', '1f'], function (_ex
             });
           });
 
+          this.title.html('All tags');
+
           var oh = 0;
           oh += parseInt(this.title.style("padding-top"));
           oh += parseInt(this.title.style("padding-bottom"));
@@ -8981,8 +8985,6 @@ $__System.register('2a', ['5', '6', '23', '28', '1b', '1c', '1f'], function (_ex
           this.margin = { 'top': oh, 'right': 0, 'bottom': 0, 'left': 0 };
 
           this.network = new CirclePackedNetwork({ 'margin': this.margin }).setBlacklist(this.blacklist).setNodeAccessor("RSWKTag").setOccurrenceScale(d3.scaleLinear().domain([0, 1]).range([0.5, 1.0])).append(this.div);
-
-          this.title.html('All tags');
         }
 
         _createClass(NetworkSection, [{
@@ -8990,7 +8992,10 @@ $__System.register('2a', ['5', '6', '23', '28', '1b', '1c', '1f'], function (_ex
           value: function stateChange(next, last) {
 
             if (next.loaded != last.loaded) this.network.updateData(this.db.date.top(Infinity)).render();
+
             if (!next.visible.NetworkSection) return;
+
+            console.log("network render");
 
             if (next.brushStart !== last.brushStart || next.brushEnd !== last.brushEnd) {
               this.title.html('All tags from ' + next.brushStart.getFullYear() + ' to ' + next.brushEnd.getFullYear());
@@ -9753,6 +9758,8 @@ $__System.register("43", ["5", "6", "29"], function (_export) {
 					key: "updateData",
 					value: function updateData(data) {
 
+						this.rawData = data;
+
 						var nesting = d3.nest();
 
 						// if both nestings are of same value, just use the first
@@ -9771,20 +9778,16 @@ $__System.register("43", ["5", "6", "29"], function (_export) {
 						}).thresholds([2]);
 						var nested = nesting.entries(data);
 
-						nested = nesting.entries(data).map(function (d) {
-							var rHist = hist(d.values);
-							if (rHist.length > 1) {
-								var rVal = d3.values(rHist[1]).filter(function (f) {
-									return typeof f === "object";
-								});
-								rVal.push({ key: "Other", value: d3.sum(rHist[0], function (s) {
-										return s.value;
-									}) });
-								return { key: d.key, values: rVal };
-							} else {
-								return d;
-							}
-						});
+						// let nested = nesting.entries(data).map( d=> {
+						// 	let rHist = hist(d.values);
+						// 	if (rHist.length>1) {
+						// 		let rVal = d3.values(rHist[1]).filter(f=> typeof f === "object");
+						// 		rVal.push({key:"Other", value : d3.sum(rHist[0], s=>s.value)});
+						// 		return { key:d.key, values: rVal };
+						// 	} else {
+						// 		return d;
+						// 	}
+						// });	
 
 						this.root = d3.hierarchy({ key: "all values", values: nested }, function (d) {
 							return d.values;
@@ -9806,7 +9809,7 @@ $__System.register("43", ["5", "6", "29"], function (_export) {
 								//case 2: return 1;
 								//case 3: return 1;
 								default:
-									return 1;
+									return 2;
 							}
 						}).paddingLeft(function (d) {
 							switch (d.depth) {
@@ -9843,9 +9846,11 @@ $__System.register("43", ["5", "6", "29"], function (_export) {
 							});
 						}
 
-						//this.svg.selectAll(".node").remove();	
+						this.svg.selectAll(".node").remove();
 
-						var data = this.root.descendants();
+						var data = this.root.descendants().filter(function (d) {
+							return d.depth > 0;
+						});
 
 						this.nodes = this.svg.selectAll(".node").data(data, function (d) {
 							return d.data.key;
@@ -9856,9 +9861,13 @@ $__System.register("43", ["5", "6", "29"], function (_export) {
 						var appendedNodes = enteredNodes.append("div").attr("class", function (d) {
 							return GeiVisUtils.makeSafeForCSS(d.data.key) + " node " + "level-" + d.depth;
 						}).on("mouseover", function (d) {
-							// TODO: Implement custom relative Color-Scale
+							if (d.depth == 2) {
+								// TODO: Implement custom relative Color-Scale
+								that.svg.selectAll(".node").classed("related", false);
+								that.svg.selectAll("." + GeiVisUtils.makeSafeForCSS(d.data.key)).classed("related", true);
+							}
+						}).on("mouseout", function (d) {
 							that.svg.selectAll(".node").classed("related", false);
-							that.svg.selectAll("." + GeiVisUtils.makeSafeForCSS(d.data.key)).classed("related", true);
 						}).attr("id", function (d) {
 							if (d.depth == 1) return GeiVisUtils.makeSafeForCSS(d.data.key);
 							if (d.depth == 2) return GeiVisUtils.makeSafeForCSS(d.parent.data.key + d.data.key);
@@ -9889,19 +9898,18 @@ $__System.register("43", ["5", "6", "29"], function (_export) {
 
 				}, {
 					key: "createDropdowns",
-					value: function createDropdowns() {
+					value: function createDropdowns(a, b) {
 						var _this = this;
 
 						var n = d3.keys(this.nestings);
-
-						this.dropdownA = this.container.append("select").attr("id", "dropdown-a");
-						this.dropdownB = this.container.append("select").attr("id", "dropdown-b");
+						this.dropdownA = a.append("select").attr("id", "dropdown-a");
+						this.dropdownB = b.append("select").attr("id", "dropdown-b");
 
 						this.dropdownA.on("change", function (sel) {
-							_this.levelA = _this.dropdownA.property("value");_this.update();
+							_this.levelA = _this.dropdownA.property("value");_this.updateData(_this.rawData).render();
 						});
 						this.dropdownB.on("change", function (sel) {
-							_this.levelB = _this.dropdownB.property("value");_this.update();
+							_this.levelB = _this.dropdownB.property("value");_this.updateData(_this.rawData).render();
 						});
 
 						this.dropdownA.selectAll("option").data(n).enter().append("option").attr("selected", function (d) {
@@ -9974,6 +9982,12 @@ $__System.register('44', ['5', '6', '43', '1b', '1c', '1f'], function (_export) 
 
           _get(Object.getPrototypeOf(TreemapSection.prototype), 'constructor', this).call(this, state, db);
 
+          this.title.append("span").classed("verb", true).text("Comparing");
+          this.title.append("span").classed("dropdown-b", true);
+          this.title.append("span").classed("in", true).text("in");
+          this.title.append("span").classed("dropdown-a", true);
+          this.title.append("span").classed("years", true);
+
           var oh = 0;
           oh += parseInt(this.title.style("padding-top"));
           oh += parseInt(this.title.style("padding-bottom"));
@@ -9995,7 +10009,7 @@ $__System.register('44', ['5', '6', '43', '1b', '1c', '1f'], function (_export) 
             return d.publisher == undefined ? "Publisher unbekannt" : d.publisher;
           }).appendTo(this.div);
 
-          this.title.html('Comparing ' + this.treemap.levelB + 's in ' + this.treemap.levelA + 's');
+          this.treemap.createDropdowns(this.title.select(".dropdown-a"), this.title.select(".dropdown-b"));
         }
 
         _createClass(TreemapSection, [{
@@ -10007,7 +10021,9 @@ $__System.register('44', ['5', '6', '43', '1b', '1c', '1f'], function (_export) 
 
             if (next.brushStart !== last.brushStart || next.brushEnd !== last.brushEnd) {
 
-              this.title.html('Comparing ' + this.treemap.levelB + 's in ' + this.treemap.levelA + 's from ' + next.brushStart.getFullYear() + ' to ' + next.brushEnd.getFullYear());
+              console.log("treemap render");
+
+              this.title.select(".years").text(' from ' + next.brushStart.getFullYear() + ' to ' + next.brushEnd.getFullYear());
 
               var data = this.db.date.top(Infinity);
               if (data.length > 0) {
@@ -10031,7 +10047,7 @@ $__System.register('44', ['5', '6', '43', '1b', '1c', '1f'], function (_export) 
 $__System.register('1', ['4', '7', '8', '20', '22', '44', '1e', '2a'], function (_export) {
   'use strict';
 
-  var StateMachine, DataBase, ScrollListener, DummySection, GeomapSection, TreemapSection, StreamSection, NetworkSection, __hotReload, state, db, scroll, streamSection, geomapSection, networkSection, treemapSection;
+  var StateMachine, DataBase, ScrollListener, DummySection, GeomapSection, TreemapSection, StreamSection, NetworkSection, __hotReload, state, db, scroll, streamSection, geomapSection, treemapSection, networkSection;
 
   return {
     setters: [function (_) {
@@ -10064,8 +10080,8 @@ $__System.register('1', ['4', '7', '8', '20', '22', '44', '1e', '2a'], function 
 
       // let dummy = new DummySection(state, db);
 
-      networkSection = new NetworkSection(state, db);
       treemapSection = new TreemapSection(state, db);
+      networkSection = new NetworkSection(state, db);
 
       db.load();
     }

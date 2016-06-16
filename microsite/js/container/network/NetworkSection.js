@@ -40,7 +40,10 @@ export class NetworkSection extends Section {
   stateChange(next, last){
 
     if (next.loaded != last.loaded) this.network.updateData(this.db.date.top(Infinity)).render();
+
     if (!next.visible.NetworkSection) return;
+
+    console.log("network render");
 
     if (next.brushStart !== last.brushStart || next.brushEnd !== last.brushEnd) {
       this.title.html(`All tags from ${next.brushStart.getFullYear()} to ${next.brushEnd.getFullYear()}`);
