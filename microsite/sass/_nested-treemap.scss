@@ -25,17 +25,13 @@
 		&.overflow {
 			color:transparent;
 		}
-
-		&.related {
-			background-color:$blue;
-		}
 	}
 
 	.level-1 {
 		padding-top:5px;
-		//border: 0.5px solid #fff;
+		border: 0.5px solid #fff;
 		box-sizing:border-box;
-		//box-shadow: 0 0 10px 0 rgba(0,0,0,0.25) inset;
+		box-shadow: 0 0 10px 0 rgba(0,0,0,0.25) inset;
 		background-color: $blue;
 		color : #ffffff !important;
 		font-size: 16px;

@@ -338,9 +338,6 @@ export class CirclePackedNetwork {
 
     //console.log(this.root.children);
 
-
-    //this.container.selectAll(".node").remove();
-
     this.nodes = 
         this.container
         .selectAll(".node")
@@ -356,9 +353,6 @@ export class CirclePackedNetwork {
       .text(d => d.data.occurrence);
 
     this.nodes
-      .transition()
-      .duration(300)
-      .delay((d,i) => d.data.occurrence)
       .call(setNodeProperties)
       .each( function (d) { 
         let el = d3.select(this);
