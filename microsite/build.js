@@ -10233,7 +10233,7 @@ $__System.register('4a', ['5', '6', '27', '28', '49', '2b'], function (_export) 
 $__System.register('1', ['4', '13', '14', '35', '2a', '2c', '2e', '4a'], function (_export) {
   'use strict';
 
-  var StateMachine, DataBase, ScrollListener, NetworkSection, StreamSection, DummySection, GeomapSection, TreemapSection, __hotReload, state, db, scroll, streamSection, geomapSection, dummy;
+  var StateMachine, DataBase, ScrollListener, NetworkSection, StreamSection, DummySection, GeomapSection, TreemapSection, __hotReload, state, db, scroll, streamSection, geomapSection, treemapSection, networkSection, dummy;
 
   return {
     setters: [function (_) {
@@ -10263,10 +10263,8 @@ $__System.register('1', ['4', '13', '14', '35', '2a', '2c', '2e', '4a'], functio
       scroll = new ScrollListener(state);
       streamSection = new StreamSection(state, db);
       geomapSection = new GeomapSection(state, db);
-
-      // let treemapSection = new TreemapSection(state, db);
-      // let networkSection = new NetworkSection(state, db);
-
+      treemapSection = new TreemapSection(state, db);
+      networkSection = new NetworkSection(state, db);
       dummy = new DummySection(state, db);
 
       db.load();
