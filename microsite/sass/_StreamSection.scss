@@ -9,6 +9,7 @@
 }
 
 #StreamSection {
+    top:80px;
     h2.title {
         background-color: #fff;
         position: fixed;
@@ -26,6 +27,7 @@
         }
     }
     .stream {
+        top:80px;
         background: #FFF;
         position: fixed;
         z-index: 100;

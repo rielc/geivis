@@ -24,9 +24,12 @@ export class ScrollListener {
       const height = parseInt(s.div.style("height")) - 100;
       const visible = (rect.top >= -height && rect.top <= height);
 
+      // console.log(s.name, visible);
+      
       return [s.name, visible];
     });
-    
+
+
     this.state.push({ scrollY: window.scrollY, visible: fromPairs(visible) });
   }
 

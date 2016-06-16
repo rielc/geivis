@@ -9,7 +9,7 @@ export class StreamSection extends Section {
   constructor(state, db){
   	super(state,db);
 
-    this.title.html("<strong>GEORG ECKERT INSTITUTE</strong> / Visualized Collection Prototype");
+    // this.title.html("<strong>GEORG ECKERT INSTITUTE</strong> / Visualized Collection Prototype");
 
   	this.divStream = this.div.append("div").attr("class", "stream");
   	this.divEntities = this.div.append("div").attr("class", "entities");
