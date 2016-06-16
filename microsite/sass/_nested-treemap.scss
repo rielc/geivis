@@ -50,34 +50,40 @@
 
 		.label { position:absolute; }
 		.count { }
+
+		&.other {
+			border:none !important;
+		}
 	}
 
 	.level-1 {
 		z-index:1 !important;
 		padding-top:5px;
-		border: 0.5px solid #fff;
-		background-color: lighten($grey, 40%);
+		border: 1px solid #fff;
+		background-color: rgba(238, 238, 238, 0.27);
 
 		.label {
 			color:$grey;
 			position:absolute;
 			transform:translate(-50%,0px);
-			font-size: 16px;
+			font-size: 12px;
 		}
 
 	}
 	.level-2 {
-		background-color: lighten($blue, 50%);
-		border-bottom:1px solid #fff;
-		border-top:1px solid #fff;
+		background-color: rgba(238, 238, 238, 0.4);
+		border-bottom: 1px solid #fff;
+		//border-bottom:1px solid #fff;
+		//border-top:1px solid #fff;
 		&:hover {
 			z-index:3 !important;
-			background-color:$red;
+            background-color: rgba($red, 0.3);
 			color:#fff;
-			z-index:100 !important;
 			.label, .count { color:#fff; }
 		}
 		.label {
+			padding-left:20px;
+			text-align:left;
 			display:block;
 			position:relative;
 			top:50%;
@@ -87,8 +93,12 @@
 		}
 
 		.count {
+			box-sizing:border-box;
+			text-align:right;
 			display:block;
-			position:relative;
+			width:100%;
+			position:absolute;
+			padding-right:20px;
 			top:50%;
 			color:lighten($grey, 20%);
 			transform:translate(0,-50%);

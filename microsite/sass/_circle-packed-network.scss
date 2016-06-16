@@ -10,7 +10,7 @@
         //z-index:0 !important;
 
         &:hover {
-            background-color: $red !important;
+            background-color: rgba($red, 0.3);
             opacity: 1 !important;
         }
 

@@ -68,19 +68,19 @@ export class NestedTreemap {
 
 		nesting.rollup(d=>d.length);
 
-		let hist = d3.histogram().value(h=>h.value).thresholds([2])
-		//let nested = nesting.entries(data);
+		//let hist = d3.histogram().value(h=>h.value).thresholds([2])
+		let nested = nesting.entries(data);
 
-		let nested = nesting.entries(data).map( d=> {
-			let rHist = hist(d.values);
-			if (rHist.length>1) {
-				let rVal = d3.values(rHist[1]).filter(f=> typeof f === "object");
-				rVal.push({key:"Other", value : d3.sum(rHist[0], s=>s.value)});
-				return { key:d.key, values: rVal };
-			} else {
-				return d;
-			}
-		});	
+		// let nested = nesting.entries(data).map( d=> {
+		// 	let rHist = hist(d.values);
+		// 	if (rHist.length>1) {
+		// 		let rVal = d3.values(rHist[1]).filter(f=> typeof f === "object");
+		// 		rVal.push({key:"Other", value : d3.sum(rHist[0], s=>s.value)});
+		// 		return { key:d.key, values: rVal };
+		// 	} else {
+		// 		return d;
+		// 	}
+		// });	
 
 		this.root = d3
 			.hierarchy( { key : "all values", values : nested }, function(d) { return d.values; })
@@ -91,29 +91,31 @@ export class NestedTreemap {
 			.size([this.width, this.height])
 			.tile(d3.treemapSliceDice)
 			.round(true)
-			.paddingTop( d=> {
-				switch(d.depth){
-					case 1: return 30;
-					default: return 0;
-				}
-			})
-			.paddingBottom( d=> {
-				switch(d.depth){
-					//case 2: return 1;
-					//case 3: return 1;
-					default: return 2;
-				}
-			})
 			.paddingLeft( d=> {
 				switch(d.depth){
-					case 1: return 1;
-					default: return 0;
+					case 1: return 1; break;
+					default: return 0; break;
 				}
 			})
 			.paddingRight( d=> {
 				switch(d.depth){
 					case 1: return 1;
 					default: return 0;
+				}
+			})
+			.paddingTop( d=> {
+				switch(d.depth){
+					case 1: return 30; break;
+					case 2: return 1; break;
+					case 3: return 1; break;
+					default: return 1; break;
+				}
+			})
+			.paddingBottom( d=> {
+				switch(d.depth){
+					case 2: return 1; break;
+					//case 3: return 1;
+					default: return 2; break;
 				}
 			});
 
@@ -128,30 +130,45 @@ export class NestedTreemap {
 
 		function updateNode (s) {
 			s
-			.style("transform", d => `translate(${d.x0}px,${d.y0}px)` )
+			.style("transform", d => `translate3d(${d.x0}px,${d.y0}px,0px)` )
+			//.style("border", d=> (Math.abs(d.x1-d.x0)<3||Math.abs(d.y1-d.y0)<3) ? "none" : null)
 			.style("width", d => { return ((d.x1-d.x0)+"px"); })
   			.style("height", d => ((d.y1 - d.y0)+"px"));
 
+  			s.each( checkOverflow );
 		}
 
 
-		this.svg.selectAll(".node").remove();	
+		//this.svg.selectAll(".node").remove();	
 		
 		let data = this.root.descendants().filter(d=>d.depth>0);
 
 		this.nodes = this.svg
 			.selectAll(".node")
 			.data(data, d=>d.data.key)
-			.call(updateNode);
+			.call(updateNode)
+			.attr("class", d => {
+				let c = GeiVisUtils.makeSafeForCSS(d.data.key) + " node " + "level-"+d.depth;
+				c += (Math.abs(d.x1-d.x0)<3||Math.abs(d.y1-d.y0)<3) ? " other" : "";
+				return c;
+			});
+
+		this.nodes.select(".label").text(d => d.depth!=0?d.data.key:null);
+		this.nodes.select(".count").text(d => d.depth!=0?d.data.value:null);
+
+		this.nodes.each(checkOverflow);
 
 		let enteredNodes = this.nodes.enter();
 
-		let appendedNodes = enteredNodes
+		let appendedNode = enteredNodes
 			.append("div")
-			.attr("class", d => GeiVisUtils.makeSafeForCSS(d.data.key) + " node " + "level-"+d.depth)
+			.attr("class", d => {
+				let c = GeiVisUtils.makeSafeForCSS(d.data.key) + " node " + "level-"+d.depth;
+				c += (Math.abs(d.x1-d.x0)<3||Math.abs(d.y1-d.y0)<3) ? " other" : "";
+				return c;
+			})
 			.on("mouseover", function (d) {
-				if (d.depth==2) {
-					// TODO: Implement custom relative Color-Scale
+				if (d.depth===2) {
 					that.svg.selectAll(".node").classed("related", false);
 					that.svg.selectAll("."+GeiVisUtils.makeSafeForCSS(d.data.key)).classed("related", true);
 				}
@@ -160,33 +177,38 @@ export class NestedTreemap {
 				that.svg.selectAll(".node").classed("related", false);
 			})
 			.attr("id", d => {
-				if (d.depth == 1) return GeiVisUtils.makeSafeForCSS(d.data.key);
-				if (d.depth == 2) return GeiVisUtils.makeSafeForCSS(d.parent.data.key+d.data.key);
+				if (d.depth === 1) return GeiVisUtils.makeSafeForCSS(d.data.key);
+				if (d.depth === 2) return GeiVisUtils.makeSafeForCSS(d.parent.data.key+d.data.key);
 			})
 			.call(updateNode);
 
 
-		appendedNodes
+		appendedNode
 			.append("span")
 			.classed("label", true)
 			.text(d => d.depth!=0?d.data.key:null);
 
-		appendedNodes
+		appendedNode
 			.append("span")
 			.classed("count", true)
 			.text(d => d.depth!=0?d.data.value:null);
 
+		appendedNode
+			.each( checkOverflow );
 
-		appendedNodes
-			.each( function (d) {
-				let el = d3.select(this);
-				let overflow = GeiVisUtils.checkOverflow(el.node());
-				el.classed(overflow, true);
-				if (overflow == "overflow" || overflow == "partial-overflow") {
-				  el.attr("data-balloon", d=>d.data.key);
-				  el.attr("data-balloon-pos", "up");
-				}
-			});
+		function checkOverflow (d) {
+			let el = d3.select(this);
+			let overflow = GeiVisUtils.checkOverflow(el.node());
+			if (overflow == "overflow") {
+				el.classed("overflow", true);
+			  	el.attr("data-balloon", d=>d.data.key);
+			  	el.attr("data-balloon-pos", "up");
+			} else {
+				el.attr("data-balloon", null);
+				el.attr("data-balloon-pos", null);
+				el.classed("overflow", false);
+			}
+		}
 
 		this.nodes
 			.exit()

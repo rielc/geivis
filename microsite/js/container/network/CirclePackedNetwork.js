@@ -230,11 +230,6 @@ export class CirclePackedNetwork {
       let center = [that.width/2,that.height/2];
       let d = data.data;
 
-      d3.select(this)
-        .style("opacity", 1)
-        //.style("box-shadow", "0 0 10px 0 rgba(0,0,0,0.25)")
-        .style("transform",  d => `translate3d(${center[0]}px,${center[1]}px,0px)`);
-
       let linkedNodes = that.transformedData.links
         .filter( l => (l.source.name == d.name || l.target.name == d.name) )
         .map(l => {
@@ -249,7 +244,7 @@ export class CirclePackedNetwork {
       let occurenceToProximity = d3.scaleLinear().domain([linkMax,linkMin]).range([100, that.height/3]);
 
       linkedNodes.forEach( (l,i) => {
-        let x = center[0]+Math.sin(indexToPolar(i))*occurenceToProximity(l.strength);
+        let x = center[0]+(Math.sin(indexToPolar(i))*occurenceToProximity(l.strength)*2);
         let y = center[1]+Math.cos(indexToPolar(i))*occurenceToProximity(l.strength);
 
         let n = d3.select( "#"+GeiVisUtils.makeSafeForCSS( l.node.name ) ).style("opacity", 1).classed("hidden", false).classed("monadic-related", true);
@@ -284,7 +279,7 @@ export class CirclePackedNetwork {
         n
           .transition()
           .duration(300)
-          .delay((d,i) => i*10)
+          .delay((d,i) => i*30)
           .style("width", "5px")
           .style("height", "5px")
           .style("border-radius", "5px")
@@ -296,10 +291,17 @@ export class CirclePackedNetwork {
           .select(".label")
           .transition()
           .duration(300)
-          .delay((d,i) => i*10)
+          .delay((d,i) => i*30)
           //.style("transform-origin", transform)
           .style("transform", (d) => `translate(${translate})rotate(-${(indexToPolar(i)*180/Math.PI)+(value)*sign}deg)`);
 
+      d3.select(this)
+        .transtion()
+        .duration(300)
+        .delay(400)
+        .style("opacity", 1)
+        .style("box-shadow", "0 0 10px 0 rgba(0,0,0,0.25)")
+        .style("transform",  d => `translate3d(${center[0]}px,${center[1]}px,0px)`);
 
       });
 
@@ -319,13 +321,7 @@ export class CirclePackedNetwork {
     function out () {
       let n = that.container.selectAll(".node").classed("inactive", false).style("opacity", null);
       n.select('.count').text(d=>d.data.occurrence);
-      n.select('.label').text(d=>d.data.name);
-
-      // n.each( function (d) { 
-      //   let el = d3.select(this);
-      //   let overflow = GeiVisUtils.checkOverflow(el._groups[0], 18);
-      //   el.classed(overflow, true);
-      // });
+      n.each(checkOverflow);
     }
 
     function over(data) {
@@ -357,16 +353,13 @@ export class CirclePackedNetwork {
         // // highlight the nodes
         linkedNodes.forEach( f => {
 
-          let n = d3.select( "#"+GeiVisUtils.makeSafeForCSS( f.node.name ) )
+          let n = d3.select( "#"+GeiVisUtils.makeSafeForCSS( f.node.name ) );
+            n
             .classed("inactive", false)
             .style("opacity", that.occurrenceScale.domain([linkMin, f.node.occurrence])(f.strength) );
             n.select(".count").text(f.strength);
+            n.each(checkOverflow);
 
-            // n.each( function (d) { 
-            //   let el = d3.select(this);
-            //   let overflow = GeiVisUtils.checkOverflow(el._groups[0], 18);
-            //   el.classed(overflow, true);
-            // });
         });
     }
 
@@ -380,9 +373,6 @@ export class CirclePackedNetwork {
         .data(this.root.children, e=>e.data.name );
 
     // update
-    this.nodes
-      .select(".label")
-      .text(d => d.data.name);
 
     this.nodes
       .select(".count")
@@ -441,11 +431,17 @@ export class CirclePackedNetwork {
 
     function checkOverflow (d) {
         let el = d3.select(this);
-        let overflow = GeiVisUtils.checkOverflow(el.node(), 18);
+        let overflow = GeiVisUtils.checkOverflow(el.node(), 20);
         el.classed(overflow, true);
+        
         if (overflow == "overflow" || overflow == "partial-overflow") {
           el.attr("data-balloon", d=>d.data.name+": "+d.data.occurrence);
           el.attr("data-balloon-pos", "down");
+        } else {
+          el.classed("overflow", false);
+          el.classed("partial-overflow", false);
+          el.attr("data-balloon", null);
+          el.attr("data-balloon-pos", null);
         }
     }
     return this;
