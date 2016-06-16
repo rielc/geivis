@@ -21,7 +21,7 @@ export class ScrollListener {
     const visible = this.state.subscriber.filter(d=> d.type == "section").map(s => {
     
       const rect = s.div.node().getBoundingClientRect();
-      const height = (window.innerHeight || document.documentElement.clientHeight);
+      const height = parseInt(s.div.style("height")) - 100;
       const visible = (rect.top >= -height && rect.top <= height);
 
       return [s.name, visible];
