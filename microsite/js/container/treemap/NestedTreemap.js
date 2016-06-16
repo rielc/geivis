@@ -69,18 +69,18 @@ export class NestedTreemap {
 		nesting.rollup(d=>d.length);
 
 		let hist = d3.histogram().value(h=>h.value).thresholds([2])
-		let nested = nesting.entries(data);
+		//let nested = nesting.entries(data);
 
-		// let nested = nesting.entries(data).map( d=> {
-		// 	let rHist = hist(d.values);
-		// 	if (rHist.length>1) {
-		// 		let rVal = d3.values(rHist[1]).filter(f=> typeof f === "object");
-		// 		rVal.push({key:"Other", value : d3.sum(rHist[0], s=>s.value)});
-		// 		return { key:d.key, values: rVal };
-		// 	} else {
-		// 		return d;
-		// 	}
-		// });	
+		let nested = nesting.entries(data).map( d=> {
+			let rHist = hist(d.values);
+			if (rHist.length>1) {
+				let rVal = d3.values(rHist[1]).filter(f=> typeof f === "object");
+				rVal.push({key:"Other", value : d3.sum(rHist[0], s=>s.value)});
+				return { key:d.key, values: rVal };
+			} else {
+				return d;
+			}
+		});	
 
 		this.root = d3
 			.hierarchy( { key : "all values", values : nested }, function(d) { return d.values; })
@@ -171,15 +171,20 @@ export class NestedTreemap {
 			.classed("label", true)
 			.text(d => d.depth!=0?d.data.key:null);
 
+		appendedNodes
+			.append("span")
+			.classed("count", true)
+			.text(d => d.depth!=0?d.data.value:null);
+
 
 		appendedNodes
 			.each( function (d) {
 				let el = d3.select(this);
-				let overflow = GeiVisUtils.checkOverflow(el._groups[0], 14);
+				let overflow = GeiVisUtils.checkOverflow(el.node());
 				el.classed(overflow, true);
 				if (overflow == "overflow" || overflow == "partial-overflow") {
 				  el.attr("data-balloon", d=>d.data.key);
-				  el.attr("data-balloon-pos", "down");
+				  el.attr("data-balloon-pos", "up");
 				}
 			});
 

@@ -199,7 +199,7 @@ input[type=button] {
 #TreemapSection .title span {
   display: inline; }
 #TreemapSection .title select {
-  margin-left: 10px;
+  margin: 0 10px 0 10px;
   padding: 0;
   text-align: center;
   color: #009ee0;
@@ -223,24 +223,21 @@ input[type=button] {
   position: absolute;
   text-align: center;
   z-index: 2 !important; }
-  #TreemapSection .node.overflow .label {
-    display: none; }
   #TreemapSection .node.related {
-    background-color: #009ee0; }
-    #TreemapSection .node.related .label {
+    background-color: #7ad8ff; }
+    #TreemapSection .node.related .label, #TreemapSection .node.related .count {
       color: #fff !important; }
+  #TreemapSection .node.overflow .label, #TreemapSection .node.overflow .count {
+    display: none; }
   #TreemapSection .node .label {
     position: absolute; }
 #TreemapSection .level-1 {
   z-index: 1 !important;
   padding-top: 5px;
   border: 0.5px solid #fff;
-  background-color: #707070; }
-  #TreemapSection .level-1:hover {
-    background-color: #707070;
-    color: #fff; }
+  background-color: #d6d6d6; }
   #TreemapSection .level-1 .label {
-    color: #fff;
+    color: #707070;
     position: absolute;
     transform: translate(-50%, 0px);
     font-size: 16px; }
@@ -253,11 +250,22 @@ input[type=button] {
     background-color: #b00046;
     color: #fff;
     z-index: 100 !important; }
+    #TreemapSection .level-2:hover .label, #TreemapSection .level-2:hover .count {
+      color: #fff; }
   #TreemapSection .level-2 .label {
+    display: block;
+    position: relative;
     top: 50%;
-    transform: translate(-50%, -50%);
-    color: #707070 !important;
-    font-size: 12px; }
+    transform: translate(0, -50%);
+    font-size: 12px;
+    color: #707070 !important; }
+  #TreemapSection .level-2 .count {
+    display: block;
+    position: relative;
+    top: 50%;
+    color: #a3a3a3;
+    transform: translate(0, -50%);
+    font-size: 10px; }
 
 .dropdown {
   position: relative;
@@ -344,6 +352,22 @@ input[type=button] {
       display: none !important; }
     #NetworkSection .node.inactive > .count {
       display: none !important; }
+  #NetworkSection .node.hidden {
+    display: none; }
+  #NetworkSection .node.monadic-related {
+    overflow: visible;
+    opacity: 1; }
+    #NetworkSection .node.monadic-related > .label {
+      width: 100px;
+      display: block !important;
+      color: #707070; }
+    #NetworkSection .node.monadic-related > .count {
+      position: absolute;
+      display: none !important; }
+    #NetworkSection .node.monadic-related.left > .label {
+      text-align: left; }
+    #NetworkSection .node.monadic-related.right > .label {
+      text-align: right; }
 
 #GeomapSection .river {
   fill: none;
@@ -792,18 +816,22 @@ section {
   position: relative;
   display: flex;
   width: 100%;
-  overflow: hidden;
   flex-direction: column;
   margin: 0;
   min-height: calc(100vh - 100px);
   box-shadow: 0 0 5px 0 rgba(112, 112, 112, 0.125); }
   section h2.title {
+    font-face: "gravurcondensed-bold";
     box-sizing: border-box;
     padding: 25px 0;
     font-size: 25px;
     color: #707070;
     font-weight: bold;
     text-align: center; }
+    section h2.title .years {
+      font-face: "gravurcondensed-regular";
+      font-weight: normal;
+      color: #a3a3a3; }
 
 .control {
   width: 100%; }

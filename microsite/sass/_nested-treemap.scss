@@ -10,7 +10,7 @@
 			display:inline;
 		}
 		select {
-			margin-left:10px;
+			margin:0 10px 0 10px;
 			padding:0;
 			text-align:center;
 			color:$blue;
@@ -38,13 +38,14 @@
 		position:absolute;
 		text-align: center;
 		z-index:2 !important;
-		&.overflow .label {
-			display:none;
-		}
 
 		&.related {
-			background-color:$blue;
-			.label { color:#fff !important; }
+			background-color: lighten($blue, 30%);
+			.label, .count { color:#fff !important; }
+		}
+
+		&.overflow {
+			.label, .count { display:none; }
 		}
 
 		.label { position:absolute; }
@@ -55,19 +56,15 @@
 		z-index:1 !important;
 		padding-top:5px;
 		border: 0.5px solid #fff;
-		background-color: $grey;
-
-		&:hover {
-			background-color: $grey;
-			color:#fff;
-		}
+		background-color: lighten($grey, 40%);
 
 		.label {
-			color:#fff;
+			color:$grey;
 			position:absolute;
 			transform:translate(-50%,0px);
 			font-size: 16px;
 		}
+
 	}
 	.level-2 {
 		background-color: lighten($blue, 50%);
@@ -78,13 +75,24 @@
 			background-color:$red;
 			color:#fff;
 			z-index:100 !important;
+			.label, .count { color:#fff; }
 		}
 		.label {
+			display:block;
+			position:relative;
 			top:50%;
-			transform:translate(-50%, -50%);
-			color : $grey !important;
+			transform:translate(0,-50%);
 			font-size: 12px;
+			color : $grey !important;
+		}
 
+		.count {
+			display:block;
+			position:relative;
+			top:50%;
+			color:lighten($grey, 20%);
+			transform:translate(0,-50%);
+			font-size: 10px;
 		}
 	}
 }

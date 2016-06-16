@@ -1,14 +1,22 @@
 export let __hotReload = true;
 
 export function checkOverflow (el, min) {
-  if ( el[0].offsetHeight < min || el[0].offsetWidth < min ) {
+  if ( el.offsetHeight < min || el.offsetWidth < min ) {
     return "overflow";
   } else {
-    if ( el[0].offsetHeight < el[0].scrollHeight || el[0].offsetWidth < el[0].scrollWidth) {
+    if ( el.offsetHeight < el.scrollHeight || el.offsetWidth < el.scrollWidth) {
       return "partial-overflow";
     } else {
       return "no-overflow";
     }
+  }
+}
+
+export function checkOverflow (el) {
+  if ( el.offsetHeight < el.scrollHeight || el.offsetWidth < el.scrollWidth) {
+    return "overflow";
+  } else {
+    return "no-overflow";
   }
 }
 

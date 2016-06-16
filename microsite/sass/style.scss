@@ -56,18 +56,24 @@ section {
   position:relative;
   display: flex;
   width:100%;
-  overflow: hidden;
   flex-direction:column;
   margin:0;
   min-height:calc(100vh - 100px);
   box-shadow: 0 0 5px 0 rgba($grey, 0.125);  
   h2.title {
+    font-face:"gravurcondensed-bold";
     box-sizing:border-box;
     padding: 25px 0;
     font-size: 25px;
     color:$grey;
     font-weight: bold;
     text-align:center;
+
+    .years {
+      font-face:"gravurcondensed-regular";
+      font-weight: normal;
+      color:lighten($grey, 20%);
+    }
   }
   
 }

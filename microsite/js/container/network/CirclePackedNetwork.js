@@ -45,7 +45,7 @@ export class CirclePackedNetwork {
     this.pack = 
       d3.pack()
       .size([this.width,this.height])
-      .padding(0);
+      .padding(10);
     
 
     return this;
@@ -225,12 +225,9 @@ export class CirclePackedNetwork {
 
       that.monad = true;
 
-          d3
-            .selectAll(".node");
-            //.style("opacity", 0);
+      that.container.selectAll(".node").classed("hidden", true);
 
       let center = [that.width/2,that.height/2];
-
       let d = data.data;
 
       d3.select(this)
@@ -249,21 +246,60 @@ export class CirclePackedNetwork {
       let linkMin = d3.min(linkedNodes, l=>l.strength);
 
       let indexToPolar = d3.scaleLinear().domain([0,linkedNodes.length-1]).range([0, Math.PI*2]);
-      let occurenceToProximity = d3.scaleLinear().domain([linkMax,linkMin]).range([30, that.width/3]);
+      let occurenceToProximity = d3.scaleLinear().domain([linkMax,linkMin]).range([100, that.height/3]);
 
       linkedNodes.forEach( (l,i) => {
         let x = center[0]+Math.sin(indexToPolar(i))*occurenceToProximity(l.strength);
         let y = center[1]+Math.cos(indexToPolar(i))*occurenceToProximity(l.strength);
-        let n = d3.select( "#"+GeiVisUtils.makeSafeForCSS( l.node.name ) ).style("opacity", 1);
+
+        let n = d3.select( "#"+GeiVisUtils.makeSafeForCSS( l.node.name ) ).style("opacity", 1).classed("hidden", false).classed("monadic-related", true);
+        let width = n.select(".label").node().offsetWidth;
+
         
+        let sign;
+        let value;
+        let transform;
+        let translate;
+
+        var tx = Math.sin(indexToPolar(i))*width/2-30;
+        var ty = Math.cos(indexToPolar(i))*width/2+10;
+
+
+        if (indexToPolar(i) >= Math.PI && indexToPolar(i) <= Math.PI*2) {
+          n.classed("right", true);
+          value = 90;
+          sign = 1;
+          translate = `${tx}px,${ty}px`;
+          //transform = "100% 0%";
+        }
+
+        if (indexToPolar(i) >= 0 && indexToPolar(i) <= Math.PI) {
+          //n.classed("left", true);
+          value = 270;
+          sign = 1;
+          translate = `${tx}px,${ty}px`;
+          //transform = "100% 0%";
+        }
+
         n
           .transition()
           .duration(300)
           .delay((d,i) => i*10)
-          .style("width", "20px")
-          .style("height", "20px")
-          .style("border-radius", "10px")
-          .style("transform", d => `translate3d(${x-10}px,${y-10}px,0px)`);
+          .style("width", "5px")
+          .style("height", "5px")
+          .style("border-radius", "5px")
+          .style("transform", d => `translate3d(${x-2.5}px,${y-2.5}px,0px)`);
+
+
+
+        n
+          .select(".label")
+          .transition()
+          .duration(300)
+          .delay((d,i) => i*10)
+          //.style("transform-origin", transform)
+          .style("transform", (d) => `translate(${translate})rotate(-${(indexToPolar(i)*180/Math.PI)+(value)*sign}deg)`);
+
 
       });
 
@@ -272,11 +308,12 @@ export class CirclePackedNetwork {
     // sets the visual props of a node
     function setNodeProperties (selection) {
       selection
-        .style("position", "absolute")
+        .style("opacity", 1.0)
+        .style("transform",  d => `translate3d(${d.x-d.r}px,${d.y-d.r}px,0px)`)
         .style("width", d => (d.r*2)+'px' )
         .style("height", d => (d.r*2)+'px')
-        .style("border-radius", d => (d.r)+'px')
-        .style("transform",  d => `translate3d(${d.x-d.r}px,${d.y-d.r}px,0px)`);
+        .style("border-radius", d => (d.r)+'px');
+        return selection;
     }
 
     function out () {
@@ -284,11 +321,11 @@ export class CirclePackedNetwork {
       n.select('.count').text(d=>d.data.occurrence);
       n.select('.label').text(d=>d.data.name);
 
-      n.each( function (d) { 
-        let el = d3.select(this);
-        let overflow = GeiVisUtils.checkOverflow(el._groups[0], 18);
-        el.classed(overflow, true);
-      });
+      // n.each( function (d) { 
+      //   let el = d3.select(this);
+      //   let overflow = GeiVisUtils.checkOverflow(el._groups[0], 18);
+      //   el.classed(overflow, true);
+      // });
     }
 
     function over(data) {
@@ -325,18 +362,17 @@ export class CirclePackedNetwork {
             .style("opacity", that.occurrenceScale.domain([linkMin, f.node.occurrence])(f.strength) );
             n.select(".count").text(f.strength);
 
-            n.each( function (d) { 
-              let el = d3.select(this);
-              let overflow = GeiVisUtils.checkOverflow(el._groups[0], 18);
-              el.classed(overflow, true);
-            });
+            // n.each( function (d) { 
+            //   let el = d3.select(this);
+            //   let overflow = GeiVisUtils.checkOverflow(el._groups[0], 18);
+            //   el.classed(overflow, true);
+            // });
         });
     }
 
     //console.log(this.root.children);
 
-    this.container
-        .selectAll(".node").remove()
+    //this.container.selectAll(".node").remove()
 
     this.nodes = 
         this.container
@@ -353,16 +389,11 @@ export class CirclePackedNetwork {
       .text(d => d.data.occurrence);
 
     this.nodes
+      .transition()
+      .duration(300)
+      .delay((d,i) => i*10)
       .call(setNodeProperties)
-      .each( function (d) { 
-        let el = d3.select(this);
-        let overflow = GeiVisUtils.checkOverflow(el._groups[0], 18);
-        el.classed(overflow, true);
-        if (overflow == "overflow" || overflow == "partial-overflow") {
-          el.attr("data-balloon", d=>d.data.name+": "+d.data.occurrence);
-          el.attr("data-balloon-pos", "down");
-        }
-      });
+      .on("end", checkOverflow);
 
 
     // enter
@@ -371,12 +402,11 @@ export class CirclePackedNetwork {
       .append("div")
       .on("mouseover", over)
       .on("mouseout", out)
-      //.on("click", switchToMonad)
+      .on("click", switchToMonad)
       .attr("id", d => GeiVisUtils.makeSafeForCSS(d.data.name))
-      .attr("class", "node")
-      .style("transform-origin", "center center")
-      .style("transform",  d => `translate3d(${d.x-d.r}px,${d.y-d.r}px,0)`)
-      .call(setNodeProperties);
+      .style("transform",  d => `translate3d(${this.width/2-d.r}px,${this.height/2-d.r}px,0px)`)
+      .style("opacity", 0.0)
+      .classed("node", true);
 
     enteredNodes
       .append("span")
@@ -389,30 +419,35 @@ export class CirclePackedNetwork {
       .text(d => d.data.occurrence);
 
 
-      //
     enteredNodes
-      .each( function (d) { 
-        let el = d3.select(this);
-        let overflow = GeiVisUtils.checkOverflow(el._groups[0], 18);
-        el.classed(overflow, true);
-        if (overflow == "overflow" || overflow == "partial-overflow") {
-          el.attr("data-balloon", d=>d.data.name+": "+d.data.occurrence);
-          el.attr("data-balloon-pos", "down");
-        }
-      });
+      .transition()
+      .duration(300)
+      .delay((d,i) => i*10)
+      .call(setNodeProperties)
+      .on("end", checkOverflow);
+
 
 
     let exitedNodes = this.nodes.exit();
 
     // exit
     exitedNodes
-      // .transition()
-      // .duration(300)
-      // .style("width", '0px')
-      // .style("height", '0px')
+      .transition()
+      .duration(100)
+      .style("transform",  d => `translate3d(${this.width/2-d.r}px,${this.height/2-d.r}px,0px)`)
+      .style("opacity", 0.0)
       .remove();
 
 
+    function checkOverflow (d) {
+        let el = d3.select(this);
+        let overflow = GeiVisUtils.checkOverflow(el.node(), 18);
+        el.classed(overflow, true);
+        if (overflow == "overflow" || overflow == "partial-overflow") {
+          el.attr("data-balloon", d=>d.data.name+": "+d.data.occurrence);
+          el.attr("data-balloon-pos", "down");
+        }
+    }
     return this;
   }
 
