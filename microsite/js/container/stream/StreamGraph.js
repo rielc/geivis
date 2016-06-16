@@ -39,9 +39,9 @@ export class StreamGraph extends StateDb {
     this.div = div;
     this.svg = this.div.append("svg");
     this.g = this.svg.append("g");
+    this.gBrush = this.g.append("g").attr("class", "brush");
     this.gXaxis = this.g.append("g").attr("class", "x axis");
     this.gYaxis = this.g.append("g").attr("class", "y axis");
-    this.gBrush = this.g.append("g").attr("class", "brush");
     this.gGraph = this.g.append("g").attr("class", "graph");
 
     // this.offset = this.div.node().offsetTop;
@@ -255,7 +255,7 @@ export class StreamGraph extends StateDb {
 
     this.gXaxis
       .selectAll("text")
-      .attr("dy", "1em")
+      .attr("dy", -this.height/2)
 
     // this.gXaxis
     //   .selectAll("text")
@@ -266,7 +266,7 @@ export class StreamGraph extends StateDb {
     this.gYaxis
       //.transition()
       // .duration(notransition ? 0 : 800)
-      .call(this.yAxis)
+      //.call(this.yAxis)
 
   }
 
