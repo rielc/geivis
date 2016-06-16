@@ -20,7 +20,7 @@ export class NetworkSection extends Section {
     });
   });
 
-    this.margin = {'top':100,'right':0,'bottom':100,'left':0};
+    this.margin = {'top':100-parseInt(this.title.style("height")),'right':0,'bottom':0,'left':0};
 
     this.network = new
       CirclePackedNetwork( {'margin':this.margin} )

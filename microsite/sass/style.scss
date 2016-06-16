@@ -52,14 +52,19 @@ section {
   flex-direction:column;
   margin:0;
   min-height:calc(100vh - 100px);
-  box-shadow:0 0 5px 0 rgba(0,0,0,0.125) inset;
+  box-shadow:0 0 2px 0 rgba(0,0,0,0.125);
 
   h2.title {
-    //padding-top:10px;
+    position:absolute;
+    padding-top:40px;
+    padding-left:40px;
     font-size: 24px;
     color:$grey;
-    font-weight: bold;
-    text-align:center;
+    text-align:left;
+    font-weight: normal;
+    span {
+      font-weight: bold;
+    }
   }
   
 }

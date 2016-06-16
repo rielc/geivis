@@ -8,7 +8,7 @@ export class TreemapSection extends Section {
   constructor(state, db){
     super(state,db);
 
-    this.margin = {'top':100,'right':0,'bottom':100,'left':0};
+    this.margin = {'top':100-parseInt(this.title.style("height")),'right':0,'bottom':0,'left':0};
     
     this.treemap = new NestedTreemap( {'margin':this.margin} );
     this.treemap.layout = "SliceDice";
