@@ -195,15 +195,13 @@ input[type=button] {
   clear: both; }
 
 header {
-  /* position: relative; */
   padding-top: 20px;
   padding-bottom: 20px;
   float: left;
   width: 1200px;
   position: fixed;
   z-index: 500;
-  background: #FFF;
-  }
+  background: #FFF; }
   header .logo {
     width: 200px;
     float: left;
@@ -439,6 +437,8 @@ header {
         fill: none;
         stroke: rgba(0, 0, 0, 0.1);
         shape-rendering: crispEdges; }
+      #StreamSection .stream .axis .domain {
+        display: none; }
     #StreamSection .stream .graph path {
       cursor: pointer;
       fill: #BEE6F9; }
@@ -456,7 +456,7 @@ header {
     #StreamSection .entities .entity {
       /* padding: 5px; */
       float: left;
-      width: 270px;
+      width: 278px;
       margin: 10px;
       padding: 10px;
       background: rgba(190, 230, 249, 0.26);
@@ -849,9 +849,7 @@ section {
   width: 100%;
   flex-direction: column;
   margin: 0;
-  min-height: calc(100vh - 100px);
-  /* box-shadow: 0 0 5px 0 rgba(112, 112, 112, 0.125); */
-  }
+  min-height: calc(100vh - 100px); }
   section h2.title {
     font-face: "gravurcondensed-bold";
     box-sizing: border-box;
@@ -883,5 +881,14 @@ tspan:last-child {
   position: relative;
   margin: auto auto;
   width: 1200px; }
+
+::-webkit-scrollbar {
+  -webkit-appearance: none;
+  width: 7px; }
+
+::-webkit-scrollbar-thumb {
+  border-radius: 4px;
+  background-color: rgba(0, 0, 0, 0.2);
+  -webkit-box-shadow: 0 0 1px rgba(255, 255, 255, 0.2); }
 
 /*# sourceMappingURL=style.css.map */

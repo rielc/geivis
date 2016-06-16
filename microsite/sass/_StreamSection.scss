@@ -60,6 +60,9 @@
                 stroke: rgba(0, 0, 0, 0.1);
                 shape-rendering: crispEdges;
             }
+            .domain {
+                display: none;
+            }
         }
         .graph path {
             cursor: pointer;
@@ -82,7 +85,7 @@
         .entity {
             /* padding: 5px; */
             float: left;
-            width: 270px;
+            width: 278px;
             margin: 10px;
             padding: 10px;
             background: rgba(190, 230, 249, 0.26);

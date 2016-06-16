@@ -60,7 +60,7 @@ section {
   flex-direction:column;
   margin:0;
   min-height:calc(100vh - 100px);
-  box-shadow: 0 0 5px 0 rgba($grey, 0.125);  
+
   h2.title {
     font-face:"gravurcondensed-bold";
     box-sizing:border-box;
@@ -108,4 +108,14 @@ tspan:last-child {
   position: relative;
   margin: auto auto;
   width: 1200px;
+}
+
+::-webkit-scrollbar {
+    -webkit-appearance: none;
+    width: 7px;
+}
+::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    background-color: rgba(0,0,0,.2);
+    -webkit-box-shadow: 0 0 1px rgba(255,255,255,.2);
 }
