@@ -430,7 +430,9 @@ input[type=button] {
             padding: 2px; }
         #StreamSection .entities .entity .items .item .right {
           float: right;
-          width: 55%; }
+          width: 55%;
+          overflow: hidden;
+          height: 12px; }
 
 /*! tooltip 0.1.0 - 18th Dec 2013 | https://github.com/darsain/tooltip */
 .tooltip {
