@@ -8,7 +8,8 @@ export class GeomapSection extends Section {
   constructor(state, db){
     super(state,db);
 
-    this.geomap = new Geomap(state,db, this.div).init();
+    this.title.text(`Places`);
+    this.geomap = new Geomap(state,db, this.div.append("div")).init();
   }
 
 

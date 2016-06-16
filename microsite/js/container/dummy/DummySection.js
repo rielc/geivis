@@ -6,7 +6,8 @@ export class DummySection extends Section {
 
   constructor(state, db){
     super(state,db);
-
+    
+    this.title.text("Dummy");
   	this.divDummy = this.div.append("div").attr("class", "dummy");
   }
 

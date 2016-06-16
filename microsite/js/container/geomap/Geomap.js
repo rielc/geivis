@@ -8,7 +8,7 @@ export class Geomap extends StateDb {
     super(state,db);
    
     this.outerWidth = 1200;
-    this.outerHeight = 800;
+    this.outerHeight = window.innerHeight-400;
     this.margin = {top: 20, right: 20, bottom: 20, left: 20};
 
     this.projection = d3v3.geo.mercator()

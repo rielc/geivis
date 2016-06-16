@@ -170,7 +170,7 @@ export class StreamGraph extends StateDb {
       // console.log(next.scrollY);
       // this needs to be cleaned up
 
-      const diff = this.outerHeightInitial - next.scrollY;
+      const diff = this.outerHeightInitial - this.margin.top - this.margin.bottom - next.scrollY;
       const height = this.outerHeightInitial + diff;
       // console.log(diff, height)
       if(diff < 0 && height > this.outerHeightSmall){
@@ -187,7 +187,7 @@ export class StreamGraph extends StateDb {
         }
         // console.log(this.outerHeight, diff,  this.outerHeightInitial)
       }
-      this.div.classed("dropshadow", diff < this.outerHeightInitial);  
+      this.div.classed("dropshadow", diff < this.outerHeightInitial - this.margin.top - this.margin.bottom);  
 
     }
     // if(next.activeItem !== last.activeItem){

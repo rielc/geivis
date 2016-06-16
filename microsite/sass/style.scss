@@ -55,7 +55,7 @@ section {
   position:relative;
   display: flex;
   width:100%;
-  overflow: scroll;
+  overflow: hidden;
   flex-direction:column;
   margin:0;
   min-height:calc(100vh - 100px);

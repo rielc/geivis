@@ -7820,7 +7820,7 @@ $__System.register('19', ['5', '6', '9', '1b', '1c', '1a'], function (_export) {
               // console.log(next.scrollY);
               // this needs to be cleaned up
 
-              var diff = this.outerHeightInitial - next.scrollY;
+              var diff = this.outerHeightInitial - this.margin.top - this.margin.bottom - next.scrollY;
               var height = this.outerHeightInitial + diff;
               // console.log(diff, height)
               if (diff < 0 && height > this.outerHeightSmall) {
@@ -7837,7 +7837,7 @@ $__System.register('19', ['5', '6', '9', '1b', '1c', '1a'], function (_export) {
                 }
                 // console.log(this.outerHeight, diff,  this.outerHeightInitial)
               }
-              this.div.classed("dropshadow", diff < this.outerHeightInitial);
+              this.div.classed("dropshadow", diff < this.outerHeightInitial - this.margin.top - this.margin.bottom);
             }
             // if(next.activeItem !== last.activeItem){
             //   if(!next.activeItem) {
@@ -8096,9 +8096,10 @@ $__System.register('1e', ['5', '6', '19', '1b', '1c', '1f', '1d'], function (_ex
 
           _get(Object.getPrototypeOf(StreamSection.prototype), 'constructor', this).call(this, state, db);
 
+          this.title.html("<strong>GEORG ECKERT INSTITUTE</strong> / Visualized Collection Prototype");
+
           this.divStream = this.div.append("div").attr("class", "stream");
           this.divEntities = this.div.append("div").attr("class", "entities");
-          this.title.html("<strong>GEORG ECKERT INSTITUTE</strong> / Visualized Collection Prototype");
 
           this.stream = new StreamGraph(state, db, this.divStream).init();
 
@@ -8158,6 +8159,7 @@ $__System.register("20", ["5", "6", "1b", "1c", "1f"], function (_export) {
 
           _get(Object.getPrototypeOf(DummySection.prototype), "constructor", this).call(this, state, db);
 
+          this.title.text("Dummy");
           this.divDummy = this.div.append("div").attr("class", "dummy");
         }
 
@@ -8218,7 +8220,7 @@ $__System.register("21", ["5", "6", "1b", "1c", "1a"], function (_export) {
           _get(Object.getPrototypeOf(Geomap.prototype), "constructor", this).call(this, state, db);
 
           this.outerWidth = 1200;
-          this.outerHeight = 800;
+          this.outerHeight = window.innerHeight - 400;
           this.margin = { top: 20, right: 20, bottom: 20, left: 20 };
 
           this.projection = d3v3.geo.mercator().center([15, 49]).scale(3500).translate([outerWidth / 2, outerHeight / 2]);
@@ -8358,7 +8360,8 @@ $__System.register('22', ['5', '6', '21', '1b', '1c', '1f'], function (_export) 
 
           _get(Object.getPrototypeOf(GeomapSection.prototype), 'constructor', this).call(this, state, db);
 
-          this.geomap = new Geomap(state, db, this.div).init();
+          this.title.text('Places');
+          this.geomap = new Geomap(state, db, this.div.append("div")).init();
         }
 
         _createClass(GeomapSection, [{
@@ -8513,12 +8516,13 @@ $__System.register("28", ["5", "6", "27", "29"], function (_export) {
             this.outerWidth = this.width + this.properties.margin.left + this.properties.margin.right;
             this.outerHeight = this.height + this.properties.margin.top + this.properties.margin.bottom;
 
-            //console.log(this.width, this.height);
+            // this.tooltip = new Tooltip('');
+            // this.tooltip.attach(selector._groups[0][0]);
 
-            this.container = selector.append("div").classed("container", true).attr("id", this.containerName + "-visualization").style("width", this.width + "px").style("height", this.height + "px").style("position", "relative");
+            this.container = selector.append("div").attr("id", this.containerName + "-visualization").style("width", this.width + "px").style("height", this.height + "px").style("position", "relative");
             //.style("transform",  d => `translate(${this.properties.margin.left}px,${this.properties.margin.top}px)`);
 
-            this.pack = d3.pack().size([this.width - 2, this.height - 2]).padding(3);
+            this.pack = d3.pack().size([this.width, this.height]).padding(0);
 
             return this;
           }
@@ -9866,7 +9870,7 @@ $__System.register("43", ["5", "6", "29"], function (_export) {
 							el.classed(overflow, true);
 							if (overflow == "overflow" || overflow == "partial-overflow") {
 								el.attr("data-balloon", function (d) {
-									return d.data.key + ": " + d.values;
+									return d.data.key;
 								});
 								el.attr("data-balloon-pos", "down");
 							}
@@ -10053,6 +10057,9 @@ $__System.register('1', ['4', '7', '8', '20', '22', '44', '1e', '2a'], function 
       scroll = new ScrollListener(state);
       streamSection = new StreamSection(state, db);
       geomapSection = new GeomapSection(state, db);
+
+      // let dummy = new DummySection(state, db);
+
       networkSection = new NetworkSection(state, db);
       treemapSection = new TreemapSection(state, db);
 

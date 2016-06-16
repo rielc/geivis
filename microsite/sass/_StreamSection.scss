@@ -49,7 +49,7 @@
     }
     
     .entities {
-        margin-top: calc(100vh - 400px);
+        margin-top: calc(92vh - 400px);
 
         .title {
             font-family: "gravurcondensed-bold";
@@ -62,7 +62,7 @@
         .entity {
             /* padding: 5px; */
             float: left;
-            width: 240px;
+            width: 270px;
             margin: 10px;
             padding: 10px;
             background: rgba(190, 230, 249, 0.26);
@@ -92,7 +92,7 @@
                     }
                     .left {
                         float: left;
-                        width: 40%;
+                        width: 45%;
                         padding-right: 5px;
                         .bar {
                             background: #3C7C9B;
@@ -103,7 +103,7 @@
                     }
                     .right {
                         float: right;
-                        width: 60%;
+                        width: 55%;
                     }
                 }
             }
