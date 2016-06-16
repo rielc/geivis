@@ -71,16 +71,16 @@ export class NestedTreemap {
 		let hist = d3.histogram().value(h=>h.value).thresholds([2])
 		let nested = nesting.entries(data);
 
-		nested = nesting.entries(data).map( d=> {
-			let rHist = hist(d.values);
-			if (rHist.length>1) {
-				let rVal = d3.values(rHist[1]).filter(f=> typeof f === "object");
-				rVal.push({key:"Other", value : d3.sum(rHist[0], s=>s.value)});
-				return { key:d.key, values: rVal };
-			} else {
-				return d;
-			}
-		});	
+		// let nested = nesting.entries(data).map( d=> {
+		// 	let rHist = hist(d.values);
+		// 	if (rHist.length>1) {
+		// 		let rVal = d3.values(rHist[1]).filter(f=> typeof f === "object");
+		// 		rVal.push({key:"Other", value : d3.sum(rHist[0], s=>s.value)});
+		// 		return { key:d.key, values: rVal };
+		// 	} else {
+		// 		return d;
+		// 	}
+		// });	
 
 		this.root = d3
 			.hierarchy( { key : "all values", values : nested }, function(d) { return d.values; })
@@ -137,23 +137,24 @@ export class NestedTreemap {
 
 		this.svg.selectAll(".node").remove();	
 		
-		let data = this.root.descendants();
+		let data = this.root.descendants().filter(d=>d.depth>0);
 
 		this.nodes = this.svg
 			.selectAll(".node")
 			.data(data, d=>d.data.key)
 			.call(updateNode);
 
-		let enteredNodes = this.nodes
-			.enter();
+		let enteredNodes = this.nodes.enter();
 
 		let appendedNodes = enteredNodes
 			.append("div")
 			.attr("class", d => GeiVisUtils.makeSafeForCSS(d.data.key) + " node " + "level-"+d.depth)
 			.on("mouseover", function (d) {
-				// TODO: Implement custom relative Color-Scale
-				that.svg.selectAll(".node").classed("related", false);
-				that.svg.selectAll("."+GeiVisUtils.makeSafeForCSS(d.data.key)).classed("related", true);
+				if (d.depth==2) {
+					// TODO: Implement custom relative Color-Scale
+					that.svg.selectAll(".node").classed("related", false);
+					that.svg.selectAll("."+GeiVisUtils.makeSafeForCSS(d.data.key)).classed("related", true);
+				}
 			})
 			.on("mouseout", function (d) {
 				that.svg.selectAll(".node").classed("related", false);
@@ -169,6 +170,7 @@ export class NestedTreemap {
 			.append("span")
 			.classed("label", true)
 			.text(d => d.depth!=0?d.data.key:null);
+
 
 		appendedNodes
 			.each( function (d) {

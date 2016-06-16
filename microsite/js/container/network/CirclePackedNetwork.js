@@ -280,7 +280,7 @@ export class CirclePackedNetwork {
     }
 
     function out () {
-      let n = d3.selectAll(".node").classed("inactive", false).style("opacity", null);
+      let n = that.container.selectAll(".node").classed("inactive", false).style("opacity", null);
       n.select('.count').text(d=>d.data.occurrence);
       n.select('.label').text(d=>d.data.name);
 
@@ -293,7 +293,7 @@ export class CirclePackedNetwork {
 
     function over(data) {
 
-        d3.selectAll(".node").classed("inactive", true);
+        that.container.selectAll(".node").classed("inactive", true);
         d3.select(this).classed("inactive", false)
         
         let d = data.data;
