@@ -42,6 +42,7 @@ export class NetworkSection extends Section {
     if (next.loaded != last.loaded) this.network.updateData(this.db.date.top(Infinity)).render();
 
     if (!next.visible.NetworkSection) return;
+      console.log(next.keyframe);
 
     console.log("network render");
 
@@ -50,7 +51,7 @@ export class NetworkSection extends Section {
       let data = this.db.date.top(Infinity);
       if (data.length>0) {
         this.network.updateData(data);
-        this.network.render();
+        this.network.render(next.keyframe!=last.keyframe);
       }
     }
   }

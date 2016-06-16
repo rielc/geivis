@@ -346,7 +346,8 @@ header {
   text-align: center;
   box-sizing: border-box;
   background-color: #009ee0;
-  cursor: pointer; }
+  cursor: pointer;
+  transition: border 0.3s, background-color 0.3s, opacity 0.3s; }
   #NetworkSection .node:hover {
     background-color: rgba(176, 0, 70, 0.3);
     opacity: 1 !important; }

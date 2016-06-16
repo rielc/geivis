@@ -230,6 +230,11 @@ export class CirclePackedNetwork {
       let center = [that.width/2,that.height/2];
       let d = data.data;
 
+      d3.select(this)
+        .style("opacity", 1)
+        //.style("box-shadow", "0 0 10px 0 rgba(0,0,0,0.25)")
+        .style("transform",  d => `translate3d(${center[0]}px,${center[1]}px,0px)`);
+
       let linkedNodes = that.transformedData.links
         .filter( l => (l.source.name == d.name || l.target.name == d.name) )
         .map(l => {
@@ -244,7 +249,7 @@ export class CirclePackedNetwork {
       let occurenceToProximity = d3.scaleLinear().domain([linkMax,linkMin]).range([100, that.height/3]);
 
       linkedNodes.forEach( (l,i) => {
-        let x = center[0]+(Math.sin(indexToPolar(i))*occurenceToProximity(l.strength)*2);
+        let x = center[0]+(Math.sin(indexToPolar(i))*occurenceToProximity(l.strength));
         let y = center[1]+Math.cos(indexToPolar(i))*occurenceToProximity(l.strength);
 
         let n = d3.select( "#"+GeiVisUtils.makeSafeForCSS( l.node.name ) ).style("opacity", 1).classed("hidden", false).classed("monadic-related", true);
@@ -295,13 +300,6 @@ export class CirclePackedNetwork {
           //.style("transform-origin", transform)
           .style("transform", (d) => `translate(${translate})rotate(-${(indexToPolar(i)*180/Math.PI)+(value)*sign}deg)`);
 
-      d3.select(this)
-        .transtion()
-        .duration(300)
-        .delay(400)
-        .style("opacity", 1)
-        .style("box-shadow", "0 0 10px 0 rgba(0,0,0,0.25)")
-        .style("transform",  d => `translate3d(${center[0]}px,${center[1]}px,0px)`);
 
       });
 
