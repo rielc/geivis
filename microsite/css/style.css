@@ -257,28 +257,30 @@ header {
     display: none; }
   #TreemapSection .node .label {
     position: absolute; }
+  #TreemapSection .node.other {
+    border-bottom: none !important; }
 #TreemapSection .level-1 {
   z-index: 1 !important;
   padding-top: 5px;
-  border: 0.5px solid #fff;
-  background-color: #d6d6d6; }
+  border: 1px solid #fff;
+  background-color: rgba(238, 238, 238, 0.27); }
   #TreemapSection .level-1 .label {
     color: #707070;
     position: absolute;
     transform: translate(-50%, 0px);
-    font-size: 16px; }
+    font-size: 12px; }
 #TreemapSection .level-2 {
-  background-color: #e0f6ff;
-  border-bottom: 1px solid #fff;
-  border-top: 1px solid #fff; }
+  background-color: rgba(238, 238, 238, 0.4);
+  border-bottom: 1px solid #fff; }
   #TreemapSection .level-2:hover {
     z-index: 3 !important;
-    background-color: #b00046;
-    color: #fff;
-    z-index: 100 !important; }
+    background-color: rgba(176, 0, 70, 0.3);
+    color: #fff; }
     #TreemapSection .level-2:hover .label, #TreemapSection .level-2:hover .count {
       color: #fff; }
   #TreemapSection .level-2 .label {
+    padding-left: 20px;
+    text-align: left;
     display: block;
     position: relative;
     top: 50%;
@@ -286,8 +288,12 @@ header {
     font-size: 12px;
     color: #707070 !important; }
   #TreemapSection .level-2 .count {
+    box-sizing: border-box;
+    text-align: right;
     display: block;
-    position: relative;
+    width: 100%;
+    position: absolute;
+    padding-right: 20px;
     top: 50%;
     color: #a3a3a3;
     transform: translate(0, -50%);
@@ -342,7 +348,7 @@ header {
   background-color: #009ee0;
   cursor: pointer; }
   #NetworkSection .node:hover {
-    background-color: #b00046 !important;
+    background-color: rgba(176, 0, 70, 0.3);
     opacity: 1 !important; }
   #NetworkSection .node .label {
     color: #fff;
@@ -857,7 +863,7 @@ section {
     font-size: 25px;
     color: #707070;
     font-weight: bold;
-    text-align: center; }
+    text-align: left; }
     section h2.title .years {
       font-face: "gravurcondensed-regular";
       font-weight: normal;
