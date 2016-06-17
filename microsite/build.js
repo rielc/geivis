@@ -8356,7 +8356,7 @@ $__System.register("2d", ["5", "6", "26", "27", "28"], function (_export) {
           value: function stateChange(next, last) {
             if (!next.visible.BookshelfSection) return;
 
-            if (next.brushStart !== last.brushStart || next.brushEnd !== last.brushEnd || next.active !== last.active || next.activeItem !== last.activeItem || next.hover !== last.hover || next.loaded !== last.loaded) {
+            if (next.brushStart !== last.brushStart || next.brushEnd !== last.brushEnd || next.active !== last.active || next.activeItem !== last.activeItem || next.hover !== last.hover || next.loaded !== last.loaded || next.visible.BookshelfSection !== last.visible.BookshelfSection) {
               this.render();
             }
             // console.log(next.brushStart, last.brushStart);
@@ -8365,7 +8365,7 @@ $__System.register("2d", ["5", "6", "26", "27", "28"], function (_export) {
           key: "render",
           value: function render() {
             //console.log( this.state.state);
-            var data = this.db.date.top(150);
+            var data = this.db.date.top(120);
 
             // console.log(data);
 
@@ -8424,7 +8424,7 @@ $__System.register('2e', ['5', '6', '27', '28', '2b', '2d'], function (_export) 
 
           _get(Object.getPrototypeOf(BookshelfSection.prototype), 'constructor', this).call(this, state, db);
 
-          this.title.text("Bookshelf (first 150 books)");
+          this.title.text("Bookshelf (first 100 books)");
 
           var bookshelf = new Bookshelf(state, db, this.div);
         }
