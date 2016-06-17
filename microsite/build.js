@@ -8356,10 +8356,9 @@ $__System.register("2d", ["5", "6", "26", "27", "28"], function (_export) {
           value: function stateChange(next, last) {
             if (!next.visible.BookshelfSection) return;
 
-            // if(next.brushStart !== last.brushStart){
-            //   this.render();
-            // }
-            this.render();
+            if (next.brushStart !== last.brushStart || next.brushEnd !== last.brushEnd || next.active !== last.active || next.activeItem !== last.activeItem || next.hover !== last.hover || next.loaded !== last.loaded) {
+              this.render();
+            }
             // console.log(next.brushStart, last.brushStart);
           }
         }, {
@@ -10407,7 +10406,7 @@ $__System.register('4c', ['5', '6', '27', '28', '2b', '4b'], function (_export) 
 $__System.register('1', ['4', '13', '14', '30', '37', '2a', '2c', '2e', '4c'], function (_export) {
   'use strict';
 
-  var StateMachine, DataBase, ScrollListener, GeomapSection, NetworkSection, StreamSection, DummySection, BookshelfSection, TreemapSection, __hotReload, state, db, scroll, streamSection, bookshelfSection, geomapSection, treemapSection, networkSection, dummy;
+  var StateMachine, DataBase, ScrollListener, GeomapSection, NetworkSection, StreamSection, DummySection, BookshelfSection, TreemapSection, __hotReload, state, db, scroll, streamSection, geomapSection, treemapSection, networkSection, bookshelfSection, dummy;
 
   return {
     setters: [function (_) {
@@ -10438,10 +10437,10 @@ $__System.register('1', ['4', '13', '14', '30', '37', '2a', '2c', '2e', '4c'], f
       db = new DataBase(state);
       scroll = new ScrollListener(state);
       streamSection = new StreamSection(state, db);
-      bookshelfSection = new BookshelfSection(state, db);
       geomapSection = new GeomapSection(state, db);
       treemapSection = new TreemapSection(state, db);
       networkSection = new NetworkSection(state, db);
+      bookshelfSection = new BookshelfSection(state, db);
       dummy = new DummySection(state, db);
 
       db.load();

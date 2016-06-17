@@ -17,10 +17,15 @@ export class Bookshelf extends StateDb {
   stateChange(next, last){
     if(!next.visible.BookshelfSection) return;
 
-    // if(next.brushStart !== last.brushStart){
-    //   this.render();
-    // }
-    this.render();
+    if(next.brushStart !== last.brushStart
+      || next.brushEnd !== last.brushEnd
+      || next.active !== last.active
+      || next.activeItem !== last.activeItem
+      || next.hover !== last.hover
+      || next.loaded !== last.loaded
+    ){
+      this.render();
+    }
     // console.log(next.brushStart, last.brushStart);
   }
 
