@@ -1,4 +1,7 @@
 #GeomapSection {
+    text {
+        font-family: "gravurcondensed-regular";
+    }
     .river {
         fill: none;
         stroke: #EEE;
@@ -14,18 +17,16 @@
         background-color: #fff;
         position: fixed;
     }
-    .bookshelf {
-        height: 340px;
-        margin-left: 20px;
-        overflow: hidden;
-        .book {
-            float: left;
-            width: 200px;
-            padding: 2px;
-            display: list-item;
-            margin-left: 40px;
-        }
+
+    .totals {
+        font-size: 12px;
+        position: absolute;
+        top: 5px;
+        left: 10px;
+        background: #FFF;
+        padding: 5px;
     }
+    
     .stream {
         top:80px;
         background: #FFF;
@@ -35,7 +36,8 @@
             // -webkit-box-shadow: 0px 0px 15px 4px rgba(0,0,0,0.11);
             // -moz-box-shadow: 0px 0px 15px 4px rgba(0,0,0,0.11);
             // box-shadow: 0px 0px 15px 4px rgba(0,0,0,0.11);
-            box-shadow: 0 9px 7px -6px rgba(0, 0, 0, 0.18);
+            // box-shadow: 0 9px 7px -6px rgba(0, 0, 0, 0.18);
+            box-shadow: 0 12px 13px -9px rgba(0, 0, 0, 0.18);
         }
         text {
             font-family: "gravurcondensed-regular";

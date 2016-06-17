@@ -16,7 +16,7 @@ export class StreamGraph extends StateDb {
     this.outerHeight = window.innerHeight-500;
     this.outerHeightInitial = this.outerHeight;
     this.outerHeightSmall = 100;
-    this.margin = {top: 0, right: 20, bottom: 0, left: 20};
+    this.margin = {top: 0, right: 20, bottom: 10, left: 20};
     
     this.x = d3.scaleTime();
     this.y = d3.scaleLinear();
@@ -43,6 +43,10 @@ export class StreamGraph extends StateDb {
     this.gXaxis = this.g.append("g").attr("class", "x axis");
     this.gYaxis = this.g.append("g").attr("class", "y axis");
     this.gGraph = this.g.append("g").attr("class", "graph");
+
+    this.div.append("div")
+      .attr("class", "totals")
+      .html('<span id="active">-</span> of <span id="total">-</span> books selected.');
 
     // this.offset = this.div.node().offsetTop;
 
