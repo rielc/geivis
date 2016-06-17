@@ -501,14 +501,30 @@ header {
             height: 12px; }
 
 #BookshelfSection .bookshelf {
-  margin-left: 20px;
-  overflow: hidden; }
+  margin-left: 10px;
+  margin-top: 20px; }
   #BookshelfSection .bookshelf .book {
+    z-index: 1;
+    font-family: 'gravurcondensed-regular';
+    font-size: 10px;
     float: left;
-    width: 200px;
-    padding: 2px;
-    display: list-item;
-    margin-left: 40px; }
+    width: 80px;
+    height: 100px;
+    padding: 8px;
+    background: #EEE;
+    margin: 2px;
+    overflow: hidden;
+    transform: perspective(500px) rotateY(22deg) scale(0.9);
+    transition: all 0.2s ease;
+    cursor: pointer;
+    border-left: 5px solid #dadada; }
+    #BookshelfSection .bookshelf .book:hover {
+      border-color: #71091f;
+      z-index: 100;
+      color: #FFF;
+      background: #96112d;
+      transform: perspective(500px) rotateY(0deg) scale(1);
+      box-shadow: 0px 9px 23px -14px rgba(0, 0, 0, 0.52); }
 
 /*! tooltip 0.1.0 - 18th Dec 2013 | https://github.com/darsain/tooltip */
 .tooltip {

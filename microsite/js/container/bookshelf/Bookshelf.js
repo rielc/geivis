@@ -23,6 +23,7 @@ export class Bookshelf extends StateDb {
       || next.activeItem !== last.activeItem
       || next.hover !== last.hover
       || next.loaded !== last.loaded
+      || next.visible.BookshelfSection !== last.visible.BookshelfSection
     ){
       this.render();
     }
@@ -31,7 +32,7 @@ export class Bookshelf extends StateDb {
 
   render(){
     //console.log( this.state.state);
-    const data = this.db.date.top(150);
+    const data = this.db.date.top(120);
 
     // console.log(data);
 

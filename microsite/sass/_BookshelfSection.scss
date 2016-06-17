@@ -1,13 +1,33 @@
 #BookshelfSection {
     .bookshelf {
-        margin-left: 20px;
-        overflow: hidden;
+        margin-left: 10px;
+        margin-top: 20px;
         .book {
+            z-index: 1;
+            font-family: 'gravurcondensed-regular';
+            font-size: 10px;
             float: left;
-            width: 200px;
-            padding: 2px;
-            display: list-item;
-            margin-left: 40px;
+            width: 80px;
+            height: 100px;
+            padding: 8px;
+            background: #EEE;
+            margin:2px;
+            overflow: hidden;
+            transform: perspective(500px) rotateY(22deg) scale(0.9);
+            // box-shadow: -2px 0 -1px #444, -4px 0 -2px #444, -6px 0 -3px #444, -8px 0 -4px #444, -10px 0 -5px #444;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            // margin-left: -5px;
+            border-left: 5px solid #dadada;
+            &:hover {
+                border-color: #71091f;
+                z-index: 100;
+                color: #FFF;
+                background: #96112d;
+                transform: perspective(500px) rotateY(0deg) scale(1);
+                box-shadow: 0px 9px 23px -14px rgba(0,0,0,0.52);
+
+            }
         }
     }
 }
