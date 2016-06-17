@@ -8852,8 +8852,8 @@ $__System.register("33", ["5", "6", "32", "34"], function (_export) {
           // renders the whole scene
         }, {
           key: "render",
-          value: function render() {
-            this.renderNodes();
+          value: function render(keyframe) {
+            this.renderNodes(keyframe);
             return this;
           }
         }, {
@@ -8863,8 +8863,7 @@ $__System.register("33", ["5", "6", "32", "34"], function (_export) {
           // this function gets called to re-render the layout
         }, {
           key: "renderNodes",
-          value: function renderNodes() {
-            var _this3 = this;
+          value: function renderNodes(keyframe) {
 
             var that = this;
 
@@ -8953,16 +8952,28 @@ $__System.register("33", ["5", "6", "32", "34"], function (_export) {
 
             // sets the visual props of a node
             function setNodeProperties(selection) {
-              selection.style("opacity", 1.0).style("transform", function (d) {
-                return "translate3d(" + (d.x - d.r) + "px," + (d.y - d.r) + "px,0px)";
-              }).style("width", function (d) {
-                return d.r * 2 + 'px';
-              }).style("height", function (d) {
-                return d.r * 2 + 'px';
-              }).style("border-radius", function (d) {
-                return d.r + 'px';
-              });
-              return selection;
+
+              if (keyframe == "brushend") {
+                selection.style("opacity", 1.0).style("transform", function (d) {
+                  return "translate3d(" + (d.x - d.r) + "px," + (d.y - d.r) + "px,0px)";
+                }).style("width", function (d) {
+                  return d.r * 2 + 'px';
+                }).style("height", function (d) {
+                  return d.r * 2 + 'px';
+                }).style("border-radius", function (d) {
+                  return d.r + 'px';
+                });
+              } else {
+                selection.style("opacity", 1.0).style("transform", function (d) {
+                  return "translate3d(" + (d.x - d.r) + "px," + (d.y - d.r) + "px,0px)";
+                }).style("width", function (d) {
+                  return d.r * 2 + 'px';
+                }).style("height", function (d) {
+                  return d.r * 2 + 'px';
+                }).style("border-radius", function (d) {
+                  return d.r + 'px';
+                });
+              }
             }
 
             function out() {
@@ -8970,7 +8981,7 @@ $__System.register("33", ["5", "6", "32", "34"], function (_export) {
               n.select('.count').text(function (d) {
                 return d.data.occurrence;
               });
-              n.each(checkOverflow);
+              //n.each(checkOverflow);
             }
 
             function over(data) {
@@ -9012,69 +9023,85 @@ $__System.register("33", ["5", "6", "32", "34"], function (_export) {
                 var n = d3.select("#" + GeiVisUtils.makeSafeForCSS(f.node.name));
                 n.classed("inactive", false).style("opacity", that.occurrenceScale.domain([linkMin, f.node.occurrence])(f.strength));
                 n.select(".count").text(f.strength);
-                n.each(checkOverflow);
+                //n.each(checkOverflow);
               });
             }
 
-            //console.log(this.root.children);
-
-            //this.container.selectAll(".node").remove()
+            // update
 
             this.nodes = this.container.selectAll(".node").data(this.root.children, function (e) {
               return e.data.name;
             });
-
-            // update
 
             this.nodes.select(".count").text(function (d) {
               return d.data.occurrence;
             });
 
             this.nodes.transition().duration(300).delay(function (d, i) {
-              return i * 10;
+              return i * 30;
             }).call(setNodeProperties).on("end", checkOverflow);
 
-            // enter
-            var enteredNodes = this.nodes.enter().append("div").on("mouseover", over).on("mouseout", out).on("click", switchToMonad).attr("id", function (d) {
-              return GeiVisUtils.makeSafeForCSS(d.data.name);
-            }).style("transform", function (d) {
-              return "translate3d(" + (_this3.width / 2 - d.r) + "px," + (_this3.height / 2 - d.r) + "px,0px)";
-            }).style("opacity", 0.0).classed("node", true);
+            if (keyframe == "brushend") {
 
-            enteredNodes.append("span").classed("label", true).text(function (d) {
-              return d.data.name;
-            });
+              // enter
+              var enteredNodes = this.nodes.enter().append("div");
 
-            enteredNodes.append("span").classed("count", true).text(function (d) {
-              return d.data.occurrence;
-            });
+              enteredNodes.on("mouseover", over).on("mouseout", out)
+              //.on("click", switchToMonad)
+              .attr("id", function (d) {
+                return GeiVisUtils.makeSafeForCSS(d.data.name);
+              })
+              //.style("transform",  d => `translate3d(${this.width/2-d.r}px,${this.height/2-d.r}px,0px)`)
+              .style("transform", function (d) {
+                return "translate3d(" + (d.x - d.r) + "px," + (d.y - d.r) + "px,0px)";
+              }).style("opacity", 0.0).classed("node", true);
 
-            enteredNodes.transition().duration(300).delay(function (d, i) {
-              return i * 10;
-            }).call(setNodeProperties).on("end", checkOverflow);
+              enteredNodes.append("span").classed("label", true).text(function (d) {
+                return d.data.name;
+              });
+
+              enteredNodes.append("span").classed("count", true).text(function (d) {
+                return d.data.occurrence;
+              });
+
+              enteredNodes.transition().duration(300)
+              //.delay((d,i) => i*10)
+              .call(setNodeProperties).on("end", checkOverflow);
+            }
 
             var exitedNodes = this.nodes.exit();
 
             // exit
-            exitedNodes.transition().duration(100).style("transform", function (d) {
-              return "translate3d(" + (_this3.width / 2 - d.r) + "px," + (_this3.height / 2 - d.r) + "px,0px)";
-            }).style("opacity", 0.0).remove();
+            exitedNodes.transition().duration(100).style("opacity", 0.0).on("end", checkOverflow)
+            //.style("transform",  d => `translate3d(${this.width/2-d.r}px,${this.height/2-d.r}px,0px)`)
+            .remove();
 
             function checkOverflow(d) {
-              var el = d3.select(this);
-              var overflow = GeiVisUtils.checkOverflow(el.node(), 20);
-              el.classed(overflow, true);
 
-              if (overflow == "overflow" || overflow == "partial-overflow") {
-                el.attr("data-balloon", function (d) {
-                  return d.data.name + ": " + d.data.occurrence;
-                });
-                el.attr("data-balloon-pos", "down");
-              } else {
-                el.classed("overflow", false);
-                el.classed("partial-overflow", false);
-                el.attr("data-balloon", null);
-                el.attr("data-balloon-pos", null);
+              var el = d3.select(this);
+              var overflow = GeiVisUtils.checkPartialOverflow(el.node(), 20);
+
+              //console.log(el.data()[0].data.name, overflow);
+
+              switch (overflow) {
+                case "overflow":
+                  el.classed("overflow", true).classed("partial", false);
+                  el.attr("data-balloon", function (d) {
+                    return d.data.name + ": " + d.data.occurrence;
+                  });
+                  el.attr("data-balloon-pos", "down");
+                  break;
+                case "partial-overflow":
+                  el.classed("overflow", true).classed("partial", true);
+                  el.attr("data-balloon", function (d) {
+                    return d.data.name + ": " + d.data.occurrence;
+                  });
+                  el.attr("data-balloon-pos", "down");
+                  break;
+                case "no-overflow":
+                  el.classed("overflow", false).classed("partial", false);
+                  el.attr("data-balloon", null).attr("data-balloon-pos", null);
+                  break;
               }
             }
             return this;
@@ -9150,19 +9177,20 @@ $__System.register('35', ['5', '6', '27', '28', '33', '2b', '2f'], function (_ex
           key: 'stateChange',
           value: function stateChange(next, last) {
 
-            if (next.loaded != last.loaded) this.network.updateData(this.db.date.top(Infinity)).render();
+            if (next.loaded != last.loaded) this.network.updateData(this.db.date.top(Infinity)).render("brushend");
 
             if (!next.visible.NetworkSection) return;
-            console.log(next.keyframe);
 
-            console.log("network render");
+            if (next.brushStart !== last.brushStart || next.brushEnd !== last.brushEnd || next.event != last.event) {
 
-            if (next.brushStart !== last.brushStart || next.brushEnd !== last.brushEnd) {
               this.title.html('All tags from ' + next.brushStart.getFullYear() + ' to ' + next.brushEnd.getFullYear());
+
               var data = this.db.date.top(Infinity);
               if (data.length > 0) {
+                var keyframe = next.event;
                 this.network.updateData(data);
-                this.network.render(next.keyframe != last.keyframe);
+                console.log(keyframe);
+                this.network.render(keyframe);
               }
             }
           }
@@ -9778,7 +9806,7 @@ $__System.register("34", [], function (_export) {
 
   var __hotReload;
 
-  _export("checkOverflow", checkOverflow);
+  _export("checkPartialOverflow", checkPartialOverflow);
 
   _export("checkOverflow", checkOverflow);
 
@@ -9792,7 +9820,7 @@ $__System.register("34", [], function (_export) {
 
   _export("remap", remap);
 
-  function checkOverflow(el, min) {
+  function checkPartialOverflow(el, min) {
     if (el.offsetHeight < min || el.offsetWidth < min) {
       return "overflow";
     } else {
