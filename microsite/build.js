@@ -8227,7 +8227,7 @@ $__System.register('2a', ['5', '6', '25', '27', '28', '29', '2b'], function (_ex
               var bottom = bb.bottom - 88 - this.stream.outerHeightInitial;
               var height = this.stream.outerHeightInitial + bottom;
 
-              // console.log(bottom, height);
+              console.log(bottom, height);
 
               if (bottom < 0 && height > this.stream.outerHeightSmall) {
                 this.stream.outerHeight = height;
@@ -8237,6 +8237,11 @@ $__System.register('2a', ['5', '6', '25', '27', '28', '29', '2b'], function (_ex
                 if (bottom > 0 && this.stream.outerHeight != this.stream.outerHeightInitial) {
                   this.stream.big = true;
                   this.stream.outerHeight = this.stream.outerHeightInitial;
+                  this.stream.init().render(true);
+                }
+                if (height < this.stream.outerHeightSmall && this.stream.outerHeight != this.stream.outerHeightSmall) {
+                  this.stream.big = false;
+                  this.stream.outerHeight = this.stream.outerHeightSmall;
                   this.stream.init().render(true);
                 }
               }

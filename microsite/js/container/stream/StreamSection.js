@@ -37,7 +37,7 @@ export class StreamSection extends Section {
         const bottom = bb.bottom - 88 - this.stream.outerHeightInitial;
         const height = this.stream.outerHeightInitial + bottom;
 
-        // console.log(bottom, height);
+        console.log(bottom, height);
 
         if(bottom < 0 && height > this.stream.outerHeightSmall){
           this.stream.outerHeight = height;
@@ -47,6 +47,11 @@ export class StreamSection extends Section {
           if(bottom>0 && this.stream.outerHeight != this.stream.outerHeightInitial){
             this.stream.big = true;
             this.stream.outerHeight = this.stream.outerHeightInitial;
+            this.stream.init().render(true);
+          }
+          if(height<this.stream.outerHeightSmall && this.stream.outerHeight != this.stream.outerHeightSmall){
+            this.stream.big = false;
+            this.stream.outerHeight = this.stream.outerHeightSmall;
             this.stream.init().render(true);
           }
         }
