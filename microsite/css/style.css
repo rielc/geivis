@@ -453,7 +453,7 @@ header {
         fill: #b00046; }
   #StreamSection .entities {
     position: absolute;
-    bottom: 0px; }
+    bottom: 20px; }
     #StreamSection .entities .title {
       font-family: "gravurcondensed-bold";
       font-size: 12px;
@@ -476,7 +476,7 @@ header {
         overflow-y: scroll;
         overflow-x: hidden;
         width: 100%;
-        height: 250px; }
+        height: 230px; }
         #StreamSection .entities .entity .items .item {
           clear: left;
           margin: 1px;
