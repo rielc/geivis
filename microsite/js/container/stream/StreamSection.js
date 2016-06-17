@@ -37,7 +37,7 @@ export class StreamSection extends Section {
         const bottom = bb.bottom - 88 - this.stream.outerHeightInitial;
         const height = this.stream.outerHeightInitial + bottom;
 
-        console.log(bottom, height);
+        // console.log(bottom, height);
 
         if(bottom < 0 && height > this.stream.outerHeightSmall){
           this.stream.outerHeight = height;

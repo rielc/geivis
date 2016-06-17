@@ -8227,7 +8227,7 @@ $__System.register('2a', ['5', '6', '25', '27', '28', '29', '2b'], function (_ex
               var bottom = bb.bottom - 88 - this.stream.outerHeightInitial;
               var height = this.stream.outerHeightInitial + bottom;
 
-              console.log(bottom, height);
+              // console.log(bottom, height);
 
               if (bottom < 0 && height > this.stream.outerHeightSmall) {
                 this.stream.outerHeight = height;
@@ -8374,7 +8374,9 @@ $__System.register("2d", ["5", "6", "26", "27", "28"], function (_export) {
 
             // console.log(data);
 
-            var s = this.container.selectAll(".book").data(data);
+            var s = this.container.selectAll(".book").data(data, function (d) {
+              return d.id;
+            });
 
             s.enter().append("div").attr("class", "book").text(function (d) {
               return d.title;

@@ -34,9 +34,9 @@ export class Bookshelf extends StateDb {
     //console.log( this.state.state);
     const data = this.db.date.top(120);
 
-    // console.log(data);
+    console.log(data);
 
-    let s = this.container.selectAll(".book").data(data);
+    let s = this.container.selectAll(".book").data(data, d=>d.id);
 
     s.enter()
       .append("div")

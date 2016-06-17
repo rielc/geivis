@@ -29,7 +29,6 @@ export class ScrollListener {
       return [s.name, visible];
     });
 
-
     this.state.push({ scrollY: window.scrollY, visible: fromPairs(visible) });
   }
 
