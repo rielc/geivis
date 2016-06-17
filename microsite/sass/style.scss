@@ -61,7 +61,8 @@ section {
   margin-bottom: 40px;
   width:100%;
   flex-direction:column;
-  min-height:calc(100vh - 88px);
+  // min-height:calc(100vh - 88px);
+  height:calc(100vh - 188px);
 
   h2.title {
     font-face:"gravurcondensed-bold";

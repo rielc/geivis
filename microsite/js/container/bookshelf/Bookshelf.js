@@ -26,7 +26,7 @@ export class Bookshelf extends StateDb {
 
   render(){
     //console.log( this.state.state);
-    const data = this.db.date.top(50);
+    const data = this.db.date.top(150);
 
     // console.log(data);
 

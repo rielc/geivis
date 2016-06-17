@@ -413,6 +413,7 @@ header {
   fill: rgba(238, 238, 238, 0.27); }
 
 #StreamSection {
+  height: calc(100vh - 88px);
   margin-top: 88px; }
   #StreamSection h2.title {
     background-color: #fff;
@@ -868,7 +869,7 @@ section {
   margin-bottom: 40px;
   width: 100%;
   flex-direction: column;
-  min-height: calc(100vh - 88px); }
+  height: calc(100vh - 188px); }
   section h2.title {
     font-face: "gravurcondensed-bold";
     box-sizing: border-box;

@@ -8366,7 +8366,7 @@ $__System.register("2d", ["5", "6", "26", "27", "28"], function (_export) {
           key: "render",
           value: function render() {
             //console.log( this.state.state);
-            var data = this.db.date.top(50);
+            var data = this.db.date.top(150);
 
             // console.log(data);
 
@@ -8425,7 +8425,7 @@ $__System.register('2e', ['5', '6', '27', '28', '2b', '2d'], function (_export) 
 
           _get(Object.getPrototypeOf(BookshelfSection.prototype), 'constructor', this).call(this, state, db);
 
-          this.title.text("Bookshelf (first 50)");
+          this.title.text("Bookshelf (first 150 books)");
 
           var bookshelf = new Bookshelf(state, db, this.div);
         }
