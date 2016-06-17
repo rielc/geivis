@@ -433,7 +433,10 @@ header {
         text-align: right; }
 
 #GeomapSection text {
-  font-family: "gravurcondensed-regular"; }
+  font-family: "gravurcondensed-regular";
+  cursor: pointer; }
+#GeomapSection circle {
+  cursor: pointer; }
 #GeomapSection .river {
   fill: none;
   stroke: #EEE; }

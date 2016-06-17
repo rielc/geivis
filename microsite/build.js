@@ -8431,7 +8431,7 @@ $__System.register('2e', ['5', '6', '27', '28', '2b', '2d'], function (_export) 
 
           _get(Object.getPrototypeOf(BookshelfSection.prototype), 'constructor', this).call(this, state, db);
 
-          this.title.text("Bookshelf (first 100 books)");
+          this.title.text("Books (first 100)");
 
           var bookshelf = new Bookshelf(state, db, this.div);
         }
@@ -8500,6 +8500,7 @@ $__System.register("2f", ["5", "6", "26", "27", "28"], function (_export) {
           this.rivers = this.g.append("path").attr("class", "river");
 
           this.scale = d3v3.scale.linear().range([1, 20]);
+          this.fontscale = d3v3.scale.linear().range([10, 15]);
 
           return this;
         }
@@ -8549,6 +8550,9 @@ $__System.register("2f", ["5", "6", "26", "27", "28"], function (_export) {
             });
 
             this.scale.domain([0.1, max]).clamp(true);
+            this.fontscale.domain(d3v3.extent(places, function (d) {
+              return d.value;
+            })).clamp(true);
 
             // console.log(d3v3.max(places, d=>d.value))
 
@@ -8585,7 +8589,9 @@ $__System.register("2f", ["5", "6", "26", "27", "28"], function (_export) {
             }).attr("dy", function (d) {
               return _this.scale(d.value) + 2 + "px";
             }).style("opacity", function (d) {
-              return d.value / max * 3;
+              return d.value / max * 4;
+            }).style("font-size", function (d) {
+              return _this.fontscale(d.value) + "px";
             });
 
             s.select("circle").attr("fill", function (d) {

@@ -25,6 +25,7 @@ export class Geomap extends StateDb {
     this.rivers = this.g.append("path").attr("class","river");
 
     this.scale = d3v3.scale.linear().range([1,20]);
+    this.fontscale = d3v3.scale.linear().range([10,15]);
 
     return this;
   }
@@ -87,6 +88,7 @@ export class Geomap extends StateDb {
     let max = d3v3.max(places, d=>d.value);
 
     this.scale.domain([0.1, max]).clamp(true);
+    this.fontscale.domain(d3v3.extent(places, d=>d.value)).clamp(true);
 
     // console.log(d3v3.max(places, d=>d.value))
 
@@ -117,7 +119,8 @@ export class Geomap extends StateDb {
     s.select("text")
       .attr("dx", d=>(this.scale(d.value)+2)+"px")
       .attr("dy", d=>(this.scale(d.value)+2)+"px")
-      .style("opacity", d=>((d.value/max)*3))
+      .style("opacity", d=>((d.value/max)*4))
+      .style("font-size", d=>(this.fontscale(d.value)+"px"))
 
     s.select("circle")
       .attr("fill", d=> "#3C7C9B")

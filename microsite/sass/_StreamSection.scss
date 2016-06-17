@@ -1,6 +1,10 @@
 #GeomapSection {
     text {
         font-family: "gravurcondensed-regular";
+        cursor: pointer;
+    }
+    circle {
+        cursor: pointer;
     }
     .river {
         fill: none;
