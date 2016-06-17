@@ -56,7 +56,7 @@ export class NetworkSection extends Section {
       if (data.length>0) {
         let keyframe = next.event;
         this.network.updateData(data);
-        console.log(keyframe);
+        //console.log(keyframe);
         this.network.render(keyframe);
       }
     }

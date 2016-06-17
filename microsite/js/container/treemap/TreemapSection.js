@@ -45,7 +45,7 @@ export class TreemapSection extends Section {
 
     if (next.brushStart !== last.brushStart || next.brushEnd !== last.brushEnd) {
 
-      console.log("treemap render");
+      //console.log("treemap render");
         
       this.title.select(".years").text(` from ${next.brushStart.getFullYear()} to ${next.brushEnd.getFullYear()}`);
 

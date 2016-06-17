@@ -590,10 +590,10 @@ $__System.register('14', ['5', '6', '15'], function (_export) {
             }).map(function (s) {
 
               var rect = s.div.node().getBoundingClientRect();
-              var height = parseInt(s.div.style("height")) - 100;
+              var height = parseInt(s.div.style("height")) - 188;
               var visible = rect.top >= -height && rect.top <= height;
 
-              // console.log(s.name, visible);
+              // console.log(s.name, visible, rect.bottom, s.div.style("height"));
 
               return [s.name, visible];
             });
@@ -8782,6 +8782,7 @@ $__System.register("35", ["5", "6", "34", "36"], function (_export) {
           this.properties = properties;
           this.blacklist = [];
           this.years = [0, 0];
+          this.monad = "";
           return this;
         }
 
@@ -8877,22 +8878,55 @@ $__System.register("35", ["5", "6", "34", "36"], function (_export) {
           value: function setNodeAccessor(nodeAccessor) {
             this.nodeAccessor = nodeAccessor;return this;
           }
+        }, {
+          key: "cacheLinksAndNodes",
+          value: function cacheLinksAndNodes() {
+            var _this2 = this;
+
+            this.networkByYear = d3.nest().key(function (k) {
+              return parseInt(k.year);
+            }).entries(this.data).map(function (m) {
+              var d = _this2.generateLinksAndNodes(m.values);
+              return { year: m.key, data: d };
+            });
+
+            this.networkByYear.filter(function (f) {
+              return f.year == "1820" || f.year == "1911";
+            }).map(function (m) {
+              return m.data;
+            }).map(function (m) {
+              return m.links;
+            });
+
+            d3.nest().key(function (k) {
+              return k.source + "-" + k.target;
+            }).entries();
+
+            return this;
+          }
 
           // this function extracts a network from if given a array with
         }, {
           key: "generateLinksAndNodes",
-          value: function generateLinksAndNodes() {
-            var _this2 = this;
+          value: function generateLinksAndNodes(newData) {
+            var _this3 = this;
+
+            var dataToAnalyze = undefined;
+            if (newData != undefined) {
+              ataToAnalyze = newData;
+            } else {
+              dataToAnalyze = this.data;
+            }
 
             // extract ALL tags (with duplicates)
             var allTags = [];
             // push all tags of every entry into the global array
-            this.data.forEach(function (e) {
-              if (e[_this2.nodeAccessor] != undefined) {
-                allTags.push(e[_this2.nodeAccessor].map(function (t) {
+            dataToAnalyze.forEach(function (e) {
+              if (e[_this3.nodeAccessor] != undefined) {
+                allTags.push(e[_this3.nodeAccessor].map(function (t) {
                   return t.trim().toLowerCase();
                 }).filter(function (f) {
-                  return _this2.blacklist.indexOf(f) == -1;
+                  return _this3.blacklist.indexOf(f) == -1;
                 }));
               }
             });
@@ -8905,36 +8939,33 @@ $__System.register("35", ["5", "6", "34", "36"], function (_export) {
               nodeList.set(e, 0);
             });
 
-            //console.time("asdf");
-
             var linkList = d3.map();
 
             // extract all links
-            this.data.forEach(function (e) {
+            dataToAnalyze.forEach(function (e) {
 
               // this array prevent duplicate links
 
               // if the entry has tags
-              if (e[_this2.nodeAccessor] != undefined) {
+              if (e[_this3.nodeAccessor] != undefined) {
                 (function () {
 
                   var parsedLinks = [];
                   var addedTags = [];
 
-                  var tags = e[_this2.nodeAccessor].map(function (t) {
+                  var tags = e[_this3.nodeAccessor].map(function (t) {
                     return t.trim().toLowerCase();
                   }); // clean the tags again
 
                   //create a link for n-to-n connection
                   tags.filter(function (f) {
-                    return _this2.blacklist.indexOf(f) == -1;
+                    return _this3.blacklist.indexOf(f) == -1;
                   }).forEach(function (tagA) {
                     tags.filter(function (f) {
-                      return _this2.blacklist.indexOf(f) == -1;
+                      return _this3.blacklist.indexOf(f) == -1;
                     }).forEach(function (tagB) {
                       if (tagA != tagB) {
                         // sort them to prevent duplications
-
                         var indexA = nodes.indexOf(tagA);
                         var indexB = nodes.indexOf(tagB);
 
@@ -8946,6 +8977,7 @@ $__System.register("35", ["5", "6", "34", "36"], function (_export) {
 
                         if (parsedLinks.indexOf(link) == -1) {
 
+                          // increment the value of the connection
                           if (linkList.has(link)) {
                             linkList.set(link, linkList.get(link) + 1);
                           } else {
@@ -8979,12 +9011,15 @@ $__System.register("35", ["5", "6", "34", "36"], function (_export) {
               };
             });
 
-            //console.log(nodes);
-
-            this.transformedData = { 'nodes': nodes.map(function (n) {
+            var result = { 'nodes': nodes.map(function (n) {
                 return { 'name': n, 'occurrence': nodeList.get(n) };
               }), 'links': r };
-            return this;
+
+            if (newData != undefined) {
+              return result;
+            } else {
+              this.transformedData = result;return this;
+            }
           }
 
           // renders the whole scene
@@ -9003,168 +9038,17 @@ $__System.register("35", ["5", "6", "34", "36"], function (_export) {
           key: "renderNodes",
           value: function renderNodes(keyframe) {
 
+            var delay = 30;
+
+            switch (keyframe) {
+              case "brushend":
+                delay = 0;break;
+              case "leave-monadic-view":
+                delay = 10;break;
+
+            }
+
             var that = this;
-
-            function switchToMonad(data) {
-
-              that.monad = true;
-
-              that.container.selectAll(".node").classed("hidden", true);
-
-              var center = [that.width / 2, that.height / 2];
-              var d = data.data;
-
-              d3.select(this).style("opacity", 1)
-              //.style("box-shadow", "0 0 10px 0 rgba(0,0,0,0.25)")
-              .style("transform", function (d) {
-                return "translate3d(" + center[0] + "px," + center[1] + "px,0px)";
-              });
-
-              var linkedNodes = that.transformedData.links.filter(function (l) {
-                return l.source.name == d.name || l.target.name == d.name;
-              }).map(function (l) {
-                if (l.source.name == d.name) {
-                  return { "strength": l.strength, "node": l.target };
-                }
-                if (l.target.name == d.name) {
-                  return { "strength": l.strength, "node": l.source };
-                }
-              });
-
-              var linkMax = d3.max(linkedNodes, function (l) {
-                return l.strength;
-              });
-              var linkMin = d3.min(linkedNodes, function (l) {
-                return l.strength;
-              });
-
-              var indexToPolar = d3.scaleLinear().domain([0, linkedNodes.length - 1]).range([0, Math.PI * 2]);
-              var occurenceToProximity = d3.scaleLinear().domain([linkMax, linkMin]).range([100, that.height / 3]);
-
-              linkedNodes.forEach(function (l, i) {
-                var x = center[0] + Math.sin(indexToPolar(i)) * occurenceToProximity(l.strength);
-                var y = center[1] + Math.cos(indexToPolar(i)) * occurenceToProximity(l.strength);
-
-                var n = d3.select("#" + GeiVisUtils.makeSafeForCSS(l.node.name)).style("opacity", 1).classed("hidden", false).classed("monadic-related", true);
-                var width = n.select(".label").node().offsetWidth;
-
-                var sign = undefined;
-                var value = undefined;
-                var transform = undefined;
-                var translate = undefined;
-
-                var tx = Math.sin(indexToPolar(i)) * width / 2 - 30;
-                var ty = Math.cos(indexToPolar(i)) * width / 2 + 10;
-
-                if (indexToPolar(i) >= Math.PI && indexToPolar(i) <= Math.PI * 2) {
-                  n.classed("right", true);
-                  value = 90;
-                  sign = 1;
-                  translate = tx + "px," + ty + "px";
-                  //transform = "100% 0%";
-                }
-
-                if (indexToPolar(i) >= 0 && indexToPolar(i) <= Math.PI) {
-                  //n.classed("left", true);
-                  value = 270;
-                  sign = 1;
-                  translate = tx + "px," + ty + "px";
-                  //transform = "100% 0%";
-                }
-
-                n.transition().duration(300).delay(function (d, i) {
-                  return i * 30;
-                }).style("width", "5px").style("height", "5px").style("border-radius", "5px").style("transform", function (d) {
-                  return "translate3d(" + (x - 2.5) + "px," + (y - 2.5) + "px,0px)";
-                });
-
-                n.select(".label").transition().duration(300).delay(function (d, i) {
-                  return i * 30;
-                })
-                //.style("transform-origin", transform)
-                .style("transform", function (d) {
-                  return "translate(" + translate + ")rotate(-" + (indexToPolar(i) * 180 / Math.PI + value * sign) + "deg)";
-                });
-              });
-            }
-
-            // sets the visual props of a node
-            function setNodeProperties(selection) {
-
-              if (keyframe == "brushend") {
-                selection.style("opacity", 1.0).style("transform", function (d) {
-                  return "translate3d(" + (d.x - d.r) + "px," + (d.y - d.r) + "px,0px)";
-                }).style("width", function (d) {
-                  return d.r * 2 + 'px';
-                }).style("height", function (d) {
-                  return d.r * 2 + 'px';
-                }).style("border-radius", function (d) {
-                  return d.r + 'px';
-                });
-              } else {
-                selection.style("opacity", 1.0).style("transform", function (d) {
-                  return "translate3d(" + (d.x - d.r) + "px," + (d.y - d.r) + "px,0px)";
-                }).style("width", function (d) {
-                  return d.r * 2 + 'px';
-                }).style("height", function (d) {
-                  return d.r * 2 + 'px';
-                }).style("border-radius", function (d) {
-                  return d.r + 'px';
-                });
-              }
-            }
-
-            function out() {
-              var n = that.container.selectAll(".node").classed("inactive", false).style("opacity", null);
-              n.select('.count').text(function (d) {
-                return d.data.occurrence;
-              });
-              //n.each(checkOverflow);
-            }
-
-            function over(data) {
-
-              that.container.selectAll(".node").classed("inactive", true);
-              d3.select(this).classed("inactive", false);
-
-              var d = data.data;
-
-              //console.time("tagnetwork");
-              //console.log(that.transformedData.links);
-
-              var linkedNodes = that.transformedData.links.filter(function (l) {
-                return l.source.name == d.name || l.target.name == d.name;
-              }).map(function (l) {
-                if (l.source.name == d.name) {
-                  return { "strength": l.strength, "node": l.target };
-                }
-                if (l.target.name == d.name) {
-                  return { "strength": l.strength, "node": l.source };
-                }
-              });
-              //console.timeEnd("tagnetwork");
-
-              var linkMax = d3.max(linkedNodes, function (l) {
-                return l.strength;
-              });
-              var linkMin = d3.min(linkedNodes, function (l) {
-                return l.strength;
-              });
-
-              // TODO: select all nodes with this array
-              // enter() changes the related ones
-              // .exit() hides the unrelated
-
-              // // highlight the nodes
-              linkedNodes.forEach(function (f) {
-
-                var n = d3.select("#" + GeiVisUtils.makeSafeForCSS(f.node.name));
-                n.classed("inactive", false).style("opacity", that.occurrenceScale.domain([linkMin, f.node.occurrence])(f.strength));
-                n.select(".count").text(f.strength);
-                //n.each(checkOverflow);
-              });
-            }
-
             // update
 
             this.nodes = this.container.selectAll(".node").data(this.root.children, function (e) {
@@ -9175,18 +9059,20 @@ $__System.register("35", ["5", "6", "34", "36"], function (_export) {
               return d.data.occurrence;
             });
 
-            this.nodes.classed("overflow", false).classed("partial", false).attr("data-balloon", null).attr("data-balloon-pos", null).transition().duration(300).delay(function (d, i) {
-              return i * 30;
+            this.nodes
+            // clear tolltips
+            .classed("overflow", false).classed("partial", false).attr("data-balloon", null).attr("data-balloon-pos", null)
+
+            // clear monadic
+            .classed("monadic-related", false).classed("hidden", false).classed("monad", false).transition().duration(300).delay(function (d, i) {
+              return i * delay;
             }).call(setNodeProperties).on("end", checkOverflow);
 
-            if (keyframe == "brushend") {
-
+            if (keyframe == "brushend" || keyframe == "leave-monadic-view") {
               // enter
               var enteredNodes = this.nodes.enter().append("div");
 
-              enteredNodes.on("mouseover", over).on("mouseout", out)
-              //.on("click", switchToMonad)
-              .attr("id", function (d) {
+              enteredNodes.on("mouseover", over).on("mouseout", out).on("click", switchToMonad).attr("id", function (d) {
                 return GeiVisUtils.makeSafeForCSS(d.data.name);
               })
               //.style("transform",  d => `translate3d(${this.width/2-d.r}px,${this.height/2-d.r}px,0px)`)
@@ -9216,12 +9102,8 @@ $__System.register("35", ["5", "6", "34", "36"], function (_export) {
             .remove();
 
             function checkOverflow(d) {
-
               var el = d3.select(this);
               var overflow = GeiVisUtils.checkPartialOverflow(el.node(), 14);
-
-              //console.log(el.data()[0].data.name, overflow);
-
               switch (overflow) {
                 case "overflow":
                   el.classed("overflow", true);
@@ -9237,9 +9119,155 @@ $__System.register("35", ["5", "6", "34", "36"], function (_export) {
                   });
                   el.attr("data-balloon-pos", "down");
                   break;
-
               }
             }
+
+            function switchToMonad(data) {
+              var _this4 = this;
+
+              var d = data.data;
+
+              if (that.monad == d.name) {
+                that.monad = "";
+                that.renderNodes("leave-monadic-view");
+              } else {
+                (function () {
+
+                  that.monad = d.name;
+                  var center = [that.width / 2 - 50, that.height / 2];
+
+                  // reset all nodes
+                  that.container.selectAll(".node").classed("hidden", true).classed("overflow", false).classed("partial", false).classed("monad", false).classed("left", false).classed("right", false).attr("data-balloon", null).attr("data-balloon-pos", null);
+
+                  // center this node
+                  d3.select(_this4).classed("hidden", false).classed("monad", true).classed("monadic-related", false).transition().duration(300).style("width", null).style("height", null).style("opacity", 1).style("transform", function (d) {
+                    return "translate3d(" + center[0] + "px," + center[1] + "px,0px)";
+                  });
+
+                  var linkedNodes = that.transformedData.links.filter(function (l) {
+                    return l.source.name == d.name || l.target.name == d.name;
+                  }).map(function (l) {
+                    if (l.source.name == d.name) {
+                      return { "strength": l.strength, "node": l.target };
+                    }
+                    if (l.target.name == d.name) {
+                      return { "strength": l.strength, "node": l.source };
+                    }
+                  });
+
+                  var linkMax = d3.max(linkedNodes, function (l) {
+                    return l.strength;
+                  });
+                  var linkMin = d3.min(linkedNodes, function (l) {
+                    return l.strength;
+                  });
+
+                  var indexToPolar = d3.scaleLinear().domain([0, linkedNodes.length]).range([0, Math.PI * 2]);
+                  var occurenceToProximity = d3.scaleLinear().domain([linkMax, linkMin]).range([200, that.height / 3]);
+                  //let occurenceToAlpha = d3.scaleLinear().domain([linkMin, linkMax]).range([0.125, 1.0]);
+
+                  linkedNodes.forEach(function (l, i) {
+
+                    if (l.node.name != that.monad) {
+                      (function () {
+
+                        var n = d3.select("#" + GeiVisUtils.makeSafeForCSS(l.node.name)).style("opacity", 1).classed("hidden", false).classed("monadic-related", true).classed("overflow", false).classed("partial", false);
+
+                        var x = center[0] + Math.sin(indexToPolar(i)) * occurenceToProximity(l.strength);
+                        var y = center[1] + Math.cos(indexToPolar(i)) * occurenceToProximity(l.strength);
+
+                        var width = n.select(".label").node().offsetWidth;
+                        var height = n.select(".label").node().offsetHeight;
+                        var value = undefined;
+
+                        if (indexToPolar(i) >= Math.PI && indexToPolar(i) <= Math.PI * 2) {
+                          n.classed("right", true);value = 90;
+                        }
+                        if (indexToPolar(i) >= 0 && indexToPolar(i) <= Math.PI) {
+                          n.classed("left", true);value = 270;
+                        }
+
+                        n.transition().duration(300).delay(function (d, i) {
+                          return i * 30;
+                        }).style("width", null).style("height", null).style("transform", function (d) {
+                          return "translate3d(" + x + "px," + y + "px,0px)rotate(-" + (indexToPolar(i) * 180 / Math.PI + value) + "deg)";
+                        });
+                      })();
+                    }
+                  });
+                })();
+              }
+            }
+
+            // sets the visual props of a node
+            function setNodeProperties(selection) {
+
+              if (keyframe == "brushend" || keyframe == "leave-monadic-view") {
+                selection.style("opacity", 1.0).style("transform", function (d) {
+                  return "translate3d(" + (d.x - d.r) + "px," + (d.y - d.r) + "px,0px)";
+                }).style("width", function (d) {
+                  return d.r * 2 + 'px';
+                }).style("height", function (d) {
+                  return d.r * 2 + 'px';
+                }).style("border-radius", function (d) {
+                  return d.r + 'px';
+                });
+              } else {
+                selection.style("opacity", 1.0).style("width", function (d) {
+                  return d.r * 2 + 'px';
+                }).style("height", function (d) {
+                  return d.r * 2 + 'px';
+                }).style("border-radius", function (d) {
+                  return d.r + 'px';
+                });
+              }
+            }
+
+            function out() {
+              var n = that.container.selectAll(".node").classed("inactive", false);
+              n.style("opacity", null);
+              n.select('.count').text(function (d) {
+                return d.data.occurrence;
+              });
+            }
+
+            function over(data) {
+
+              that.container.selectAll(".node").classed("inactive", true);
+              d3.select(this).classed("inactive", false);
+
+              var d = data.data;
+
+              var linkedNodes = that.transformedData.links.filter(function (l) {
+                return l.source.name == d.name || l.target.name == d.name;
+              }).map(function (l) {
+                if (l.source.name == d.name) {
+                  return { "strength": l.strength, "node": l.target };
+                }
+                if (l.target.name == d.name) {
+                  return { "strength": l.strength, "node": l.source };
+                }
+              });
+
+              var linkMax = d3.max(linkedNodes, function (l) {
+                return l.strength;
+              });
+              var linkMin = d3.min(linkedNodes, function (l) {
+                return l.strength;
+              });
+
+              // TODO: select all nodes with this array
+              // enter() changes the related ones
+              // .exit() hides the unrelated
+
+              // // highlight the nodes
+              linkedNodes.forEach(function (f) {
+                var n = d3.select("#" + GeiVisUtils.makeSafeForCSS(f.node.name));
+                n.classed("inactive", false).style("opacity", that.occurrenceScale.domain([linkMin, f.node.occurrence])(f.strength));
+                n.select(".count").text(f.strength);
+              });
+            }
+
             return this;
           }
         }]);
@@ -9313,7 +9341,11 @@ $__System.register('37', ['5', '6', '27', '28', '31', '35', '2b'], function (_ex
           key: 'stateChange',
           value: function stateChange(next, last) {
 
-            if (next.loaded != last.loaded) this.network.updateData(this.db.date.top(Infinity)).render("brushend");
+            if (next.loaded != last.loaded) {
+              this.network.updateData(this.db.date.top(Infinity));
+              //this.network.cacheLinksAndNodes(this.db.date.top(Infinity))
+              this.network.render("brushend");
+            }
 
             if (!next.visible.NetworkSection) return;
 
@@ -9325,7 +9357,7 @@ $__System.register('37', ['5', '6', '27', '28', '31', '35', '2b'], function (_ex
               if (data.length > 0) {
                 var keyframe = next.event;
                 this.network.updateData(data);
-                console.log(keyframe);
+                //console.log(keyframe);
                 this.network.render(keyframe);
               }
             }
@@ -10387,7 +10419,7 @@ $__System.register('4c', ['5', '6', '27', '28', '2b', '4b'], function (_export) 
 
             if (next.brushStart !== last.brushStart || next.brushEnd !== last.brushEnd) {
 
-              console.log("treemap render");
+              //console.log("treemap render");
 
               this.title.select(".years").text(' from ' + next.brushStart.getFullYear() + ' to ' + next.brushEnd.getFullYear());
 
@@ -10413,7 +10445,7 @@ $__System.register('4c', ['5', '6', '27', '28', '2b', '4b'], function (_export) 
 $__System.register('1', ['4', '13', '14', '30', '37', '2a', '2c', '2e', '4c'], function (_export) {
   'use strict';
 
-  var StateMachine, DataBase, ScrollListener, GeomapSection, NetworkSection, StreamSection, DummySection, BookshelfSection, TreemapSection, __hotReload, state, db, scroll, streamSection, geomapSection, treemapSection, networkSection, bookshelfSection, dummy;
+  var StateMachine, DataBase, ScrollListener, GeomapSection, NetworkSection, StreamSection, DummySection, BookshelfSection, TreemapSection, __hotReload, state, db, scroll, streamSection, geomapSection, treemapSection, networkSection, bookshelfSection;
 
   return {
     setters: [function (_) {
@@ -10448,7 +10480,8 @@ $__System.register('1', ['4', '13', '14', '30', '37', '2a', '2c', '2e', '4c'], f
       treemapSection = new TreemapSection(state, db);
       networkSection = new NetworkSection(state, db);
       bookshelfSection = new BookshelfSection(state, db);
-      dummy = new DummySection(state, db);
+
+      // let dummy = new DummySection(state, db);
 
       db.load();
     }
