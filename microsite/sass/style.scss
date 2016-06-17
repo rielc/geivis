@@ -57,9 +57,10 @@ p {
 section {
   position:relative;
   display: flex;
+  overflow: hidden;
+  margin-bottom: 40px;
   width:100%;
   flex-direction:column;
-  margin:0;
   min-height:calc(100vh - 88px);
 
   h2.title {
