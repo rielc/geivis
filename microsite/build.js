@@ -7783,7 +7783,7 @@ $__System.register('25', ['5', '6', '15', '26', '27', '28'], function (_export) 
           this.outerHeight = window.innerHeight - 500;
           this.outerHeightInitial = this.outerHeight;
           this.outerHeightSmall = 100;
-          this.margin = { top: 0, right: 20, bottom: 10, left: 20 };
+          this.margin = { top: 0, right: 20, bottom: 10, left: 30 };
 
           this.x = d3.scaleTime();
           this.y = d3.scaleLinear();
@@ -7934,10 +7934,13 @@ $__System.register('25', ['5', '6', '15', '26', '27', '28'], function (_export) 
             if (next.hover !== last.hover) {
               this.render();
             }
-            if (next.active !== last.active || next.activeItem !== last.activeItem) {
+            if (next.active !== last.active) {
               // let data = this.db.date.top(Infinity);
-              //console.log("load2")
               this.load().render();
+            }
+            if (next.activeItem !== last.activeItem) {
+              console.log("load2");
+              this.load().render(true);
             }
 
             // if(next.activeItem !== last.activeItem){
@@ -7959,7 +7962,7 @@ $__System.register('25', ['5', '6', '15', '26', '27', '28'], function (_export) 
           }
         }, {
           key: 'render',
-          value: function render(notransition) {
+          value: function render(transition) {
             var _this3 = this;
 
             //console.log("render stream")
@@ -7977,9 +7980,9 @@ $__System.register('25', ['5', '6', '15', '26', '27', '28'], function (_export) 
             }).on("click", function (d) {
               if (d.key == "other" || !_this3.big) return;
               var active = _this3.state.state.activeItem === d.key;
-              _this3.state.push({ activeItem: active ? null : d.key });
+              _this3.state.push({ activeItem: active ? null : d.key, event: "brushend" });
             }).attr("d", this.area).style("opacity", 0)
-            // .transition()
+            // .transition(transition)
             // .duration(notransition ? 0 : 800)
             .style("opacity", function (d) {
               return d.key == "other" ? 0.3 : 1;
@@ -7987,14 +7990,25 @@ $__System.register('25', ['5', '6', '15', '26', '27', '28'], function (_export) 
 
             s.exit().remove();
 
-            s.classed("active", function (d) {
-              return _this3.state.state.hover == d.key;
-            })
-            // .transition()
-            // .duration(notransition ? 0 : 800)
-            .attr("d", this.area).style("opacity", function (d) {
-              return d.key == "other" ? 0.3 : 1;
-            });
+            // nasty quickhack
+            if (transition) {
+              s.classed("active", function (d) {
+                return _this3.big && _this3.state.state.hover == d.key;
+              }).transition()
+              // .duration(notransition ? 0 : 800)
+              .attr("d", this.area).style("opacity", function (d) {
+                return d.key == "other" ? 0.3 : 1;
+              });
+            } else {
+              s.classed("active", function (d) {
+                return _this3.big && _this3.state.state.hover == d.key;
+              })
+              // .transition()
+              // .duration(notransition ? 0 : 800)
+              .attr("d", this.area).style("opacity", function (d) {
+                return d.key == "other" ? 0.3 : 1;
+              });
+            }
 
             this.gXaxis.attr("transform", "translate(0," + this.height + ")").call(this.xAxis);
 
@@ -8006,10 +8020,15 @@ $__System.register('25', ['5', '6', '15', '26', '27', '28'], function (_export) 
             //        return "translate(" + this.getBBox().height*-2 + "," + this.getBBox().height + ")rotate(-45)";
             //    });
 
-            this.gYaxis;
-            //.transition()
-            // .duration(notransition ? 0 : 800)
-            //.call(this.yAxis)
+            if (transition) {
+              this.gYaxis.transition().call(this.yAxis);
+            } else {
+              this.gYaxis.call(this.yAxis);
+            }
+
+            this.gYaxis.style("opacity", 1 - (this.outerHeightInitial - this.outerHeight - 100) / 100);
+            //   .selectAll("text")
+            //   .attr("dx", 30)
           }
         }]);
 
@@ -8232,17 +8251,17 @@ $__System.register('2a', ['5', '6', '25', '27', '28', '29', '2b'], function (_ex
               if (bottom < 0 && height > this.stream.outerHeightSmall) {
                 this.stream.outerHeight = height;
                 this.stream.big = false;
-                this.stream.init().render(true);
+                this.stream.init().render();
               } else {
                 if (bottom > 0 && this.stream.outerHeight != this.stream.outerHeightInitial) {
                   this.stream.big = true;
                   this.stream.outerHeight = this.stream.outerHeightInitial;
-                  this.stream.init().render(true);
+                  this.stream.init().render();
                 }
                 if (height < this.stream.outerHeightSmall && this.stream.outerHeight != this.stream.outerHeightSmall) {
                   this.stream.big = false;
                   this.stream.outerHeight = this.stream.outerHeightSmall;
-                  this.stream.init().render(true);
+                  this.stream.init().render();
                 }
               }
 
@@ -8370,7 +8389,9 @@ $__System.register("2d", ["5", "6", "26", "27", "28"], function (_export) {
           key: "render",
           value: function render() {
             //console.log( this.state.state);
-            var data = this.db.date.top(120);
+            var data = this.db.date.top(150).filter(function (d) {
+              return d.title != "";
+            });
 
             // console.log(data);
 
@@ -8510,7 +8531,7 @@ $__System.register("2f", ["5", "6", "26", "27", "28"], function (_export) {
           value: function init() {
             this.width = this.outerWidth - this.margin.left - this.margin.right, this.height = this.outerHeight - this.margin.top - this.margin.bottom;
 
-            this.projection.center([15, 50]).scale(3500).translate([outerWidth / 2, outerHeight / 2]);
+            this.projection.center([16, 49.8]).scale(3500).translate([outerWidth / 2, outerHeight / 2]);
 
             this.svg.attr("width", this.outerWidth).attr("height", this.outerHeight);
 
@@ -8647,7 +8668,7 @@ $__System.register('30', ['5', '6', '27', '28', '2b', '2f'], function (_export) 
 
           this.title.text('Places');
           this.geomap = new Geomap(state, db, this.div.append("div"));
-          this.geomap.outerHeight = parseInt(this.div.style("height")) - 80;
+          this.geomap.outerHeight = this.height;
           this.geomap.init();
         }
 
@@ -9066,6 +9087,7 @@ $__System.register("35", ["5", "6", "34", "36"], function (_export) {
             });
 
             this.nodes
+            //.classed("transition", true)
             // clear tolltips
             .classed("overflow", false).classed("partial", false).attr("data-balloon", null).attr("data-balloon-pos", null)
 
@@ -9085,6 +9107,7 @@ $__System.register("35", ["5", "6", "34", "36"], function (_export) {
               .style("transform", function (d) {
                 return "translate3d(" + (d.x - d.r) + "px," + (d.y - d.r) + "px,0px)";
               }).style("opacity", 0.0).classed("node", true);
+              //.classed("transition", true);
 
               enteredNodes.append("span").classed("label", true).text(function (d) {
                 return d.data.name;
@@ -9102,7 +9125,7 @@ $__System.register("35", ["5", "6", "34", "36"], function (_export) {
             var exitedNodes = this.nodes.exit();
 
             // exit
-            exitedNodes.transition().duration(100).style("opacity", 0.0)
+            exitedNodes.transition().duration(100).style("opacity", 0.0).style("width", 0).style("height", 0)
             // .on("end", checkOverflow)
             //.style("transform",  d => `translate3d(${this.width/2-d.r}px,${this.height/2-d.r}px,0px)`)
             .remove();
@@ -9110,6 +9133,7 @@ $__System.register("35", ["5", "6", "34", "36"], function (_export) {
             function checkOverflow(d) {
               var el = d3.select(this);
               var overflow = GeiVisUtils.checkPartialOverflow(el.node(), 14);
+              //el.classed("transition", false);
               switch (overflow) {
                 case "overflow":
                   el.classed("overflow", true);
@@ -9347,6 +9371,7 @@ $__System.register('37', ['5', '6', '27', '28', '31', '35', '2b'], function (_ex
           key: 'stateChange',
           value: function stateChange(next, last) {
 
+            // init
             if (next.loaded != last.loaded) {
               this.network.updateData(this.db.date.top(Infinity));
               //this.network.cacheLinksAndNodes(this.db.date.top(Infinity))
@@ -9355,22 +9380,21 @@ $__System.register('37', ['5', '6', '27', '28', '31', '35', '2b'], function (_ex
 
             if (!next.visible.NetworkSection) return;
 
-            if (next.brushStart !== last.brushStart || next.brushEnd !== last.brushEnd || next.event != last.event) {
-
-              this.title.html('All tags from ' + next.brushStart.getFullYear() + ' to ' + next.brushEnd.getFullYear());
-
-              var data = this.db.date.top(Infinity);
-              if (data.length > 0) {
-                var keyframe = next.event;
-                this.network.updateData(data);
-                //console.log(keyframe);
-                this.network.render(keyframe);
-              }
+            if (next.brushStart !== last.brushStart || next.brushEnd !== last.brushEnd || next.visible.NetworkSection !== last.visible.NetworkSection) {
+              this.render(next, last);
             }
           }
         }, {
           key: 'render',
-          value: function render() {}
+          value: function render(next, last) {
+            this.title.html('All tags from ' + next.brushStart.getFullYear() + ' to ' + next.brushEnd.getFullYear());
+            var data = this.db.date.top(Infinity);
+            if (data.length > 0) {
+              var keyframe = next.event;
+              this.network.updateData(data);
+              this.network.render(keyframe);
+            }
+          }
         }]);
 
         return NetworkSection;
@@ -10420,25 +10444,25 @@ $__System.register('4c', ['5', '6', '27', '28', '2b', '4b'], function (_export) 
           key: 'stateChange',
           value: function stateChange(next, last) {
 
+            // init
             if (next.loaded != last.loaded) this.treemap.updateData(this.db.date.top(Infinity)).render();
+
             if (!next.visible.TreemapSection) return;
 
-            if (next.brushStart !== last.brushStart || next.brushEnd !== last.brushEnd) {
-
-              //console.log("treemap render");
-
-              this.title.select(".years").text(' from ' + next.brushStart.getFullYear() + ' to ' + next.brushEnd.getFullYear());
-
-              var data = this.db.date.top(Infinity);
-              if (data.length > 0) {
-                this.treemap.updateData(data);
-                this.treemap.render();
-              }
+            if (next.brushStart !== last.brushStart || next.brushEnd !== last.brushEnd || next.visible.TreemapSection !== last.visible.TreemapSection) {
+              this.render(next, last);
             }
           }
         }, {
           key: 'render',
-          value: function render() {}
+          value: function render(next, last) {
+            this.title.select(".years").text(' from ' + next.brushStart.getFullYear() + ' to ' + next.brushEnd.getFullYear());
+            var data = this.db.date.top(Infinity);
+            if (data.length > 0) {
+              this.treemap.updateData(data);
+              this.treemap.render();
+            }
+          }
         }]);
 
         return TreemapSection;
