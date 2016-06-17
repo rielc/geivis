@@ -7985,7 +7985,7 @@ $__System.register('25', ['5', '6', '15', '26', '27', '28'], function (_export) 
             // .transition(transition)
             // .duration(notransition ? 0 : 800)
             .style("opacity", function (d) {
-              return d.key == "other" ? 0.3 : 1;
+              return d.key == "other" && _this3.big ? 0.3 : 1;
             });
 
             s.exit().remove();
@@ -7997,7 +7997,7 @@ $__System.register('25', ['5', '6', '15', '26', '27', '28'], function (_export) 
               }).transition()
               // .duration(notransition ? 0 : 800)
               .attr("d", this.area).style("opacity", function (d) {
-                return d.key == "other" ? 0.3 : 1;
+                return d.key == "other" && _this3.big ? 0.3 : 1;
               });
             } else {
               s.classed("active", function (d) {
@@ -8006,7 +8006,7 @@ $__System.register('25', ['5', '6', '15', '26', '27', '28'], function (_export) 
               // .transition()
               // .duration(notransition ? 0 : 800)
               .attr("d", this.area).style("opacity", function (d) {
-                return d.key == "other" ? 0.3 : 1;
+                return d.key == "other" && _this3.big ? 0.3 : 1;
               });
             }
 

@@ -221,7 +221,7 @@ export class StreamGraph extends StateDb {
       .style("opacity", 0)
       // .transition(transition)
       // .duration(notransition ? 0 : 800)
-      .style("opacity", d=> d.key=="other" ? 0.3 : 1)
+      .style("opacity", d=> (d.key=="other" && this.big) ? 0.3 : 1)
 
     s.exit().remove();
     
@@ -232,14 +232,14 @@ export class StreamGraph extends StateDb {
         .transition()
         // .duration(notransition ? 0 : 800)
         .attr("d", this.area)
-        .style("opacity", d=> d.key=="other" ? 0.3 : 1)
+        .style("opacity", d=> (d.key=="other" && this.big) ? 0.3 : 1)
     } else {
       s
         .classed("active", d => this.big && this.state.state.hover == d.key)
         // .transition()
         // .duration(notransition ? 0 : 800)
         .attr("d", this.area)
-        .style("opacity", d=> d.key=="other" ? 0.3 : 1)
+       .style("opacity", d=> (d.key=="other" && this.big) ? 0.3 : 1)
     } 
    
 
