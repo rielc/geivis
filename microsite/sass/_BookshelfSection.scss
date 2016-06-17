@@ -1,0 +1,13 @@
+#BookshelfSection {
+    .bookshelf {
+        margin-left: 20px;
+        overflow: hidden;
+        .book {
+            float: left;
+            width: 200px;
+            padding: 2px;
+            display: list-item;
+            margin-left: 40px;
+        }
+    }
+}

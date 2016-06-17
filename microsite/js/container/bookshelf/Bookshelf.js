@@ -1,20 +1,22 @@
 export let __hotReload = true
-export class Bookshelf {
 
-  constructor(state, db){
+import {StateDb} from '../../StateDb';
 
-    this.container = d3.select(".bookshelf");
-    this.state = state;
-    this.db = db;
+export class Bookshelf extends StateDb {
 
-    this.state.listen(this.stateChange.bind(this));
+  constructor(state, db, div){
+    super(state, db);
 
+    this.container = div.append("div").attr("class", "bookshelf");
+    
     return this;
   }
 
  
 
   stateChange(next, last){
+    if(!next.visible.BookshelfSection) return;
+
     // if(next.brushStart !== last.brushStart){
     //   this.render();
     // }

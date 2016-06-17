@@ -403,6 +403,8 @@ header {
     #NetworkSection .node.monadic-related.right > .label {
       text-align: right; }
 
+#GeomapSection text {
+  font-family: "gravurcondensed-regular"; }
 #GeomapSection .river {
   fill: none;
   stroke: #EEE; }
@@ -414,23 +416,20 @@ header {
   #StreamSection h2.title {
     background-color: #fff;
     position: fixed; }
-  #StreamSection .bookshelf {
-    height: 340px;
-    margin-left: 20px;
-    overflow: hidden; }
-    #StreamSection .bookshelf .book {
-      float: left;
-      width: 200px;
-      padding: 2px;
-      display: list-item;
-      margin-left: 40px; }
+  #StreamSection .totals {
+    font-size: 12px;
+    position: absolute;
+    top: 5px;
+    left: 10px;
+    background: #FFF;
+    padding: 5px; }
   #StreamSection .stream {
     top: 80px;
     background: #FFF;
     position: fixed;
     z-index: 100; }
     #StreamSection .stream.dropshadow {
-      box-shadow: 0 9px 7px -6px rgba(0, 0, 0, 0.18); }
+      box-shadow: 0 12px 13px -9px rgba(0, 0, 0, 0.18); }
     #StreamSection .stream text {
       font-family: "gravurcondensed-regular";
       font-size: 12px; }
@@ -498,6 +497,16 @@ header {
             width: 55%;
             overflow: hidden;
             height: 12px; }
+
+#BookshelfSection .bookshelf {
+  margin-left: 20px;
+  overflow: hidden; }
+  #BookshelfSection .bookshelf .book {
+    float: left;
+    width: 200px;
+    padding: 2px;
+    display: list-item;
+    margin-left: 40px; }
 
 /*! tooltip 0.1.0 - 18th Dec 2013 | https://github.com/darsain/tooltip */
 .tooltip {
