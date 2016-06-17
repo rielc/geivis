@@ -1,6 +1,6 @@
-!function(e){function r(e,r,o){return 4===arguments.length?t.apply(this,arguments):void n(e,{declarative:!0,deps:r,declare:o})}function t(e,r,t,o){n(e,{declarative:!1,deps:r,executingRequire:t,execute:o})}function n(e,r){r.name=e,e in g||(g[e]=r),r.normalizedDeps=r.deps}function o(e,r){if(r[e.groupIndex]=r[e.groupIndex]||[],-1==m.call(r[e.groupIndex],e)){r[e.groupIndex].push(e);for(var t=0,n=e.normalizedDeps.length;n>t;t++){var a=e.normalizedDeps[t],u=g[a];if(u&&!u.evaluated){var d=e.groupIndex+(u.declarative!=e.declarative);if(void 0===u.groupIndex||u.groupIndex<d){if(void 0!==u.groupIndex&&(r[u.groupIndex].splice(m.call(r[u.groupIndex],u),1),0==r[u.groupIndex].length))throw new TypeError("Mixed dependency cycle detected");u.groupIndex=d}o(u,r)}}}}function a(e){var r=g[e];r.groupIndex=0;var t=[];o(r,t);for(var n=!!r.declarative==t.length%2,a=t.length-1;a>=0;a--){for(var u=t[a],i=0;i<u.length;i++){var s=u[i];n?d(s):l(s)}n=!n}}function u(e){return D[e]||(D[e]={name:e,dependencies:[],exports:{},importers:[]})}function d(r){if(!r.module){var t=r.module=u(r.name),n=r.module.exports,o=r.declare.call(e,function(e,r){if(t.locked=!0,"object"==typeof e)for(var o in e)n[o]=e[o];else n[e]=r;for(var a=0,u=t.importers.length;u>a;a++){var d=t.importers[a];if(!d.locked)for(var i=0;i<d.dependencies.length;++i)d.dependencies[i]===t&&d.setters[i](n)}return t.locked=!1,r},r.name);t.setters=o.setters,t.execute=o.execute;for(var a=0,i=r.normalizedDeps.length;i>a;a++){var l,s=r.normalizedDeps[a],c=g[s],f=D[s];f?l=f.exports:c&&!c.declarative?l=c.esModule:c?(d(c),f=c.module,l=f.exports):l=v(s),f&&f.importers?(f.importers.push(t),t.dependencies.push(f)):t.dependencies.push(null),t.setters[a]&&t.setters[a](l)}}}function i(e){var r,t=g[e];if(t)t.declarative?p(e,[]):t.evaluated||l(t),r=t.module.exports;else if(r=v(e),!r)throw new Error("Unable to load dependency "+e+".");return(!t||t.declarative)&&r&&r.__useDefault?r["default"]:r}function l(r){if(!r.module){var t={},n=r.module={exports:t,id:r.name};if(!r.executingRequire)for(var o=0,a=r.normalizedDeps.length;a>o;o++){var u=r.normalizedDeps[o],d=g[u];d&&l(d)}r.evaluated=!0;var c=r.execute.call(e,function(e){for(var t=0,n=r.deps.length;n>t;t++)if(r.deps[t]==e)return i(r.normalizedDeps[t]);throw new TypeError("Module "+e+" not declared as a dependency.")},t,n);c&&(n.exports=c),t=n.exports,t&&t.__esModule?r.esModule=t:r.esModule=s(t)}}function s(e){var r={};if("object"==typeof e||"function"==typeof e){var t=e&&e.hasOwnProperty;if(h)for(var n in e)f(r,e,n)||c(r,e,n,t);else for(var n in e)c(r,e,n,t)}return r["default"]=e,y(r,"__useDefault",{value:!0}),r}function c(e,r,t,n){(!n||r.hasOwnProperty(t))&&(e[t]=r[t])}function f(e,r,t){try{var n;return(n=Object.getOwnPropertyDescriptor(r,t))&&y(e,t,n),!0}catch(o){return!1}}function p(r,t){var n=g[r];if(n&&!n.evaluated&&n.declarative){t.push(r);for(var o=0,a=n.normalizedDeps.length;a>o;o++){var u=n.normalizedDeps[o];-1==m.call(t,u)&&(g[u]?p(u,t):v(u))}n.evaluated||(n.evaluated=!0,n.module.execute.call(e))}}function v(e){if(I[e])return I[e];if("@node/"==e.substr(0,6))return _(e.substr(6));var r=g[e];if(!r)throw"Module "+e+" not present.";return a(e),p(e,[]),g[e]=void 0,r.declarative&&y(r.module.exports,"__esModule",{value:!0}),I[e]=r.declarative?r.module.exports:r.esModule}var g={},m=Array.prototype.indexOf||function(e){for(var r=0,t=this.length;t>r;r++)if(this[r]===e)return r;return-1},h=!0;try{Object.getOwnPropertyDescriptor({a:0},"a")}catch(x){h=!1}var y;!function(){try{Object.defineProperty({},"a",{})&&(y=Object.defineProperty)}catch(e){y=function(e,r,t){try{e[r]=t.value||t.get.call(e)}catch(n){}}}}();var D={},_="undefined"!=typeof System&&System._nodeRequire||"undefined"!=typeof require&&require.resolve&&"undefined"!=typeof process&&require,I={"@empty":{}};return function(e,n,o){return function(a){a(function(a){for(var u={_nodeRequire:_,register:r,registerDynamic:t,get:v,set:function(e,r){I[e]=r},newModule:function(e){return e}},d=0;d<n.length;d++)(function(e,r){r&&r.__esModule?I[e]=r:I[e]=s(r)})(n[d],arguments[d]);o(u);var i=v(e[0]);if(e.length>1)for(var d=1;d<e.length;d++)v(e[d]);return i.__useDefault?i["default"]:i})}}}("undefined"!=typeof self?self:global)
+!function(e){function r(e,r,o){return 4===arguments.length?t.apply(this,arguments):void n(e,{declarative:!0,deps:r,declare:o})}function t(e,r,t,o){n(e,{declarative:!1,deps:r,executingRequire:t,execute:o})}function n(e,r){r.name=e,e in v||(v[e]=r),r.normalizedDeps=r.deps}function o(e,r){if(r[e.groupIndex]=r[e.groupIndex]||[],-1==g.call(r[e.groupIndex],e)){r[e.groupIndex].push(e);for(var t=0,n=e.normalizedDeps.length;n>t;t++){var a=e.normalizedDeps[t],u=v[a];if(u&&!u.evaluated){var d=e.groupIndex+(u.declarative!=e.declarative);if(void 0===u.groupIndex||u.groupIndex<d){if(void 0!==u.groupIndex&&(r[u.groupIndex].splice(g.call(r[u.groupIndex],u),1),0==r[u.groupIndex].length))throw new TypeError("Mixed dependency cycle detected");u.groupIndex=d}o(u,r)}}}}function a(e){var r=v[e];r.groupIndex=0;var t=[];o(r,t);for(var n=!!r.declarative==t.length%2,a=t.length-1;a>=0;a--){for(var u=t[a],i=0;i<u.length;i++){var s=u[i];n?d(s):l(s)}n=!n}}function u(e){return y[e]||(y[e]={name:e,dependencies:[],exports:{},importers:[]})}function d(r){if(!r.module){var t=r.module=u(r.name),n=r.module.exports,o=r.declare.call(e,function(e,r){if(t.locked=!0,"object"==typeof e)for(var o in e)n[o]=e[o];else n[e]=r;for(var a=0,u=t.importers.length;u>a;a++){var d=t.importers[a];if(!d.locked)for(var i=0;i<d.dependencies.length;++i)d.dependencies[i]===t&&d.setters[i](n)}return t.locked=!1,r},r.name);t.setters=o.setters,t.execute=o.execute;for(var a=0,i=r.normalizedDeps.length;i>a;a++){var l,s=r.normalizedDeps[a],c=v[s],f=y[s];f?l=f.exports:c&&!c.declarative?l=c.esModule:c?(d(c),f=c.module,l=f.exports):l=p(s),f&&f.importers?(f.importers.push(t),t.dependencies.push(f)):t.dependencies.push(null),t.setters[a]&&t.setters[a](l)}}}function i(e){var r,t=v[e];if(t)t.declarative?f(e,[]):t.evaluated||l(t),r=t.module.exports;else if(r=p(e),!r)throw new Error("Unable to load dependency "+e+".");return(!t||t.declarative)&&r&&r.__useDefault?r["default"]:r}function l(r){if(!r.module){var t={},n=r.module={exports:t,id:r.name};if(!r.executingRequire)for(var o=0,a=r.normalizedDeps.length;a>o;o++){var u=r.normalizedDeps[o],d=v[u];d&&l(d)}r.evaluated=!0;var c=r.execute.call(e,function(e){for(var t=0,n=r.deps.length;n>t;t++)if(r.deps[t]==e)return i(r.normalizedDeps[t]);throw new TypeError("Module "+e+" not declared as a dependency.")},t,n);c&&(n.exports=c),t=n.exports,t&&t.__esModule?r.esModule=t:r.esModule=s(t)}}function s(r){var t={};if(("object"==typeof r||"function"==typeof r)&&r!==e)if(m)for(var n in r)"default"!==n&&c(t,r,n);else{var o=r&&r.hasOwnProperty;for(var n in r)"default"===n||o&&!r.hasOwnProperty(n)||(t[n]=r[n])}return t["default"]=r,x(t,"__useDefault",{value:!0}),t}function c(e,r,t){try{var n;(n=Object.getOwnPropertyDescriptor(r,t))&&x(e,t,n)}catch(o){return e[t]=r[t],!1}}function f(r,t){var n=v[r];if(n&&!n.evaluated&&n.declarative){t.push(r);for(var o=0,a=n.normalizedDeps.length;a>o;o++){var u=n.normalizedDeps[o];-1==g.call(t,u)&&(v[u]?f(u,t):p(u))}n.evaluated||(n.evaluated=!0,n.module.execute.call(e))}}function p(e){if(I[e])return I[e];if("@node/"==e.substr(0,6))return D(e.substr(6));var r=v[e];if(!r)throw"Module "+e+" not present.";return a(e),f(e,[]),v[e]=void 0,r.declarative&&x(r.module.exports,"__esModule",{value:!0}),I[e]=r.declarative?r.module.exports:r.esModule}var v={},g=Array.prototype.indexOf||function(e){for(var r=0,t=this.length;t>r;r++)if(this[r]===e)return r;return-1},m=!0;try{Object.getOwnPropertyDescriptor({a:0},"a")}catch(h){m=!1}var x;!function(){try{Object.defineProperty({},"a",{})&&(x=Object.defineProperty)}catch(e){x=function(e,r,t){try{e[r]=t.value||t.get.call(e)}catch(n){}}}}();var y={},D="undefined"!=typeof System&&System._nodeRequire||"undefined"!=typeof require&&require.resolve&&"undefined"!=typeof process&&require,I={"@empty":{}};return function(e,n,o,a){return function(u){u(function(u){for(var d={_nodeRequire:D,register:r,registerDynamic:t,get:p,set:function(e,r){I[e]=r},newModule:function(e){return e}},i=0;i<n.length;i++)(function(e,r){r&&r.__esModule?I[e]=r:I[e]=s(r)})(n[i],arguments[i]);a(d);var l=p(e[0]);if(e.length>1)for(var i=1;i<e.length;i++)p(e[i]);return o?l["default"]:l})}}}("undefined"!=typeof self?self:global)
 
-(["1"], [], function($__System) {
+(["1"], [], false, function($__System) {
 var require = this.require, exports = this.exports, module = this.module;
 $__System.registerDynamic("2", [], true, function($__require, exports, module) {
   "use strict";
@@ -7783,7 +7783,7 @@ $__System.register('25', ['5', '6', '15', '26', '27', '28'], function (_export) 
           this.outerHeight = window.innerHeight - 500;
           this.outerHeightInitial = this.outerHeight;
           this.outerHeightSmall = 100;
-          this.margin = { top: 0, right: 20, bottom: 0, left: 20 };
+          this.margin = { top: 0, right: 20, bottom: 10, left: 20 };
 
           this.x = d3.scaleTime();
           this.y = d3.scaleLinear();
@@ -7811,6 +7811,8 @@ $__System.register('25', ['5', '6', '15', '26', '27', '28'], function (_export) 
           this.gXaxis = this.g.append("g").attr("class", "x axis");
           this.gYaxis = this.g.append("g").attr("class", "y axis");
           this.gGraph = this.g.append("g").attr("class", "graph");
+
+          this.div.append("div").attr("class", "totals").html('<span id="active">-</span> of <span id="total">-</span> books selected.');
 
           // this.offset = this.div.node().offsetTop;
 
@@ -8314,6 +8316,135 @@ $__System.register("2c", ["5", "6", "27", "28", "2b"], function (_export) {
   };
 });
 $__System.register("2d", ["5", "6", "26", "27", "28"], function (_export) {
+  var _createClass, _classCallCheck, StateDb, _get, _inherits, __hotReload, Bookshelf;
+
+  return {
+    setters: [function (_3) {
+      _createClass = _3["default"];
+    }, function (_4) {
+      _classCallCheck = _4["default"];
+    }, function (_5) {
+      StateDb = _5.StateDb;
+    }, function (_) {
+      _get = _["default"];
+    }, function (_2) {
+      _inherits = _2["default"];
+    }],
+    execute: function () {
+      "use strict";
+
+      __hotReload = true;
+
+      _export("__hotReload", __hotReload);
+
+      Bookshelf = (function (_StateDb) {
+        _inherits(Bookshelf, _StateDb);
+
+        function Bookshelf(state, db, div) {
+          _classCallCheck(this, Bookshelf);
+
+          _get(Object.getPrototypeOf(Bookshelf.prototype), "constructor", this).call(this, state, db);
+
+          this.container = div.append("div").attr("class", "bookshelf");
+
+          return this;
+        }
+
+        _createClass(Bookshelf, [{
+          key: "stateChange",
+          value: function stateChange(next, last) {
+            if (!next.visible.BookshelfSection) return;
+
+            // if(next.brushStart !== last.brushStart){
+            //   this.render();
+            // }
+            this.render();
+            // console.log(next.brushStart, last.brushStart);
+          }
+        }, {
+          key: "render",
+          value: function render() {
+            //console.log( this.state.state);
+            var data = this.db.date.top(50);
+
+            // console.log(data);
+
+            var s = this.container.selectAll(".book").data(data);
+
+            s.enter().append("div").attr("class", "book").text(function (d) {
+              return d.title;
+            });
+
+            s.text(function (d) {
+              return d.title;
+            });
+
+            s.exit().remove();
+
+            return this;
+          }
+        }]);
+
+        return Bookshelf;
+      })(StateDb);
+
+      _export("Bookshelf", Bookshelf);
+    }
+  };
+});
+$__System.register('2e', ['5', '6', '27', '28', '2b', '2d'], function (_export) {
+  var _createClass, _classCallCheck, _get, _inherits, Section, Bookshelf, __hotReload, BookshelfSection;
+
+  return {
+    setters: [function (_3) {
+      _createClass = _3['default'];
+    }, function (_4) {
+      _classCallCheck = _4['default'];
+    }, function (_) {
+      _get = _['default'];
+    }, function (_2) {
+      _inherits = _2['default'];
+    }, function (_b) {
+      Section = _b.Section;
+    }, function (_d) {
+      Bookshelf = _d.Bookshelf;
+    }],
+    execute: function () {
+      'use strict';
+
+      __hotReload = true;
+
+      _export('__hotReload', __hotReload);
+
+      BookshelfSection = (function (_Section) {
+        _inherits(BookshelfSection, _Section);
+
+        function BookshelfSection(state, db) {
+          _classCallCheck(this, BookshelfSection);
+
+          _get(Object.getPrototypeOf(BookshelfSection.prototype), 'constructor', this).call(this, state, db);
+
+          this.title.text("Bookshelf");
+
+          var bookshelf = new Bookshelf(state, db, this.div);
+        }
+
+        _createClass(BookshelfSection, [{
+          key: 'stateChange',
+          value: function stateChange(next, pev) {}
+        }, {
+          key: 'render',
+          value: function render() {}
+        }]);
+
+        return BookshelfSection;
+      })(Section);
+
+      _export('BookshelfSection', BookshelfSection);
+    }
+  };
+});
+$__System.register("2f", ["5", "6", "26", "27", "28"], function (_export) {
   var _createClass, _classCallCheck, StateDb, _get, _inherits, __hotReload, Geomap;
 
   return {
@@ -8469,7 +8600,7 @@ $__System.register("2d", ["5", "6", "26", "27", "28"], function (_export) {
     }
   };
 });
-$__System.register('2e', ['5', '6', '27', '28', '2b', '2d'], function (_export) {
+$__System.register('30', ['5', '6', '27', '28', '2b', '2f'], function (_export) {
   var _createClass, _classCallCheck, _get, _inherits, Section, Geomap, __hotReload, GeomapSection;
 
   return {
@@ -8483,8 +8614,8 @@ $__System.register('2e', ['5', '6', '27', '28', '2b', '2d'], function (_export) 
       _inherits = _2['default'];
     }, function (_b) {
       Section = _b.Section;
-    }, function (_d) {
-      Geomap = _d.Geomap;
+    }, function (_f) {
+      Geomap = _f.Geomap;
     }],
     execute: function () {
       'use strict';
@@ -8528,7 +8659,7 @@ $__System.register('2e', ['5', '6', '27', '28', '2b', '2d'], function (_export) 
     }
   };
 });
-$__System.register("2f", [], function (_export) {
+$__System.register("31", [], function (_export) {
 	"use strict";
 
 	var classificationTags;
@@ -8584,7 +8715,7 @@ $__System.register("2f", [], function (_export) {
 		}
 	};
 });
-$__System.registerDynamic("30", ["e"], true, function($__require, exports, module) {
+$__System.registerDynamic("32", ["e"], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
@@ -8594,29 +8725,29 @@ $__System.registerDynamic("30", ["e"], true, function($__require, exports, modul
   return module.exports;
 });
 
-$__System.registerDynamic("31", ["30"], true, function($__require, exports, module) {
+$__System.registerDynamic("33", ["32"], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
       GLOBAL = this;
-  $__require('30');
+  $__require('32');
   module.exports = parseFloat;
   return module.exports;
 });
 
-$__System.registerDynamic("32", ["31"], true, function($__require, exports, module) {
+$__System.registerDynamic("34", ["33"], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
       GLOBAL = this;
   module.exports = {
-    "default": $__require('31'),
+    "default": $__require('33'),
     __esModule: true
   };
   return module.exports;
 });
 
-$__System.register("33", ["5", "6", "32", "34"], function (_export) {
+$__System.register("35", ["5", "6", "34", "36"], function (_export) {
   var _createClass, _classCallCheck, _Number$parseFloat, GeiVisUtils, __hotReload, CirclePackedNetwork;
 
   return {
@@ -9113,8 +9244,8 @@ $__System.register("33", ["5", "6", "32", "34"], function (_export) {
     }
   };
 });
-$__System.register('35', ['5', '6', '27', '28', '33', '2b', '2f'], function (_export) {
-  var _createClass, _classCallCheck, _get, _inherits, CirclePackedNetwork, Section, classificationTags, __hotReload, NetworkSection;
+$__System.register('37', ['5', '6', '27', '28', '31', '35', '2b'], function (_export) {
+  var _createClass, _classCallCheck, _get, _inherits, classificationTags, CirclePackedNetwork, Section, __hotReload, NetworkSection;
 
   return {
     setters: [function (_3) {
@@ -9126,11 +9257,11 @@ $__System.register('35', ['5', '6', '27', '28', '33', '2b', '2f'], function (_ex
     }, function (_2) {
       _inherits = _2['default'];
     }, function (_5) {
-      CirclePackedNetwork = _5.CirclePackedNetwork;
+      classificationTags = _5.classificationTags;
+    }, function (_6) {
+      CirclePackedNetwork = _6.CirclePackedNetwork;
     }, function (_b) {
       Section = _b.Section;
-    }, function (_f) {
-      classificationTags = _f.classificationTags;
     }],
     execute: function () {
       'use strict';
@@ -9204,7 +9335,7 @@ $__System.register('35', ['5', '6', '27', '28', '33', '2b', '2f'], function (_ex
     }
   };
 });
-$__System.registerDynamic("36", [], true, function($__require, exports, module) {
+$__System.registerDynamic("38", [], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
@@ -9216,12 +9347,12 @@ $__System.registerDynamic("36", [], true, function($__require, exports, module) 
   return module.exports;
 });
 
-$__System.registerDynamic("b", ["36"], true, function($__require, exports, module) {
+$__System.registerDynamic("b", ["38"], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
       GLOBAL = this;
-  var cof = $__require('36');
+  var cof = $__require('38');
   module.exports = Object('z').propertyIsEnumerable(0) ? Object : function(it) {
     return cof(it) == 'String' ? it.split('') : Object(it);
   };
@@ -9241,7 +9372,7 @@ $__System.registerDynamic("8", [], true, function($__require, exports, module) {
   return module.exports;
 });
 
-$__System.registerDynamic("37", ["b", "8"], true, function($__require, exports, module) {
+$__System.registerDynamic("39", ["b", "8"], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
@@ -9269,7 +9400,7 @@ $__System.registerDynamic("c", [], true, function($__require, exports, module) {
   return module.exports;
 });
 
-$__System.registerDynamic("38", ["e", "10", "c"], true, function($__require, exports, module) {
+$__System.registerDynamic("3a", ["e", "10", "c"], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
@@ -9288,13 +9419,13 @@ $__System.registerDynamic("38", ["e", "10", "c"], true, function($__require, exp
   return module.exports;
 });
 
-$__System.registerDynamic("39", ["37", "38"], true, function($__require, exports, module) {
+$__System.registerDynamic("3b", ["39", "3a"], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
       GLOBAL = this;
-  var toIObject = $__require('37');
-  $__require('38')('getOwnPropertyDescriptor', function($getOwnPropertyDescriptor) {
+  var toIObject = $__require('39');
+  $__require('3a')('getOwnPropertyDescriptor', function($getOwnPropertyDescriptor) {
     return function getOwnPropertyDescriptor(it, key) {
       return $getOwnPropertyDescriptor(toIObject(it), key);
     };
@@ -9302,38 +9433,38 @@ $__System.registerDynamic("39", ["37", "38"], true, function($__require, exports
   return module.exports;
 });
 
-$__System.registerDynamic("3a", ["a", "39"], true, function($__require, exports, module) {
+$__System.registerDynamic("3c", ["a", "3b"], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
       GLOBAL = this;
   var $ = $__require('a');
-  $__require('39');
+  $__require('3b');
   module.exports = function getOwnPropertyDescriptor(it, key) {
     return $.getDesc(it, key);
   };
   return module.exports;
 });
 
-$__System.registerDynamic("3b", ["3a"], true, function($__require, exports, module) {
+$__System.registerDynamic("3d", ["3c"], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
       GLOBAL = this;
   module.exports = {
-    "default": $__require('3a'),
+    "default": $__require('3c'),
     __esModule: true
   };
   return module.exports;
 });
 
-$__System.registerDynamic("27", ["3b"], true, function($__require, exports, module) {
+$__System.registerDynamic("27", ["3d"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
       global = this,
       GLOBAL = this;
-  var _Object$getOwnPropertyDescriptor = $__require('3b')["default"];
+  var _Object$getOwnPropertyDescriptor = $__require('3d')["default"];
   exports["default"] = function get(_x, _x2, _x3) {
     var _again = true;
     _function: while (_again) {
@@ -9371,7 +9502,7 @@ $__System.registerDynamic("27", ["3b"], true, function($__require, exports, modu
   return module.exports;
 });
 
-$__System.registerDynamic("3c", ["a"], true, function($__require, exports, module) {
+$__System.registerDynamic("3e", ["a"], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
@@ -9383,19 +9514,19 @@ $__System.registerDynamic("3c", ["a"], true, function($__require, exports, modul
   return module.exports;
 });
 
-$__System.registerDynamic("3d", ["3c"], true, function($__require, exports, module) {
+$__System.registerDynamic("3f", ["3e"], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
       GLOBAL = this;
   module.exports = {
-    "default": $__require('3c'),
+    "default": $__require('3e'),
     __esModule: true
   };
   return module.exports;
 });
 
-$__System.registerDynamic("3e", [], true, function($__require, exports, module) {
+$__System.registerDynamic("40", [], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
@@ -9406,14 +9537,14 @@ $__System.registerDynamic("3e", [], true, function($__require, exports, module) 
   return module.exports;
 });
 
-$__System.registerDynamic("e", ["3e", "10", "3f"], true, function($__require, exports, module) {
+$__System.registerDynamic("e", ["40", "10", "41"], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
       GLOBAL = this;
-  var global = $__require('3e'),
+  var global = $__require('40'),
       core = $__require('10'),
-      ctx = $__require('3f'),
+      ctx = $__require('41'),
       PROTOTYPE = 'prototype';
   var $export = function(type, name, source) {
     var IS_FORCED = type & $export.F,
@@ -9455,7 +9586,7 @@ $__System.registerDynamic("e", ["3e", "10", "3f"], true, function($__require, ex
   return module.exports;
 });
 
-$__System.registerDynamic("40", [], true, function($__require, exports, module) {
+$__System.registerDynamic("42", [], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
@@ -9466,12 +9597,12 @@ $__System.registerDynamic("40", [], true, function($__require, exports, module) 
   return module.exports;
 });
 
-$__System.registerDynamic("41", ["40"], true, function($__require, exports, module) {
+$__System.registerDynamic("43", ["42"], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
       GLOBAL = this;
-  var isObject = $__require('40');
+  var isObject = $__require('42');
   module.exports = function(it) {
     if (!isObject(it))
       throw TypeError(it + ' is not an object!');
@@ -9480,7 +9611,7 @@ $__System.registerDynamic("41", ["40"], true, function($__require, exports, modu
   return module.exports;
 });
 
-$__System.registerDynamic("42", [], true, function($__require, exports, module) {
+$__System.registerDynamic("44", [], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
@@ -9493,12 +9624,12 @@ $__System.registerDynamic("42", [], true, function($__require, exports, module) 
   return module.exports;
 });
 
-$__System.registerDynamic("3f", ["42"], true, function($__require, exports, module) {
+$__System.registerDynamic("41", ["44"], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
       GLOBAL = this;
-  var aFunction = $__require('42');
+  var aFunction = $__require('44');
   module.exports = function(fn, that, length) {
     aFunction(fn);
     if (that === undefined)
@@ -9524,14 +9655,14 @@ $__System.registerDynamic("3f", ["42"], true, function($__require, exports, modu
   return module.exports;
 });
 
-$__System.registerDynamic("43", ["a", "40", "41", "3f"], true, function($__require, exports, module) {
+$__System.registerDynamic("45", ["a", "42", "43", "41"], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
       GLOBAL = this;
   var getDesc = $__require('a').getDesc,
-      isObject = $__require('40'),
-      anObject = $__require('41');
+      isObject = $__require('42'),
+      anObject = $__require('43');
   var check = function(O, proto) {
     anObject(O);
     if (!isObject(proto) && proto !== null)
@@ -9540,7 +9671,7 @@ $__System.registerDynamic("43", ["a", "40", "41", "3f"], true, function($__requi
   module.exports = {
     set: Object.setPrototypeOf || ('__proto__' in {} ? function(test, buggy, set) {
       try {
-        set = $__require('3f')(Function.call, getDesc(Object.prototype, '__proto__').set, 2);
+        set = $__require('41')(Function.call, getDesc(Object.prototype, '__proto__').set, 2);
         set(test, []);
         buggy = !(test instanceof Array);
       } catch (e) {
@@ -9560,13 +9691,13 @@ $__System.registerDynamic("43", ["a", "40", "41", "3f"], true, function($__requi
   return module.exports;
 });
 
-$__System.registerDynamic("44", ["e", "43"], true, function($__require, exports, module) {
+$__System.registerDynamic("46", ["e", "45"], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
       GLOBAL = this;
   var $export = $__require('e');
-  $export($export.S, 'Object', {setPrototypeOf: $__require('43').set});
+  $export($export.S, 'Object', {setPrototypeOf: $__require('45').set});
   return module.exports;
 });
 
@@ -9581,36 +9712,36 @@ $__System.registerDynamic("10", [], true, function($__require, exports, module) 
   return module.exports;
 });
 
-$__System.registerDynamic("45", ["44", "10"], true, function($__require, exports, module) {
+$__System.registerDynamic("47", ["46", "10"], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
       GLOBAL = this;
-  $__require('44');
+  $__require('46');
   module.exports = $__require('10').Object.setPrototypeOf;
   return module.exports;
 });
 
-$__System.registerDynamic("46", ["45"], true, function($__require, exports, module) {
+$__System.registerDynamic("48", ["47"], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
       GLOBAL = this;
   module.exports = {
-    "default": $__require('45'),
+    "default": $__require('47'),
     __esModule: true
   };
   return module.exports;
 });
 
-$__System.registerDynamic("28", ["3d", "46"], true, function($__require, exports, module) {
+$__System.registerDynamic("28", ["3f", "48"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
       global = this,
       GLOBAL = this;
-  var _Object$create = $__require('3d')["default"];
-  var _Object$setPrototypeOf = $__require('46')["default"];
+  var _Object$create = $__require('3f')["default"];
+  var _Object$setPrototypeOf = $__require('48')["default"];
   exports["default"] = function(subClass, superClass) {
     if (typeof superClass !== "function" && superClass !== null) {
       throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
@@ -9730,7 +9861,7 @@ $__System.registerDynamic("a", [], true, function($__require, exports, module) {
   return module.exports;
 });
 
-$__System.registerDynamic("47", ["a"], true, function($__require, exports, module) {
+$__System.registerDynamic("49", ["a"], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
@@ -9742,25 +9873,25 @@ $__System.registerDynamic("47", ["a"], true, function($__require, exports, modul
   return module.exports;
 });
 
-$__System.registerDynamic("48", ["47"], true, function($__require, exports, module) {
+$__System.registerDynamic("4a", ["49"], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
       GLOBAL = this;
   module.exports = {
-    "default": $__require('47'),
+    "default": $__require('49'),
     __esModule: true
   };
   return module.exports;
 });
 
-$__System.registerDynamic("5", ["48"], true, function($__require, exports, module) {
+$__System.registerDynamic("5", ["4a"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
       global = this,
       GLOBAL = this;
-  var _Object$defineProperty = $__require('48')["default"];
+  var _Object$defineProperty = $__require('4a')["default"];
   exports["default"] = (function() {
     function defineProperties(target, props) {
       for (var i = 0; i < props.length; i++) {
@@ -9799,7 +9930,7 @@ $__System.registerDynamic("6", [], true, function($__require, exports, module) {
   return module.exports;
 });
 
-$__System.register("34", [], function (_export) {
+$__System.register("36", [], function (_export) {
   "use strict";
 
   var __hotReload;
@@ -9878,7 +10009,7 @@ $__System.register("34", [], function (_export) {
     }
   };
 });
-$__System.register("49", ["5", "6", "34"], function (_export) {
+$__System.register("4b", ["5", "6", "36"], function (_export) {
 	var _createClass, _classCallCheck, GeiVisUtils, __hotReload, NestedTreemap;
 
 	return {
@@ -10177,8 +10308,8 @@ $__System.register("49", ["5", "6", "34"], function (_export) {
 		}
 	};
 });
-$__System.register('4a', ['5', '6', '27', '28', '49', '2b'], function (_export) {
-  var _createClass, _classCallCheck, _get, _inherits, NestedTreemap, Section, __hotReload, TreemapSection;
+$__System.register('4c', ['5', '6', '27', '28', '2b', '4b'], function (_export) {
+  var _createClass, _classCallCheck, _get, _inherits, Section, NestedTreemap, __hotReload, TreemapSection;
 
   return {
     setters: [function (_3) {
@@ -10189,10 +10320,10 @@ $__System.register('4a', ['5', '6', '27', '28', '49', '2b'], function (_export) 
       _get = _['default'];
     }, function (_2) {
       _inherits = _2['default'];
-    }, function (_5) {
-      NestedTreemap = _5.NestedTreemap;
     }, function (_b) {
       Section = _b.Section;
+    }, function (_b2) {
+      NestedTreemap = _b2.NestedTreemap;
     }],
     execute: function () {
       'use strict';
@@ -10271,10 +10402,10 @@ $__System.register('4a', ['5', '6', '27', '28', '49', '2b'], function (_export) 
     }
   };
 });
-$__System.register('1', ['4', '13', '14', '35', '2a', '2c', '2e', '4a'], function (_export) {
+$__System.register('1', ['4', '13', '14', '30', '37', '2a', '2c', '2e', '4c'], function (_export) {
   'use strict';
 
-  var StateMachine, DataBase, ScrollListener, NetworkSection, StreamSection, DummySection, GeomapSection, TreemapSection, __hotReload, state, db, scroll, streamSection, geomapSection, treemapSection, networkSection;
+  var StateMachine, DataBase, ScrollListener, GeomapSection, NetworkSection, StreamSection, DummySection, BookshelfSection, TreemapSection, __hotReload, state, db, scroll, streamSection, bookshelfSection, geomapSection, treemapSection, networkSection, dummy;
 
   return {
     setters: [function (_) {
@@ -10284,15 +10415,17 @@ $__System.register('1', ['4', '13', '14', '35', '2a', '2c', '2e', '4a'], functio
     }, function (_3) {
       ScrollListener = _3.ScrollListener;
     }, function (_4) {
-      NetworkSection = _4.NetworkSection;
+      GeomapSection = _4.GeomapSection;
+    }, function (_5) {
+      NetworkSection = _5.NetworkSection;
     }, function (_a) {
       StreamSection = _a.StreamSection;
     }, function (_c) {
       DummySection = _c.DummySection;
     }, function (_e) {
-      GeomapSection = _e.GeomapSection;
-    }, function (_a2) {
-      TreemapSection = _a2.TreemapSection;
+      BookshelfSection = _e.BookshelfSection;
+    }, function (_c2) {
+      TreemapSection = _c2.TreemapSection;
     }],
     execute: function () {
       __hotReload = true;
@@ -10303,12 +10436,11 @@ $__System.register('1', ['4', '13', '14', '35', '2a', '2c', '2e', '4a'], functio
       db = new DataBase(state);
       scroll = new ScrollListener(state);
       streamSection = new StreamSection(state, db);
+      bookshelfSection = new BookshelfSection(state, db);
       geomapSection = new GeomapSection(state, db);
-
-      // let dummy = new DummySection(state, db);
-
       treemapSection = new TreemapSection(state, db);
       networkSection = new NetworkSection(state, db);
+      dummy = new DummySection(state, db);
 
       db.load();
     }
