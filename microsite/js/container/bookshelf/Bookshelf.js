@@ -32,7 +32,7 @@ export class Bookshelf extends StateDb {
 
   render(){
     //console.log( this.state.state);
-    const data = this.db.date.top(120);
+    const data = this.db.date.top(150).filter(d => d.title != "");
 
     // console.log(data);
 
