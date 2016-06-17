@@ -58,6 +58,10 @@
             > .count { display:none !important }
         }
 
+        &.transition {
+            .label, .count { display:none !important;}
+        }
+
 
         &.hidden { display:none;}
 

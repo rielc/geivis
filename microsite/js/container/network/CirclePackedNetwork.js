@@ -262,6 +262,7 @@ export class CirclePackedNetwork {
       .text(d => d.data.occurrence);
 
     this.nodes
+      //.classed("transition", true)
       // clear tolltips
       .classed("overflow", false).classed("partial", false)
       .attr("data-balloon", null).attr("data-balloon-pos", null)
@@ -287,6 +288,7 @@ export class CirclePackedNetwork {
           .style("transform",  d => `translate3d(${d.x-d.r}px,${d.y-d.r}px,0px)`)
           .style("opacity", 0.0)
           .classed("node", true);
+          //.classed("transition", true);
 
         enteredNodes
           .append("span")
@@ -314,6 +316,8 @@ export class CirclePackedNetwork {
           .transition()
           .duration(100)
           .style("opacity", 0.0)
+          .style("width", 0)
+          .style("height", 0)
           // .on("end", checkOverflow)
           //.style("transform",  d => `translate3d(${this.width/2-d.r}px,${this.height/2-d.r}px,0px)`)
           .remove();
@@ -322,6 +326,7 @@ export class CirclePackedNetwork {
     function checkOverflow (d) {
         let el = d3.select(this);
         let overflow = GeiVisUtils.checkPartialOverflow(el.node(), 14);
+        //el.classed("transition", false);
         switch (overflow) {
           case "overflow":
             el.classed("overflow", true);

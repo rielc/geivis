@@ -388,6 +388,8 @@ header {
       display: none !important; }
     #NetworkSection .node.inactive > .count {
       display: none !important; }
+  #NetworkSection .node.transition .label, #NetworkSection .node.transition .count {
+    display: none !important; }
   #NetworkSection .node.hidden {
     display: none; }
   #NetworkSection .node.monad {

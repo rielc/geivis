@@ -39,27 +39,27 @@ export class TreemapSection extends Section {
 
   stateChange(next, last) {
 
-
+    // init
     if (next.loaded != last.loaded) this.treemap.updateData(this.db.date.top(Infinity)).render();
+    
     if (!next.visible.TreemapSection) return;
 
-    if (next.brushStart !== last.brushStart || next.brushEnd !== last.brushEnd) {
-
-      //console.log("treemap render");
-        
-      this.title.select(".years").text(` from ${next.brushStart.getFullYear()} to ${next.brushEnd.getFullYear()}`);
-
-      let data = this.db.date.top(Infinity);
-      if (data.length>0) {
-        this.treemap.updateData(data);
-        this.treemap.render();
-      }
+    if (  next.brushStart !== last.brushStart
+          || next.brushEnd !== last.brushEnd
+          || next.visible.TreemapSection !== last.visible.TreemapSection ) {
+        this.render(next, last);
     }
+
   }
 
 
-  render(){
-
+  render(next, last){
+    this.title.select(".years").text(` from ${next.brushStart.getFullYear()} to ${next.brushEnd.getFullYear()}`);
+    let data = this.db.date.top(Infinity);
+    if (data.length>0) {
+      this.treemap.updateData(data);
+      this.treemap.render();
+    }
   }
 
 
