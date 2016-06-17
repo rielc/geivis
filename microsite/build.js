@@ -9037,7 +9037,7 @@ $__System.register("33", ["5", "6", "32", "34"], function (_export) {
               return d.data.occurrence;
             });
 
-            this.nodes.transition().duration(300).delay(function (d, i) {
+            this.nodes.classed("overflow", false).classed("partial", false).attr("data-balloon", null).attr("data-balloon-pos", null).transition().duration(300).delay(function (d, i) {
               return i * 30;
             }).call(setNodeProperties).on("end", checkOverflow);
 
@@ -9072,20 +9072,21 @@ $__System.register("33", ["5", "6", "32", "34"], function (_export) {
             var exitedNodes = this.nodes.exit();
 
             // exit
-            exitedNodes.transition().duration(100).style("opacity", 0.0).on("end", checkOverflow)
+            exitedNodes.transition().duration(100).style("opacity", 0.0)
+            // .on("end", checkOverflow)
             //.style("transform",  d => `translate3d(${this.width/2-d.r}px,${this.height/2-d.r}px,0px)`)
             .remove();
 
             function checkOverflow(d) {
 
               var el = d3.select(this);
-              var overflow = GeiVisUtils.checkPartialOverflow(el.node(), 20);
+              var overflow = GeiVisUtils.checkPartialOverflow(el.node(), 14);
 
               //console.log(el.data()[0].data.name, overflow);
 
               switch (overflow) {
                 case "overflow":
-                  el.classed("overflow", true).classed("partial", false);
+                  el.classed("overflow", true);
                   el.attr("data-balloon", function (d) {
                     return d.data.name + ": " + d.data.occurrence;
                   });
@@ -9098,10 +9099,7 @@ $__System.register("33", ["5", "6", "32", "34"], function (_export) {
                   });
                   el.attr("data-balloon-pos", "down");
                   break;
-                case "no-overflow":
-                  el.classed("overflow", false).classed("partial", false);
-                  el.attr("data-balloon", null).attr("data-balloon-pos", null);
-                  break;
+
               }
             }
             return this;

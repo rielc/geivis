@@ -380,6 +380,8 @@ export class CirclePackedNetwork {
       .text(d => d.data.occurrence);
 
     this.nodes
+      .classed("overflow", false).classed("partial", false)
+      .attr("data-balloon", null).attr("data-balloon-pos", null)
       .transition()
       .duration(300)
       .delay((d,i) => i*30)
@@ -427,7 +429,7 @@ export class CirclePackedNetwork {
           .transition()
           .duration(100)
           .style("opacity", 0.0)
-          .on("end", checkOverflow)
+          // .on("end", checkOverflow)
           //.style("transform",  d => `translate3d(${this.width/2-d.r}px,${this.height/2-d.r}px,0px)`)
           .remove();
 
@@ -436,14 +438,14 @@ export class CirclePackedNetwork {
 
 
         let el = d3.select(this);
-        let overflow = GeiVisUtils.checkPartialOverflow(el.node(), 20);
+        let overflow = GeiVisUtils.checkPartialOverflow(el.node(), 14);
 
       //console.log(el.data()[0].data.name, overflow);
 
 
         switch (overflow) {
           case "overflow":
-            el.classed("overflow", true).classed("partial", false);
+            el.classed("overflow", true);
             el.attr("data-balloon", d=>d.data.name+": "+d.data.occurrence);
             el.attr("data-balloon-pos", "down");
           break;
@@ -452,10 +454,7 @@ export class CirclePackedNetwork {
             el.attr("data-balloon", d=>d.data.name+": "+d.data.occurrence);
             el.attr("data-balloon-pos", "down");
           break;
-          case "no-overflow":
-            el.classed("overflow", false).classed("partial", false);
-            el.attr("data-balloon", null).attr("data-balloon-pos", null);
-          break;
+
         }
 
     }
