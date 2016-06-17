@@ -73,6 +73,14 @@
             .domain {
                 display: none;
             }
+            &.y {
+                line {
+                    stroke:none;
+                }
+                text {
+                    fill:#a7a7a7;
+                }
+            }
         }
         .graph path {
             cursor: pointer;

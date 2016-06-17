@@ -42,17 +42,17 @@ export class StreamSection extends Section {
         if(bottom < 0 && height > this.stream.outerHeightSmall){
           this.stream.outerHeight = height;
           this.stream.big = false;
-          this.stream.init().render(true);
+          this.stream.init().render();
         } else {
           if(bottom>0 && this.stream.outerHeight != this.stream.outerHeightInitial){
             this.stream.big = true;
             this.stream.outerHeight = this.stream.outerHeightInitial;
-            this.stream.init().render(true);
+            this.stream.init().render();
           }
           if(height<this.stream.outerHeightSmall && this.stream.outerHeight != this.stream.outerHeightSmall){
             this.stream.big = false;
             this.stream.outerHeight = this.stream.outerHeightSmall;
-            this.stream.init().render(true);
+            this.stream.init().render();
           }
         }
 

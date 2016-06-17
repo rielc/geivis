@@ -482,6 +482,10 @@ header {
         shape-rendering: crispEdges; }
       #StreamSection .stream .axis .domain {
         display: none; }
+      #StreamSection .stream .axis.y line {
+        stroke: none; }
+      #StreamSection .stream .axis.y text {
+        fill: #a7a7a7; }
     #StreamSection .stream .graph path {
       cursor: pointer;
       fill: #BEE6F9; }

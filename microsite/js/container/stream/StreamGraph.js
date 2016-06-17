@@ -16,7 +16,7 @@ export class StreamGraph extends StateDb {
     this.outerHeight = window.innerHeight-500;
     this.outerHeightInitial = this.outerHeight;
     this.outerHeightSmall = 100;
-    this.margin = {top: 0, right: 20, bottom: 10, left: 20};
+    this.margin = {top: 0, right: 20, bottom: 10, left: 30};
     
     this.x = d3.scaleTime();
     this.y = d3.scaleLinear();
@@ -166,10 +166,14 @@ export class StreamGraph extends StateDb {
     if(next.hover !== last.hover){
       this.render();
     }
-    if(next.active !== last.active || next.activeItem !== last.activeItem){
+    if(next.active !== last.active){
       // let data = this.db.date.top(Infinity);
-      //console.log("load2")
       this.load().render();
+    }
+    if(next.activeItem !== last.activeItem){
+      console.log("load2")
+      this.load().render(true);
+
     }
 
   
@@ -191,7 +195,7 @@ export class StreamGraph extends StateDb {
     // console.log(next.brushStart, last.brushStart);
   }
 
-  render(notransition){
+  render(transition){
 
     //console.log("render stream")
 
@@ -211,22 +215,33 @@ export class StreamGraph extends StateDb {
       .on("click", d=>{
         if(d.key == "other" || !this.big) return;
         let active = this.state.state.activeItem === d.key;
-        this.state.push({ activeItem: active ? null : d.key });
+        this.state.push({ activeItem: active ? null : d.key, event: "brushend" });
       })
       .attr("d", this.area)
       .style("opacity", 0)
-      // .transition()
+      // .transition(transition)
       // .duration(notransition ? 0 : 800)
       .style("opacity", d=> d.key=="other" ? 0.3 : 1)
 
     s.exit().remove();
-        
-    s
-      .classed("active", d => this.state.state.hover == d.key)
-      // .transition()
-      // .duration(notransition ? 0 : 800)
-      .attr("d", this.area)
-      .style("opacity", d=> d.key=="other" ? 0.3 : 1)
+    
+    // nasty quickhack
+    if(transition){
+      s
+        .classed("active", d => this.big && this.state.state.hover == d.key)
+        .transition()
+        // .duration(notransition ? 0 : 800)
+        .attr("d", this.area)
+        .style("opacity", d=> d.key=="other" ? 0.3 : 1)
+    } else {
+      s
+        .classed("active", d => this.big && this.state.state.hover == d.key)
+        // .transition()
+        // .duration(notransition ? 0 : 800)
+        .attr("d", this.area)
+        .style("opacity", d=> d.key=="other" ? 0.3 : 1)
+    } 
+   
 
     this.gXaxis
       .attr("transform", "translate(0," + this.height + ")")
@@ -242,11 +257,19 @@ export class StreamGraph extends StateDb {
     //        return "translate(" + this.getBBox().height*-2 + "," + this.getBBox().height + ")rotate(-45)";
     //    });
 
-    this.gYaxis
-      //.transition()
-      // .duration(notransition ? 0 : 800)
-      //.call(this.yAxis)
+    if(transition){
+      this.gYaxis
+        .transition()
+        .call(this.yAxis)
+    } else {
+      this.gYaxis
+        .call(this.yAxis)
+    }
 
+    this.gYaxis.style("opacity", 1-(this.outerHeightInitial-this.outerHeight-100)/100)
+    //   .selectAll("text")
+    //   .attr("dx", 30)
+  
   }
 
 }
