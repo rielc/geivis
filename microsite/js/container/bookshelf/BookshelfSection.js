@@ -8,7 +8,7 @@ export class BookshelfSection extends Section {
   constructor(state, db){
     super(state,db);
     
-    this.title.text("Books (first 100)");
+    this.title.text("Books");
 
     let bookshelf = new Bookshelf(state,db, this.div);
   }

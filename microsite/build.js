@@ -8452,7 +8452,7 @@ $__System.register('2e', ['5', '6', '27', '28', '2b', '2d'], function (_export) 
 
           _get(Object.getPrototypeOf(BookshelfSection.prototype), 'constructor', this).call(this, state, db);
 
-          this.title.text("Books (first 100)");
+          this.title.text("Books");
 
           var bookshelf = new Bookshelf(state, db, this.div);
         }
