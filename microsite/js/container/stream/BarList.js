@@ -46,6 +46,10 @@ export class BarList extends StateDb {
     this.div.select(".title").text(this.key);
     this.div.classed("active", this.state.state.active === this.key);
     this.div.classed("hover", this.state.state.hover === this.key);
+    this.div
+      .on("mouseenter", (d)=>{
+        this.state.push({ event: "enter", active: this.key });
+      })
     // console.time("filter");
    // console.log(this.key);
     const group = this.db[this.key].top(20);

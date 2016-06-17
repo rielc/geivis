@@ -96,6 +96,7 @@ export class StreamGraph extends StateDb {
   }
 
   init(){
+
     this.width = this.outerWidth - this.margin.left - this.margin.right,
     this.height = this.outerHeight - this.margin.top - this.margin.bottom;
 
@@ -171,33 +172,7 @@ export class StreamGraph extends StateDb {
       this.load().render();
     }
 
-    if(next.scrollY !== last.scrollY){
-      // console.log(next.scrollY);
-      // this needs to be cleaned up
-
-      const diff = this.outerHeightInitial - this.margin.top - this.margin.bottom - next.scrollY;
-      const height = this.outerHeightInitial + diff;
-      // console.log(diff, height)
-      if(diff < 0 && height > this.outerHeightSmall){
-        this.outerHeight = height;
-        this.big = false;
-        this.init().render(true);
-      } else {
-        if(diff < 0 && this.outerHeight != this.outerHeightSmall){
-          console.log("small");
-          this.outerHeight = this.outerHeightSmall;
-          this.init().render(true);
-        }
-        if(diff > 0 && this.outerHeight != this.outerHeightInitial){
-          this.big = true;
-          this.outerHeight = this.outerHeightInitial;
-          this.init().render(true);
-        }
-        // console.log(this.outerHeight, diff,  this.outerHeightInitial)
-      }
-      this.div.classed("dropshadow", diff < this.outerHeightInitial - this.margin.top - this.margin.bottom);  
-
-    }
+  
     // if(next.activeItem !== last.activeItem){
     //   if(!next.activeItem) {
     //     // this.stack.offset("silhouette");

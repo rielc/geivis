@@ -7867,6 +7867,7 @@ $__System.register('25', ['5', '6', '15', '26', '27', '28'], function (_export) 
         }, {
           key: 'init',
           value: function init() {
+
             this.width = this.outerWidth - this.margin.left - this.margin.right, this.height = this.outerHeight - this.margin.top - this.margin.bottom;
 
             this.x.rangeRound([0, this.width]);
@@ -7939,32 +7940,6 @@ $__System.register('25', ['5', '6', '15', '26', '27', '28'], function (_export) 
               this.load().render();
             }
 
-            if (next.scrollY !== last.scrollY) {
-              // console.log(next.scrollY);
-              // this needs to be cleaned up
-
-              var diff = this.outerHeightInitial - this.margin.top - this.margin.bottom - next.scrollY;
-              var height = this.outerHeightInitial + diff;
-              // console.log(diff, height)
-              if (diff < 0 && height > this.outerHeightSmall) {
-                this.outerHeight = height;
-                this.big = false;
-                this.init().render(true);
-              } else {
-                if (diff < 0 && this.outerHeight != this.outerHeightSmall) {
-                  console.log("small");
-                  this.outerHeight = this.outerHeightSmall;
-                  this.init().render(true);
-                }
-                if (diff > 0 && this.outerHeight != this.outerHeightInitial) {
-                  this.big = true;
-                  this.outerHeight = this.outerHeightInitial;
-                  this.init().render(true);
-                }
-                // console.log(this.outerHeight, diff,  this.outerHeightInitial)
-              }
-              this.div.classed("dropshadow", diff < this.outerHeightInitial - this.margin.top - this.margin.bottom);
-            }
             // if(next.activeItem !== last.activeItem){
             //   if(!next.activeItem) {
             //     // this.stack.offset("silhouette");
@@ -8115,6 +8090,9 @@ $__System.register("29", ["5", "6", "26", "27", "28"], function (_export) {
             this.div.select(".title").text(this.key);
             this.div.classed("active", this.state.state.active === this.key);
             this.div.classed("hover", this.state.state.hover === this.key);
+            this.div.on("mouseenter", function (d) {
+              _this2.state.push({ event: "enter", active: _this2.key });
+            });
             // console.time("filter");
             // console.log(this.key);
             var group = this.db[this.key].top(20);
@@ -8227,7 +8205,11 @@ $__System.register('2a', ['5', '6', '25', '27', '28', '29', '2b'], function (_ex
           this.divStream = this.div.append("div").attr("class", "stream");
           this.divEntities = this.div.append("div").attr("class", "entities");
 
-          this.stream = new StreamGraph(state, db, this.divStream).init();
+          this.stream = new StreamGraph(state, db, this.divStream);
+          this.stream.paddingTop = 330;
+          this.stream.outerHeight = this.height - this.stream.paddingTop;
+          this.stream.outerHeightInitial = this.stream.outerHeight;
+          this.stream.init();
 
           this.listSubjects = new BarList(state, db, this.divEntities).Key("subjects");
           this.listSchoollevels = new BarList(state, db, this.divEntities).Key("schoollevels");
@@ -8238,10 +8220,29 @@ $__System.register('2a', ['5', '6', '25', '27', '28', '29', '2b'], function (_ex
         _createClass(StreamSection, [{
           key: 'stateChange',
           value: function stateChange(next, last) {
-            // console.log(next.visible)
 
-            //console.log(this.db.date.top(Infinity));
+            if (next.scrollY !== last.scrollY) {
+              var bb = this.div.node().getBoundingClientRect();
+              // console.log(bb.bottom, bb.top, this.height , this.stream.outerHeight,  this.height + bb.top - this.stream.outerHeight -88);
+              var bottom = bb.bottom - 88 - this.stream.outerHeightInitial;
+              var height = this.stream.outerHeightInitial + bottom;
 
+              // console.log(bottom, height);
+
+              if (bottom < 0 && height > this.stream.outerHeightSmall) {
+                this.stream.outerHeight = height;
+                this.stream.big = false;
+                this.stream.init().render(true);
+              } else {
+                if (bottom > 0 && this.stream.outerHeight != this.stream.outerHeightInitial) {
+                  this.stream.big = true;
+                  this.stream.outerHeight = this.stream.outerHeightInitial;
+                  this.stream.init().render(true);
+                }
+              }
+
+              this.stream.div.classed("dropshadow", bottom < this.stream.paddingTop);
+            }
           }
         }, {
           key: 'render',
@@ -8424,7 +8425,7 @@ $__System.register('2e', ['5', '6', '27', '28', '2b', '2d'], function (_export) 
 
           _get(Object.getPrototypeOf(BookshelfSection.prototype), 'constructor', this).call(this, state, db);
 
-          this.title.text("Bookshelf");
+          this.title.text("Bookshelf (first 50)");
 
           var bookshelf = new Bookshelf(state, db, this.div);
         }
@@ -9831,6 +9832,7 @@ $__System.register("2b", ["6", "26", "27", "28"], function (_export) {
 					this.div = d3.select(".container").append("section").attr("id", this.name);
 					this.title = this.div.append("h2").classed("title", true);
 					this.type = "section";
+					this.height = parseInt(this.div.style("height"));
 				}
 
 				return Section;

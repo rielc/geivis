@@ -201,7 +201,8 @@ header {
   width: 1200px;
   position: fixed;
   z-index: 500;
-  background: #FFF; }
+  background: #FFF;
+  top: 0px; }
   header .logo {
     width: 200px;
     float: left;
@@ -412,7 +413,7 @@ header {
   fill: rgba(238, 238, 238, 0.27); }
 
 #StreamSection {
-  top: 80px; }
+  margin-top: 88px; }
   #StreamSection h2.title {
     background-color: #fff;
     position: fixed; }
@@ -424,10 +425,11 @@ header {
     background: #FFF;
     padding: 5px; }
   #StreamSection .stream {
-    top: 80px;
     background: #FFF;
     position: fixed;
-    z-index: 100; }
+    z-index: 100;
+    /* height: 100%; */
+    }
     #StreamSection .stream.dropshadow {
       box-shadow: 0 12px 13px -9px rgba(0, 0, 0, 0.18); }
     #StreamSection .stream text {
@@ -452,7 +454,8 @@ header {
       #StreamSection .stream .graph path.active {
         fill: #b00046; }
   #StreamSection .entities {
-    margin-top: calc(92vh - 400px); }
+    position: absolute;
+    bottom: 0px; }
     #StreamSection .entities .title {
       font-family: "gravurcondensed-bold";
       font-size: 12px;
@@ -475,7 +478,7 @@ header {
         overflow-y: scroll;
         overflow-x: hidden;
         width: 100%;
-        height: 200px; }
+        height: 250px; }
         #StreamSection .entities .entity .items .item {
           clear: left;
           margin: 1px;
@@ -866,7 +869,7 @@ section {
   width: 100%;
   flex-direction: column;
   margin: 0;
-  min-height: calc(100vh - 100px); }
+  min-height: calc(100vh - 88px); }
   section h2.title {
     font-face: "gravurcondensed-bold";
     box-sizing: border-box;
@@ -905,7 +908,7 @@ tspan:last-child {
 
 ::-webkit-scrollbar-thumb {
   border-radius: 4px;
-  background-color: rgba(0, 0, 0, 0.2);
-  -webkit-box-shadow: 0 0 1px rgba(255, 255, 255, 0.2); }
+  background-color: rgba(0, 0, 0, 0.5);
+  -webkit-box-shadow: 0 0 1px rgba(255, 255, 255, 0.5); }
 
 /*# sourceMappingURL=style.css.map */

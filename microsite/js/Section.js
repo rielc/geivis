@@ -11,6 +11,7 @@ export class Section extends StateDb {
 	  this.div = d3.select(".container").append("section").attr("id", this.name);
 	  this.title = this.div.append("h2").classed("title", true);
 	  this.type = "section";
+	  this.height = parseInt(this.div.style("height"))
 	}
 
 }
