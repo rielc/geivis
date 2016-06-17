@@ -432,6 +432,8 @@ header {
       #NetworkSection .node.monadic-related.right .label {
         text-align: right; }
 
+#GeomapSection h2 {
+  position: absolute; }
 #GeomapSection text {
   font-family: "gravurcondensed-regular";
   cursor: pointer; }

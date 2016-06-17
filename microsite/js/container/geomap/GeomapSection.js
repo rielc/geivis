@@ -10,7 +10,7 @@ export class GeomapSection extends Section {
 
     this.title.text(`Places`);
     this.geomap = new Geomap(state,db, this.div.append("div"))
-    this.geomap.outerHeight = parseInt(this.div.style("height"))-80;
+    this.geomap.outerHeight = this.height;
     this.geomap.init();
   }
 

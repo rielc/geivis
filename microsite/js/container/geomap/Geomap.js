@@ -35,7 +35,7 @@ export class Geomap extends StateDb {
     this.height = this.outerHeight - this.margin.top - this.margin.bottom;
 
     this.projection
-      .center([15, 50])
+      .center([16, 49.8])
       .scale(3500)
       .translate([outerWidth / 2, outerHeight / 2])
 
