@@ -346,8 +346,7 @@ header {
   text-align: center;
   box-sizing: border-box;
   background-color: #009ee0;
-  cursor: pointer;
-  transition: border 0.1s, background-color 0.1s, opacity 0.1s; }
+  transition: background-color 0.1s, opacity 0.1s; }
   #NetworkSection .node:hover {
     background-color: rgba(176, 0, 70, 0.3);
     opacity: 1 !important; }
@@ -367,16 +366,18 @@ header {
     position: relative;
     top: 50%;
     transform: translate(0, -50%); }
-  #NetworkSection .node.partial-overflow {
-    overflow: visible; }
-    #NetworkSection .node.partial-overflow > .label {
-      display: none !important; }
   #NetworkSection .node.overflow {
     overflow: visible; }
     #NetworkSection .node.overflow > .label {
       display: none !important; }
     #NetworkSection .node.overflow > .count {
       display: none !important; }
+  #NetworkSection .node.overflow.partial {
+    overflow: visible; }
+    #NetworkSection .node.overflow.partial > .label {
+      display: none !important; }
+    #NetworkSection .node.overflow.partial > .count {
+      display: block !important; }
   #NetworkSection .node.inactive {
     border: 2px solid rgba(0, 158, 224, 0.125);
     background-color: transparent;

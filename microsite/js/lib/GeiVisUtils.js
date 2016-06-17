@@ -1,6 +1,6 @@
 export let __hotReload = true;
 
-export function checkOverflow (el, min) {
+export function checkPartialOverflow (el, min) {
   if ( el.offsetHeight < min || el.offsetWidth < min ) {
     return "overflow";
   } else {

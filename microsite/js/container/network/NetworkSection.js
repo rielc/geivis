@@ -39,19 +39,21 @@ export class NetworkSection extends Section {
 
   stateChange(next, last){
 
-    if (next.loaded != last.loaded) this.network.updateData(this.db.date.top(Infinity)).render();
+    if (next.loaded != last.loaded) this.network.updateData(this.db.date.top(Infinity)).render("brushend");
 
     if (!next.visible.NetworkSection) return;
-      console.log(next.keyframe);
 
-    console.log("network render");
 
-    if (next.brushStart !== last.brushStart || next.brushEnd !== last.brushEnd) {
+    if (next.brushStart !== last.brushStart || next.brushEnd !== last.brushEnd || next.event != last.event) {
+
       this.title.html(`All tags from ${next.brushStart.getFullYear()} to ${next.brushEnd.getFullYear()}`);
+
       let data = this.db.date.top(Infinity);
       if (data.length>0) {
+        let keyframe = next.event;
         this.network.updateData(data);
-        this.network.render(next.keyframe!=last.keyframe);
+        console.log(keyframe);
+        this.network.render(keyframe);
       }
     }
   }

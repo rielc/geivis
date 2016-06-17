@@ -203,8 +203,8 @@ export class CirclePackedNetwork {
 
 
   // renders the whole scene
-  render () {
-    this.renderNodes();
+  render (keyframe) {
+    this.renderNodes(keyframe);
     return this;
   }
 
@@ -216,10 +216,9 @@ export class CirclePackedNetwork {
 
 
   // this function gets called to re-render the layout
-  renderNodes () {
+  renderNodes (keyframe) {
 
     let that = this;
-
 
     function switchToMonad (data) {
 
@@ -290,8 +289,6 @@ export class CirclePackedNetwork {
           .style("border-radius", "5px")
           .style("transform", d => `translate3d(${x-2.5}px,${y-2.5}px,0px)`);
 
-
-
         n
           .select(".label")
           .transition()
@@ -307,19 +304,28 @@ export class CirclePackedNetwork {
 
     // sets the visual props of a node
     function setNodeProperties (selection) {
-      selection
-        .style("opacity", 1.0)
-        .style("transform",  d => `translate3d(${d.x-d.r}px,${d.y-d.r}px,0px)`)
-        .style("width", d => (d.r*2)+'px' )
-        .style("height", d => (d.r*2)+'px')
-        .style("border-radius", d => (d.r)+'px');
-        return selection;
+
+      if (keyframe == "brushend") {
+        selection
+          .style("opacity", 1.0)
+          .style("transform",  d => `translate3d(${d.x-d.r}px,${d.y-d.r}px,0px)`)
+          .style("width", d => (d.r*2)+'px' )
+          .style("height", d => (d.r*2)+'px')
+          .style("border-radius", d => (d.r)+'px');
+      } else {
+        selection
+          .style("opacity", 1.0)
+          .style("transform",  d => `translate3d(${d.x-d.r}px,${d.y-d.r}px,0px)`)
+          .style("width", d => (d.r*2)+'px' )
+          .style("height", d => (d.r*2)+'px')
+          .style("border-radius", d => (d.r)+'px');
+      }
     }
 
     function out () {
       let n = that.container.selectAll(".node").classed("inactive", false).style("opacity", null);
       n.select('.count').text(d=>d.data.occurrence);
-      n.each(checkOverflow);
+      //n.each(checkOverflow);
     }
 
     function over(data) {
@@ -356,21 +362,18 @@ export class CirclePackedNetwork {
             .classed("inactive", false)
             .style("opacity", that.occurrenceScale.domain([linkMin, f.node.occurrence])(f.strength) );
             n.select(".count").text(f.strength);
-            n.each(checkOverflow);
+            //n.each(checkOverflow);
 
         });
     }
 
-    //console.log(this.root.children);
 
-    //this.container.selectAll(".node").remove()
+    // update
 
     this.nodes = 
         this.container
         .selectAll(".node")
         .data(this.root.children, e=>e.data.name );
-
-    // update
 
     this.nodes
       .select(".count")
@@ -379,68 +382,82 @@ export class CirclePackedNetwork {
     this.nodes
       .transition()
       .duration(300)
-      .delay((d,i) => i*10)
+      .delay((d,i) => i*30)
       .call(setNodeProperties)
       .on("end", checkOverflow);
 
+      if (keyframe == "brushend") {
 
-    // enter
-    let enteredNodes = this.nodes
-      .enter()
-      .append("div")
-      .on("mouseover", over)
-      .on("mouseout", out)
-      .on("click", switchToMonad)
-      .attr("id", d => GeiVisUtils.makeSafeForCSS(d.data.name))
-      .style("transform",  d => `translate3d(${this.width/2-d.r}px,${this.height/2-d.r}px,0px)`)
-      .style("opacity", 0.0)
-      .classed("node", true);
+        // enter
+        let enteredNodes = this.nodes.enter().append("div");
+          
+        enteredNodes
+          .on("mouseover", over)
+          .on("mouseout", out)
+          //.on("click", switchToMonad)
+          .attr("id", d => GeiVisUtils.makeSafeForCSS(d.data.name))
+          //.style("transform",  d => `translate3d(${this.width/2-d.r}px,${this.height/2-d.r}px,0px)`)
+          .style("transform",  d => `translate3d(${d.x-d.r}px,${d.y-d.r}px,0px)`)
+          .style("opacity", 0.0)
+          .classed("node", true);
 
-    enteredNodes
-      .append("span")
-      .classed("label", true)
-      .text(d => d.data.name);
+        enteredNodes
+          .append("span")
+          .classed("label", true)
+          .text(d => d.data.name);
 
-    enteredNodes
-      .append("span")
-      .classed("count", true)
-      .text(d => d.data.occurrence);
+        enteredNodes
+          .append("span")
+          .classed("count", true)
+          .text(d => d.data.occurrence);
 
+        enteredNodes
+          .transition()
+          .duration(300)
+          //.delay((d,i) => i*10)
+          .call(setNodeProperties)
+          .on("end", checkOverflow);
 
-    enteredNodes
-      .transition()
-      .duration(300)
-      .delay((d,i) => i*10)
-      .call(setNodeProperties)
-      .on("end", checkOverflow);
+      }
 
+        let exitedNodes = this.nodes.exit();
 
-
-    let exitedNodes = this.nodes.exit();
-
-    // exit
-    exitedNodes
-      .transition()
-      .duration(100)
-      .style("transform",  d => `translate3d(${this.width/2-d.r}px,${this.height/2-d.r}px,0px)`)
-      .style("opacity", 0.0)
-      .remove();
+        // exit
+        exitedNodes
+          .transition()
+          .duration(100)
+          .style("opacity", 0.0)
+          .on("end", checkOverflow)
+          //.style("transform",  d => `translate3d(${this.width/2-d.r}px,${this.height/2-d.r}px,0px)`)
+          .remove();
 
 
     function checkOverflow (d) {
+
+
         let el = d3.select(this);
-        let overflow = GeiVisUtils.checkOverflow(el.node(), 20);
-        el.classed(overflow, true);
-        
-        if (overflow == "overflow" || overflow == "partial-overflow") {
-          el.attr("data-balloon", d=>d.data.name+": "+d.data.occurrence);
-          el.attr("data-balloon-pos", "down");
-        } else {
-          el.classed("overflow", false);
-          el.classed("partial-overflow", false);
-          el.attr("data-balloon", null);
-          el.attr("data-balloon-pos", null);
+        let overflow = GeiVisUtils.checkPartialOverflow(el.node(), 20);
+
+      //console.log(el.data()[0].data.name, overflow);
+
+
+        switch (overflow) {
+          case "overflow":
+            el.classed("overflow", true).classed("partial", false);
+            el.attr("data-balloon", d=>d.data.name+": "+d.data.occurrence);
+            el.attr("data-balloon-pos", "down");
+          break;
+          case "partial-overflow":
+            el.classed("overflow", true).classed("partial", true);
+            el.attr("data-balloon", d=>d.data.name+": "+d.data.occurrence);
+            el.attr("data-balloon-pos", "down");
+          break;
+          case "no-overflow":
+            el.classed("overflow", false).classed("partial", false);
+            el.attr("data-balloon", null).attr("data-balloon-pos", null);
+          break;
         }
+
     }
     return this;
   }
