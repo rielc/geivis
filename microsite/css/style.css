@@ -347,6 +347,7 @@ header {
   text-align: center;
   box-sizing: border-box;
   background-color: #009ee0;
+  cursor: pointer;
   transition: background-color 0.1s, opacity 0.1s; }
   #NetworkSection .node:hover {
     background-color: rgba(176, 0, 70, 0.3);
@@ -389,20 +390,47 @@ header {
       display: none !important; }
   #NetworkSection .node.hidden {
     display: none; }
+  #NetworkSection .node.monad {
+    border: none;
+    background-color: transparent;
+    border-radius: 20px !important;
+    padding: 5px;
+    overflow: visible;
+    opacity: 1;
+    border: 5px solid rgba(176, 0, 70, 0.3); }
+    #NetworkSection .node.monad > .label {
+      width: 100px;
+      top: 0;
+      transform: translate(0, 0);
+      display: block !important;
+      color: #707070; }
+    #NetworkSection .node.monad > .count {
+      display: none !important; }
   #NetworkSection .node.monadic-related {
+    border: none;
+    background-color: transparent;
+    border-radius: 20px !important;
+    padding: 5px;
     overflow: visible;
     opacity: 1; }
+    #NetworkSection .node.monadic-related.inactive {
+      opacity: 0 !important; }
     #NetworkSection .node.monadic-related > .label {
       width: 100px;
+      top: 0;
+      transform: translate(0, 0);
       display: block !important;
       color: #707070; }
     #NetworkSection .node.monadic-related > .count {
-      position: absolute;
       display: none !important; }
-    #NetworkSection .node.monadic-related.left > .label {
-      text-align: left; }
-    #NetworkSection .node.monadic-related.right > .label {
-      text-align: right; }
+    #NetworkSection .node.monadic-related.left {
+      border-left: 5px solid rgba(0, 158, 224, 0.1); }
+      #NetworkSection .node.monadic-related.left .label {
+        text-align: left; }
+    #NetworkSection .node.monadic-related.right {
+      border-right: 5px solid rgba(0, 158, 224, 0.1); }
+      #NetworkSection .node.monadic-related.right .label {
+        text-align: right; }
 
 #GeomapSection text {
   font-family: "gravurcondensed-regular"; }

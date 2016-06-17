@@ -6,11 +6,11 @@
         text-align:center;
         box-sizing: border-box;
         background-color: $blue;
-        //cursor: pointer;
+        cursor: pointer;
         //z-index:0 !important;
 
         transition: background-color 0.1s, opacity 0.1s;
-
+        
         &:hover {
             background-color: rgba($red, 0.3);
             opacity: 1 !important;
@@ -61,30 +61,55 @@
 
         &.hidden { display:none;}
 
-        &.monadic-related {
+        &.monad {
+            border:none;
+            background-color:transparent;
+            border-radius:20px !important;
+            padding:5px;
             overflow:visible;
             opacity:1;
-            //background-color: transparent;
+            border:5px solid rgba($red, 0.3);
+
             > .label {
                 width:100px;
-                //height:5px;
-                // margin:0;
-                // padding:0;
-                // left:0;
-                // top:0;
+                top:0;
+                transform:translate(0,0);
                 display:block !important;
                 color:$grey;
             }
-            > .count {
-                position:absolute;
-                display:none !important;
+            > .count { display:none !important; }
+        }
+
+
+
+        &.monadic-related {
+            border:none;
+            background-color:transparent;
+            border-radius:20px !important;
+            padding:5px;
+            overflow:visible;
+            opacity:1;
+
+            &.inactive {
+                opacity:0 !important;
             }
 
+            > .label {
+                width:100px;
+                top:0;
+                transform:translate(0,0);
+                display:block !important;
+                color:$grey;
+            }
+            > .count { display:none !important; }
+
             &.left {
-                > .label { text-align:left; }
+                .label { text-align:left;}
+                border-left:5px solid rgba($blue, 0.1);
             }
             &.right {
-                > .label { text-align:right;}
+                .label { text-align:right;}
+                border-right:5px solid rgba($blue, 0.1);
             }
         }
     }

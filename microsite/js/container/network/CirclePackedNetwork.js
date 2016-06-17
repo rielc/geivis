@@ -9,6 +9,7 @@ export class CirclePackedNetwork {
     this.properties = properties;
     this.blacklist = [];
     this.years = [0,0];
+    this.monad = "";
     return this;
 
   }
@@ -104,14 +105,42 @@ export class CirclePackedNetwork {
   // this defines the accessor string to the node-array
   setNodeAccessor (nodeAccessor) { this.nodeAccessor = nodeAccessor; return this; }
 
+  cacheLinksAndNodes () {
+    this.networkByYear = 
+      d3.nest()
+      .key(k=>parseInt(k.year))
+      .entries(this.data)
+      .map( m => {
+        let d = this.generateLinksAndNodes(m.values);
+        return { year:m.key, data:d};
+      });
+
+
+      this
+        .networkByYear
+        .filter(f=>(f.year=="1820"||f.year=="1911"))
+        .map(m=>m.data)
+        .map(m=>m.links);
+
+      d3.nest()
+        .key(k=>`${k.source}-${k.target}`)
+        .entries();
+
+    return this;
+  }
+
 
   // this function extracts a network from if given a array with 
-  generateLinksAndNodes () {
+  generateLinksAndNodes (newData) {
+
+    let dataToAnalyze;
+    if (newData != undefined) { ataToAnalyze = newData; }
+    else { dataToAnalyze = this.data; }
 
     // extract ALL tags (with duplicates)
     let allTags = [];
     // push all tags of every entry into the global array
-    this.data.forEach( e => { 
+    dataToAnalyze.forEach( e => { 
       if (e[this.nodeAccessor] != undefined) {
         allTags.push( 
           e[this.nodeAccessor]
@@ -127,12 +156,10 @@ export class CirclePackedNetwork {
     let nodeList = d3.map();
     nodes.forEach( e => { nodeList.set(e, 0); });
 
-    //console.time("asdf");
-
     let linkList = d3.map();
 
     // extract all links
-    this.data.forEach( (e) => {
+    dataToAnalyze.forEach( (e) => {
 
       // this array prevent duplicate links
 
@@ -149,7 +176,6 @@ export class CirclePackedNetwork {
           tags.filter(f=>this.blacklist.indexOf(f)==-1).forEach( (tagB) => {
             if (tagA!=tagB) {
               // sort them to prevent duplications
-
               let indexA = nodes.indexOf(tagA);
               let indexB = nodes.indexOf(tagB);
 
@@ -159,12 +185,9 @@ export class CirclePackedNetwork {
 
               if (parsedLinks.indexOf(link) == -1) {
 
-                if (linkList.has(link)) {
-                    linkList.set(link, linkList.get(link) + 1);
-                } else {
-                    linkList.set(link, 1);
-                }
-
+                // increment the value of the connection
+                if ( linkList.has(link) ) { linkList.set(link, linkList.get(link) + 1); }
+                else { linkList.set(link, 1); }
 
                 if (addedTags.indexOf(tagA) == -1) {
                   nodeList.set(tagA, nodeList.get(tagA)+1);
@@ -194,10 +217,10 @@ export class CirclePackedNetwork {
         };
     });
 
-    //console.log(nodes);
-
-    this.transformedData = {'nodes' : nodes.map(function (n) {return { 'name' : n, 'occurrence' : nodeList.get(n) } ;}), 'links': r };
-    return this;
+    let result = {'nodes' : nodes.map(function (n) {return { 'name' : n, 'occurrence' : nodeList.get(n) } ;}), 'links': r };
+    
+    if (newData != undefined) { return result; }
+    else { this.transformedData = result; return this; }
   }
 
 
@@ -218,156 +241,15 @@ export class CirclePackedNetwork {
   // this function gets called to re-render the layout
   renderNodes (keyframe) {
 
+    let delay = 30;
+
+    switch (keyframe) {
+      case "brushend": delay=0; break;
+      case "leave-monadic-view": delay=10; break;
+
+    }
+
     let that = this;
-
-    function switchToMonad (data) {
-
-      that.monad = true;
-
-      that.container.selectAll(".node").classed("hidden", true);
-
-      let center = [that.width/2,that.height/2];
-      let d = data.data;
-
-      d3.select(this)
-        .style("opacity", 1)
-        //.style("box-shadow", "0 0 10px 0 rgba(0,0,0,0.25)")
-        .style("transform",  d => `translate3d(${center[0]}px,${center[1]}px,0px)`);
-
-      let linkedNodes = that.transformedData.links
-        .filter( l => (l.source.name == d.name || l.target.name == d.name) )
-        .map(l => {
-          if (l.source.name == d.name) { return { "strength" : l.strength, "node":l.target }; }
-          if (l.target.name == d.name) { return { "strength" : l.strength, "node":l.source }; }
-        });
-
-      let linkMax = d3.max(linkedNodes, l=>l.strength);
-      let linkMin = d3.min(linkedNodes, l=>l.strength);
-
-      let indexToPolar = d3.scaleLinear().domain([0,linkedNodes.length-1]).range([0, Math.PI*2]);
-      let occurenceToProximity = d3.scaleLinear().domain([linkMax,linkMin]).range([100, that.height/3]);
-
-      linkedNodes.forEach( (l,i) => {
-        let x = center[0]+(Math.sin(indexToPolar(i))*occurenceToProximity(l.strength));
-        let y = center[1]+Math.cos(indexToPolar(i))*occurenceToProximity(l.strength);
-
-        let n = d3.select( "#"+GeiVisUtils.makeSafeForCSS( l.node.name ) ).style("opacity", 1).classed("hidden", false).classed("monadic-related", true);
-        let width = n.select(".label").node().offsetWidth;
-
-        
-        let sign;
-        let value;
-        let transform;
-        let translate;
-
-        var tx = Math.sin(indexToPolar(i))*width/2-30;
-        var ty = Math.cos(indexToPolar(i))*width/2+10;
-
-
-        if (indexToPolar(i) >= Math.PI && indexToPolar(i) <= Math.PI*2) {
-          n.classed("right", true);
-          value = 90;
-          sign = 1;
-          translate = `${tx}px,${ty}px`;
-          //transform = "100% 0%";
-        }
-
-        if (indexToPolar(i) >= 0 && indexToPolar(i) <= Math.PI) {
-          //n.classed("left", true);
-          value = 270;
-          sign = 1;
-          translate = `${tx}px,${ty}px`;
-          //transform = "100% 0%";
-        }
-
-        n
-          .transition()
-          .duration(300)
-          .delay((d,i) => i*30)
-          .style("width", "5px")
-          .style("height", "5px")
-          .style("border-radius", "5px")
-          .style("transform", d => `translate3d(${x-2.5}px,${y-2.5}px,0px)`);
-
-        n
-          .select(".label")
-          .transition()
-          .duration(300)
-          .delay((d,i) => i*30)
-          //.style("transform-origin", transform)
-          .style("transform", (d) => `translate(${translate})rotate(-${(indexToPolar(i)*180/Math.PI)+(value)*sign}deg)`);
-
-
-      });
-
-    }
-
-    // sets the visual props of a node
-    function setNodeProperties (selection) {
-
-      if (keyframe == "brushend") {
-        selection
-          .style("opacity", 1.0)
-          .style("transform",  d => `translate3d(${d.x-d.r}px,${d.y-d.r}px,0px)`)
-          .style("width", d => (d.r*2)+'px' )
-          .style("height", d => (d.r*2)+'px')
-          .style("border-radius", d => (d.r)+'px');
-      } else {
-        selection
-          .style("opacity", 1.0)
-          .style("transform",  d => `translate3d(${d.x-d.r}px,${d.y-d.r}px,0px)`)
-          .style("width", d => (d.r*2)+'px' )
-          .style("height", d => (d.r*2)+'px')
-          .style("border-radius", d => (d.r)+'px');
-      }
-    }
-
-    function out () {
-      let n = that.container.selectAll(".node").classed("inactive", false).style("opacity", null);
-      n.select('.count').text(d=>d.data.occurrence);
-      //n.each(checkOverflow);
-    }
-
-    function over(data) {
-
-        that.container.selectAll(".node").classed("inactive", true);
-        d3.select(this).classed("inactive", false)
-        
-        let d = data.data;
-
-        //console.time("tagnetwork");
-        //console.log(that.transformedData.links);
-
-        let linkedNodes = that.transformedData.links
-          .filter( l => (l.source.name == d.name || l.target.name == d.name) )
-          .map(l => {
-            if (l.source.name == d.name) { return { "strength" : l.strength, "node":l.target }; }
-            if (l.target.name == d.name) { return { "strength" : l.strength, "node":l.source }; }
-          });
-        //console.timeEnd("tagnetwork");
-
-        let linkMax = d3.max(linkedNodes, l=>l.strength);
-        let linkMin = d3.min(linkedNodes, l=>l.strength);
-
-
-        // TODO: select all nodes with this array
-        // enter() changes the related ones 
-        // .exit() hides the unrelated
-
-        // // highlight the nodes
-        linkedNodes.forEach( f => {
-
-          let n = d3.select( "#"+GeiVisUtils.makeSafeForCSS( f.node.name ) );
-            n
-            .classed("inactive", false)
-            .style("opacity", that.occurrenceScale.domain([linkMin, f.node.occurrence])(f.strength) );
-            n.select(".count").text(f.strength);
-            //n.each(checkOverflow);
-
-        });
-    }
-
-
     // update
 
     this.nodes = 
@@ -380,23 +262,26 @@ export class CirclePackedNetwork {
       .text(d => d.data.occurrence);
 
     this.nodes
+      // clear tolltips
       .classed("overflow", false).classed("partial", false)
       .attr("data-balloon", null).attr("data-balloon-pos", null)
+
+      // clear monadic
+      .classed("monadic-related", false).classed("hidden", false).classed("monad", false)
       .transition()
       .duration(300)
-      .delay((d,i) => i*30)
+      .delay((d,i) => i*delay)
       .call(setNodeProperties)
       .on("end", checkOverflow);
 
-      if (keyframe == "brushend") {
-
+      if (keyframe == "brushend" || keyframe == "leave-monadic-view") {
         // enter
         let enteredNodes = this.nodes.enter().append("div");
           
         enteredNodes
           .on("mouseover", over)
           .on("mouseout", out)
-          //.on("click", switchToMonad)
+          .on("click", switchToMonad)
           .attr("id", d => GeiVisUtils.makeSafeForCSS(d.data.name))
           //.style("transform",  d => `translate3d(${this.width/2-d.r}px,${this.height/2-d.r}px,0px)`)
           .style("transform",  d => `translate3d(${d.x-d.r}px,${d.y-d.r}px,0px)`)
@@ -435,14 +320,8 @@ export class CirclePackedNetwork {
 
 
     function checkOverflow (d) {
-
-
         let el = d3.select(this);
         let overflow = GeiVisUtils.checkPartialOverflow(el.node(), 14);
-
-      //console.log(el.data()[0].data.name, overflow);
-
-
         switch (overflow) {
           case "overflow":
             el.classed("overflow", true);
@@ -454,10 +333,156 @@ export class CirclePackedNetwork {
             el.attr("data-balloon", d=>d.data.name+": "+d.data.occurrence);
             el.attr("data-balloon-pos", "down");
           break;
-
         }
+    }
+
+
+
+    function switchToMonad (data) {
+
+      let d = data.data;
+
+      if (that.monad == d.name) {
+        that.monad = "";
+        that.renderNodes("leave-monadic-view");
+      } else {
+
+        that.monad = d.name;
+        let center = [that.width/2-50,that.height/2];
+
+        // reset all nodes
+        that.container.selectAll(".node")
+          .classed("hidden", true)
+          .classed("overflow", false)
+          .classed("partial", false)
+          .classed("monad", false)
+          .classed("left", false)
+          .classed("right", false)
+          .attr("data-balloon", null)
+          .attr("data-balloon-pos", null);
+
+        // center this node
+        d3.select(this)
+          .classed("hidden", false)
+          .classed("monad", true)
+          .classed("monadic-related", false)
+          .transition()
+          .duration(300)
+          .style("width", null)
+          .style("height", null)
+          .style("opacity", 1)
+          .style("transform",  d => `translate3d(${center[0]}px,${center[1]}px,0px)`);
+
+        let linkedNodes = that.transformedData.links
+          .filter( l => (l.source.name == d.name || l.target.name == d.name) )
+          .map(l => {
+            if (l.source.name == d.name) { return { "strength" : l.strength, "node":l.target }; }
+            if (l.target.name == d.name) { return { "strength" : l.strength, "node":l.source }; }
+          });
+
+        let linkMax = d3.max(linkedNodes, l=>l.strength);
+        let linkMin = d3.min(linkedNodes, l=>l.strength);
+
+        let indexToPolar = d3.scaleLinear().domain([0,linkedNodes.length]).range([0, Math.PI*2]);
+        let occurenceToProximity = d3.scaleLinear().domain([linkMax,linkMin]).range([200, that.height/3]);
+        //let occurenceToAlpha = d3.scaleLinear().domain([linkMin, linkMax]).range([0.125, 1.0]);
+
+
+        linkedNodes.forEach( (l,i) => {
+
+          if (l.node.name != that.monad) {
+
+            let n = d3.select( "#"+GeiVisUtils.makeSafeForCSS( l.node.name ) )
+              .style("opacity", 1)
+              .classed("hidden", false)
+              .classed("monadic-related", true)
+              .classed("overflow", false)
+              .classed("partial", false);
+
+            let x = center[0]+(Math.sin(indexToPolar(i))*occurenceToProximity(l.strength));
+            let y = center[1]+Math.cos(indexToPolar(i))*occurenceToProximity(l.strength);
+
+
+            let width = n.select(".label").node().offsetWidth;
+            let height = n.select(".label").node().offsetHeight;
+            let value;
+
+            if (indexToPolar(i) >= Math.PI && indexToPolar(i) <= Math.PI*2) { n.classed("right", true); value = 90; }
+            if (indexToPolar(i) >= 0 && indexToPolar(i) <= Math.PI) { n.classed("left", true); value = 270; }
+
+            n
+              .transition()
+              .duration(300)
+              .delay((d,i) => i*30)
+              .style("width", null)
+              .style("height", null)
+              .style("transform", d => `translate3d(${x}px,${y}px,0px)rotate(-${(indexToPolar(i)*180/Math.PI)+(value)}deg)`);
+          }
+
+        });
+
+      }
 
     }
+
+    // sets the visual props of a node
+    function setNodeProperties (selection) {
+
+      if (keyframe == "brushend" || keyframe == "leave-monadic-view") {
+        selection
+          .style("opacity", 1.0)
+          .style("transform",  d => `translate3d(${d.x-d.r}px,${d.y-d.r}px,0px)`)
+          .style("width", d => (d.r*2)+'px' )
+          .style("height", d => (d.r*2)+'px')
+          .style("border-radius", d => (d.r)+'px');
+      } else {
+        selection
+          .style("opacity", 1.0)
+          .style("width", d => (d.r*2)+'px' )
+          .style("height", d => (d.r*2)+'px')
+          .style("border-radius", d => (d.r)+'px');
+      }
+    }
+
+    function out () {
+      let n = that.container.selectAll(".node").classed("inactive", false);
+        n.style("opacity", null);
+        n.select('.count').text(d=>d.data.occurrence);
+
+    }
+
+    function over(data) {
+
+        that.container.selectAll(".node").classed("inactive", true);
+        d3.select(this).classed("inactive", false)
+        
+        let d = data.data;
+
+        let linkedNodes = that.transformedData.links
+          .filter( l => (l.source.name == d.name || l.target.name == d.name) )
+          .map(l => {
+            if (l.source.name == d.name) { return { "strength" : l.strength, "node":l.target }; }
+            if (l.target.name == d.name) { return { "strength" : l.strength, "node":l.source }; }
+          });
+
+        let linkMax = d3.max(linkedNodes, l=>l.strength);
+        let linkMin = d3.min(linkedNodes, l=>l.strength);
+
+        // TODO: select all nodes with this array
+        // enter() changes the related ones 
+        // .exit() hides the unrelated
+
+
+          // // highlight the nodes
+          linkedNodes.forEach( f => {
+            let n = d3.select( "#"+GeiVisUtils.makeSafeForCSS( f.node.name ) );
+              n
+              .classed("inactive", false)
+              .style("opacity", that.occurrenceScale.domain([linkMin, f.node.occurrence])(f.strength) );
+              n.select(".count").text(f.strength);
+          });
+    }
+
     return this;
   }
 

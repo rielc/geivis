@@ -39,7 +39,11 @@ export class NetworkSection extends Section {
 
   stateChange(next, last){
 
-    if (next.loaded != last.loaded) this.network.updateData(this.db.date.top(Infinity)).render("brushend");
+    if (next.loaded != last.loaded) {
+      this.network.updateData(this.db.date.top(Infinity))
+      //this.network.cacheLinksAndNodes(this.db.date.top(Infinity))
+      this.network.render("brushend");
+    }
 
     if (!next.visible.NetworkSection) return;
 
