@@ -4,11 +4,10 @@ a webbased visualization of schoolbooks for the Georg-Eckert-Institut
 
 ## setup
 
+- `cd microsite`
 - `npm install jspm -g`
 - `npm install jspm-server -g`
-- `cd vis`
 - `jspm init`
-- `cd ..`
 - `jspm-server`
 
 ## build
