@@ -1,5 +1,8 @@
 .DS_Store
 data/raw/
+data/download/*
+data/download/
+data/download
 .sass-cache
 vis/jspm_packages/github/
 vis/jspm_packages/npm/
