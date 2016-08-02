@@ -88,14 +88,23 @@ function loadFiles(error, fn) {
 
     console.log("finish", loadedFiles, parsedBooks);
 
+    // make place translation
+    var places = Object.keys(publisher_city).map(k => { return { place: k, num: publisher_city[k]}; })
+	fs.writeFileSync("../data/places.csv", json2csv({ data: places, fields: ['place', 'toPlace', 'num'] }));
+
+	// save json books
     // fs.writeFileSync("../data/better-data.json", JSON.stringify(books, null, "  "));
 
+    // save csv books
     var fields = Object.keys(books.reduce((p,c) => { Object.keys(c).forEach(n => p[n] = true); return p; }, {}));
     var csv = json2csv({ data: books, fields })
 	fs.writeFileSync("../data/data.csv", csv);
 }
 
 
+
+
+var publisher_city = {};
 var digicount = 0;
 // callback which parses the content of the loaded file
 function parseFile(content) {
@@ -135,6 +144,7 @@ function parseFile(content) {
                 // city (?) + publisher
                 if (type == "033A") {
                     newBook.publisher_city = subfield[0]._;
+                    publisher_city[newBook.publisher_city] = publisher_city[newBook.publisher_city] !== undefined ? publisher_city[newBook.publisher_city]+1 : 0;
                     if (subfield[1] != undefined) {
                         newBook.publisher = subfield[1]._;
                     }
