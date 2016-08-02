@@ -1,6 +1,7 @@
 // debugger;
 
 var fs = require("fs");
+var json2csv = require("json2csv");
 
 var pathToDataFiles = "../data/download/";
 var interval;
@@ -79,7 +80,7 @@ function loadFiles(error, fn) {
 
     fileNames = fn;
     fileNames
-        .filter(f => f != '.DS_Store')
+        .filter((f,i) => f != '.DS_Store')
         .forEach(f => {
             var content = fs.readFileSync(pathToDataFiles + f, 'utf8');
             parseFile(content);
@@ -87,7 +88,11 @@ function loadFiles(error, fn) {
 
     console.log("finish", loadedFiles, parsedBooks);
 
-    fs.writeFileSync("../data/better-data.json", JSON.stringify(books, null, "  "));
+    // fs.writeFileSync("../data/better-data.json", JSON.stringify(books, null, "  "));
+
+    var fields = Object.keys(books.reduce((p,c) => { Object.keys(c).forEach(n => p[n] = true); return p; }, {}));
+    var csv = json2csv({ data: books, fields })
+	fs.writeFileSync("../data/data.csv", csv);
 }
 
 
