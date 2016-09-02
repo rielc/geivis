@@ -7790,7 +7790,7 @@ $__System.register('25', ['5', '6', '15', '26', '27', '28'], function (_export) 
 
           this.xAxis = d3.axisBottom();
           // .orient("bottom")
-          // .ticks(d3.time.years, 20)
+          // .ticks(d3.timeYear.every(20))
 
           this.yAxis = d3.axisLeft().ticks(5, "1f");
 
@@ -7903,6 +7903,11 @@ $__System.register('25', ['5', '6', '15', '26', '27', '28'], function (_export) 
             }); // do it better
             this.y.domain([0.1, max]).nice();
 
+            this.x.domain(this.db.extent);
+            // add the upper domain which is < 20 years to the axis
+            var ticks = this.x.ticks(d3.timeYear.every(20)).concat(this.x.domain()[1]);
+            this.xAxis.tickValues(ticks);
+
             // if(this.data.length > 20){
             //   const cutoff = 100;
             //   let filtered = this.data.filter(d => d.values.length > cutoff);
@@ -7927,7 +7932,6 @@ $__System.register('25', ['5', '6', '15', '26', '27', '28'], function (_export) 
             // console.log("stream", last.loaded, next.loaded);
 
             if (next.loaded == !last.loaded) {
-              this.x.domain(this.db.extent);
               this.load().render();
             }
 
