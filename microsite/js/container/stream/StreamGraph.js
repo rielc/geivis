@@ -23,7 +23,7 @@ export class StreamGraph extends StateDb {
 
     this.xAxis = d3.axisBottom()
       // .orient("bottom")
-      // .ticks(d3.time.years, 20)
+      // .ticks(d3.timeYear.every(20))
 
     this.yAxis = d3.axisLeft()
       .ticks(5, "1f")
@@ -132,8 +132,12 @@ export class StreamGraph extends StateDb {
     // console.log(this.data);
 
     const max = d3.max(this.data, d=>d3.max(d, d=>(d[1]))); // do it better
-    this.y.domain([0.1, max]).nice()
+    this.y.domain([0.1, max]).nice();
 
+    this.x.domain(this.db.extent);
+    // add the upper domain which is < 20 years to the axis
+    const ticks = this.x.ticks(d3.timeYear.every(20)).concat(this.x.domain()[1]);
+    this.xAxis.tickValues(ticks);
 
     // if(this.data.length > 20){
     //   const cutoff = 100;
@@ -159,7 +163,6 @@ export class StreamGraph extends StateDb {
     // console.log("stream", last.loaded, next.loaded);
     
     if(next.loaded == !last.loaded){
-      this.x.domain(this.db.extent);
       this.load().render();
     }
 
