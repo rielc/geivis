@@ -57,6 +57,7 @@ export class StreamSection extends Section {
         }
 
         this.stream.div.classed("dropshadow", bottom < this.stream.paddingTop); 
+        // this.stream.div.style("position", bottom < this.stream.paddingTop ? 'fixed': 'relative'); 
     }
 
   }

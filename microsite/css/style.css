@@ -221,6 +221,12 @@ header {
       header .navi a:hover, header .navi a:active {
         color: #96112d; }
 
+#intro {
+  padding-top: 20px;
+  padding-bottom: 20px;
+  margin-top: 88px;
+  height: auto; }
+
 #TreemapSection .visualization {
   position: relative; }
 #TreemapSection .title span {
@@ -448,8 +454,7 @@ header {
   fill: rgba(238, 238, 238, 0.27); }
 
 #StreamSection {
-  height: calc(100vh - 88px);
-  margin-top: 88px; }
+  height: calc(100vh - 88px); }
   #StreamSection h2.title {
     background-color: #fff;
     position: fixed; }
@@ -462,10 +467,11 @@ header {
     padding: 5px; }
   #StreamSection .stream {
     background: #FFF;
-    position: fixed;
     z-index: 100; }
     #StreamSection .stream.dropshadow {
-      box-shadow: 0 12px 13px -9px rgba(0, 0, 0, 0.18); }
+      box-shadow: 0 12px 13px -9px rgba(0, 0, 0, 0.18);
+      position: fixed;
+      top: 88px; }
     #StreamSection .stream text {
       font-family: "gravurcondensed-regular";
       font-size: 12px; }
