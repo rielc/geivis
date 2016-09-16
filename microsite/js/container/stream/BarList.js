@@ -75,7 +75,9 @@ export class BarList extends StateDb {
       })
 
     e.append("div").classed("left", true).append("div")
-      .classed("bar", true).text(d => `${ d.value }` )
+      .classed("bar", true)
+      // .classed("hidden", d=> d.value/max < 0.2 )
+      .text(d => d.value/max < 0.15 ? `` : `${ d.value }` )
       .style("width", d=> `${ (d.value / max)*100 }%`)
 
     e.append("div").classed("right", true)
@@ -90,7 +92,7 @@ export class BarList extends StateDb {
     s.classed("active", d=> this.state.state.activeItem === d.key)
     
     s.select(".bar")
-      .text(d => `${ d.value }` )
+      .text(d => d.value/max < 0.15 ? `` : `${ d.value }` )
       // .transition()
       .style("width", d=> `${ (d.value / max)*100 }%`);
 

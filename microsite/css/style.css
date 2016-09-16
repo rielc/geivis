@@ -532,7 +532,8 @@ header {
               background: #3C7C9B;
               float: right;
               color: #FFF;
-              padding: 2px; }
+              padding: 2px;
+              height: 14px; }
           #StreamSection .entities .entity .items .item .right {
             float: right;
             width: 55%;
