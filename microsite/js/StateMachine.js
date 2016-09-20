@@ -13,7 +13,8 @@ export class StateMachine {
       loaded:false,
       timestamp:null,
       visible: { StreamSection: true },
-      scrollY: 0
+      scrollY: 0,
+      tooltip: {}
     }
     this.history = [];
     this.history.push(objectAssign({}, this.state));

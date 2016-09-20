@@ -207,13 +207,13 @@ export class StreamGraph extends StateDb {
     
     s.enter()
       .append("path")
-      .on("mouseenter", d=>{
+      .on("mouseenter", (d)=>{
         if(d.key == "other" || !this.big) return;
-        this.state.push({ hover: d.key });
+        this.state.push({ hover: d.key, tooltip: { name: d.key } });
       })
       .on("mouseleave", d=>{
         if(d.key == "other" || !this.big) return;
-        this.state.push({ hover: null });
+        this.state.push({ hover: null, tooltip: null });
       })
       .on("click", d=>{
         if(d.key == "other" || !this.big) return;

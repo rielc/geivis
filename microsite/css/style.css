@@ -572,6 +572,43 @@ header {
       transform: perspective(500px) rotateY(0deg) scale(1);
       box-shadow: 0px 9px 23px -14px rgba(0, 0, 0, 0.52); }
 
+.ctooltip {
+  position: absolute;
+  z-index: 300;
+  left: 0;
+  top: 0;
+  pointer-events: none; }
+  .ctooltip .arrow_box {
+    position: relative;
+    left: -50%;
+    top: -25px;
+    background: #000000;
+    border-radius: 4px;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    font-size: 13px;
+    font-weight: bold;
+    color: #FFF; }
+  .ctooltip .arrow_box:after, .ctooltip .arrow_box:before {
+    top: 100%;
+    left: 50%;
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none; }
+  .ctooltip .arrow_box:after {
+    border-color: transparent;
+    border-top-color: #000000;
+    border-width: 5px;
+    margin-left: -5px; }
+  .ctooltip .arrow_box:before {
+    border-width: 8px;
+    margin-left: -8px; }
+
 /*! tooltip 0.1.0 - 18th Dec 2013 | https://github.com/darsain/tooltip */
 .tooltip {
   position: absolute;

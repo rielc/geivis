@@ -7,6 +7,7 @@ import {StreamSection} from './js/container/stream/StreamSection'
 import {DummySection} from './js/container/dummy/DummySection'
 import {BookshelfSection} from './js/container/bookshelf/BookshelfSection'
 import {GeomapSection} from './js/container/geomap/GeomapSection'
+import {Tooltip} from './js/Tooltip'
 
 
 import {NetworkSection} from './js/container/network/NetworkSection'
@@ -15,6 +16,7 @@ import {TreemapSection} from './js/container/treemap/TreemapSection'
 let state = new StateMachine();
 let db = new DataBase(state);
 let scroll = new ScrollListener(state)
+let tooltip = new Tooltip(state)
 
 let streamSection = new StreamSection(state, db);
 

@@ -79,6 +79,9 @@ export class BarList extends StateDb {
       // .classed("hidden", d=> d.value/max < 0.2 )
       .text(d => d.value/max < 0.15 ? `` : `${ d.value }` )
       .style("width", d=> `${ (d.value / max)*100 }%`)
+      .on("mouseenter", (d)=>{
+        this.state.push({ event: "enter", active: this.key, hover: d.key, tooltip: { name: d.value } });
+      })
 
     e.append("div").classed("right", true)
       .text(d => `${ d.key }` )
