@@ -13,18 +13,19 @@ export class Geomap extends StateDb {
     this.outerHeight = window.innerHeight-100;
     this.margin = {top: 20, right: 20, bottom: 20, left: 20};
 
-    this.projection = d3v3.geo.mercator();
+    this.projection = d3.geoMercator();
       
-    this.path = d3v3.geo.path().projection(this.projection);
+    this.path = d3.geoPath().projection(this.projection);
     
     div.selectAll("*").remove() // temp fix
 
-    this.svg = d3v3.select(div.node()).append("svg");
+    this.svg = d3.select(div.node()).append("svg");
     this.g = this.svg.append("g");
     this.land = this.g.append("path").attr("class","land");
     this.rivers = this.g.append("path").attr("class","river");
 
     this.scale = d3v3.scale.linear().range([1,20]);
+    this.opacity = d3.scaleLog().range([0.2,1])
     this.fontscale = d3v3.scale.linear().range([10,15]);
 
     return this;
@@ -35,7 +36,7 @@ export class Geomap extends StateDb {
     this.height = this.outerHeight - this.margin.top - this.margin.bottom;
 
     this.projection
-      .center([16, 49.8])
+      .center([15, 49])
       .scale(3500)
       .translate([outerWidth / 2, outerHeight / 2])
 
@@ -87,6 +88,7 @@ export class Geomap extends StateDb {
     let places = this.db["places"].top(100);
     let max = d3v3.max(places, d=>d.value);
 
+    this.opacity.domain([0.1,max]);
     this.scale.domain([0.1, max]).clamp(true);
     this.fontscale.domain(d3v3.extent(places, d=>d.value)).clamp(true);
 
@@ -103,29 +105,60 @@ export class Geomap extends StateDb {
 
     let e = s.enter()
       .append("g")
+      .on("mouseenter", (d,i,l)=> {
+        d3.select(l[i])
+          .style("opacity", 1)
+          .select("text")
+          .text(d2 => `${d.key} (${d.value})`)
+      })
+      .on("mouseleave", (d,i,l)=> {
+        d3.select(l[i])
+          .style("opacity", d=>this.opacity(d.value))
+          .select("text")
+          .text(d2 => `${d.key}`)
+      })
       
       e.append("circle")
+        .attr("fill", d=> "#3C7C9B")
+        .attr("r", d => this.scale(d.value))
+        .style("opacity", d=>d.value ? 1: 0)
+
       e.append("text")
         .attr("dx", d=>(this.scale(d.value)+2)+"px")
         .attr("dy", d=>(this.scale(d.value)+2)+"px")
         .text(d => d.key)
+        .style("font-size", d=>(this.fontscale(d.value)+"px"))
+      
+      e.merge(s)
+        .attr("transform", d=> {
+          const p = this.projection([d.lon,d.lat]);
+          return `translate(${p[0]},${p[1]})`;
+        })
+        .style("opacity", d=>this.opacity(d.value))
+        .style("display", d=> d.value ? "": "none")
 
-    s
-      .attr("transform", d=> {
-        const p = this.projection([d.lon,d.lat]);
-        return `translate(${p[0]},${p[1]})`;
-      })
+
     
     s.select("text")
       .attr("dx", d=>(this.scale(d.value)+2)+"px")
       .attr("dy", d=>(this.scale(d.value)+2)+"px")
-      .style("opacity", d=>((d.value/max)*4))
       .style("font-size", d=>(this.fontscale(d.value)+"px"))
 
     s.select("circle")
       .attr("fill", d=> "#3C7C9B")
       .attr("r", d => this.scale(d.value))
-      .style("opacity", d=>d.value ? 1: 0)
+
+    // slow...
+    // e.merge(s).select("text")
+    //   .attr("dx", d=>(this.scale(d.value)+2)+"px")
+    //   .attr("dy", d=>(this.scale(d.value)+2)+"px")
+    //   .style("opacity", d=>((d.value/max)*4))
+    //   .style("font-size", d=>(this.fontscale(d.value)+"px"))
+
+    // e.merge(s).select("circle")
+    //   .attr("fill", d=> "#3C7C9B")
+    //   .attr("r", d => this.scale(d.value))
+    //   .style("opacity", d=>d.value ? 1: 0)
 
 
     s.exit().remove();
