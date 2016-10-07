@@ -42,7 +42,6 @@ export class NetworkSection extends Section {
     // init
     if (next.loaded != last.loaded) {
       this.network.updateData(this.db.date.top(Infinity))
-      //this.network.cacheLinksAndNodes(this.db.date.top(Infinity))
       this.network.render("brushend");
     }
 
@@ -56,12 +55,15 @@ export class NetworkSection extends Section {
   }
 
   render(next, last){
+
+    // this simple hack enables brushstart,brushmove and brushend events
+    let event = (last.event != next.event && next.event == "brushmove") ? "brushstart" : next.event;
+
       this.title.html(`All tags from ${next.brushStart.getFullYear()} to ${next.brushEnd.getFullYear()}`);
       let data = this.db.date.top(Infinity);
       if (data.length>0) {
-        let keyframe = next.event;
         this.network.updateData(data);
-        this.network.render(keyframe);
+        this.network.render(event);
       }
   }
 

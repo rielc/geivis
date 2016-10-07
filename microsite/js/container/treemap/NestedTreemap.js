@@ -68,24 +68,7 @@ export class NestedTreemap {
 		}
 
 		nesting.rollup(d=>d.length);
-
-		//let hist = d3.histogram().value(h=>h.value).thresholds([2])
-
-
-		console.time("nest");
 		let nested = nesting.entries(data);
-		console.timeEnd("nest");
-
-		// let nested = nesting.entries(data).map( d=> {
-		// 	let rHist = hist(d.values);
-		// 	if (rHist.length>1) {
-		// 		let rVal = d3.values(rHist[1]).filter(f=> typeof f === "object");
-		// 		rVal.push({key:"Other", value : d3.sum(rHist[0], s=>s.value)});
-		// 		return { key:d.key, values: rVal };
-		// 	} else {
-		// 		return d;
-		// 	}
-		// });	
 
 		this.root = d3
 			.hierarchy( { key : "all values", values : nested }, function(d) { return d.values; })
@@ -170,55 +153,47 @@ export class NestedTreemap {
 	}
 
 
+	checkOverflow (d,i,array) {
+		let el = d3.select(this);
+		let o = GeiVisUtils.checkOverflow(el.node());
+		if (o == "overflow") {
+			el.classed("overflow", true);
+		  	el.attr("data-balloon", d=>d.data.key);
+		  	el.attr("data-balloon-pos", "up");
+		} else {
+			el.attr("data-balloon", null);
+			el.attr("data-balloon-pos", null);
+			el.classed("overflow", false);
+		}
+	}
+
+	dKey (d) {
+		let k = d.data.key
+		k += d.parent!=undefined?d.parent.data.key:'root'
+		return k
+	}
+
 
 	render(mode) {
 
-		function checkOverflow (d,i,array) {
-			let el = d3.select(this);
-			let o = GeiVisUtils.checkOverflow(el.node());
-			overflow.push(overflow);
+		console.log(mode)
 
-		}
-
-		function setOverflow (d,i,array) {
-
-			let el = d3.select(this);
-
-			if (overflow[i] == "overflow") {
-				el.classed("overflow", true);
-			  	el.attr("data-balloon", d=>d.data.key);
-			  	el.attr("data-balloon-pos", "up");
-			} else {
-				el.attr("data-balloon", null);
-				el.attr("data-balloon-pos", null);
-				el.classed("overflow", false);
-			}
-		}
-
+		// this filter function enables us render partial data depending on the brushevent
 		let filter = () => true;
-
 		switch (mode) {
-			case "brushmove" :
-				filter = (d) => { return (d.depth > 0 && d.depth < 2) };
-			break;
-			case "brushend" :
-				filter = (d) => { return (d.depth > 0) };
-			break;
+			case "brushmove" : filter = (d) => { return (d.depth > 0 && d.depth < 2) }; break;
+			case "brushend" : filter = (d) => { return (d.depth > 0) }; break;
 		}
 
-		let data = this.root.descendants().filter(filter);
-
-		this.nodes = this.svg
-			.selectAll(".node").data(data, d=>d.data.key);
+		// data filtered depending on the brushevent
+		let data = this.root.descendants().filter(filter)
+		this.nodes = this.svg.selectAll(".node").data(data, this.dKey)
 
 		switch (mode) {
 			case "brushstart" :
 				// update all existing nodes
 				this.nodes
 					.call(this.setNodeDimensions)
-					.transition()
-					.duration(300)
-					.delay((d,i) => i*100)
 					.style("height", "100px")
 					.call(this.setNodeID)
 					.call(this.setNodeClass);
@@ -226,63 +201,51 @@ export class NestedTreemap {
 			case "brushmove" :
 				// update all existing nodes
 				this.nodes
-					.call(this.setNodeID)
-					.call(this.setNodeClass)
-					.transition()
-					.duration(300)
-					.delay((d,i) => i*100)
-					.call(this.setNodeDimensions);
-			break;
-			case "brushEnd" :
-				// update all existing nodes
-				this.nodes
 					.call(this.setNodeDimensions)
 					.call(this.setNodeID)
-					.call(this.setNodeClass);
+					.call(this.setNodeClass)
+			break;
+			case "brushend" :
+
+				this.nodes
+					.call(this.setNodeID)
+					.call(this.setNodeClass)
+					.call(this.setNodeDimensions)
+
+				let enteredNodes = 
+					this.nodes
+						.enter()
+						.append("div")
+						.call(this.setNodeClass)
+						.call(this.setNodeDimensions)
+						.call(this.setNodeID)
+						.call(this.setMouseBehaviour.bind(this));
+
+				enteredNodes
+					.append("span")
+					.classed("label", true)
+					.text(d => d.depth!=0?d.data.key:null);
+
+				enteredNodes
+					.append("span")
+					.classed("count", true)
+					.text(d => d.depth!=0?d.data.value:null);
+
+				// got through each new node and check if its overflowing
+		    enteredNodes
+		      .call( (d) => { 
+		      	d.nodes().forEach( (n) => {
+		      		this.checkOverflow.bind(n)()
+		      	})
+		      })
+
 			break;
 		}
-
-
-
-
-		//console.time("append nodes");
-
-		// let enteredNodes = this.nodes.enter();
-
-		let enteredNodes = 
-			this.nodes
-				.enter()
-				.append("div")
-				.call(this.setNodeClass)
-				.call(this.setNodeDimensions)
-				.call(this.setNodeID)
-				.call(this.setMouseBehaviour.bind(this));
-
-		enteredNodes
-			.append("span")
-			.classed("label", true)
-			.text(d => d.depth!=0?d.data.key:null);
-
-		enteredNodes
-			.append("span")
-			.classed("count", true)
-			.text(d => d.depth!=0?d.data.value:null);
-
-		//console.timeEnd("append nodes");
 
 
 		this.nodes
 			.exit()
 			.remove();
-
-		let overflow = [];
-
-		// window.fastdom.measure( () => { 
-			this.nodes.each( checkOverflow );
-		// });
-		// window.fastdom.mutate( () => {
-			this.nodes.each( setOverflow );
-		// });
 
 		return this;
   	}

@@ -37,11 +37,13 @@ export class TreemapSection extends Section {
   }
 
 
-
   stateChange(next, last) {
 
     // init
-    if (next.loaded != last.loaded) this.treemap.updateData(this.db.date.top(Infinity)).render();
+    if (next.loaded != last.loaded) {
+      this.treemap.updateData(this.db.date.top(Infinity))
+      this.treemap.render("brushend");
+    }
     
     if (!next.visible.TreemapSection) return;
 
@@ -54,7 +56,7 @@ export class TreemapSection extends Section {
   }
 
 
-  render(next, last){
+    render(next, last){
 
     // this simple hack enables brushstart,brushmove and brushend events
     let event = (last.event != next.event && next.event == "brushmove") ? "brushstart" : next.event;
@@ -68,7 +70,6 @@ export class TreemapSection extends Section {
       this.treemap.render(event);
     }
   }
-
 
 
 

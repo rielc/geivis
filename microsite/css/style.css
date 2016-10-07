@@ -310,6 +310,17 @@ header .navi a:hover, header .navi a:active {
   margin-top: 88px;
   height: auto;
 }
+/* line 7, ../sass/_intro.scss */
+#intro p {
+  -webkit-column-count: 2;
+  /* Chrome, Safari, Opera */
+  -moz-column-count: 2;
+  /* Firefox */
+  column-count: 2;
+  font-size: 18px;
+  color: #707070;
+  margin-top: 10px;
+}
 
 /* line 3, ../sass/_nested-treemap.scss */
 #TreemapSection .visualization {
@@ -347,56 +358,62 @@ header .navi a:hover, header .navi a:active {
   position: absolute;
   text-align: center;
   z-index: 2 !important;
+  transition: transform 0.4s, width 0.4s, height 0.4s, background-color 0.4s;
 }
-/* line 42, ../sass/_nested-treemap.scss */
+/* line 43, ../sass/_nested-treemap.scss */
 #TreemapSection .node.related {
   background-color: #7ad8ff;
 }
-/* line 44, ../sass/_nested-treemap.scss */
+/* line 45, ../sass/_nested-treemap.scss */
 #TreemapSection .node.related .label, #TreemapSection .node.related .count {
   color: #fff !important;
 }
-/* line 48, ../sass/_nested-treemap.scss */
+/* line 49, ../sass/_nested-treemap.scss */
 #TreemapSection .node.overflow .label, #TreemapSection .node.overflow .count {
   display: none;
 }
-/* line 51, ../sass/_nested-treemap.scss */
+/* line 52, ../sass/_nested-treemap.scss */
 #TreemapSection .node .label {
+  transition: color 0.4s;
   position: absolute;
 }
-/* line 54, ../sass/_nested-treemap.scss */
+/* line 53, ../sass/_nested-treemap.scss */
+#TreemapSection .node .count {
+  transition: color 0.4s;
+}
+/* line 55, ../sass/_nested-treemap.scss */
 #TreemapSection .node.other {
   border-bottom: none !important;
 }
-/* line 59, ../sass/_nested-treemap.scss */
+/* line 60, ../sass/_nested-treemap.scss */
 #TreemapSection .level-1 {
   z-index: 1 !important;
   padding-top: 5px;
-  border: 1px solid #eeeeee;
+  box-shadow: 0 0 0 1px #eeeeee inset;
 }
-/* line 65, ../sass/_nested-treemap.scss */
+/* line 66, ../sass/_nested-treemap.scss */
 #TreemapSection .level-1 .label {
   color: #707070;
   position: absolute;
   transform: translate(-50%, 0px);
   font-size: 12px;
 }
-/* line 74, ../sass/_nested-treemap.scss */
+/* line 75, ../sass/_nested-treemap.scss */
 #TreemapSection .level-2 {
   background-color: rgba(238, 238, 238, 0.4);
-  border-bottom: 1px solid #fff;
+  box-shadow: 0 -1px 0 0 #eeeeee inset;
 }
-/* line 79, ../sass/_nested-treemap.scss */
+/* line 80, ../sass/_nested-treemap.scss */
 #TreemapSection .level-2:hover {
   z-index: 3 !important;
   background-color: rgba(176, 0, 70, 0.3);
   color: #fff;
 }
-/* line 83, ../sass/_nested-treemap.scss */
+/* line 84, ../sass/_nested-treemap.scss */
 #TreemapSection .level-2:hover .label, #TreemapSection .level-2:hover .count {
   color: #fff;
 }
-/* line 85, ../sass/_nested-treemap.scss */
+/* line 86, ../sass/_nested-treemap.scss */
 #TreemapSection .level-2 .label {
   padding-left: 20px;
   text-align: left;
@@ -407,7 +424,7 @@ header .navi a:hover, header .navi a:active {
   font-size: 12px;
   color: #707070 !important;
 }
-/* line 96, ../sass/_nested-treemap.scss */
+/* line 97, ../sass/_nested-treemap.scss */
 #TreemapSection .level-2 .count {
   box-sizing: border-box;
   text-align: right;
@@ -421,13 +438,13 @@ header .navi a:hover, header .navi a:active {
   font-size: 10px;
 }
 
-/* line 111, ../sass/_nested-treemap.scss */
+/* line 112, ../sass/_nested-treemap.scss */
 .dropdown {
   position: relative;
   display: inline-block;
 }
 
-/* line 116, ../sass/_nested-treemap.scss */
+/* line 117, ../sass/_nested-treemap.scss */
 .dropdown .dropdown-menu {
   position: absolute;
   top: 100%;
@@ -443,13 +460,13 @@ header .navi a:hover, header .navi a:active {
   padding: 0;
 }
 
-/* line 131, ../sass/_nested-treemap.scss */
+/* line 132, ../sass/_nested-treemap.scss */
 .dropdown:hover .dropdown-menu {
   display: block;
 }
 
 /** Button Styles **/
-/* line 136, ../sass/_nested-treemap.scss */
+/* line 137, ../sass/_nested-treemap.scss */
 .dropdown button {
   background: #FF6223;
   color: #FFFFFF;
@@ -460,7 +477,7 @@ header .navi a:hover, header .navi a:active {
 }
 
 /** List Item Styles **/
-/* line 146, ../sass/_nested-treemap.scss */
+/* line 147, ../sass/_nested-treemap.scss */
 .dropdown a {
   display: block;
   padding: 0.2em 0.8em;
@@ -470,7 +487,7 @@ header .navi a:hover, header .navi a:active {
 }
 
 /** List Item Hover Styles **/
-/* line 155, ../sass/_nested-treemap.scss */
+/* line 156, ../sass/_nested-treemap.scss */
 .dropdown a:hover {
   background: #BBBBBB;
 }
@@ -1334,19 +1351,19 @@ header .navi a:hover, header .navi a:active {
   font-family: "egyptienne";
   src: url("egyptienne.woff") format("woff");
 }
-/* line 46, ../sass/style.scss */
+/* line 34, ../sass/style.scss */
 body {
   font: 10px "gravurcondensed-regular", sans-serif;
   margin: 0;
   padding: 0;
 }
 
-/* line 53, ../sass/style.scss */
+/* line 40, ../sass/style.scss */
 p {
   font: 12px "egyptienne", sans-serif;
 }
 
-/* line 59, ../sass/style.scss */
+/* line 46, ../sass/style.scss */
 section {
   position: relative;
   display: flex;
@@ -1356,7 +1373,7 @@ section {
   flex-direction: column;
   height: calc(100vh - 188px);
 }
-/* line 69, ../sass/style.scss */
+/* line 56, ../sass/style.scss */
 section h2.title {
   font-face: "gravurcondensed-bold";
   box-sizing: border-box;
@@ -1366,51 +1383,51 @@ section h2.title {
   font-weight: bold;
   text-align: left;
 }
-/* line 78, ../sass/style.scss */
+/* line 65, ../sass/style.scss */
 section h2.title .years {
   font-face: "gravurcondensed-regular";
   font-weight: normal;
   color: #a3a3a3;
 }
 
-/* line 88, ../sass/style.scss */
+/* line 75, ../sass/style.scss */
 .control {
   width: 100%;
 }
-/* line 90, ../sass/style.scss */
+/* line 77, ../sass/style.scss */
 .control svg {
   background-color: #fff;
 }
-/* line 92, ../sass/style.scss */
+/* line 79, ../sass/style.scss */
 .control svg .grid-background {
   fill: rgba(190, 230, 249, 0.26);
 }
 
-/* line 102, ../sass/style.scss */
+/* line 89, ../sass/style.scss */
 text {
   font: 10px sans-serif;
 }
 
-/* line 106, ../sass/style.scss */
+/* line 93, ../sass/style.scss */
 tspan:last-child {
   font-size: 9px;
   fill-opacity: 0.8;
 }
 
-/* line 112, ../sass/style.scss */
+/* line 99, ../sass/style.scss */
 .container {
   position: relative;
   margin: auto auto;
   width: 1200px;
 }
 
-/* line 118, ../sass/style.scss */
+/* line 105, ../sass/style.scss */
 ::-webkit-scrollbar {
   -webkit-appearance: none;
   width: 7px;
 }
 
-/* line 122, ../sass/style.scss */
+/* line 109, ../sass/style.scss */
 ::-webkit-scrollbar-thumb {
   border-radius: 4px;
   background-color: rgba(0, 0, 0, 0.5);
