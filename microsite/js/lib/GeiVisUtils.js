@@ -1,23 +1,25 @@
 export let __hotReload = true;
 
 export function checkPartialOverflow (el, min) {
-  if ( el.offsetHeight < min || el.offsetWidth < min ) {
-    return "overflow";
-  } else {
-    if ( el.offsetHeight < el.scrollHeight || el.offsetWidth < el.scrollWidth) {
-      return "partial-overflow";
+
+  console.log('el', el.offsetHeight, 'min', min)
+    if ( el.offsetHeight < min || el.offsetWidth < min ) {
+      return "overflow";
     } else {
-      return "no-overflow";
+      if ( el.offsetHeight < el.scrollHeight || el.offsetWidth < el.scrollWidth) {
+        return "partial-overflow";
+      } else {
+        return "no-overflow";
+      }
     }
-  }
 }
 
 export function checkOverflow (el) {
-  if ( el.offsetHeight < el.scrollHeight || el.offsetWidth < el.scrollWidth) {
-    return "overflow";
-  } else {
-    return "no-overflow";
-  }
+    if ( el.offsetHeight < el.scrollHeight || el.offsetWidth < el.scrollWidth) {
+      return "overflow";
+    } else {
+      return "no-overflow";
+    }
 }
 
 export function makeSafeForCSS (name) {

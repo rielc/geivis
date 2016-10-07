@@ -1,0 +1,18 @@
+#DonutChart {
+    z-index:3;
+    position:absolute;
+    left:50%;
+    top:50%;
+    transform:translate(-50%, -50%);
+    pointer-events: none;
+
+    path {
+        pointer-events:all;
+        cursor: pointer;
+        &:hover { fill:salmon !important; }
+    }
+
+    &.hidden {
+        display:none;
+    } 
+}

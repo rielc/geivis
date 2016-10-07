@@ -1,5 +1,13 @@
 #NetworkSection {
 
+    &.hasTransition {
+        .node {
+            transition-timing-function: cubic-bezier(.78,.06,.58,1);
+            transition: transform 0.4s, opacity 0.4s, border 0.4s;
+      }  
+
+    }
+
     .node {
         position:absolute;
         //display:block;
@@ -7,9 +15,7 @@
         box-sizing: border-box;
         background-color: $blue;
         cursor: pointer;
-        //z-index:0 !important;
 
-        transition: background-color 0.1s, opacity 0.1s;
         
         &:hover {
             background-color: rgba($red, 0.3);
@@ -51,15 +57,10 @@
         }
 
         &.inactive {
-            border:2px solid rgba($blue, 0.125);
-            background-color: transparent;
-            opacity: 1 !important;
+            //box-shadow:  0 0 0 1px rgba($blue, 1.0) inset, 0 0 0 1000px rgba(#fff, 1.0) inset;
+            opacity: 0.1 !important;
             > .label { display:none !important }
             > .count { display:none !important }
-        }
-
-        &.transition {
-            .label, .count { display:none !important;}
         }
 
 

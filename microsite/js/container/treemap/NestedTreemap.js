@@ -25,6 +25,7 @@ export class NestedTreemap {
 		this.color;
 		this.state;
 		this.layout = "SliceDice";
+		this.order = [];
 	}
 
 	appendTo (selector) {
@@ -69,7 +70,11 @@ export class NestedTreemap {
 		nesting.rollup(d=>d.length);
 
 		//let hist = d3.histogram().value(h=>h.value).thresholds([2])
+
+
+		console.time("nest");
 		let nested = nesting.entries(data);
+		console.timeEnd("nest");
 
 		// let nested = nesting.entries(data).map( d=> {
 		// 	let rHist = hist(d.values);
@@ -124,82 +129,62 @@ export class NestedTreemap {
 	}
 
 
-	render() {
-
-		let that = this;
-
-		function updateNode (s) {
-			s
+	setNodeDimensions (selection) {
+		selection
 			.style("transform", d => `translate3d(${d.x0}px,${d.y0}px,0px)` )
-			//.style("border", d=> (Math.abs(d.x1-d.x0)<3||Math.abs(d.y1-d.y0)<3) ? "none" : null)
 			.style("width", d => { return ((d.x1-d.x0)+"px"); })
-  			.style("height", d => ((d.y1 - d.y0)+"px"));
+			.style("height", d => ((d.y1 - d.y0)+"px"));
 
-  			s.each( checkOverflow );
-		}
+		selection.select(".label").text(d => d.depth!=0?d.data.key:null);
+		selection.select(".count").text(d => d.depth!=0?d.data.value:null);
+	}
 
-
-		//this.svg.selectAll(".node").remove();	
-		
-		let data = this.root.descendants().filter(d=>d.depth>0);
-
-		this.nodes = this.svg
-			.selectAll(".node")
-			.data(data, d=>d.data.key)
-			.call(updateNode)
+	setNodeClass (selection) {
+		selection
 			.attr("class", d => {
 				let c = GeiVisUtils.makeSafeForCSS(d.data.key) + " node " + "level-"+d.depth;
 				c += (Math.abs(d.x1-d.x0)<3||Math.abs(d.y1-d.y0)<3) ? " other" : "";
 				return c;
 			});
+	}
 
-		this.nodes.select(".label").text(d => d.depth!=0?d.data.key:null);
-		this.nodes.select(".count").text(d => d.depth!=0?d.data.value:null);
+	setNodeID (selection) {
+		selection
+		.attr("id", (d) => {
+			if (d.depth === 1) return GeiVisUtils.makeSafeForCSS(d.data.key);
+			if (d.depth === 2) return GeiVisUtils.makeSafeForCSS(d.parent.data.key + d.data.key);
+		});
+	}
 
-		this.nodes.each(checkOverflow);
-
-		let enteredNodes = this.nodes.enter();
-
-		let appendedNode = enteredNodes
-			.append("div")
-			.attr("class", d => {
-				let c = GeiVisUtils.makeSafeForCSS(d.data.key) + " node " + "level-"+d.depth;
-				c += (Math.abs(d.x1-d.x0)<3||Math.abs(d.y1-d.y0)<3) ? " other" : "";
-				return c;
-			})
-			.on("mouseover", function (d) {
+	setMouseBehaviour (selection) {
+		selection
+			.on("mouseover", (d) => {
 				if (d.depth===2) {
-					that.svg.selectAll(".node").classed("related", false);
-					that.svg.selectAll("."+GeiVisUtils.makeSafeForCSS(d.data.key)).classed("related", true);
+					this.svg.selectAll(".node").classed("related", false);
+					this.svg.selectAll("."+GeiVisUtils.makeSafeForCSS(d.data.key)).classed("related", true);
 				}
 			})
-			.on("mouseout", function (d) {
-				that.svg.selectAll(".node").classed("related", false);
+			.on("mouseout", (d) => {
+				this.svg.selectAll(".node").classed("related", false);
 			})
-			.attr("id", d => {
-				if (d.depth === 1) return GeiVisUtils.makeSafeForCSS(d.data.key);
-				if (d.depth === 2) return GeiVisUtils.makeSafeForCSS(d.parent.data.key+d.data.key);
-			})
-			.call(updateNode);
+	}
 
 
-		appendedNode
-			.append("span")
-			.classed("label", true)
-			.text(d => d.depth!=0?d.data.key:null);
 
-		appendedNode
-			.append("span")
-			.classed("count", true)
-			.text(d => d.depth!=0?d.data.value:null);
+	render(mode) {
 
-		appendedNode
-			.each( checkOverflow );
-
-		function checkOverflow (d) {
+		function checkOverflow (d,i,array) {
 			let el = d3.select(this);
-			let overflow = GeiVisUtils.checkOverflow(el.node());
-			if (overflow == "overflow") {
+			let o = GeiVisUtils.checkOverflow(el.node());
+			overflow.push(overflow);
+
+		}
+
+		function setOverflow (d,i,array) {
+
+			let el = d3.select(this);
+
+			if (overflow[i] == "overflow") {
 				el.classed("overflow", true);
 			  	el.attr("data-balloon", d=>d.data.key);
 			  	el.attr("data-balloon-pos", "up");
@@ -210,9 +195,94 @@ export class NestedTreemap {
 			}
 		}
 
+		let filter = () => true;
+
+		switch (mode) {
+			case "brushmove" :
+				filter = (d) => { return (d.depth > 0 && d.depth < 2) };
+			break;
+			case "brushend" :
+				filter = (d) => { return (d.depth > 0) };
+			break;
+		}
+
+		let data = this.root.descendants().filter(filter);
+
+		this.nodes = this.svg
+			.selectAll(".node").data(data, d=>d.data.key);
+
+		switch (mode) {
+			case "brushstart" :
+				// update all existing nodes
+				this.nodes
+					.call(this.setNodeDimensions)
+					.transition()
+					.duration(300)
+					.delay((d,i) => i*100)
+					.style("height", "100px")
+					.call(this.setNodeID)
+					.call(this.setNodeClass);
+			break;
+			case "brushmove" :
+				// update all existing nodes
+				this.nodes
+					.call(this.setNodeID)
+					.call(this.setNodeClass)
+					.transition()
+					.duration(300)
+					.delay((d,i) => i*100)
+					.call(this.setNodeDimensions);
+			break;
+			case "brushEnd" :
+				// update all existing nodes
+				this.nodes
+					.call(this.setNodeDimensions)
+					.call(this.setNodeID)
+					.call(this.setNodeClass);
+			break;
+		}
+
+
+
+
+		//console.time("append nodes");
+
+		// let enteredNodes = this.nodes.enter();
+
+		let enteredNodes = 
+			this.nodes
+				.enter()
+				.append("div")
+				.call(this.setNodeClass)
+				.call(this.setNodeDimensions)
+				.call(this.setNodeID)
+				.call(this.setMouseBehaviour.bind(this));
+
+		enteredNodes
+			.append("span")
+			.classed("label", true)
+			.text(d => d.depth!=0?d.data.key:null);
+
+		enteredNodes
+			.append("span")
+			.classed("count", true)
+			.text(d => d.depth!=0?d.data.value:null);
+
+		//console.timeEnd("append nodes");
+
+
 		this.nodes
 			.exit()
 			.remove();
+
+		let overflow = [];
+
+		// window.fastdom.measure( () => { 
+			this.nodes.each( checkOverflow );
+		// });
+		// window.fastdom.mutate( () => {
+			this.nodes.each( setOverflow );
+		// });
 
 		return this;
   	}
@@ -236,6 +306,7 @@ export class NestedTreemap {
 			.attr("selected", d => d == this.levelA ? "true" : null)
 			.attr("value", (d) => { return d; })
 			.text( (d) => { return d; });
+
 		this.dropdownB
 			.selectAll("option")
 			.data(n)

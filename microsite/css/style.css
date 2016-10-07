@@ -10,6 +10,7 @@
 -------------------------------------------------------------------------------*/
 /* Let's default this puppy out
 -------------------------------------------------------------------------------*/
+/* line 15, ../sass/_reset.scss */
 html, body, body div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, abbr, address, cite, code, del, dfn, em, img, ins, kbd, q, samp, small, strong, sub, sup, var, b, i, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, figure, footer, header, menu, nav, section, time, mark, audio, video, details, summary {
   margin: 0;
   padding: 0;
@@ -17,28 +18,37 @@ html, body, body div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquot
   font-size: 100%;
   font-weight: normal;
   vertical-align: baseline;
-  background: transparent; }
+  background: transparent;
+}
 
+/* line 25, ../sass/_reset.scss */
 article, aside, figure, footer, header, nav, section, details, summary {
-  display: block; }
+  display: block;
+}
 
 /* Handle box-sizing while better addressing child elements:
    http://css-tricks.com/inheriting-box-sizing-probably-slightly-better-best-practice/ */
+/* line 29, ../sass/_reset.scss */
 html {
-  box-sizing: border-box; }
+  box-sizing: border-box;
+}
 
+/* line 33, ../sass/_reset.scss */
 *,
 *:before,
 *:after {
-  box-sizing: inherit; }
+  box-sizing: inherit;
+}
 
 /* consider resetting the default cursor: https://gist.github.com/murtaugh/5247154 */
 /* Responsive images and other embedded objects */
 /* if you don't have full control over `img` tags (if you have to overcome attributes), consider adding height: auto */
+/* line 43, ../sass/_reset.scss */
 img,
 object,
 embed {
-  max-width: 100%; }
+  max-width: 100%;
+}
 
 /*
    Note: keeping IMG here will cause problems if you're using foreground images as sprites.
@@ -50,63 +60,88 @@ embed {
 }
 */
 /* force a vertical scrollbar to prevent a jumpy page */
+/* line 58, ../sass/_reset.scss */
 html {
-  overflow-y: scroll; }
+  overflow-y: scroll;
+}
 
 /* we use a lot of ULs that aren't bulleted.
 	you'll have to restore the bullets within content,
 	which is fine because they're probably customized anyway */
+/* line 63, ../sass/_reset.scss */
 ul {
-  list-style: none; }
+  list-style: none;
+}
 
+/* line 65, ../sass/_reset.scss */
 blockquote, q {
-  quotes: none; }
+  quotes: none;
+}
 
+/* line 67, ../sass/_reset.scss */
 blockquote:before,
 blockquote:after,
 q:before,
 q:after {
   content: '';
-  content: none; }
+  content: none;
+}
 
+/* line 72, ../sass/_reset.scss */
 a {
   margin: 0;
   padding: 0;
   font-size: 100%;
   vertical-align: baseline;
-  background: transparent; }
+  background: transparent;
+}
 
+/* line 74, ../sass/_reset.scss */
 del {
-  text-decoration: line-through; }
+  text-decoration: line-through;
+}
 
+/* line 76, ../sass/_reset.scss */
 abbr[title], dfn[title] {
   border-bottom: 1px dotted #000;
-  cursor: help; }
+  cursor: help;
+}
 
 /* tables still need cellspacing="0" in the markup */
+/* line 79, ../sass/_reset.scss */
 table {
   border-collapse: separate;
-  border-spacing: 0; }
+  border-spacing: 0;
+}
 
+/* line 80, ../sass/_reset.scss */
 th {
   font-weight: bold;
-  vertical-align: bottom; }
+  vertical-align: bottom;
+}
 
+/* line 81, ../sass/_reset.scss */
 td {
   font-weight: normal;
-  vertical-align: top; }
+  vertical-align: top;
+}
 
+/* line 83, ../sass/_reset.scss */
 hr {
   display: block;
   height: 1px;
   border: 0;
   border-top: 1px solid #ccc;
   margin: 1em 0;
-  padding: 0; }
+  padding: 0;
+}
 
+/* line 85, ../sass/_reset.scss */
 input, select {
-  vertical-align: middle; }
+  vertical-align: middle;
+}
 
+/* line 87, ../sass/_reset.scss */
 pre {
   white-space: pre;
   /* CSS2 */
@@ -115,85 +150,123 @@ pre {
   white-space: pre-line;
   /* CSS 3 (and 2.1 as well, actually) */
   word-wrap: break-word;
-  /* IE */ }
+  /* IE */
+}
 
+/* line 94, ../sass/_reset.scss */
 input[type="radio"] {
-  vertical-align: text-bottom; }
+  vertical-align: text-bottom;
+}
 
+/* line 95, ../sass/_reset.scss */
 input[type="checkbox"] {
-  vertical-align: bottom; }
+  vertical-align: bottom;
+}
 
+/* line 96, ../sass/_reset.scss */
 .ie7 input[type="checkbox"] {
-  vertical-align: baseline; }
+  vertical-align: baseline;
+}
 
+/* line 97, ../sass/_reset.scss */
 .ie6 input {
-  vertical-align: text-bottom; }
+  vertical-align: text-bottom;
+}
 
+/* line 99, ../sass/_reset.scss */
 select, input, textarea {
-  font: 99% sans-serif; }
+  font: 99% sans-serif;
+}
 
+/* line 101, ../sass/_reset.scss */
 table {
   font-size: inherit;
-  font: 100%; }
+  font: 100%;
+}
 
+/* line 103, ../sass/_reset.scss */
 small {
-  font-size: 85%; }
+  font-size: 85%;
+}
 
+/* line 105, ../sass/_reset.scss */
 strong {
-  font-weight: bold; }
+  font-weight: bold;
+}
 
+/* line 107, ../sass/_reset.scss */
 td, td img {
-  vertical-align: top; }
+  vertical-align: top;
+}
 
 /* Make sure sup and sub don't mess with your line-heights http://gist.github.com/413930 */
+/* line 110, ../sass/_reset.scss */
 sub, sup {
   font-size: 75%;
   line-height: 0;
-  position: relative; }
+  position: relative;
+}
 
+/* line 111, ../sass/_reset.scss */
 sup {
-  top: -0.5em; }
+  top: -0.5em;
+}
 
+/* line 112, ../sass/_reset.scss */
 sub {
-  bottom: -0.25em; }
+  bottom: -0.25em;
+}
 
 /* standardize any monospaced elements */
+/* line 115, ../sass/_reset.scss */
 pre, code, kbd, samp {
-  font-family: monospace, sans-serif; }
+  font-family: monospace, sans-serif;
+}
 
 /* hand cursor on clickable elements */
+/* line 118, ../sass/_reset.scss */
 .clickable,
 label,
 input[type=button],
 input[type=submit],
 input[type=file],
 button {
-  cursor: pointer; }
+  cursor: pointer;
+}
 
 /* Webkit browsers add a 2px margin outside the chrome of form elements */
+/* line 126, ../sass/_reset.scss */
 button, input, select, textarea {
-  margin: 0; }
+  margin: 0;
+}
 
 /* make buttons play nice in IE */
+/* line 129, ../sass/_reset.scss */
 button,
 input[type=button] {
   width: auto;
-  overflow: visible; }
+  overflow: visible;
+}
 
 /* scale images in IE7 more attractively */
+/* line 133, ../sass/_reset.scss */
 .ie7 img {
-  -ms-interpolation-mode: bicubic; }
+  -ms-interpolation-mode: bicubic;
+}
 
 /* prevent BG image flicker upon hover
    (commented out as usage is rare, and the filter syntax messes with some pre-processors)
 .ie6 html {filter: expression(document.execCommand("BackgroundImageCache", false, true));}
 */
 /* let's clear some floats */
+/* line 141, ../sass/_reset.scss */
 .clearfix:after {
   content: " ";
   display: block;
-  clear: both; }
+  clear: both;
+}
 
+/* line 1, ../sass/_header.scss */
 header {
   padding-top: 20px;
   padding-bottom: 20px;
@@ -202,35 +275,51 @@ header {
   position: fixed;
   z-index: 500;
   background: #FFF;
-  top: 0px; }
-  header .logo {
-    width: 200px;
-    float: left;
-    padding-left: 10px; }
-  header .navi {
-    float: right;
-    text-transform: uppercase;
-    padding-top: 10px; }
-    header .navi a {
-      color: #000;
-      text-decoration: none;
-      width: 150px;
-      float: left;
-      font-size: 20px;
-      text-align: center; }
-      header .navi a:hover, header .navi a:active {
-        color: #96112d; }
+  top: 0px;
+}
+/* line 11, ../sass/_header.scss */
+header .logo {
+  width: 200px;
+  float: left;
+  padding-left: 10px;
+}
+/* line 16, ../sass/_header.scss */
+header .navi {
+  float: right;
+  text-transform: uppercase;
+  padding-top: 10px;
+}
+/* line 21, ../sass/_header.scss */
+header .navi a {
+  color: #000;
+  text-decoration: none;
+  width: 150px;
+  float: left;
+  font-size: 20px;
+  text-align: center;
+}
+/* line 29, ../sass/_header.scss */
+header .navi a:hover, header .navi a:active {
+  color: #96112d;
+}
 
+/* line 1, ../sass/_intro.scss */
 #intro {
   padding-top: 20px;
   padding-bottom: 20px;
   margin-top: 88px;
-  height: auto; }
+  height: auto;
+}
 
+/* line 3, ../sass/_nested-treemap.scss */
 #TreemapSection .visualization {
-  position: relative; }
+  position: relative;
+}
+/* line 9, ../sass/_nested-treemap.scss */
 #TreemapSection .title span {
-  display: inline; }
+  display: inline;
+}
+/* line 12, ../sass/_nested-treemap.scss */
 #TreemapSection .title select {
   margin: 0 10px 0 10px;
   padding: 0;
@@ -250,66 +339,95 @@ header {
   background-size: 10px;
   background-repeat: no-repeat;
   background-position: 90% 50%;
-  display: inline; }
+  display: inline;
+}
+/* line 36, ../sass/_nested-treemap.scss */
 #TreemapSection .node {
   box-sizing: border-box;
   position: absolute;
   text-align: center;
-  z-index: 2 !important; }
-  #TreemapSection .node.related {
-    background-color: #7ad8ff; }
-    #TreemapSection .node.related .label, #TreemapSection .node.related .count {
-      color: #fff !important; }
-  #TreemapSection .node.overflow .label, #TreemapSection .node.overflow .count {
-    display: none; }
-  #TreemapSection .node .label {
-    position: absolute; }
-  #TreemapSection .node.other {
-    border-bottom: none !important; }
+  z-index: 2 !important;
+}
+/* line 42, ../sass/_nested-treemap.scss */
+#TreemapSection .node.related {
+  background-color: #7ad8ff;
+}
+/* line 44, ../sass/_nested-treemap.scss */
+#TreemapSection .node.related .label, #TreemapSection .node.related .count {
+  color: #fff !important;
+}
+/* line 48, ../sass/_nested-treemap.scss */
+#TreemapSection .node.overflow .label, #TreemapSection .node.overflow .count {
+  display: none;
+}
+/* line 51, ../sass/_nested-treemap.scss */
+#TreemapSection .node .label {
+  position: absolute;
+}
+/* line 54, ../sass/_nested-treemap.scss */
+#TreemapSection .node.other {
+  border-bottom: none !important;
+}
+/* line 59, ../sass/_nested-treemap.scss */
 #TreemapSection .level-1 {
   z-index: 1 !important;
   padding-top: 5px;
-  border: 1px solid #fff;
-  background-color: rgba(238, 238, 238, 0.27); }
-  #TreemapSection .level-1 .label {
-    color: #707070;
-    position: absolute;
-    transform: translate(-50%, 0px);
-    font-size: 12px; }
+  border: 1px solid #eeeeee;
+}
+/* line 65, ../sass/_nested-treemap.scss */
+#TreemapSection .level-1 .label {
+  color: #707070;
+  position: absolute;
+  transform: translate(-50%, 0px);
+  font-size: 12px;
+}
+/* line 74, ../sass/_nested-treemap.scss */
 #TreemapSection .level-2 {
   background-color: rgba(238, 238, 238, 0.4);
-  border-bottom: 1px solid #fff; }
-  #TreemapSection .level-2:hover {
-    z-index: 3 !important;
-    background-color: rgba(176, 0, 70, 0.3);
-    color: #fff; }
-    #TreemapSection .level-2:hover .label, #TreemapSection .level-2:hover .count {
-      color: #fff; }
-  #TreemapSection .level-2 .label {
-    padding-left: 20px;
-    text-align: left;
-    display: block;
-    position: relative;
-    top: 50%;
-    transform: translate(0, -50%);
-    font-size: 12px;
-    color: #707070 !important; }
-  #TreemapSection .level-2 .count {
-    box-sizing: border-box;
-    text-align: right;
-    display: block;
-    width: 100%;
-    position: absolute;
-    padding-right: 20px;
-    top: 50%;
-    color: #a3a3a3;
-    transform: translate(0, -50%);
-    font-size: 10px; }
+  border-bottom: 1px solid #fff;
+}
+/* line 79, ../sass/_nested-treemap.scss */
+#TreemapSection .level-2:hover {
+  z-index: 3 !important;
+  background-color: rgba(176, 0, 70, 0.3);
+  color: #fff;
+}
+/* line 83, ../sass/_nested-treemap.scss */
+#TreemapSection .level-2:hover .label, #TreemapSection .level-2:hover .count {
+  color: #fff;
+}
+/* line 85, ../sass/_nested-treemap.scss */
+#TreemapSection .level-2 .label {
+  padding-left: 20px;
+  text-align: left;
+  display: block;
+  position: relative;
+  top: 50%;
+  transform: translate(0, -50%);
+  font-size: 12px;
+  color: #707070 !important;
+}
+/* line 96, ../sass/_nested-treemap.scss */
+#TreemapSection .level-2 .count {
+  box-sizing: border-box;
+  text-align: right;
+  display: block;
+  width: 100%;
+  position: absolute;
+  padding-right: 20px;
+  top: 50%;
+  color: #a3a3a3;
+  transform: translate(0, -50%);
+  font-size: 10px;
+}
 
+/* line 111, ../sass/_nested-treemap.scss */
 .dropdown {
   position: relative;
-  display: inline-block; }
+  display: inline-block;
+}
 
+/* line 116, ../sass/_nested-treemap.scss */
 .dropdown .dropdown-menu {
   position: absolute;
   top: 100%;
@@ -322,294 +440,428 @@ header {
   /** Remove list bullets */
   width: 100%;
   /** Set the width to 100% of it's parent */
-  padding: 0; }
+  padding: 0;
+}
 
+/* line 131, ../sass/_nested-treemap.scss */
 .dropdown:hover .dropdown-menu {
-  display: block; }
+  display: block;
+}
 
 /** Button Styles **/
+/* line 136, ../sass/_nested-treemap.scss */
 .dropdown button {
   background: #FF6223;
   color: #FFFFFF;
   border: none;
   margin: 0;
   padding: 0.4em 0.8em;
-  font-size: 1em; }
+  font-size: 1em;
+}
 
 /** List Item Styles **/
+/* line 146, ../sass/_nested-treemap.scss */
 .dropdown a {
   display: block;
   padding: 0.2em 0.8em;
   text-decoration: none;
   background: #CCCCCC;
-  color: #333333; }
+  color: #333333;
+}
 
 /** List Item Hover Styles **/
+/* line 155, ../sass/_nested-treemap.scss */
 .dropdown a:hover {
-  background: #BBBBBB; }
+  background: #BBBBBB;
+}
 
+/* line 4, ../sass/_circle-packed-network.scss */
+#NetworkSection.hasTransition .node {
+  transition-timing-function: cubic-bezier(0.78, 0.06, 0.58, 1);
+  transition: transform 0.4s, opacity 0.4s, border 0.4s;
+}
+/* line 11, ../sass/_circle-packed-network.scss */
 #NetworkSection .node {
   position: absolute;
   text-align: center;
   box-sizing: border-box;
   background-color: #009ee0;
   cursor: pointer;
-  transition: background-color 0.1s, opacity 0.1s; }
-  #NetworkSection .node:hover {
-    background-color: rgba(176, 0, 70, 0.3);
-    opacity: 1 !important; }
-  #NetworkSection .node .label {
-    color: #fff;
-    text-transform: capitalize;
-    font-size: 12px;
-    font-weight: bold;
-    display: block;
-    position: relative;
-    top: 50%;
-    transform: translate(0, -50%); }
-  #NetworkSection .node .count {
-    color: #fff;
-    font-size: 14px;
-    display: block;
-    position: relative;
-    top: 50%;
-    transform: translate(0, -50%); }
-  #NetworkSection .node.overflow {
-    overflow: visible; }
-    #NetworkSection .node.overflow > .label {
-      display: none !important; }
-    #NetworkSection .node.overflow > .count {
-      display: none !important; }
-  #NetworkSection .node.overflow.partial {
-    overflow: visible; }
-    #NetworkSection .node.overflow.partial > .label {
-      display: none !important; }
-    #NetworkSection .node.overflow.partial > .count {
-      display: block !important; }
-  #NetworkSection .node.inactive {
-    border: 2px solid rgba(0, 158, 224, 0.125);
-    background-color: transparent;
-    opacity: 1 !important; }
-    #NetworkSection .node.inactive > .label {
-      display: none !important; }
-    #NetworkSection .node.inactive > .count {
-      display: none !important; }
-  #NetworkSection .node.transition .label, #NetworkSection .node.transition .count {
-    display: none !important; }
-  #NetworkSection .node.hidden {
-    display: none; }
-  #NetworkSection .node.monad {
-    border: none;
-    background-color: transparent;
-    border-radius: 20px !important;
-    padding: 5px;
-    overflow: visible;
-    opacity: 1;
-    border: 5px solid rgba(176, 0, 70, 0.3); }
-    #NetworkSection .node.monad > .label {
-      width: 100px;
-      top: 0;
-      transform: translate(0, 0);
-      display: block !important;
-      color: #707070; }
-    #NetworkSection .node.monad > .count {
-      display: none !important; }
-  #NetworkSection .node.monadic-related {
-    border: none;
-    background-color: transparent;
-    border-radius: 20px !important;
-    padding: 5px;
-    overflow: visible;
-    opacity: 1; }
-    #NetworkSection .node.monadic-related.inactive {
-      opacity: 0 !important; }
-    #NetworkSection .node.monadic-related > .label {
-      width: 100px;
-      top: 0;
-      transform: translate(0, 0);
-      display: block !important;
-      color: #707070; }
-    #NetworkSection .node.monadic-related > .count {
-      display: none !important; }
-    #NetworkSection .node.monadic-related.left {
-      border-left: 5px solid rgba(0, 158, 224, 0.1); }
-      #NetworkSection .node.monadic-related.left .label {
-        text-align: left; }
-    #NetworkSection .node.monadic-related.right {
-      border-right: 5px solid rgba(0, 158, 224, 0.1); }
-      #NetworkSection .node.monadic-related.right .label {
-        text-align: right; }
+}
+/* line 20, ../sass/_circle-packed-network.scss */
+#NetworkSection .node:hover {
+  background-color: rgba(176, 0, 70, 0.3);
+  opacity: 1 !important;
+}
+/* line 25, ../sass/_circle-packed-network.scss */
+#NetworkSection .node .label {
+  color: #fff;
+  text-transform: capitalize;
+  font-size: 12px;
+  font-weight: bold;
+  display: block;
+  position: relative;
+  top: 50%;
+  transform: translate(0, -50%);
+}
+/* line 36, ../sass/_circle-packed-network.scss */
+#NetworkSection .node .count {
+  color: #fff;
+  font-size: 14px;
+  display: block;
+  position: relative;
+  top: 50%;
+  transform: translate(0, -50%);
+}
+/* line 45, ../sass/_circle-packed-network.scss */
+#NetworkSection .node.overflow {
+  overflow: visible;
+}
+/* line 46, ../sass/_circle-packed-network.scss */
+#NetworkSection .node.overflow > .label {
+  display: none !important;
+}
+/* line 47, ../sass/_circle-packed-network.scss */
+#NetworkSection .node.overflow > .count {
+  display: none !important;
+}
+/* line 52, ../sass/_circle-packed-network.scss */
+#NetworkSection .node.overflow.partial {
+  overflow: visible;
+}
+/* line 53, ../sass/_circle-packed-network.scss */
+#NetworkSection .node.overflow.partial > .label {
+  display: none !important;
+}
+/* line 54, ../sass/_circle-packed-network.scss */
+#NetworkSection .node.overflow.partial > .count {
+  display: block !important;
+}
+/* line 59, ../sass/_circle-packed-network.scss */
+#NetworkSection .node.inactive {
+  opacity: 0.1 !important;
+}
+/* line 62, ../sass/_circle-packed-network.scss */
+#NetworkSection .node.inactive > .label {
+  display: none !important;
+}
+/* line 63, ../sass/_circle-packed-network.scss */
+#NetworkSection .node.inactive > .count {
+  display: none !important;
+}
+/* line 67, ../sass/_circle-packed-network.scss */
+#NetworkSection .node.hidden {
+  display: none;
+}
+/* line 69, ../sass/_circle-packed-network.scss */
+#NetworkSection .node.monad {
+  border: none;
+  background-color: transparent;
+  border-radius: 20px !important;
+  padding: 5px;
+  overflow: visible;
+  opacity: 1;
+  border: 5px solid rgba(176, 0, 70, 0.3);
+}
+/* line 78, ../sass/_circle-packed-network.scss */
+#NetworkSection .node.monad > .label {
+  width: 100px;
+  top: 0;
+  transform: translate(0, 0);
+  display: block !important;
+  color: #707070;
+}
+/* line 85, ../sass/_circle-packed-network.scss */
+#NetworkSection .node.monad > .count {
+  display: none !important;
+}
+/* line 90, ../sass/_circle-packed-network.scss */
+#NetworkSection .node.monadic-related {
+  border: none;
+  background-color: transparent;
+  border-radius: 20px !important;
+  padding: 5px;
+  overflow: visible;
+  opacity: 1;
+}
+/* line 98, ../sass/_circle-packed-network.scss */
+#NetworkSection .node.monadic-related.inactive {
+  opacity: 0 !important;
+}
+/* line 102, ../sass/_circle-packed-network.scss */
+#NetworkSection .node.monadic-related > .label {
+  width: 100px;
+  top: 0;
+  transform: translate(0, 0);
+  display: block !important;
+  color: #707070;
+}
+/* line 109, ../sass/_circle-packed-network.scss */
+#NetworkSection .node.monadic-related > .count {
+  display: none !important;
+}
+/* line 111, ../sass/_circle-packed-network.scss */
+#NetworkSection .node.monadic-related.left {
+  border-left: 5px solid rgba(0, 158, 224, 0.1);
+}
+/* line 112, ../sass/_circle-packed-network.scss */
+#NetworkSection .node.monadic-related.left .label {
+  text-align: left;
+}
+/* line 115, ../sass/_circle-packed-network.scss */
+#NetworkSection .node.monadic-related.right {
+  border-right: 5px solid rgba(0, 158, 224, 0.1);
+}
+/* line 116, ../sass/_circle-packed-network.scss */
+#NetworkSection .node.monadic-related.right .label {
+  text-align: right;
+}
 
+/* line 2, ../sass/_StreamSection.scss */
 #GeomapSection h2 {
-  position: absolute; }
+  position: absolute;
+}
+/* line 5, ../sass/_StreamSection.scss */
 #GeomapSection text {
   font-family: "gravurcondensed-regular";
-  cursor: pointer; }
+  cursor: pointer;
+}
+/* line 9, ../sass/_StreamSection.scss */
 #GeomapSection circle {
-  cursor: pointer; }
+  cursor: pointer;
+}
+/* line 12, ../sass/_StreamSection.scss */
 #GeomapSection .river {
   fill: none;
-  stroke: #EEE; }
+  stroke: #EEE;
+}
+/* line 16, ../sass/_StreamSection.scss */
 #GeomapSection .land {
-  fill: rgba(238, 238, 238, 0.27); }
+  fill: rgba(238, 238, 238, 0.27);
+}
 
+/* line 21, ../sass/_StreamSection.scss */
 #StreamSection {
-  height: calc(100vh - 88px); }
-  #StreamSection h2.title {
-    background-color: #fff;
-    position: fixed; }
-  #StreamSection .totals {
-    font-size: 12px;
-    position: absolute;
-    top: 0px;
-    left: 10px;
-    background: #FFF;
-    padding: 5px; }
-  #StreamSection .stream {
-    background: #FFF;
-    z-index: 100; }
-    #StreamSection .stream.dropshadow {
-      box-shadow: 0 12px 13px -9px rgba(0, 0, 0, 0.18);
-      position: fixed;
-      top: 88px; }
-    #StreamSection .stream text {
-      font-family: "gravurcondensed-regular";
-      font-size: 12px; }
-    #StreamSection .stream .brush .selection {
-      fill: #b00046;
-      fill-opacity: 0.3;
-      stroke: none; }
-    #StreamSection .stream .axis {
-      pointer-events: none; }
-      #StreamSection .stream .axis path,
-      #StreamSection .stream .axis line {
-        fill: none;
-        stroke: rgba(0, 0, 0, 0.1);
-        shape-rendering: crispEdges; }
-      #StreamSection .stream .axis .domain {
-        display: none; }
-      #StreamSection .stream .axis.y line {
-        stroke: none; }
-      #StreamSection .stream .axis.y text {
-        fill: #a7a7a7; }
-    #StreamSection .stream .graph path {
-      cursor: pointer;
-      fill: #BEE6F9; }
-      #StreamSection .stream .graph path.active {
-        fill: #b00046; }
-  #StreamSection .entities {
-    position: absolute;
-    bottom: 20px; }
-    #StreamSection .entities .title {
-      font-family: "gravurcondensed-bold";
-      font-size: 12px;
-      text-transform: uppercase;
-      padding-bottom: 10px;
-      padding-top: 10px;
-      text-align: center; }
-    #StreamSection .entities .entity {
-      /* padding: 5px; */
-      float: left;
-      width: 278px;
-      margin: 10px;
-      padding: 10px;
-      background: rgba(190, 230, 249, 0.26);
-      cursor: pointer; }
-      #StreamSection .entities .entity.active, #StreamSection .entities .entity.hover {
-        background: #bee6f9; }
-      #StreamSection .entities .entity .items {
-        float: left;
-        overflow-y: scroll;
-        overflow-x: hidden;
-        width: 100%;
-        height: 230px; }
-        #StreamSection .entities .entity .items .item {
-          clear: left;
-          margin: 1px;
-          float: left;
-          width: 100%; }
-          #StreamSection .entities .entity .items .item.active .left .bar, #StreamSection .entities .entity .items .item.hover .left .bar {
-            background: #b00046; }
-          #StreamSection .entities .entity .items .item .left {
-            float: left;
-            width: 45%;
-            padding-right: 5px; }
-            #StreamSection .entities .entity .items .item .left .bar {
-              background: #3C7C9B;
-              float: right;
-              color: #FFF;
-              padding: 2px;
-              height: 14px; }
-          #StreamSection .entities .entity .items .item .right {
-            float: right;
-            width: 55%;
-            overflow: hidden;
-            height: 12px; }
+  height: calc(100vh - 88px);
+}
+/* line 24, ../sass/_StreamSection.scss */
+#StreamSection h2.title {
+  background-color: #fff;
+  position: fixed;
+}
+/* line 29, ../sass/_StreamSection.scss */
+#StreamSection .totals {
+  font-size: 12px;
+  position: absolute;
+  top: 0px;
+  left: 10px;
+  background: #FFF;
+  padding: 5px;
+}
+/* line 38, ../sass/_StreamSection.scss */
+#StreamSection .stream {
+  background: #FFF;
+  z-index: 100;
+}
+/* line 41, ../sass/_StreamSection.scss */
+#StreamSection .stream.dropshadow {
+  box-shadow: 0 12px 13px -9px rgba(0, 0, 0, 0.18);
+  position: fixed;
+  top: 88px;
+}
+/* line 50, ../sass/_StreamSection.scss */
+#StreamSection .stream text {
+  font-family: "gravurcondensed-regular";
+  font-size: 12px;
+}
+/* line 56, ../sass/_StreamSection.scss */
+#StreamSection .stream .brush .selection {
+  fill: #b00046;
+  fill-opacity: 0.3;
+  stroke: none;
+}
+/* line 65, ../sass/_StreamSection.scss */
+#StreamSection .stream .axis {
+  pointer-events: none;
+}
+/* line 67, ../sass/_StreamSection.scss */
+#StreamSection .stream .axis path,
+#StreamSection .stream .axis line {
+  fill: none;
+  stroke: rgba(0, 0, 0, 0.1);
+  shape-rendering: crispEdges;
+}
+/* line 73, ../sass/_StreamSection.scss */
+#StreamSection .stream .axis .domain {
+  display: none;
+}
+/* line 77, ../sass/_StreamSection.scss */
+#StreamSection .stream .axis.y line {
+  stroke: none;
+}
+/* line 80, ../sass/_StreamSection.scss */
+#StreamSection .stream .axis.y text {
+  fill: #a7a7a7;
+}
+/* line 85, ../sass/_StreamSection.scss */
+#StreamSection .stream .graph path {
+  cursor: pointer;
+  fill: #BEE6F9;
+}
+/* line 88, ../sass/_StreamSection.scss */
+#StreamSection .stream .graph path.active {
+  fill: #b00046;
+}
+/* line 93, ../sass/_StreamSection.scss */
+#StreamSection .entities {
+  position: absolute;
+  bottom: 20px;
+}
+/* line 97, ../sass/_StreamSection.scss */
+#StreamSection .entities .title {
+  font-family: "gravurcondensed-bold";
+  font-size: 12px;
+  text-transform: uppercase;
+  padding-bottom: 10px;
+  padding-top: 10px;
+  text-align: center;
+}
+/* line 105, ../sass/_StreamSection.scss */
+#StreamSection .entities .entity {
+  /* padding: 5px; */
+  float: left;
+  width: 278px;
+  margin: 10px;
+  padding: 10px;
+  background: rgba(190, 230, 249, 0.26);
+  cursor: pointer;
+}
+/* line 113, ../sass/_StreamSection.scss */
+#StreamSection .entities .entity.active, #StreamSection .entities .entity.hover {
+  background: #bee6f9;
+}
+/* line 117, ../sass/_StreamSection.scss */
+#StreamSection .entities .entity .items {
+  float: left;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  width: 100%;
+  height: 230px;
+}
+/* line 123, ../sass/_StreamSection.scss */
+#StreamSection .entities .entity .items .item {
+  clear: left;
+  margin: 1px;
+  float: left;
+  width: 100%;
+}
+/* line 131, ../sass/_StreamSection.scss */
+#StreamSection .entities .entity .items .item.active .left .bar, #StreamSection .entities .entity .items .item.hover .left .bar {
+  background: #b00046;
+}
+/* line 136, ../sass/_StreamSection.scss */
+#StreamSection .entities .entity .items .item .left {
+  float: left;
+  width: 45%;
+  padding-right: 5px;
+}
+/* line 140, ../sass/_StreamSection.scss */
+#StreamSection .entities .entity .items .item .left .bar {
+  background: #3C7C9B;
+  float: right;
+  color: #FFF;
+  padding: 2px;
+  height: 14px;
+}
+/* line 148, ../sass/_StreamSection.scss */
+#StreamSection .entities .entity .items .item .right {
+  float: right;
+  width: 55%;
+  overflow: hidden;
+  height: 12px;
+}
 
+/* line 2, ../sass/_BookshelfSection.scss */
 #BookshelfSection .bookshelf {
   margin-left: 10px;
-  margin-top: 20px; }
-  #BookshelfSection .bookshelf .book {
-    z-index: 1;
-    font-family: 'gravurcondensed-regular';
-    font-size: 10px;
-    float: left;
-    width: 80px;
-    height: 100px;
-    padding: 8px;
-    background: #EEE;
-    margin: 2px;
-    overflow: hidden;
-    transform: perspective(500px) rotateY(22deg) scale(0.9);
-    transition: all 0.2s ease;
-    cursor: pointer;
-    border-left: 5px solid #dadada; }
-    #BookshelfSection .bookshelf .book:hover {
-      border-color: #71091f;
-      z-index: 100;
-      color: #FFF;
-      background: #96112d;
-      transform: perspective(500px) rotateY(0deg) scale(1);
-      box-shadow: 0px 9px 23px -14px rgba(0, 0, 0, 0.52); }
+  margin-top: 20px;
+}
+/* line 5, ../sass/_BookshelfSection.scss */
+#BookshelfSection .bookshelf .book {
+  z-index: 1;
+  font-family: 'gravurcondensed-regular';
+  font-size: 10px;
+  float: left;
+  width: 80px;
+  height: 100px;
+  padding: 8px;
+  background: #EEE;
+  margin: 2px;
+  overflow: hidden;
+  transform: perspective(500px) rotateY(22deg) scale(0.9);
+  transition: all 0.2s ease;
+  cursor: pointer;
+  border-left: 5px solid #dadada;
+}
+/* line 22, ../sass/_BookshelfSection.scss */
+#BookshelfSection .bookshelf .book:hover {
+  border-color: #71091f;
+  z-index: 100;
+  color: #FFF;
+  background: #96112d;
+  transform: perspective(500px) rotateY(0deg) scale(1);
+  box-shadow: 0px 9px 23px -14px rgba(0, 0, 0, 0.52);
+}
 
+/* line 1, ../sass/_ctooltip.scss */
 .ctooltip {
   position: absolute;
   z-index: 300;
   left: 0;
   top: 0;
-  pointer-events: none; }
-  .ctooltip .arrow_box {
-    position: relative;
-    left: -50%;
-    top: -25px;
-    background: #000000;
-    border-radius: 4px;
-    padding-left: 5px;
-    padding-right: 5px;
-    padding-top: 3px;
-    padding-bottom: 3px;
-    font-size: 13px;
-    font-weight: bold;
-    color: #FFF; }
-  .ctooltip .arrow_box:after, .ctooltip .arrow_box:before {
-    top: 100%;
-    left: 50%;
-    border: solid transparent;
-    content: " ";
-    height: 0;
-    width: 0;
-    position: absolute;
-    pointer-events: none; }
-  .ctooltip .arrow_box:after {
-    border-color: transparent;
-    border-top-color: #000000;
-    border-width: 5px;
-    margin-left: -5px; }
-  .ctooltip .arrow_box:before {
-    border-width: 8px;
-    margin-left: -8px; }
+  pointer-events: none;
+}
+/* line 8, ../sass/_ctooltip.scss */
+.ctooltip .arrow_box {
+  position: relative;
+  left: -50%;
+  top: -25px;
+  background: #000000;
+  border-radius: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  padding-top: 3px;
+  padding-bottom: 3px;
+  font-size: 13px;
+  font-weight: bold;
+  color: #FFF;
+}
+/* line 22, ../sass/_ctooltip.scss */
+.ctooltip .arrow_box:after, .ctooltip .arrow_box:before {
+  top: 100%;
+  left: 50%;
+  border: solid transparent;
+  content: " ";
+  height: 0;
+  width: 0;
+  position: absolute;
+  pointer-events: none;
+}
+/* line 33, ../sass/_ctooltip.scss */
+.ctooltip .arrow_box:after {
+  border-color: transparent;
+  border-top-color: #000000;
+  border-width: 5px;
+  margin-left: -5px;
+}
+/* line 39, ../sass/_ctooltip.scss */
+.ctooltip .arrow_box:before {
+  border-width: 8px;
+  margin-left: -8px;
+}
 
 /*! tooltip 0.1.0 - 18th Dec 2013 | https://github.com/darsain/tooltip */
+/* line 2, ../sass/_tooltip.scss */
 .tooltip {
   position: absolute;
   padding: .8em 1em;
@@ -623,9 +875,11 @@ header {
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   user-select: none;
-  pointer-events: none; }
+  pointer-events: none;
+}
 
 /* Arrow styles */
+/* line 18, ../sass/_tooltip.scss */
 .tooltip:after {
   content: '';
   position: absolute;
@@ -635,163 +889,239 @@ header {
   background: inherit;
   -webkit-transform: rotate(45deg);
   -ms-transform: rotate(45deg);
-  transform: rotate(45deg); }
+  transform: rotate(45deg);
+}
 
+/* line 30, ../sass/_tooltip.scss */
 .tooltip.top:after, .tooltip.top-left:after, .tooltip.top-right:after {
-  bottom: 0; }
+  bottom: 0;
+}
 
+/* line 31, ../sass/_tooltip.scss */
 .tooltip.bottom:after, .tooltip.bottom-left:after, .tooltip.bottom-right:after {
-  top: 0; }
+  top: 0;
+}
 
+/* line 32, ../sass/_tooltip.scss */
 .tooltip.top:after, .tooltip.bottom:after {
-  left: 50%; }
+  left: 50%;
+}
 
+/* line 33, ../sass/_tooltip.scss */
 .tooltip.top-left:after, .tooltip.bottom-left:after {
-  right: 15px; }
+  right: 15px;
+}
 
+/* line 34, ../sass/_tooltip.scss */
 .tooltip.top-right:after, .tooltip.bottom-right:after {
-  left: 15px; }
+  left: 15px;
+}
 
+/* line 36, ../sass/_tooltip.scss */
 .tooltip.left:after, .tooltip.left-top:after, .tooltip.left-bottom:after {
-  right: 0; }
+  right: 0;
+}
 
+/* line 37, ../sass/_tooltip.scss */
 .tooltip.right:after, .tooltip.right-top:after, .tooltip.right-bottom:after {
-  left: 0; }
+  left: 0;
+}
 
+/* line 38, ../sass/_tooltip.scss */
 .tooltip.left:after, .tooltip.right:after {
-  top: 50%; }
+  top: 50%;
+}
 
+/* line 39, ../sass/_tooltip.scss */
 .tooltip.left-top:after, .tooltip.right-top:after {
-  bottom: 15px; }
+  bottom: 15px;
+}
 
+/* line 40, ../sass/_tooltip.scss */
 .tooltip.left-bottom:after, .tooltip.right-bottom:after {
-  top: 15px; }
+  top: 15px;
+}
 
 /* Fade */
+/* line 43, ../sass/_tooltip.scss */
 .tooltip.fade {
   opacity: 0;
-  transition: opacity 200ms ease-out; }
+  transition: opacity 200ms ease-out;
+}
 
+/* line 44, ../sass/_tooltip.scss */
 .tooltip.fade.in {
   opacity: 1;
-  transition-duration: 100ms; }
+  transition-duration: 100ms;
+}
 
 /* Slide */
+/* line 47, ../sass/_tooltip.scss */
 .tooltip.slide {
   opacity: 0;
   transition: -webkit-transform 200ms ease-out;
   transition: transform 200ms ease-out;
   transition-property: -webkit-transform, opacity;
-  transition-property: transform, opacity; }
+  transition-property: transform, opacity;
+}
 
+/* line 54, ../sass/_tooltip.scss */
 .tooltip.slide.top,
 .tooltip.slide.top-left,
 .tooltip.slide.top-right {
   -webkit-transform: translateY(15px);
-  transform: translateY(15px); }
+  transform: translateY(15px);
+}
 
+/* line 60, ../sass/_tooltip.scss */
 .tooltip.slide.bottom,
 .tooltip.slide.bottom-left,
 .tooltip.slide.bottom-right {
   -webkit-transform: translateY(-15px);
-  transform: translateY(-15px); }
+  transform: translateY(-15px);
+}
 
+/* line 66, ../sass/_tooltip.scss */
 .tooltip.slide.left,
 .tooltip.slide.left-top,
 .tooltip.slide.left-bottom {
   -webkit-transform: translateX(15px);
-  transform: translateX(15px); }
+  transform: translateX(15px);
+}
 
+/* line 72, ../sass/_tooltip.scss */
 .tooltip.slide.right,
 .tooltip.slide.right-top,
 .tooltip.slide.right-bottom {
   -webkit-transform: translateX(-15px);
-  transform: translateX(-15px); }
+  transform: translateX(-15px);
+}
 
+/* line 78, ../sass/_tooltip.scss */
 .tooltip.slide.in {
   opacity: 1;
   -webkit-transform: none;
   transform: none;
-  transition-duration: 100ms; }
+  transition-duration: 100ms;
+}
 
 /* Grow */
+/* line 86, ../sass/_tooltip.scss */
 .tooltip.grow {
   -webkit-transform: scale(0);
   transform: scale(0);
   transition: -webkit-transform 200ms ease-out;
-  transition: transform 200ms ease-out; }
+  transition: transform 200ms ease-out;
+}
 
+/* line 92, ../sass/_tooltip.scss */
 .tooltip.grow.top {
   -webkit-transform: translateY(60%) scale(0);
-  transform: translateY(60%) scale(0); }
+  transform: translateY(60%) scale(0);
+}
 
+/* line 96, ../sass/_tooltip.scss */
 .tooltip.grow.top-left {
   -webkit-transform: translateY(60%) translateX(40%) scale(0);
-  transform: translateY(60%) translateX(40%) scale(0); }
+  transform: translateY(60%) translateX(40%) scale(0);
+}
 
+/* line 100, ../sass/_tooltip.scss */
 .tooltip.grow.top-right {
   -webkit-transform: translateY(60%) translateX(-40%) scale(0);
-  transform: translateY(60%) translateX(-40%) scale(0); }
+  transform: translateY(60%) translateX(-40%) scale(0);
+}
 
+/* line 104, ../sass/_tooltip.scss */
 .tooltip.grow.bottom {
   -webkit-transform: translateY(-60%) scale(0);
-  transform: translateY(-60%) scale(0); }
+  transform: translateY(-60%) scale(0);
+}
 
+/* line 108, ../sass/_tooltip.scss */
 .tooltip.grow.bottom-left {
   -webkit-transform: translateY(-60%) translateX(40%) scale(0);
-  transform: translateY(-60%) translateX(40%) scale(0); }
+  transform: translateY(-60%) translateX(40%) scale(0);
+}
 
+/* line 112, ../sass/_tooltip.scss */
 .tooltip.grow.bottom-right {
   -webkit-transform: translateY(-60%) translateX(-40%) scale(0);
-  transform: translateY(-60%) translateX(-40%) scale(0); }
+  transform: translateY(-60%) translateX(-40%) scale(0);
+}
 
+/* line 116, ../sass/_tooltip.scss */
 .tooltip.grow.left {
   -webkit-transform: translateX(53%) scale(0);
-  transform: translateX(53%) scale(0); }
+  transform: translateX(53%) scale(0);
+}
 
+/* line 120, ../sass/_tooltip.scss */
 .tooltip.grow.left-top {
   -webkit-transform: translateX(53%) translateY(40%) scale(0);
-  transform: translateX(53%) translateY(40%) scale(0); }
+  transform: translateX(53%) translateY(40%) scale(0);
+}
 
+/* line 124, ../sass/_tooltip.scss */
 .tooltip.grow.left-bottom {
   -webkit-transform: translateX(53%) translateY(-40%) scale(0);
-  transform: translateX(53%) translateY(-40%) scale(0); }
+  transform: translateX(53%) translateY(-40%) scale(0);
+}
 
+/* line 128, ../sass/_tooltip.scss */
 .tooltip.grow.right {
   -webkit-transform: translateX(-53%) scale(0);
-  transform: translateX(-53%) scale(0); }
+  transform: translateX(-53%) scale(0);
+}
 
+/* line 132, ../sass/_tooltip.scss */
 .tooltip.grow.right-top {
   -webkit-transform: translateX(-53%) translateY(40%) scale(0);
-  transform: translateX(-53%) translateY(40%) scale(0); }
+  transform: translateX(-53%) translateY(40%) scale(0);
+}
 
+/* line 136, ../sass/_tooltip.scss */
 .tooltip.grow.right-bottom {
   -webkit-transform: translateX(-53%) translateY(-40%) scale(0);
-  transform: translateX(-53%) translateY(-40%) scale(0); }
+  transform: translateX(-53%) translateY(-40%) scale(0);
+}
 
+/* line 140, ../sass/_tooltip.scss */
 .tooltip.grow.in {
   -webkit-transform: none;
   transform: none;
-  transition-duration: 100ms; }
+  transition-duration: 100ms;
+}
 
 /* Types */
+/* line 147, ../sass/_tooltip.scss */
 .tooltip.light {
   color: #3a3c47;
   background: #fff;
-  text-shadow: none; }
+  text-shadow: none;
+}
 
+/* line 148, ../sass/_tooltip.scss */
 .tooltip.success {
-  background: #8dc572; }
+  background: #8dc572;
+}
 
+/* line 149, ../sass/_tooltip.scss */
 .tooltip.warning {
-  background: #ddc12e; }
+  background: #ddc12e;
+}
 
+/* line 150, ../sass/_tooltip.scss */
 .tooltip.error {
-  background: #be6464; }
+  background: #be6464;
+}
 
+/* line 1, ../sass/_balloon.scss */
 [data-balloon] {
-  position: relative; }
+  position: relative;
+}
 
+/* line 5, ../sass/_balloon.scss */
 [data-balloon]:before,
 [data-balloon]:after {
   -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
@@ -808,8 +1138,10 @@ header {
   transform: translate(-50%, 10px);
   -webkit-transform-origin: top;
   -ms-transform-origin: top;
-  transform-origin: top; }
+  transform-origin: top;
+}
 
+/* line 24, ../sass/_balloon.scss */
 [data-balloon]:after {
   background: #b00046;
   border-radius: 4px;
@@ -819,16 +1151,20 @@ header {
   font-size: 12px;
   padding: .5em 1em;
   white-space: nowrap;
-  margin-bottom: 11px; }
+  margin-bottom: 11px;
+}
 
+/* line 35, ../sass/_balloon.scss */
 [data-balloon]:before {
   background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="36px" height="12px"><path fill="#b00046" transform="rotate(0)" d="M2.658,0.000 C-13.615,0.000 50.938,0.000 34.662,0.000 C28.662,0.000 23.035,12.002 18.660,12.002 C14.285,12.002 8.594,0.000 2.658,0.000 Z"/></svg>') no-repeat;
   background-size: 100% auto;
   height: 6px;
   width: 18px;
   content: "";
-  margin-bottom: 5px; }
+  margin-bottom: 5px;
+}
 
+/* line 43, ../sass/_balloon.scss */
 [data-balloon]:hover:before,
 [data-balloon]:hover:after {
   -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
@@ -839,11 +1175,15 @@ header {
   pointer-events: auto;
   -webkit-transform: translate(-50%, 0);
   -ms-transform: translate(-50%, 0);
-  transform: translate(-50%, 0); }
+  transform: translate(-50%, 0);
+}
 
+/* line 55, ../sass/_balloon.scss */
 [data-balloon][data-balloon-break]:after {
-  white-space: normal; }
+  white-space: normal;
+}
 
+/* line 58, ../sass/_balloon.scss */
 [data-balloon-pos="down"]:before,
 [data-balloon-pos="down"]:after {
   bottom: auto;
@@ -851,25 +1191,33 @@ header {
   top: 100%;
   -webkit-transform: translate(-50%, -10px);
   -ms-transform: translate(-50%, -10px);
-  transform: translate(-50%, -10px); }
+  transform: translate(-50%, -10px);
+}
 
+/* line 67, ../sass/_balloon.scss */
 [data-balloon-pos="down"]:after {
-  margin-top: 11px; }
+  margin-top: 11px;
+}
 
+/* line 70, ../sass/_balloon.scss */
 [data-balloon-pos="down"]:before {
   background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="36px" height="12px"><path fill="#b00046" transform="rotate(180 18 6)" d="M2.658,0.000 C-13.615,0.000 50.938,0.000 34.662,0.000 C28.662,0.000 23.035,12.002 18.660,12.002 C14.285,12.002 8.594,0.000 2.658,0.000 Z"/></svg>') no-repeat;
   background-size: 100% auto;
   height: 6px;
   width: 18px;
   margin-top: 5px;
-  margin-bottom: 0; }
+  margin-bottom: 0;
+}
 
+/* line 78, ../sass/_balloon.scss */
 [data-balloon-pos="down"]:hover:before,
 [data-balloon-pos="down"]:hover:after {
   -webkit-transform: translate(-50%, 0);
   -ms-transform: translate(-50%, 0);
-  transform: translate(-50%, 0); }
+  transform: translate(-50%, 0);
+}
 
+/* line 84, ../sass/_balloon.scss */
 [data-balloon-pos="left"]:before,
 [data-balloon-pos="left"]:after {
   bottom: auto;
@@ -878,25 +1226,33 @@ header {
   top: 50%;
   -webkit-transform: translate(10px, -50%);
   -ms-transform: translate(10px, -50%);
-  transform: translate(10px, -50%); }
+  transform: translate(10px, -50%);
+}
 
+/* line 94, ../sass/_balloon.scss */
 [data-balloon-pos="left"]:after {
-  margin-right: 11px; }
+  margin-right: 11px;
+}
 
+/* line 97, ../sass/_balloon.scss */
 [data-balloon-pos="left"]:before {
   background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="12px" height="36px"><path fill="#b00046" transform="rotate(-90 18 18)" d="M2.658,0.000 C-13.615,0.000 50.938,0.000 34.662,0.000 C28.662,0.000 23.035,12.002 18.660,12.002 C14.285,12.002 8.594,0.000 2.658,0.000 Z"/></svg>') no-repeat;
   background-size: 100% auto;
   height: 18px;
   width: 6px;
   margin-right: 5px;
-  margin-bottom: 0; }
+  margin-bottom: 0;
+}
 
+/* line 105, ../sass/_balloon.scss */
 [data-balloon-pos="left"]:hover:before,
 [data-balloon-pos="left"]:hover:after {
   -webkit-transform: translate(0, -50%);
   -ms-transform: translate(0, -50%);
-  transform: translate(0, -50%); }
+  transform: translate(0, -50%);
+}
 
+/* line 111, ../sass/_balloon.scss */
 [data-balloon-pos="right"]:before,
 [data-balloon-pos="right"]:after {
   bottom: auto;
@@ -904,63 +1260,93 @@ header {
   top: 50%;
   -webkit-transform: translate(-10px, -50%);
   -ms-transform: translate(-10px, -50%);
-  transform: translate(-10px, -50%); }
+  transform: translate(-10px, -50%);
+}
 
+/* line 120, ../sass/_balloon.scss */
 [data-balloon-pos="right"]:after {
-  margin-left: 11px; }
+  margin-left: 11px;
+}
 
+/* line 123, ../sass/_balloon.scss */
 [data-balloon-pos="right"]:before {
   background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="12px" height="36px"><path fill="#b00046" transform="rotate(90 6 6)" d="M2.658,0.000 C-13.615,0.000 50.938,0.000 34.662,0.000 C28.662,0.000 23.035,12.002 18.660,12.002 C14.285,12.002 8.594,0.000 2.658,0.000 Z"/></svg>') no-repeat;
   background-size: 100% auto;
   height: 18px;
   width: 6px;
   margin-bottom: 0;
-  margin-left: 5px; }
+  margin-left: 5px;
+}
 
+/* line 131, ../sass/_balloon.scss */
 [data-balloon-pos="right"]:hover:before,
 [data-balloon-pos="right"]:hover:after {
   -webkit-transform: translate(0, -50%);
   -ms-transform: translate(0, -50%);
-  transform: translate(0, -50%); }
+  transform: translate(0, -50%);
+}
 
+/* line 137, ../sass/_balloon.scss */
 [data-balloon-length]:after {
-  white-space: normal; }
+  white-space: normal;
+}
 
+/* line 140, ../sass/_balloon.scss */
 [data-balloon-length="small"]:after {
-  width: 80px; }
+  width: 80px;
+}
 
+/* line 143, ../sass/_balloon.scss */
 [data-balloon-length="medium"]:after {
-  width: 150px; }
+  width: 150px;
+}
 
+/* line 146, ../sass/_balloon.scss */
 [data-balloon-length="large"]:after {
-  width: 260px; }
+  width: 260px;
+}
 
+/* line 149, ../sass/_balloon.scss */
 [data-balloon-length="xlarge"]:after {
-  width: 90vw; }
+  width: 90vw;
+}
 
 @media screen and (min-width: 768px) {
+  /* line 153, ../sass/_balloon.scss */
   [data-balloon-length="xlarge"]:after {
-    width: 380px; } }
+    width: 380px;
+  }
+}
+/* line 157, ../sass/_balloon.scss */
 [data-balloon-length="fit"]:after {
-  width: 100%; }
+  width: 100%;
+}
 
 @font-face {
   font-family: "gravurcondensed-regular";
-  src: url("gravurcondensed-regular.woff") format("woff"); }
+  src: url("gravurcondensed-regular.woff") format("woff");
+}
 @font-face {
   font-family: "gravurcondensed-bold";
-  src: url("gravurcondensed-bold.woff") format("woff"); }
+  src: url("gravurcondensed-bold.woff") format("woff");
+}
 @font-face {
   font-family: "egyptienne";
-  src: url("egyptienne.woff") format("woff"); }
+  src: url("egyptienne.woff") format("woff");
+}
+/* line 46, ../sass/style.scss */
 body {
   font: 10px "gravurcondensed-regular", sans-serif;
   margin: 0;
-  padding: 0; }
+  padding: 0;
+}
 
+/* line 53, ../sass/style.scss */
 p {
-  font: 12px "egyptienne", sans-serif; }
+  font: 12px "egyptienne", sans-serif;
+}
 
+/* line 59, ../sass/style.scss */
 section {
   position: relative;
   display: flex;
@@ -968,46 +1354,65 @@ section {
   margin-bottom: 40px;
   width: 100%;
   flex-direction: column;
-  height: calc(100vh - 188px); }
-  section h2.title {
-    font-face: "gravurcondensed-bold";
-    box-sizing: border-box;
-    padding: 25px 0;
-    font-size: 25px;
-    color: #707070;
-    font-weight: bold;
-    text-align: left; }
-    section h2.title .years {
-      font-face: "gravurcondensed-regular";
-      font-weight: normal;
-      color: #a3a3a3; }
+  height: calc(100vh - 188px);
+}
+/* line 69, ../sass/style.scss */
+section h2.title {
+  font-face: "gravurcondensed-bold";
+  box-sizing: border-box;
+  padding: 25px 0;
+  font-size: 25px;
+  color: #707070;
+  font-weight: bold;
+  text-align: left;
+}
+/* line 78, ../sass/style.scss */
+section h2.title .years {
+  font-face: "gravurcondensed-regular";
+  font-weight: normal;
+  color: #a3a3a3;
+}
 
+/* line 88, ../sass/style.scss */
 .control {
-  width: 100%; }
-  .control svg {
-    background-color: #fff; }
-    .control svg .grid-background {
-      fill: rgba(190, 230, 249, 0.26); }
+  width: 100%;
+}
+/* line 90, ../sass/style.scss */
+.control svg {
+  background-color: #fff;
+}
+/* line 92, ../sass/style.scss */
+.control svg .grid-background {
+  fill: rgba(190, 230, 249, 0.26);
+}
 
+/* line 102, ../sass/style.scss */
 text {
-  font: 10px sans-serif; }
+  font: 10px sans-serif;
+}
 
+/* line 106, ../sass/style.scss */
 tspan:last-child {
   font-size: 9px;
-  fill-opacity: 0.8; }
+  fill-opacity: 0.8;
+}
 
+/* line 112, ../sass/style.scss */
 .container {
   position: relative;
   margin: auto auto;
-  width: 1200px; }
+  width: 1200px;
+}
 
+/* line 118, ../sass/style.scss */
 ::-webkit-scrollbar {
   -webkit-appearance: none;
-  width: 7px; }
+  width: 7px;
+}
 
+/* line 122, ../sass/style.scss */
 ::-webkit-scrollbar-thumb {
   border-radius: 4px;
   background-color: rgba(0, 0, 0, 0.5);
-  -webkit-box-shadow: 0 0 1px rgba(255, 255, 255, 0.5); }
-
-/*# sourceMappingURL=style.css.map */
+  -webkit-box-shadow: 0 0 1px rgba(255, 255, 255, 0.5);
+}
