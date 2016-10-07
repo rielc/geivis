@@ -28,6 +28,45 @@ export class Geomap extends StateDb {
     this.opacity = d3.scaleLog().range([0.2,1])
     this.fontscale = d3v3.scale.linear().range([10,15]);
 
+    this.geoFit = {
+      "type": "FeatureCollection",
+      "features": [
+        {
+          "type": "Feature",
+          "geometry": {
+            "type": "Polygon",
+            "coordinates": [
+              [
+                [
+                  5.7952880859375,
+                  54.16243396806779
+                ],
+                [
+                  20.9124755859375,
+                  55.07836723201514
+                ],
+                [
+                  19.8577880859375,
+                  47.27922900257082
+                ],
+                [
+                  5.2679443359375,
+                  46.92025531537451
+                ],
+                [
+                  5.7952880859375,
+                  54.16243396806779
+                ]
+              ]
+            ]
+          },
+          "properties": {}
+        }
+      ]
+    };
+
+    console.log(this.geoFit);
+
     return this;
   }
 
@@ -36,9 +75,11 @@ export class Geomap extends StateDb {
     this.height = this.outerHeight - this.margin.top - this.margin.bottom;
 
     this.projection
-      .center([15, 49])
-      .scale(3500)
-      .translate([outerWidth / 2, outerHeight / 2])
+      // .center([15, 49])
+      // .scale(3500)
+      // .translate([this.outerWidth / 2, this.outerHeight / 2])
+      .clipExtent([[0,0],[this.outerWidth, this.outerHeight]])
+      .fitSize([this.outerWidth, this.outerHeight], this.geoFit)
 
     this.svg
       .attr("width", this.outerWidth)
@@ -56,7 +97,6 @@ export class Geomap extends StateDb {
 
   stateChange(next, last){
     if(next.loaded !== last.loaded){
-      // console.log(this.db.store);
       this.rivers.datum(topojson.mesh(this.db.store.rivers)).attr("d", this.path);
       this.land.datum(this.db.store.land).attr("d", this.path);
     }
