@@ -1,11 +1,18 @@
 #TreemapSection {
 
-	.visualization {
-		position:relative;
+	.visualization { position:relative; }
+
+	.label-connections {
+		path {
+			stroke:lighten($blue, 30%);
+			fill:none;
+			stroke-width: 0.5px;
+			stroke-linecap: round;
+
+		}
 	}
 
 	.title {
-
 		span {
 			display:inline;
 		}
@@ -29,8 +36,26 @@
 			background-repeat:no-repeat;
 			background-position:90% 50%;
 			display:inline;
-
 		}
+	}
+
+	.level-1-label {
+		z-index:800;
+		background-color: rgba(#fff,0.75);
+		box-sizing:border-box;
+		position:absolute;
+		text-align: right;
+		z-index:2 !important;
+		transition: transform 0.4s, width 0.4s, height 0.4s, background-color 0.4s;
+		letter-spacing: 0.3px;
+		font-family:"gravurcondensed-regular";
+		text-transform: uppercase;
+		color:$grey;
+		position:absolute;
+		padding-right:10px;
+		box-shadow: 0 0 25px 3px rgba(#fff,1);
+		transform:translate(-50%,0px);
+		font-size: 10px;
 	}
 
 	.node {
@@ -61,15 +86,6 @@
 		z-index:1 !important;
 		padding-top:5px;
 		box-shadow: 0 0 0 1px rgba(238, 238, 238, 1) inset;
-		//background-color: rgba(238, 238, 238, 1);
-
-		.label {
-			color:$grey;
-			position:absolute;
-			transform:translate(-50%,0px);
-			font-size: 12px;
-		}
-
 	}
 
 	.level-2 {
