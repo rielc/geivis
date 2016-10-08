@@ -23,6 +23,8 @@ export class TreemapSection extends Section {
     this.treemap = new NestedTreemap( {'margin':this.margin} );
     this.treemap.layout = "SliceDice";
 
+    this.treemap.setState(state)
+
     this.treemap
       .setLevelA("Subject")
       .setLevelB("Place")

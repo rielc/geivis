@@ -53,6 +53,7 @@ export class NestedTreemap {
 	}
 
 
+	setState (state) { this.state = state; }
 	setLevelA (string) { this.levelA = string; return this; }
 	setLevelB (string) { this.levelB = string; return this; }
 
@@ -88,27 +89,27 @@ export class NestedTreemap {
 			.round(true)
 			.paddingLeft( d=> {
 				switch(d.depth){
-					case 1: return 1; break;
+					case 1: return 0; break;
 					default: return 0; break;
 				}
 			})
 			.paddingRight( d=> {
 				switch(d.depth){
-					case 1: return 1;
+					case 1: return 0;
 					default: return 0;
 				}
 			})
 			.paddingTop( d=> {
 				switch(d.depth){
-					case 1: return 30; break;
-					case 2: return 1; break;
-					case 3: return 1; break;
+					case 1: return 0; break;
+					case 2: return 0; break;
+					case 3: return 0; break;
 					default: return 1; break;
 				}
 			})
 			.paddingBottom( d=> {
 				switch(d.depth){
-					case 2: return 1; break;
+					case 2: return 0; break;
 					//case 3: return 1;
 					default: return 2; break;
 				}
@@ -152,6 +153,12 @@ export class NestedTreemap {
 				if (d.depth===2) {
 					this.svg.selectAll(".node").classed("related", false);
 					this.svg.selectAll("."+GeiVisUtils.makeSafeForCSS(d.data.key)).classed("related", true);
+
+					let el = d3.select(this);
+					let o = GeiVisUtils.checkOverflow(el.node());
+					if (o == "overflow") {
+	        	this.state.push({ hover: 'd.key', tooltip: { name: d.key } });
+	        }
 				}
 			})
 			.on("mouseout", (d) => {
@@ -183,32 +190,19 @@ export class NestedTreemap {
 
 	render (mode) {
 
-		let line = d3.line().x(d=>Math.round(d[0])).y(d=>d[1]).curve(d3.curveMonotoneY)
-		function connectionLinePath (d,i,array) {
-				let shift = 30
-				let amt = i/array.length
-				let vStart = [i*w+w,0]
-				let vEnd = [d.x0+(d.x1-d.x0)*0.5,60]
-				let v0 = [vStart[0],vStart[1]]; v0[1]+=shift-(shift*amt);
-				let v1 = [vEnd[0],vEnd[1]]; v1[1]-=shift*amt;
-				return line( [vStart,v0,v1,vEnd] )
-		}
 
 
 		function updateLabels (dataLevel1) {
+
 
 				let nodesLevel1 =  this.svg.selectAll(".node.level-1").data(dataLevel1, this.dKey)
 				let labelLevel1 =  this.svg.selectAll(".level-1-label").data(dataLevel1, this.dKey)
 				let connections =  this.connectionSVG.selectAll("path").data(dataLevel1, this.dKey)
 
-				console.log('labels')
-				w = this.width / dataLevel1.length
 				// enter l1-labels
 				let enteredLabelLevel1 = labelLevel1.enter().append('div')
 					.classed('level-1-label', true)
-					.style('width', w+'px')
 					.style('height', '60')
-					.style('transform',(d,i) => `translate3d(${i*w}px,0px,0px)`)
 				// update 
 				labelLevel1
 					.style('width', w+'px')
@@ -220,7 +214,6 @@ export class NestedTreemap {
 				// exit
 				labelLevel1.exit().remove()
 
-
 				// enter connection lines
 				let enteredConnections = connections.enter()
 					.append('path')
@@ -229,7 +222,6 @@ export class NestedTreemap {
 				// update
 				connections.transition().duration(300)
 					.attr( "d", connectionLinePath)
-
 				// exit
 				connections.exit().remove()
 
@@ -247,20 +239,27 @@ export class NestedTreemap {
 
 		}
 
-		let l, w, nodes
-
-		// this filter function enables us render partial data depending on the brushevent
-		let filter = () => true;
-		switch (mode) {
-			case "brushmove" : filter = (d) => { return (d.depth > 0 && d.depth < 2) }; break;
-			case "brushend" : filter = (d) => { return (d.depth > 0) }; break;
+		function connectionLinePath (d,i,array) {
+				let shift = 30
+				let amt = i/array.length
+				let vStart = [i*w+w,0]
+				let vEnd = [d.x0+(d.x1-d.x0)*0.5,60]
+				let v0 = [vStart[0],vStart[1]]; v0[1]+=shift-(shift*amt);
+				let v1 = [vEnd[0],vEnd[1]]; v1[1]-=shift*amt;
+				return line( [vStart,v0,v1,vEnd] )
 		}
+
+		let nodes
 
 
 		// data filtered depending on the brushevent
 		let data = this.root.descendants()
 		let dataLevel1 = data.filter((d)=>d.depth==1)
 		let dataLevel2 = data.filter((d)=>d.depth==2)
+
+		let m = 20
+		let w = (this.width-m) / dataLevel1.length
+		let line = d3.line().x(d=>Math.round(d[0])).y(d=>d[1]).curve(d3.curveMonotoneY)
 
 		// this.nodes = this.svg.selectAll(".node").data(data, this.dKey)
 
