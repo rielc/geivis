@@ -358,7 +358,6 @@ export class CirclePackedNetwork {
     let linkMax = d3.max(links, l=>l.commonOccurrence)
     let linkMin = d3.min(links, l=>l.commonOccurrence)
 
-    console.table([['linkMax', 'linkMin'],[linkMax, linkMin]])
 
 
     // // highlight the nodesg
@@ -420,8 +419,7 @@ export class CirclePackedNetwork {
 
       case "brushend":
 
-      console.log('brushend')
-
+     
         // set the previous data once the user finished brushing
         this.previousData = d3.map(this.root.children, d => d.data.name)
 
@@ -473,8 +471,7 @@ export class CirclePackedNetwork {
 
       case "brushmove":
 
-      console.log('brushmove')
-
+      
         d3.select("#NetworkSection").classed("hasTransition", false);
 
         this.nodes

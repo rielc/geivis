@@ -62,10 +62,7 @@ export class TreemapSection extends Section {
 
     // this simple hack enables brushstart,brushmove and brushend events
     let event = (last.event != next.event && next.event == "brushmove") ? "brushstart" : next.event;
-
     let l = this.db.date.top(Infinity).length;
-    this.title.select(".verb").text("Comparing " + l + " books")
-    this.title.select(".years").text(`from ${next.brushStart.getFullYear()} to ${next.brushEnd.getFullYear()}`);
     let data = this.db.date.top(Infinity);
     if (data.length>0) {
       this.treemap.updateData(data);

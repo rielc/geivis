@@ -149,7 +149,7 @@ export class NestedTreemap {
 
 	setMouseBehaviour (selection) {
 
-		console.log(selection)
+		// console.log(selection)
 
 		selection
 			.on("mouseover", (d) => {

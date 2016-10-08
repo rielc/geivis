@@ -59,7 +59,6 @@ export class NetworkSection extends Section {
     // this simple hack enables brushstart,brushmove and brushend events
     let event = (last.event != next.event && next.event == "brushmove") ? "brushstart" : next.event;
 
-      this.title.html(`All tags from ${next.brushStart.getFullYear()} to ${next.brushEnd.getFullYear()}`);
       let data = this.db.date.top(Infinity);
       if (data.length>0) {
         this.network.updateData(data);
