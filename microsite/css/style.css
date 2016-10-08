@@ -279,18 +279,17 @@ header {
 }
 /* line 11, ../sass/_header.scss */
 header .logo {
-  width: 200px;
   float: left;
-  padding-left: 10px;
+  padding-left: 25px;
 }
-/* line 16, ../sass/_header.scss */
+/* line 15, ../sass/_header.scss */
 header .navi {
   box-shadow: 0 1px 0 0 #efefef;
   float: right;
   text-transform: uppercase;
   padding-top: 10px;
 }
-/* line 22, ../sass/_header.scss */
+/* line 21, ../sass/_header.scss */
 header .navi a {
   box-sizing: border-box;
   color: #b00046;
@@ -304,7 +303,7 @@ header .navi a {
   font-family: "gravurcondensed-bold";
   text-transform: uppercase;
 }
-/* line 34, ../sass/_header.scss */
+/* line 33, ../sass/_header.scss */
 header .navi a:hover, header .navi a:active {
   color: #009ee0;
 }

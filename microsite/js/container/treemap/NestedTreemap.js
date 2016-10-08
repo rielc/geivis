@@ -148,11 +148,16 @@ export class NestedTreemap {
 	}
 
 	setMouseBehaviour (selection) {
+
+		console.log(selection)
+
 		selection
 			.on("mouseover", (d) => {
 				if (d.depth===2) {
 					this.svg.selectAll(".node").classed("related", false);
 					this.svg.selectAll("."+GeiVisUtils.makeSafeForCSS(d.data.key)).classed("related", true);
+
+					console.log(this)
 
 					let el = d3.select(this);
 					let o = GeiVisUtils.checkOverflow(el.node());
@@ -203,6 +208,7 @@ export class NestedTreemap {
 				let enteredLabelLevel1 = labelLevel1.enter().append('div')
 					.classed('level-1-label', true)
 					.style('height', '60')
+					.style('transform',(d,i) => `translate3d(${i*w}px,0px,0px)scale(0,0)`)
 				// update 
 				labelLevel1
 					.style('width', w+'px')
@@ -210,7 +216,7 @@ export class NestedTreemap {
 						let label = d.data.key == '' ? 'unknown' : d.data.key
 						return `${label}<br/><span>${d.value}</span>`
 					})
-					.style('transform',(d,i) => `translate3d(${i*w}px,0px,0px)`)
+					.style('transform',(d,i) => `translate3d(${i*w}px,0px,0px)scale(1,1)`)
 				// exit
 				labelLevel1.exit().remove()
 
@@ -290,7 +296,7 @@ export class NestedTreemap {
 					.call(this.setNodeClass)
 					.call(this.setNodeID)
 					.call(this.setNodeDimensions)
-						.call(this.setMouseBehaviour.bind(this))
+					.call(this.setMouseBehaviour.bind(this))
 				// labels
 				enteredNodesLevel2
 					.append("span")
