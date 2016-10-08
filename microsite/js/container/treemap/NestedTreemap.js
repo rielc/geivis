@@ -47,7 +47,7 @@ export class NestedTreemap {
 			.style('position', 'absolute')
 			.attr("class", "label-connections")
 			.style("width", this.width)
-			.style("height", 62);
+			.style("height", 60);
 
 		return this;
 	}
@@ -84,36 +84,13 @@ export class NestedTreemap {
 			.sort( (b, a) => { return ( Math.abs((a.x1-a.x0)-Math.abs(b.x1-b.x0)) || (a.value - b.value) ); } );
 
 		this.treemap = d3.treemap()
-			.size([this.width, this.height])
+			.size([this.width, this.height-60])
 			.tile(d3.treemapSliceDice)
 			.round(true)
-			.paddingLeft( d=> {
-				switch(d.depth){
-					case 1: return 0; break;
-					default: return 0; break;
-				}
-			})
-			.paddingRight( d=> {
-				switch(d.depth){
-					case 1: return 0;
-					default: return 0;
-				}
-			})
-			.paddingTop( d=> {
-				switch(d.depth){
-					case 1: return 0; break;
-					case 2: return 0; break;
-					case 3: return 0; break;
-					default: return 1; break;
-				}
-			})
-			.paddingBottom( d=> {
-				switch(d.depth){
-					case 2: return 0; break;
-					//case 3: return 1;
-					default: return 2; break;
-				}
-			});
+			.paddingLeft(0)
+			.paddingRight(0)
+			.paddingTop(0)
+			.paddingBottom(0)
 
 		this.treemap(this.root);
 		return this;
@@ -124,7 +101,7 @@ export class NestedTreemap {
 		selection
 			.style("transform", d => `translate3d(${d.x0}px,${d.y0+60}px,0px)` )
 			.style("width", d => { return ((d.x1-d.x0)+"px"); })
-			.style("height", d => (d.depth==1?(d.y1-d.y0-60):(d.y1-d.y0))+'px' );
+			.style("height", d => (d.depth==1?(d.y1-d.y0):(d.y1-d.y0))+'px' );
 
 		selection.select(".label").text(d => d.depth!=0?d.data.key:null);
 		selection.select(".count").text(d => d.depth!=0?d.data.value:null);
@@ -185,7 +162,10 @@ export class NestedTreemap {
 					})
 					.style('transform',(d,i) => `translate3d(${i*w}px,0px,0px)scale(1,1)`)
 				// exit
-				labelLevel1.exit().remove()
+				labelLevel1
+				.exit()
+					.style('transform',(d,i) => `translate3d(${i*w}px,0px,0px)scale(1,1)`)
+					.remove()
 
 				// enter connection lines
 				let enteredConnections = connections.enter()
@@ -206,6 +186,13 @@ export class NestedTreemap {
 					.call(this.setNodeDimensions)
 				// update 
 				nodesLevel1
+					.style('box-shadow',(d,i,array) => {
+						let vBorder = ', 0 1px 0 0 #efefef inset, 0 1px 0 0 #efefef inset'
+						let value = null
+						if (i==0) value = '0 0 0 0 #efefef inset, 0 0 0 0 #efefef inset'+vBorder
+						if (i==array.length-1) value = '0 0 0 0 #efefef inset, 0 0 0 0 #efefef inset'+vBorder
+						return value
+					})
 					.call(this.setNodeDimensions)
 					.call(this.setNodeID)
 				// exit
@@ -275,7 +262,8 @@ export class NestedTreemap {
 		        }
 					})
 					.on("mouseout", (d) => {
-		        	this.state.push({ tooltip: null })
+						this.svg.selectAll(".node").classed("related", false)
+	        	this.state.push({ tooltip: null })
 					})
 				// labels
 				enteredNodesLevel2
@@ -294,78 +282,11 @@ export class NestedTreemap {
 		      	})
 		      })
 
-				// // update 
-				// nodesLevel2
-				// 	.call(this.setNodeDimensions)
-				// 	.call(this.setNodeID)
-				// // exit
-				// nodesLevel2.exit().remove()
-
-
-
-/*
-				// update the existing level 2 nodes
-				this.nodes
-					.filter(f=>f.depth==2)
-					.call(this.setNodeID)
-					.call(this.setNodeClass)
-					.call(this.setNodeDimensions)
-
-				let enteredNodes = 
-					this.nodes
-						.enter()
-						.append("div")
-						.call(this.setNodeClass)
-						.call(this.setNodeID)
-						.call(this.setMouseBehaviour.bind(this))
-
-				let enteredNodesL2 = enteredNodes.filter(f=>f.depth==2)
-
-
-				// level 2 nodes follow the treemap data
-				enteredNodesL2
-					.call(this.setNodeDimensions)
-					.call(this.setMouseBehaviour.bind(this));
-
-				enteredNodesL2
-					.append("span")
-					.classed("label", true)
-					.text(d => d.depth!=0?d.data.key:null);
-
-				enteredNodesL2
-					.append("span")
-					.classed("count", true)
-					.text(d => d.depth!=0?d.data.value:null);
-
-				// got through each new node and check if its overflowing
-		    enteredNodesL2
-		      .call( (d) => { 
-		      	d.nodes().forEach( (n) => {
-		      		this.checkOverflow.bind(n)()
-		      	})
-		      })
-
-
-				let nodesL1 = this.nodes.filter(f=>f.depth==1)
-
-
-				// width of the first level nodes
-				w = this.width / nodesL1.nodes().length
-
-				// level 1 nodes have a connection line and are spaced equally
-				nodesL1
-					.style('background-color', '#cecece')
-					.style('width', w)
-					.style('height', '30px')
-					.style('transform',(d,i) => `translate3d(${i*w}px,0px,0px)`)
-*/
 			break;
 		}
 
 		return this;
   	}
-
-		// TODO: Make the number of levels dynamic
 
 	createDropdowns (a,b) {
 

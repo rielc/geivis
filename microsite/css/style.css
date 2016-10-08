@@ -381,65 +381,70 @@ header .navi a:hover, header .navi a:active {
   letter-spacing: 0.3px;
   font-family: "gravurcondensed-regular";
   text-transform: uppercase;
-  color: #707070;
+  color: #000;
   position: absolute;
   padding-right: 10px;
   transform: translate(-50%, 0px);
   font-size: 10px;
 }
-/* line 59, ../sass/_nested-treemap.scss */
+/* line 57, ../sass/_nested-treemap.scss */
+#TreemapSection .level-1-label span {
+  color: #707070;
+}
+/* line 62, ../sass/_nested-treemap.scss */
 #TreemapSection .node {
   box-sizing: border-box;
   position: absolute;
   text-align: center;
   z-index: 2 !important;
-  transition: transform 0.4s, width 0.4s, height 0.4s, background-color 0.4s, box-shadow 0.4s;
+  transition: width 0.2s, height 0.2s, transform 0.4s, background-color 0.4s, box-shadow 0.4s;
 }
-/* line 66, ../sass/_nested-treemap.scss */
+/* line 69, ../sass/_nested-treemap.scss */
 #TreemapSection .node.related {
   box-shadow: 0 0 500px 0 #7ad8ff inset;
 }
-/* line 68, ../sass/_nested-treemap.scss */
+/* line 71, ../sass/_nested-treemap.scss */
 #TreemapSection .node.related .label, #TreemapSection .node.related .count {
   color: #009ee0 !important;
 }
-/* line 72, ../sass/_nested-treemap.scss */
+/* line 75, ../sass/_nested-treemap.scss */
 #TreemapSection .node.overflow .label, #TreemapSection .node.overflow .count {
   display: none;
 }
-/* line 75, ../sass/_nested-treemap.scss */
+/* line 78, ../sass/_nested-treemap.scss */
 #TreemapSection .node .label {
   transition: color 0.4s;
   position: absolute;
 }
-/* line 76, ../sass/_nested-treemap.scss */
+/* line 79, ../sass/_nested-treemap.scss */
 #TreemapSection .node .count {
   transition: color 0.4s;
 }
-/* line 78, ../sass/_nested-treemap.scss */
+/* line 81, ../sass/_nested-treemap.scss */
 #TreemapSection .node.other {
-  border-bottom: none !important;
+  background-color: rgba(190, 230, 249, 0.25);
+  box-shadow: 0 0 0 0 #eeeeee inset, 0 0 0 0 #eeeeee inset;
 }
-/* line 83, ../sass/_nested-treemap.scss */
+/* line 87, ../sass/_nested-treemap.scss */
 #TreemapSection .level-1 {
   z-index: 1 !important;
   padding-top: 5px;
-  box-shadow: 0 0 0 2px #efefef;
+  box-shadow: -1px 0 0 0 #efefef inset, 1px 0 0 0 #efefef inset, 0 -1px 0 0 #efefef inset, 0 1px 0 0 #efefef inset;
 }
-/* line 89, ../sass/_nested-treemap.scss */
+/* line 93, ../sass/_nested-treemap.scss */
 #TreemapSection .level-2 {
-  box-shadow: 0 -1px 0 0 #eeeeee inset;
+  box-shadow: 0 -1px 0 0 #eeeeee inset, 0 1px 0 0 #eeeeee inset;
 }
-/* line 91, ../sass/_nested-treemap.scss */
+/* line 96, ../sass/_nested-treemap.scss */
 #TreemapSection .level-2:hover {
   z-index: 3 !important;
   box-shadow: 0 0 500px 0 #ff4a92 inset;
 }
-/* line 94, ../sass/_nested-treemap.scss */
+/* line 99, ../sass/_nested-treemap.scss */
 #TreemapSection .level-2:hover .label, #TreemapSection .level-2:hover .count {
   color: #b00046 !important;
 }
-/* line 96, ../sass/_nested-treemap.scss */
+/* line 101, ../sass/_nested-treemap.scss */
 #TreemapSection .level-2 .label {
   padding-left: 20px;
   text-align: left;
@@ -450,7 +455,7 @@ header .navi a:hover, header .navi a:active {
   font-size: 12px;
   color: #707070 !important;
 }
-/* line 107, ../sass/_nested-treemap.scss */
+/* line 112, ../sass/_nested-treemap.scss */
 #TreemapSection .level-2 .count {
   box-sizing: border-box;
   text-align: right;
@@ -464,13 +469,13 @@ header .navi a:hover, header .navi a:active {
   font-size: 10px;
 }
 
-/* line 122, ../sass/_nested-treemap.scss */
+/* line 127, ../sass/_nested-treemap.scss */
 .dropdown {
   position: relative;
   display: inline-block;
 }
 
-/* line 127, ../sass/_nested-treemap.scss */
+/* line 132, ../sass/_nested-treemap.scss */
 .dropdown .dropdown-menu {
   position: absolute;
   top: 100%;
@@ -486,13 +491,13 @@ header .navi a:hover, header .navi a:active {
   padding: 0;
 }
 
-/* line 142, ../sass/_nested-treemap.scss */
+/* line 147, ../sass/_nested-treemap.scss */
 .dropdown:hover .dropdown-menu {
   display: block;
 }
 
 /** Button Styles **/
-/* line 147, ../sass/_nested-treemap.scss */
+/* line 152, ../sass/_nested-treemap.scss */
 .dropdown button {
   background: #FF6223;
   color: #FFFFFF;
@@ -503,7 +508,7 @@ header .navi a:hover, header .navi a:active {
 }
 
 /** List Item Styles **/
-/* line 157, ../sass/_nested-treemap.scss */
+/* line 162, ../sass/_nested-treemap.scss */
 .dropdown a {
   display: block;
   padding: 0.2em 0.8em;
@@ -513,7 +518,7 @@ header .navi a:hover, header .navi a:active {
 }
 
 /** List Item Hover Styles **/
-/* line 166, ../sass/_nested-treemap.scss */
+/* line 171, ../sass/_nested-treemap.scss */
 .dropdown a:hover {
   background: #BBBBBB;
 }
