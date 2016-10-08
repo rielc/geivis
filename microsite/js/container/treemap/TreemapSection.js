@@ -14,7 +14,7 @@ export class TreemapSection extends Section {
     this.title.append("span").classed("dropdown-a", true);
     this.title.append("span").classed("years", true);
 
-    let oh = 0;
+    let oh = 188;
     oh+=parseInt(this.title.style("padding-top"));
     oh+=parseInt(this.title.style("padding-bottom"));
     oh+=parseInt(this.title.style("height"));
