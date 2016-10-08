@@ -25,7 +25,8 @@ export class Tooltip {
       //console.log("tooltip", next.tooltip)
 
       if(next.tooltip !== null){
-        const pos = d3.mouse(this.containerParent.node());
+        // const pos = d3.mouse(this.containerParent.node());
+        const pos = next.tooltip.pos;
         this.container
           .style("transform", `translate(${pos[0]}px,${pos[1]}px)`)
           .style("visibility", "visible")

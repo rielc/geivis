@@ -207,9 +207,15 @@ export class StreamGraph extends StateDb {
     
     s.enter()
       .append("path")
-      .on("mouseenter", (d)=>{
+      .on("mouseenter", (d,i,e)=>{
         if(d.key == "other" || !this.big) return;
-        this.state.push({ hover: d.key, tooltip: { name: d.key } });
+
+        const p = d3.select(e[i]).node().getBoundingClientRect();
+        const p2 = d3.select(".container").node().getBoundingClientRect();
+        const time = d.reduce((h,c)=>h[1]>c[1]? h:c, {}).data.key;
+        const tooltip = { name: d.key, pos: [p.left-p2.left+this.x(time), p.top-p2.top] };
+
+        this.state.push({ hover: d.key, tooltip });
       })
       .on("mouseleave", d=>{
         if(d.key == "other" || !this.big) return;

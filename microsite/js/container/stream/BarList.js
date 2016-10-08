@@ -62,8 +62,14 @@ export class BarList extends StateDb {
     let e = s.enter()
       .append("div")
       .classed("item", true)
-      .on("mouseenter", (d)=>{
-        this.state.push({ event: "enter", active: this.key, hover: d.key });
+      .on("mouseenter", (d,i,e)=>{
+        let tooltip = null;
+        if(d.value/max < 0.15){
+          const p = d3.select(e[i]).select(".bar").node().getBoundingClientRect();
+          const p2 = d3.select(".container").node().getBoundingClientRect();
+          tooltip =  { name: d.value, pos: [p.left-p2.left, p.top-p2.top] };
+        }
+        this.state.push({ event: "enter", active: this.key, hover: d.key, tooltip });
       })
       .on("mouseleave", ()=>{
         this.state.push({ event: "leave", active: this.key, hover: null });
@@ -80,7 +86,7 @@ export class BarList extends StateDb {
       .text(d => d.value/max < 0.15 ? `` : `${ d.value }` )
       .style("width", d=> `${ (d.value / max)*100 }%`)
       .on("mouseenter", (d)=>{
-        this.state.push({ event: "enter", active: this.key, hover: d.key, tooltip: { name: d.value } });
+        this.state.push({ event: "enter", active: this.key, hover: d.key });
       })
 
     e.append("div").classed("right", true)
