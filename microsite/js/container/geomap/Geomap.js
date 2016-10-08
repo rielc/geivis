@@ -147,6 +147,7 @@ export class Geomap extends StateDb {
       .append("g")
       .on("mouseenter", (d,i,l)=> {
         d3.select(l[i])
+          .each(function(){ this.parentNode.appendChild(this); })
           .style("opacity", 1)
           .select("text")
           .text(d2 => `${d.key} (${d.value})`)
