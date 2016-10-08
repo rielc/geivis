@@ -147,43 +147,10 @@ export class NestedTreemap {
 		});
 	}
 
-	setMouseBehaviour (selection) {
-
-		// console.log(selection)
-
-		selection
-			.on("mouseover", (d) => {
-				if (d.depth===2) {
-					this.svg.selectAll(".node").classed("related", false);
-					this.svg.selectAll("."+GeiVisUtils.makeSafeForCSS(d.data.key)).classed("related", true);
-
-					console.log(this)
-
-					let el = d3.select(this);
-					let o = GeiVisUtils.checkOverflow(el.node());
-					if (o == "overflow") {
-	        	this.state.push({ hover: 'd.key', tooltip: { name: d.key } });
-	        }
-				}
-			})
-			.on("mouseout", (d) => {
-				this.svg.selectAll(".node").classed("related", false);
-			})
-	}
-
 
 	checkOverflow (d,i,array) {
-		let el = d3.select(this);
-		let o = GeiVisUtils.checkOverflow(el.node());
-		if (o == "overflow") {
-			el.classed("overflow", true);
-		  	el.attr("data-balloon", d=>d.data.key);
-		  	el.attr("data-balloon-pos", "up");
-		} else {
-			el.attr("data-balloon", null);
-			el.attr("data-balloon-pos", null);
-			el.classed("overflow", false);
-		}
+		let o = GeiVisUtils.checkOverflow( d3.select(this).node() )
+		d3.select(this).classed('overflow', o=='overflow')
 	}
 
 	dKey (d) {
@@ -226,7 +193,8 @@ export class NestedTreemap {
 					.attr('class', (d) => ('path ' + d.data.key) )
 					.attr( "d", connectionLinePath)
 				// update
-				connections.transition().duration(300)
+				connections.transition()
+					.duration(100)
 					.attr( "d", connectionLinePath)
 				// exit
 				connections.exit().remove()
@@ -289,14 +257,26 @@ export class NestedTreemap {
 
 				updateLabels.bind(this)(dataLevel1)
 
-				let nodesLevel2 =  this.svg.selectAll(".node.level-2").data(dataLevel2, this.dKey)
+				const nodesLevel2 =  this.svg.selectAll(".node.level-2").data(dataLevel2, this.dKey)
 
 				// enter l2-nodes
-				let enteredNodesLevel2 = nodesLevel2.enter().append('div')
+				const enteredNodesLevel2 = nodesLevel2.enter().append('div')
 					.call(this.setNodeClass)
 					.call(this.setNodeID)
 					.call(this.setNodeDimensions)
-					.call(this.setMouseBehaviour.bind(this))
+					.on("mouseover", (d,i,array) => {
+						this.svg.selectAll(".node").classed("related", false)
+						this.svg.selectAll("."+GeiVisUtils.makeSafeForCSS(d.data.key)).classed("related", true)
+						const el = d3.select(array[i])
+						const o = GeiVisUtils.checkOverflow(el.node())
+						if (el.classed('overflow') || el.classed('other')) {
+							const tPos = d3.mouse(this.container.node())
+		        	this.state.push({ tooltip: { name: d.data.key, pos: tPos} })
+		        }
+					})
+					.on("mouseout", (d) => {
+		        	this.state.push({ tooltip: null })
+					})
 				// labels
 				enteredNodesLevel2
 					.append("span")
