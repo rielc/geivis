@@ -1,7 +1,14 @@
 #BookshelfSection {
+    
+    position:fixed;
+
     .bookshelf {
+
         margin-left: 10px;
         margin-top: 20px;
+        &.open { transform:translate3d(0,0,0); }
+        &.closed { transform:translate3d(50%,0,0); }
+
         .book {
             z-index: 1;
             font-family: 'gravurcondensed-regular';

@@ -14,22 +14,24 @@ header {
 		padding-left: 10px;
 	}
 	.navi {
+		box-shadow:0 0 20px 0 rgba(0,0,0,0.1);
 		float: right;
 		text-transform: uppercase;
 		padding-top: 10px;
-		// font-family: 'gravurcondensed-bold';
+
 		a {
-			color: #000;
+			box-sizing:border-box;
+			color: $red;
 			text-decoration: none;
-			width: 150px;
+			width: 25%;
 			float: left;
+			padding: 0 $padding*2 0 $padding*2;
 			font-size: 20px;
 			text-align: center;
-
-			&:hover, &:active {
-				color:#96112d;
-			}
-
+			letter-spacing: 1px;
+			font-family:"gravurcondensed-bold";
+			text-transform: uppercase;
+			&:hover, &:active { color:$blue; }
 		}
 	}
 }

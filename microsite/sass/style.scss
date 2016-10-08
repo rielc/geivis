@@ -35,6 +35,10 @@ body {
   font: 10px "gravurcondensed-regular", sans-serif;
   margin:0;
   padding:0;
+  background-color:$bodyBackground;
+
+  .container { background-color:#fff; }
+
 }
 
 p {
@@ -43,7 +47,9 @@ p {
 
 
 
+
 section {
+  background-color:#fff;
   position:relative;
   display: flex;
   margin-bottom: 40px;

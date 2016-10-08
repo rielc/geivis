@@ -1,16 +1,21 @@
+
+$introSidePadding: 100px;
+
 #intro {
-	padding-top: 20px;
-	padding-bottom: 20px;
 	margin-top: 88px;
 	height:auto;
 
    p {
+    -webkit-font-smoothing: antialiased;
+    font-family: "egyptienne";
+    font-size: 16px;
+    line-height: 24px;
     -webkit-column-count: 2; /* Chrome, Safari, Opera */
     -moz-column-count: 2; /* Firefox */
     column-count: 2;
-    font-size: $fontSizeNormal;
     color:$grey;
-    margin-top: $padding;
-   }
-   
+    padding: 0 $padding;
+    a { color:#000; text-decoration:none; }
+  }
+
 }

@@ -1,8 +1,6 @@
 export let __hotReload = true;
 
 export function checkPartialOverflow (el, min) {
-
-  console.log('el', el.offsetHeight, 'min', min)
     if ( el.offsetHeight < min || el.offsetWidth < min ) {
       return "overflow";
     } else {

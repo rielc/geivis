@@ -184,7 +184,6 @@ export class NestedTreemap {
 	render (mode) {
 
 		let line = d3.line().x(d=>Math.round(d[0])).y(d=>d[1]).curve(d3.curveMonotoneY)
-
 		function connectionLinePath (d,i,array) {
 				let shift = 30
 				let amt = i/array.length
@@ -192,12 +191,61 @@ export class NestedTreemap {
 				let vEnd = [d.x0+(d.x1-d.x0)*0.5,60]
 				let v0 = [vStart[0],vStart[1]]; v0[1]+=shift-(shift*amt);
 				let v1 = [vEnd[0],vEnd[1]]; v1[1]-=shift*amt;
-
 				return line( [vStart,v0,v1,vEnd] )
-			}
+		}
 
 
-		console.log(mode)
+		function updateLabels (dataLevel1) {
+
+				let nodesLevel1 =  this.svg.selectAll(".node.level-1").data(dataLevel1, this.dKey)
+				let labelLevel1 =  this.svg.selectAll(".level-1-label").data(dataLevel1, this.dKey)
+				let connections =  this.connectionSVG.selectAll("path").data(dataLevel1, this.dKey)
+
+				console.log('labels')
+				w = this.width / dataLevel1.length
+				// enter l1-labels
+				let enteredLabelLevel1 = labelLevel1.enter().append('div')
+					.classed('level-1-label', true)
+					.style('width', w+'px')
+					.style('height', '60')
+					.style('transform',(d,i) => `translate3d(${i*w}px,0px,0px)`)
+				// update 
+				labelLevel1
+					.style('width', w+'px')
+					.html( (d) => {
+						let label = d.data.key == '' ? 'unknown' : d.data.key
+						return `${label}<br/><span>${d.value}</span>`
+					})
+					.style('transform',(d,i) => `translate3d(${i*w}px,0px,0px)`)
+				// exit
+				labelLevel1.exit().remove()
+
+
+				// enter connection lines
+				let enteredConnections = connections.enter()
+					.append('path')
+					.attr('class', (d) => ('path ' + d.data.key) )
+					.attr( "d", connectionLinePath)
+				// update
+				connections.transition().duration(300)
+					.attr( "d", connectionLinePath)
+
+				// exit
+				connections.exit().remove()
+
+				// enter l1-nodes
+				let enteredNodesLevel1 = nodesLevel1.enter().append('div')
+					.call(this.setNodeClass)
+					.call(this.setNodeID)
+					.call(this.setNodeDimensions)
+				// update 
+				nodesLevel1
+					.call(this.setNodeDimensions)
+					.call(this.setNodeID)
+				// exit
+				nodesLevel1.exit().remove()
+
+		}
 
 		let l, w, nodes
 
@@ -228,54 +276,13 @@ export class NestedTreemap {
 			case "brushmove" :
 
 				this.svg.selectAll(".node.level-2").remove()
-
-				let nodesLevel1 =  this.svg.selectAll(".node.level-1").data(dataLevel1, this.dKey)
-				let labelLevel1 =  this.svg.selectAll(".level-1-label").data(dataLevel1, this.dKey)
-				let connections =  this.connectionSVG.selectAll("path").data(dataLevel1, this.dKey)
-
-				w = this.width / dataLevel1.length
-				// enter l1-labels
-				let enteredLabelLevel1 = labelLevel1.enter().append('div')
-					.classed('level-1-label', true)
-					.text((d) => d.data.key )
-					.style('width', w+'px')
-					.style('height', '60')
-					.style('transform',(d,i) => `translate3d(${i*w}px,0px,0px)`)
-				// update 
-				labelLevel1
-					.style('width', w+'px')
-					.style('transform',(d,i) => `translate3d(${i*w}px,0px,0px)`)
-				// exit
-				labelLevel1.exit().remove()
-
-
-				// enter connection lines
-				let enteredConnections = connections.enter()
-					.append('path')
-					.attr('class', (d) => ('path ' + d.data.key) )
-					.attr( "d", connectionLinePath)
-				// update
-				connections.transition().duration(300)
-					.attr( "d", connectionLinePath)
-
-				// exit
-				connections.exit().remove()
-
-				// enter l1-nodes
-				let enteredNodesLevel1 = nodesLevel1.enter().append('div')
-					.call(this.setNodeClass)
-					.call(this.setNodeID)
-					.call(this.setNodeDimensions)
-				// update 
-				nodesLevel1
-					.call(this.setNodeDimensions)
-					.call(this.setNodeID)
-				// exit
-				nodesLevel1.exit().remove()
+				updateLabels.bind(this)(dataLevel1)
 
 
 			break;
 			case "brushend" :
+
+				updateLabels.bind(this)(dataLevel1)
 
 				let nodesLevel2 =  this.svg.selectAll(".node.level-2").data(dataLevel2, this.dKey)
 
@@ -301,7 +308,7 @@ export class NestedTreemap {
 		      		this.checkOverflow.bind(n)()
 		      	})
 		      })
-		      
+
 				// // update 
 				// nodesLevel2
 				// 	.call(this.setNodeDimensions)
