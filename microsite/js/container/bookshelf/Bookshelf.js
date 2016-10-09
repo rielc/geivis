@@ -6,47 +6,43 @@ export class Bookshelf extends StateDb {
 
   constructor(state, db, div){
     super(state, db);
-
-    this.container = div.append("div").attr("class", "bookshelf");
     
+    this.openClass = 'open fadeInRightBig'
+    this.closeClass = 'closed fadeOutRightBig'
+
+    this.div = div.classed('animated ' + this.openClass, true)
+    this.container = this.div.append("div").classed('bookshelf', true);
+    this.closeButton = this.div.append("a").classed("closeButton", true).text('Close')
+    this.closeButton.on("click", this.close.bind(this) )
     return this;
   }
 
  
 
   stateChange(next, last){
-    if(!next.visible.BookshelfSection) return;
-
-    if(next.brushStart !== last.brushStart
-      || next.brushEnd !== last.brushEnd
-      || next.active !== last.active
-      || next.activeItem !== last.activeItem
-      || next.hover !== last.hover
-      || next.loaded !== last.loaded
-      || next.visible.BookshelfSection !== last.visible.BookshelfSection
-    ){
-      this.render();
+    if (next.bookshelf!=undefined) {
+      console.log(last, next)
+      this.render(next.bookshelf.data)
+      this.open()
+      // console.log(next.bookshelf.data)
+    } else {
+      this.close()
     }
-    // console.log(next.brushStart, last.brushStart);
   }
 
-  render(){
-    //console.log( this.state.state);
-    const data = this.db.date.top(150).filter(d => d.title != "");
+  open () { console.log( 'oooooopen!');  this.div.classed(this.openClass, true).classed(this.closeClass, false) }
+  close() { console.log( 'clooooose!' ); this.div.classed(this.closeClass, true).classed(this.openClass, false) }
 
-    // console.log(data);
-
+  render(customData) {
+    const data = customData==undefined ? this.db.date.top(150).filter(d => d.title != "") : customData;
     let s = this.container.selectAll(".book").data(data, d=>d.id);
-
+   
     s.enter()
       .append("div")
       .attr("class", "book")
       .text(d=>d.title)
-
     s.text(d=>d.title)
-
     s.exit().remove();
-    
     return this;
   }
 

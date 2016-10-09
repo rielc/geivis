@@ -58,16 +58,12 @@ export class NestedTreemap {
 
 	updateData(data) {
 
-		if (data != undefined) {
-			this.data = data;
-		}
+		if (data != undefined) { this.data = data; }
 
 		let nesting = d3.nest(); 
 		let nstA = this.nestings[0][this.activeNest[0]].accessor
 		let nstB = this.nestings[1][this.activeNest[1]].accessor
-		nesting.key( nstA ).key( nstB )
-
-		nesting.rollup(d=>d.length);
+		nesting.key(nstA).key(nstB).rollup(d=>d.length)
 		let nested = nesting.entries(this.data);
 
 		this.root = d3
@@ -78,7 +74,7 @@ export class NestedTreemap {
 		this.treemap = d3.treemap()
 			.size([this.width, this.height-60])
 			.tile(d3.treemapSliceDice)
-			.round(true)
+			.round(false)
 			.paddingLeft(0)
 			.paddingRight(0)
 			.paddingTop(0)
@@ -93,7 +89,7 @@ export class NestedTreemap {
 		selection
 			.style("transform", d => `translate3d(${d.x0}px,${d.y0+60}px,0px)` )
 			.style("width", d => { return ((d.x1-d.x0)+"px"); })
-			.style("height", d => (d.depth==1?(d.y1-d.y0):(d.y1-d.y0))+'px' );
+			.style("height", d => (d.depth==1?(d.y1-d.y0):Math.max(1,(d.y1-d.y0)))+'px' );
 
 		selection.select(".label").text(d => d.depth!=0?d.data.key:null);
 		selection.select(".count").text(d => d.depth!=0?d.data.value:null);
@@ -171,13 +167,8 @@ export class NestedTreemap {
 					.call(this.setNodeDimensions)
 				// update 
 				nodesLevel1
-					.style('box-shadow',(d,i,array) => {
-						let vBorder = ', 0 1px 0 0 #efefef inset, 0 1px 0 0 #efefef inset'
-						let value = null
-						if (i==0) value = '0 0 0 0 #efefef inset, 0 0 0 0 #efefef inset'+vBorder
-						if (i==array.length-1) value = '0 0 0 0 #efefef inset, 0 0 0 0 #efefef inset'+vBorder
-						return value
-					})
+					.style('border-left',(d,i,array) => (i==0)?'none':null)
+					.style('border-right',(d,i,array) => (i==array.length-1)?'none':null)
 					.call(this.setNodeDimensions)
 					.call(this.setNodeID)
 				// exit
@@ -196,7 +187,6 @@ export class NestedTreemap {
 
 		let nodes
 
-
 		// data filtered depending on the brushevent
 		let data = this.root.descendants()
 		let dataLevel1 = data.filter((d)=>d.depth==1)
@@ -206,16 +196,9 @@ export class NestedTreemap {
 		let w = (this.width-m) / dataLevel1.length
 		let line = d3.line().x(d=>Math.round(d[0])).y(d=>d[1]).curve(d3.curveMonotoneY)
 
-		// this.nodes = this.svg.selectAll(".node").data(data, this.dKey)
-
 		switch (mode) {
 			case "brushstart" :
-				// update all existing nodes
-				// this.nodes
-				// 	.call(this.setNodeDimensions)
-				// 	.style("height", "100px")
-				// 	.call(this.setNodeID)
-				// 	.call(this.setNodeClass);
+			// not mucho to do?
 			break;
 			case "brushmove" :
 
@@ -248,6 +231,13 @@ export class NestedTreemap {
 					.on("mouseout", (d) => {
 						this.svg.selectAll(".node").classed("related", false)
 	        	this.state.push({ tooltip: null })
+					})
+					.on("click", (d) => {
+						let indicesA = this.data.map(this.nestings[1][this.activeNest[1]].accessor).map( (el,i)=>el==d.data.key?i:-1).filter(el=>el!=-1)
+						let indicesB = this.data.map(this.nestings[0][this.activeNest[0]].accessor).map( (el,i)=>el==d.parent.data.key?i:-1).filter(el=>el!=-1)
+						let filteredData = this.data.filter((d,i)=>indicesA.indexOf(i)!=-1&&indicesB.indexOf(i)!=-1)
+						//console.log(filteredData)
+	        	// this.state.push({ bookshelf: {data:filteredData} })
 					})
 				// labels
 				enteredNodesLevel2

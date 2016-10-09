@@ -18,6 +18,8 @@ let db = new DataBase(state);
 let scroll = new ScrollListener(state)
 let tooltip = new Tooltip(state)
 
+let bookshelfSection = new BookshelfSection(state, db);
+
 let streamSection = new StreamSection(state, db);
 
 let geomapSection = new GeomapSection(state, db);
@@ -25,7 +27,6 @@ let geomapSection = new GeomapSection(state, db);
 let treemapSection = new TreemapSection(state, db);
 let networkSection = new NetworkSection(state, db);
 
-let bookshelfSection = new BookshelfSection(state, db);
 
 // let dummy = new DummySection(state, db);
 

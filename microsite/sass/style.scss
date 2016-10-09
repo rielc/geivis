@@ -3,8 +3,8 @@
 @import "_reset.scss";
 @import "_header.scss";
 @import "_intro.scss";
-@import "_nested-treemap.scss";
-@import "_circle-packed-network.scss";
+@import "_nestedTreemap.scss";
+@import "_circlePackedNetwork.scss";
 @import "_StreamSection.scss";
 @import "_BookshelfSection.scss";
 @import "_ctooltip.scss";
@@ -15,22 +15,9 @@
 @import "_balloon.scss";
 
 
-// global styles
-
-@font-face {
-    font-family: "gravurcondensed-regular";
-    src: url("gravurcondensed-regular.woff") format('woff');
-}
-
-@font-face {
-    font-family: "gravurcondensed-bold";
-    src: url("gravurcondensed-bold.woff") format('woff');
-}
-
-@font-face {
-    font-family: "egyptienne";
-    src: url("egyptienne.woff") format('woff');
-}
+@font-face { font-family: "gravurcondensed-regular"; src: url("gravurcondensed-regular.woff") format('woff'); }
+@font-face { font-family: "gravurcondensed-bold"; src: url("gravurcondensed-bold.woff") format('woff'); }
+@font-face { font-family: "egyptienne"; src: url("egyptienne.woff") format('woff'); }
 
 body {
   font: 10px "gravurcondensed-regular", sans-serif;
@@ -38,13 +25,16 @@ body {
   padding:0;
   background-color:$bodyBackground;
 
-  .container { background-color:#fff; }
-
+  .container {
+    position: relative;
+    margin: auto auto;
+    width: 1200px;
+    background-color:#fff;
+    box-shadow: 0 0 10px 0 rgba(0,0,0,0.125);
+  }
 }
 
-p {
-  font: 12px "egyptienne", sans-serif;
-}
+p { font: 12px "egyptienne", sans-serif; }
 
 
 
@@ -56,7 +46,6 @@ section {
   margin-bottom: 40px;
   width:100%;
   flex-direction:column;
-  // min-height:calc(100vh - 88px);
   height:calc(100vh - 188px);
 
   h2.title {
@@ -101,13 +90,6 @@ tspan:last-child {
   fill-opacity: 0.8;
 }
 
-
-.container {
-  position: relative;
-  margin: auto auto;
-  width: 1200px;
-}
-
 ::-webkit-scrollbar {
     -webkit-appearance: none;
     width: 7px;
@@ -117,3 +99,14 @@ tspan:last-child {
     background-color: rgba(0,0,0,.5);
     -webkit-box-shadow: 0 0 1px rgba(255,255,255,.5);
 }
+
+
+@charset "UTF-8";
+
+/*!
+ * animate.css -http://daneden.me/animate
+ * Version - 3.5.1
+ * Licensed under the MIT license - http://opensource.org/licenses/MIT
+ *
+ * Copyright (c) 2016 Daniel Eden
+ */
