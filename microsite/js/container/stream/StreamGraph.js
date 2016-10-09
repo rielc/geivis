@@ -33,7 +33,7 @@ export class StreamGraph extends StateDb {
       .y0(d=> this.y(d[0]) )
       .y1(d=> this.y(d[1]) )
       // .curve(d3.curveCardinal)
-      // .curve(d3.curveStepAfter)
+      //.curve(d3.curveStepAfter)
 
     
     this.div = div;
@@ -43,10 +43,27 @@ export class StreamGraph extends StateDb {
     this.gXaxis = this.g.append("g").attr("class", "x axis");
     this.gYaxis = this.g.append("g").attr("class", "y axis");
     this.gGraph = this.g.append("g").attr("class", "graph");
+    this.gBrushLegend = this.g.append("g").attr("class", "brushLegend");
+    this.gBrushLegend.append("text")
+      .attr("class", "from")
+      .attr("text-anchor", "middle")
+      .attr("x", 0)
+      .attr("y", 3)
+      .text("from")
+
+    this.gBrushLegend.append("text")
+      .attr("class", "to")
+      .attr("text-anchor", "middle")
+      .attr("x", 0)
+      .attr("y", 3)
+      .text("to")
 
     this.div.append("div")
       .attr("class", "totals")
-      .html('<span id="active">-</span> of <span id="total">-</span> books selected.');
+      .html('<span id="active">-</span> of <span id="total">-</span> books selected')
+      .on("click", ()=>{
+        this.gBrush.call(this.brush.move, null)
+      })
 
     // this.offset = this.div.node().offsetTop;
 
@@ -74,27 +91,6 @@ export class StreamGraph extends StateDb {
     return this;
   }
 
-  brushmove() {
-    if(d3.event.sourceEvent.type == "brush") return;
-
-    let domain0 = d3.event.selection.map(this.x.invert);
-    let domain1 = domain0.map(d3.timeYear.round);
-
-    // If empty when rounded, use floor & ceil instead.
-    if (domain1[0] >= domain1[1]) {
-      domain1[0] = d3.timeYear.floor(domain0[0]);
-      domain1[1] = d3.timeYear.ceil(domain0[1]);
-    }
-
-    this.gBrush.call(this.brush.move, domain1.map(this.x))
-    this.state.push({ brushStart: domain1[0], brushEnd: domain1[1], event: "brushmove" });
-  }
-
-  brushend() {
-    let s = d3.event.selection ? d3.event.selection.map(d=> this.x.invert(d)) : this.db.extent;
-    this.state.push({ brushStart: s[0], brushEnd: s[1], event: "brushend" });
-  }
-
   init(){
 
     this.width = this.outerWidth - this.margin.left - this.margin.right,
@@ -119,10 +115,51 @@ export class StreamGraph extends StateDb {
     this.gBrush.call(this.brush);
     this.gBrush.selectAll("rect").attr("height", this.height);
 
+    this.gBrushLegend.select(".from")
+      .attr("transform", "translate("+ this.x(this.state.state.brushStart) +","+this.height/2+")")
+    this.gBrushLegend.select(".to")
+      .attr("transform", "translate("+ this.x(this.state.state.brushEnd) +","+this.height/2+")")
+
     // this.gBrush.selectAll(".resize rect")
     //   .style("visibility", "inherit")
 
     return this;
+  }
+
+  brushmove() {
+    if(!d3.event.selection || d3.event.sourceEvent.type == "brush") return;
+
+    let domain0 = d3.event.selection.map(this.x.invert);
+    let domain1 = domain0.map(d3.timeYear.round);
+
+    // If empty when rounded, use floor & ceil instead.
+    if (domain1[0] >= domain1[1]) {
+      domain1[0] = d3.timeYear.floor(domain0[0]);
+      domain1[1] = d3.timeYear.ceil(domain0[1]);
+    }
+
+    this.gBrushLegend.select(".from")
+      .attr("transform", "translate("+ this.x(domain1[0]) +","+this.height/2+")")
+      .text(domain1[0].getFullYear())
+      .attr("y", d=> domain1[1]-domain1[0]<=186159996000 ? "-5":"3" )
+
+    this.gBrushLegend.select(".to")
+      .attr("transform", "translate("+ this.x(domain1[1]) +","+this.height/2+")")
+      .text(domain1[1].getFullYear())
+      .attr("y", d=> domain1[1]-domain1[0]<=186159996000 ? "11":"3" )
+
+    this.gXaxis.selectAll("text").style("opacity", d=> {
+      let a = (+d+146159996000 >= +domain1[0] && +d-146159996000 <= +domain1[1]);
+      return a ? 0:1;
+    })
+
+    this.gBrush.call(this.brush.move, domain1.map(this.x))
+    this.state.push({ brushStart: domain1[0], brushEnd: domain1[1], event: "brushmove" });
+  }
+
+  brushend() {
+    let s = d3.event.selection ? d3.event.selection.map(d=> this.x.invert(d)) : this.db.extent;
+    this.state.push({ brushStart: s[0], brushEnd: s[1], event: "brushend" });
   }
 
   load(){
@@ -176,7 +213,14 @@ export class StreamGraph extends StateDb {
     if(next.activeItem !== last.activeItem){
       console.log("load2")
       this.load().render(true);
+    }
+    if(next.filters !== last.filters){
+      console.log("load2")
+      this.load().render(true);
+    }
 
+    if(this.big && (next.brushStart !== last.brushStart)){
+      this.load().render();
     }
 
   
