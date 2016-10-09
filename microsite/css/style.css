@@ -205,8 +205,7 @@ header {
   background: #FFF;
   top: 0px; }
   header .logo {
-    float: left;
-    padding-left: 25px; }
+    float: left; }
   header .navi {
     box-shadow: 0 1px 0 0 white;
     float: right;
@@ -228,7 +227,9 @@ header {
         color: #009ee0; }
 
 #intro {
-  margin-top: 88px;
+  margin-top: 118px;
+  margin-bottom: 70px;
+  height: auto;
   height: auto; }
   #intro p {
     -webkit-font-smoothing: antialiased;
@@ -240,8 +241,7 @@ header {
     -moz-column-count: 2;
     /* Firefox */
     column-count: 2;
-    color: #707070;
-    padding: 0 25px; }
+    color: #707070; }
     #intro p a {
       color: #000;
       text-decoration: none; }
@@ -464,7 +464,7 @@ header {
         text-align: right; }
 
 #GeomapSection h2 {
-  position: absolute; }
+  position: relative; }
 #GeomapSection text {
   font-family: "gravurcondensed-regular";
   cursor: pointer; }
@@ -3195,8 +3195,7 @@ body {
     position: relative;
     margin: auto auto;
     width: 1200px;
-    background-color: #fff;
-    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.125); }
+    background-color: #fff; }
 
 p {
   font: 12px "egyptienne", sans-serif; }
@@ -3207,8 +3206,7 @@ section {
   display: flex;
   margin-bottom: 40px;
   width: 100%;
-  flex-direction: column;
-  height: calc(100vh - 188px); }
+  flex-direction: column; }
   section h2.title {
     font-face: "gravurcondensed-bold";
     box-sizing: border-box;
@@ -3221,6 +3219,14 @@ section {
       font-face: "gravurcondensed-regular";
       font-weight: normal;
       color: #a3a3a3; }
+  section .intro {
+    font-family: "egyptienne";
+    font-size: 16px;
+    line-height: 24px;
+    -webkit-column-count: 2;
+    -moz-column-count: 2;
+    column-count: 2;
+    margin-bottom: 60px; }
 
 .control {
   width: 100%; }

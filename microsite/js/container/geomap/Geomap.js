@@ -10,7 +10,9 @@ export class Geomap extends StateDb {
     
     this.div = div;
     this.outerWidth = 1200;
-    this.outerHeight = window.innerHeight-100;
+    this.outerHeight = window.innerHeight-200;
+
+    console.log(this.outerHeight);
     this.margin = {top: 0, right: 0, bottom: 0, left: 0};
 
     this.projection = d3.geoMercator();
@@ -84,6 +86,8 @@ export class Geomap extends StateDb {
     this.svg
       .attr("width", this.outerWidth)
       .attr("height", this.outerHeight)
+
+    console.log(this.outerHeight);
 
     this.g
       .attr(
