@@ -32,6 +32,7 @@ export class BarList extends StateDb {
       || next.brushEnd !== last.brushEnd
       || next.active !== last.active
       || next.activeItem !== last.activeItem
+      || next.filters !== last.filters
       || next.hover !== last.hover
       || next.loaded !== last.loaded
     ){
@@ -69,14 +70,19 @@ export class BarList extends StateDb {
           const p2 = d3.select(".container").node().getBoundingClientRect();
           tooltip =  { name: d.value, pos: [p.left-p2.left, p.top-p2.top] };
         }
-        this.state.push({ event: "enter", active: this.key, hover: d.key, tooltip });
+        this.state.push({ event: "enter", active: this.key, hover: d.key });
       })
       .on("mouseleave", ()=>{
         this.state.push({ event: "leave", active: this.key, hover: null });
       })
       .on("click", (d)=>{
-        let activeItem = this.state.state.activeItem === d.key;
-        this.state.push({ event: "click", active: this.key, activeItem: activeItem ? null : d.key });
+        let active = this.state.state.filters[this.key] && this.state.state.filters[this.key] === d.key;
+        // this is a good example why actions where invented:
+        let filters = {...this.state.state.filters, [this.key]: active ? null:d.key };
+        this.state.push({ event: "click", active: this.key, filters });
+
+        // this.state.push({ event: "click", active: this.key, activeItem: activeItem ? null : d.key });
+        // this.state.push({ event: "click", active: this.key, filter: [d.key] });
         // this.state.push({ filter: { [this.key] : d.key }});
       })
 
@@ -97,8 +103,8 @@ export class BarList extends StateDb {
       this.items.selectAll(".item").sort((a,b) => b.value - a.value)
     }
 
-    s.classed("hover", d=> this.state.state.hover === d.key)
-    s.classed("active", d=> this.state.state.activeItem === d.key)
+    s.classed("hover", d=> !this.state.state.filters[this.key] && this.state.state.hover === d.key)
+    s.classed("active", d=> this.state.state.filters[this.key] && this.state.state.filters[this.key]===d.key)
     
     s.select(".bar")
       .text(d => d.value/max < 0.15 ? `` : `${ d.value }` )

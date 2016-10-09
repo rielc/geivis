@@ -89,6 +89,7 @@ export class DataBase {
       .order(d3.stackOrderAscending)
       .offset(d3.stackOffsetNone);
 
+    this.filters = {};
 
     return this;
   }
@@ -113,7 +114,6 @@ export class DataBase {
   }
 
   stackedHistogram(){
-    const activeItem = this.state.state.activeItem;
 
     const key = this.state.state.active.substring(0,this.state.state.active.length-1);
     let keys = this[this.state.state.active].top(20).map(d => d.key);
@@ -153,29 +153,48 @@ export class DataBase {
 
     // this.filterTag("Preußen")
 
-
     if(next.brushStart !== curr.brushStart){
       if(next.brushStart*1 === next.brushEnd*1){
         this.date.filterAll();
       } else {
         this.date.filterRange([next.brushStart, next.brushEnd]);
       }
-
       d3.select("#total").text(this.crossfilter.size());
       d3.select("#active").text(this.all.value());
     }
 
     if(next.activeItem !== curr.activeItem){
-      let k2 = curr.active.substring(0,curr.active.length-1);
-      this[k2].filterExact(null);
+      // let k2 = curr.active.substring(0,curr.active.length-1);
+      // this[k2].filterExact(null);
 
+      // let k = next.active.substring(0,next.active.length-1);
+      // this[k].filterExact(next.activeItem);
 
-      let k = next.active.substring(0,next.active.length-1);
-      this[k].filterExact(next.activeItem);
+      // this.filters[k] = next.activeItem;
 
       //console.log(curr.active, next.active)
+      // console.log(this.filters, Object.keys(this.filters))
+
+      // Object.keys(this.filters).forEach(k=>{
+      //   this[k].filterExact(this.filters[k]);
+      // })
+
+
 
     }
+
+    if(next.filters !== curr.filters){
+      console.log(next.filters);
+
+      Object.keys(next.filters).forEach(k=>{
+        this[k.substring(0,k.length-1)].filterExact(next.filters[k]);
+      })
+      d3.select("#total").text(this.crossfilter.size());
+      d3.select("#active").text(this.all.value());
+    }
+
+
+
 
     // if(next.loaded == !curr.loaded){
     //   this.state.push({ brushStart: this.extent[0], brushEnd: this.extent[1], keyframe:true })
