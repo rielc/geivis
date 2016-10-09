@@ -1,1 +1,0 @@
-module.exports = require("npm:d3-color@0.4.2/build/d3-color.js");

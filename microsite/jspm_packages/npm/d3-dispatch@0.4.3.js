@@ -1,1 +1,0 @@
-module.exports = require("npm:d3-dispatch@0.4.3/build/d3-dispatch.js");
