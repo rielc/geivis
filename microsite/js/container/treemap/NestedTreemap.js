@@ -33,7 +33,7 @@ export class NestedTreemap {
 	appendTo (selector) {
 		this.container = selector;
 	    this.width = parseInt( this.container.style("width") ) - this.properties.margin.left - this.properties.margin.right,
-	    this.height = parseInt( window.innerHeight-200 ) - this.properties.margin.top - this.properties.margin.bottom;
+	    this.height = (window.innerHeight-200) - this.properties.margin.top - this.properties.margin.bottom;
 		this.svg = this.container
 			.append("div")
 			.attr("class", "visualization")
@@ -58,6 +58,7 @@ export class NestedTreemap {
 
 	updateData(data) {
 
+
 		if (data != undefined) { this.data = data; }
 
 		let nesting = d3.nest(); 
@@ -66,15 +67,17 @@ export class NestedTreemap {
 		nesting.key(nstA).key(nstB).rollup(d=>d.length)
 		let nested = nesting.entries(this.data);
 
+
 		this.root = d3
 			.hierarchy( { key : "all values", values : nested }, function(d) { return d.values; })
 			.sum( d => d.value  )
 			.sort( (b, a) => { return ( Math.abs((a.x1-a.x0)-Math.abs(b.x1-b.x0)) || (a.value - b.value) ); } );
 
+
 		this.treemap = d3.treemap()
 			.size([this.width, this.height-60])
 			.tile(d3.treemapSliceDice)
-			.round(false)
+			.round(true)
 			.paddingLeft(0)
 			.paddingRight(0)
 			.paddingTop(0)
@@ -87,10 +90,9 @@ export class NestedTreemap {
 
 	setNodeDimensions (selection) {
 		selection
-			.style("transform", d => `translate3d(${d.x0}px,${d.y0+60}px,0px)` )
-			.style("width", d => { return ((d.x1-d.x0)+"px"); })
-			.style("height", d => (d.depth==1?(d.y1-d.y0):Math.max(1,(d.y1-d.y0)))+'px' );
-
+			.style("transform", d => `translate3d(${Math.round(d.x0)}px,${Math.round(d.y0+60)}px,0px)` )
+			.style("width", d => { return (Math.round((d.x1-d.x0))+"px"); })
+			.style("height", d => Math.round((d.depth==1?(d.y1-d.y0):Math.max(1,(d.y1-d.y0))))+'px' );
 		selection.select(".label").text(d => d.depth!=0?d.data.key:null);
 		selection.select(".count").text(d => d.depth!=0?d.data.value:null);
 	}
@@ -99,7 +101,7 @@ export class NestedTreemap {
 		selection
 			.attr("class", d => {
 				let c = GeiVisUtils.makeSafeForCSS(d.data.key) + " node " + "level-"+d.depth;
-				c += (Math.abs(d.x1-d.x0)<3||Math.abs(d.y1-d.y0)<3) ? " other" : "";
+				c += (Math.abs(d.x1-d.x0)<3||Math.abs(d.y1-d.y0)<3)&&d.depth>1 ? " other" : "";
 				return c;
 			});
 	}
@@ -114,8 +116,12 @@ export class NestedTreemap {
 
 
 	checkOverflow (d,i,array) {
-		let o = GeiVisUtils.checkOverflow( d3.select(this).node() )
-		d3.select(this).classed('overflow', o=='overflow')
+		//let o = GeiVisUtils.checkOverflow( d3.select(this).node() )
+		let w = 80
+		let h = 13
+		let el = d3.select(this).node()
+    let o = el.offsetHeight<h || el.offsetWidth<w
+		d3.select(this).classed('overflow', o)
 	}
 
 	dKey (d) {
@@ -127,6 +133,8 @@ export class NestedTreemap {
 
 	render (mode) {
 
+		console.log(mode)
+
 		function updateLabels (dataLevel1) {
 				let nodesLevel1 =  this.svg.selectAll(".node.level-1").data(dataLevel1, this.dKey)
 				let labelLevel1 =  this.svg.selectAll(".level-1-label").data(dataLevel1, this.dKey)
@@ -135,10 +143,10 @@ export class NestedTreemap {
 				let enteredLabelLevel1 = labelLevel1.enter().append('div')
 					.classed('level-1-label', true)
 					.style('height', '60')
-					.style('transform',(d,i) => `translate3d(${i*w}px,0px,0px)scale(0,0)`)
+					.style('transform',(d,i) => `translate3d(${Math.round(i*w)}px,0px,0px)scale(0,0)`)
 				// update 
 				labelLevel1
-					.style('width', w+'px')
+					.style('width', Math.round(w)+'px')
 					.html( (d) => {
 						let label = d.data.key == '' ? 'unknown' : d.data.key
 						return `${label}<br/><span>${d.value}</span>`
@@ -220,13 +228,16 @@ export class NestedTreemap {
 					.call(this.setNodeDimensions)
 					.on("mouseover", (d,i,array) => {
 						this.svg.selectAll(".node").classed("related", false)
-						this.svg.selectAll("."+GeiVisUtils.makeSafeForCSS(d.data.key)).classed("related", true)
-						const el = d3.select(array[i])
-						const o = GeiVisUtils.checkOverflow(el.node())
-						if (el.classed('overflow') || el.classed('other')) {
-							const tPos = d3.mouse(this.container.node())
-		        	this.state.push({ tooltip: { name: d.data.key, pos: tPos} })
-		        }
+						// only proceed if d.data is not empty
+						if (d.data.key != '' && d.data.key != undefined) {
+							this.svg.selectAll("."+GeiVisUtils.makeSafeForCSS(d.data.key)).classed("related", true)
+							const el = d3.select(array[i])
+							if (el.classed('overflow') || el.classed('other')) {
+								const tPos = d3.mouse(this.container.node())
+	        			const tooltip = { name: `${d.data.key} : ${d.data.value}` , pos: [tPos[0], this.container.node().offsetTop + tPos[1]] };
+	        			this.state.push({ hover: d.data.key, tooltip });
+			        }
+						}
 					})
 					.on("mouseout", (d) => {
 						this.svg.selectAll(".node").classed("related", false)

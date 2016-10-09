@@ -11,11 +11,7 @@ export class TreemapSection extends Section {
     let select1 = this.div.append("div").classed("select-1 switch", true)
     let select0 = this.div.append("div").classed("select-0 switch", true)
 
-    let oh = 0;
-    oh+=parseInt(this.title.style("padding-top"));
-    oh+=parseInt(this.title.style("padding-bottom"));
-    oh+=parseInt(this.title.style("height"));
-    this.margin = {'top':oh,'right':0,'bottom':0,'left':0};
+    this.margin = {'top':0,'right':0,'bottom':0,'left':0};
     
     this.treemap = new NestedTreemap( {'margin':this.margin} );
     this.treemap.layout = "SliceDice";
@@ -49,6 +45,7 @@ export class TreemapSection extends Section {
 
 
   stateChange(next, last) {
+    console.log(next, last)
 
     // init
     if (next.loaded != last.loaded) {
@@ -61,7 +58,9 @@ export class TreemapSection extends Section {
     if (!next.visible.TreemapSection) return;
 
     // update if became visible
-    if (next.visible.TreemapSection !== last.visible.TreemapSection) this.treemap.render("brushmove")
+    if (next.visible.TreemapSection !== last.visible.TreemapSection)
+      this.treemap.updateData(this.db.date.top(Infinity))
+      this.treemap.render("brushmove")
 
     // update if in viewport and brush has changed
     if (  next.brushStart !== last.brushStart

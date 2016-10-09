@@ -30,8 +30,8 @@ export class Bookshelf extends StateDb {
     }
   }
 
-  open () { console.log( 'oooooopen!');  this.div.classed(this.openClass, true).classed(this.closeClass, false) }
-  close() { console.log( 'clooooose!' ); this.div.classed(this.closeClass, true).classed(this.openClass, false) }
+  open () { this.div.classed(this.openClass, true).classed(this.closeClass, false) }
+  close() { this.div.classed(this.closeClass, true).classed(this.openClass, false) }
 
   render(customData) {
     const data = customData==undefined ? this.db.date.top(150).filter(d => d.title != "") : customData;
