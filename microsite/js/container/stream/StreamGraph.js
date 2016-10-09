@@ -274,8 +274,16 @@ export class StreamGraph extends StateDb {
       })
       .on("click", d=>{
         if(d.key == "other" || !this.big) return;
-        let active = this.state.state.activeItem === d.key;
-        this.state.push({ activeItem: active ? null : d.key, event: "brushend" });
+
+        // console.log(this.state.state.active);
+        let key = this.state.state.active;
+        let active = this.state.state.filters[key] && this.state.state.filters[key] === d.key;
+        // this is a good example why actions where invented:
+        let filters = {...this.state.state.filters, [key]: active ? null:d.key };
+        this.state.push({ event: "click", active: key, filters });
+
+        // let active = this.state.state.activeItem === d.key;
+        // this.state.push({ activeItem: active ? null : d.key, event: "brushend" });
       })
       .attr("d", this.area)
       .style("opacity", 0)
