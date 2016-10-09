@@ -66,9 +66,14 @@ export class BarList extends StateDb {
       .on("mouseenter", (d,i,e)=>{
         let tooltip = null;
         if(d.value/max < 0.15){
-          const p = d3.select(e[i]).select(".bar").node().getBoundingClientRect();
-          const p2 = d3.select(".container").node().getBoundingClientRect();
-          tooltip =  { name: d.value, pos: [p.left-p2.left, p.top-p2.top] };
+          // const p = d3.select(e[i]).select(".bar").node().getBoundingClientRect();
+          // const p2 = d3.select(".container").node().getBoundingClientRect();
+          // tooltip =  { name: d.value, pos: [p.left-p2.left, p.top-p2.top] };
+          // d3.select(e[i]).select(".bar")
+          //   .text(d => `${ d.value }` )
+          //   // .transition()
+          //   .style("width", d=> "20%");
+          // console.log(d.value, d3.select(e[i]).select(".bar"))
         }
         this.state.push({ event: "enter", active: this.key, hover: d.key });
       })
@@ -107,9 +112,16 @@ export class BarList extends StateDb {
     s.classed("active", d=> this.state.state.filters[this.key] && this.state.state.filters[this.key]===d.key)
     
     s.select(".bar")
-      .text(d => d.value/max < 0.15 ? `` : `${ d.value }` )
+      .text(d => `${ d.value }` )
       // .transition()
-      .style("width", d=> `${ (d.value / max)*100 }%`);
+      .style("width", d=> {
+        if(d.value/max < 0.15 && this.state.state.hover === d.key){
+          return "18%";
+        } else {
+          return `${ (d.value / max)*100 }%`;
+        }
+        
+      });
 
     s.select(".right")
       .text(d => `${ d.key }` )
