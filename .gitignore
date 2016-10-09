@@ -16,3 +16,7 @@ microsite/node_modules/
 
 
 *.map
+
+microsite/css/style.css
+
+microsite/css/style.css.map
