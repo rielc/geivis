@@ -1,3 +1,5 @@
+$linegrey: #efefef;
+
 #TreemapSection {
 
 	.title {
@@ -7,7 +9,6 @@
 
 	.switch {
 		width:100%;
-		border-bottom: 1px solid $bodyBackground;
 		height:60px;
 
 		span {
@@ -40,7 +41,7 @@
 
 	.label-connections {
 		path {
-			stroke:darken($bodyBackground, 20%);
+			stroke:darken($linegrey, 20%);
 			fill:none;
 			stroke-width: 0.5px;
 			stroke-linecap: round;
@@ -49,6 +50,7 @@
 	}
 
 	.level-1-label {
+
 		z-index:800;
 		box-sizing:border-box;
 		position:absolute;
@@ -100,15 +102,15 @@
 	.level-1 {
 		pointer-events:none;
 		padding-top:5px;
-		border-top: 1px solid $bodyBackground;
-		border-bottom: 1px solid $bodyBackground;
-		border-left: 2px solid $bodyBackground;
-		border-right: 2px solid $bodyBackground;
+		border-top: 1px solid $linegrey;
+		border-bottom: 1px solid $linegrey;
+		border-left: 2px solid $linegrey;
+		border-right: 2px solid $linegrey;
 	}
 
 	.level-2 {
 
-		border-top: 1px solid $bodyBackground;
+		border-top: 1px solid $linegrey;
 
 		&:hover {
 			z-index:3 !important;

@@ -24,7 +24,7 @@ export class CirclePackedNetwork {
     this.parentContainer = selector
   
     this.width = parseInt( this.parentContainer.style("width") ) - this.properties.margin.left - this.properties.margin.right;
-    this.height = parseInt( this.parentContainer.style("height") ) - this.properties.margin.top - this.properties.margin.bottom;
+    this.height = (window.innerHeight-200) - this.properties.margin.top - this.properties.margin.bottom;
 
     this.outerWidth = this.width + this.properties.margin.left + this.properties.margin.right;
     this.outerHeight = this.height + this.properties.margin.top + this.properties.margin.bottom;

@@ -34,11 +34,14 @@ export class NestedTreemap {
 		this.container = selector;
 	    this.width = parseInt( this.container.style("width") ) - this.properties.margin.left - this.properties.margin.right,
 	    this.height = (window.innerHeight-200) - this.properties.margin.top - this.properties.margin.bottom;
+
 		this.svg = this.container
 			.append("div")
 			.attr("class", "visualization")
-			.style("width", this.width )
-			.style("height", this.height );
+			.style("width", this.width+'px' )
+			.style("height", this.height+'px' )
+      .style("position", "relative");
+
 		this.connectionSVG = this.svg
 			.append('svg')
 			.style('position', 'absolute')
@@ -133,7 +136,6 @@ export class NestedTreemap {
 
 	render (mode) {
 
-		console.log(mode)
 
 		function updateLabels (dataLevel1) {
 				let nodesLevel1 =  this.svg.selectAll(".node.level-1").data(dataLevel1, this.dKey)
@@ -175,8 +177,8 @@ export class NestedTreemap {
 					.call(this.setNodeDimensions)
 				// update 
 				nodesLevel1
-					.style('border-left',(d,i,array) => (i==0)?'none':null)
-					.style('border-right',(d,i,array) => (i==array.length-1)?'none':null)
+					.style('border-left',(d,i,array) => (i==0)?'1px solid #efefef':null)
+					.style('border-right',(d,i,array) => (i==array.length-1)?'1px solid #efefef':null)
 					.call(this.setNodeDimensions)
 					.call(this.setNodeID)
 				// exit
@@ -241,7 +243,7 @@ export class NestedTreemap {
 					})
 					.on("mouseout", (d) => {
 						this.svg.selectAll(".node").classed("related", false)
-	        	this.state.push({ tooltip: null })
+	        	//this.state.push({ tooltip: null })
 					})
 					.on("click", (d) => {
 						let indicesA = this.data.map(this.nestings[1][this.activeNest[1]].accessor).map( (el,i)=>el==d.data.key?i:-1).filter(el=>el!=-1)
