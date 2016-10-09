@@ -362,6 +362,8 @@ $__System.register("d", ["5", "6", "e", "c"], function (_export) {
           key: "stackedHistogram",
           value: function stackedHistogram() {
 
+            this.date.filterAll();
+
             var key = this.state.state.active.substring(0, this.state.state.active.length - 1);
             var keys = this[this.state.state.active].top(20).map(function (d) {
               return d.key;
@@ -397,6 +399,8 @@ $__System.register("d", ["5", "6", "e", "c"], function (_export) {
               d.key = keys[d.key];
             });
             //console.log(stack);
+
+            this.date.filterRange([this.state.state.brushStart, this.state.state.brushEnd]);
 
             return stack;
           }
@@ -544,7 +548,7 @@ $__System.register('f', ['5', '6', '10'], function (_export) {
               var height = parseInt(s.div.style("height")) - 188;
               var visible = rect.top >= -height && rect.top <= height;
 
-              // console.log(s.name, visible, rect.bottom, s.div.style("height"));
+              // console.log(s.name, visible);
 
               return [s.name, visible];
             });
@@ -7693,22 +7697,26 @@ $__System.registerDynamic("10", ["1f"], true, function($__require, exports, modu
   return module.exports;
 });
 
-$__System.register('20', ['5', '6', '10', '21', '22', '23'], function (_export) {
-  var _createClass, _classCallCheck, defer, StateDb, _get, _inherits, __hotReload, StreamGraph;
+$__System.register('20', ['5', '6', '10', '21', '22', '23', '24', 'e'], function (_export) {
+  var _createClass, _classCallCheck, defer, StateDb, _get, _inherits, _defineProperty, _extends, __hotReload, StreamGraph;
 
   return {
     setters: [function (_3) {
       _createClass = _3['default'];
     }, function (_4) {
       _classCallCheck = _4['default'];
+    }, function (_7) {
+      defer = _7.defer;
     }, function (_6) {
-      defer = _6.defer;
-    }, function (_5) {
-      StateDb = _5.StateDb;
+      StateDb = _6.StateDb;
     }, function (_) {
       _get = _['default'];
     }, function (_2) {
       _inherits = _2['default'];
+    }, function (_5) {
+      _defineProperty = _5['default'];
+    }, function (_e) {
+      _extends = _e['default'];
     }],
     execute: function () {
       'use strict';
@@ -7734,7 +7742,7 @@ $__System.register('20', ['5', '6', '10', '21', '22', '23'], function (_export) 
           this.outerHeight = window.innerHeight - 500;
           this.outerHeightInitial = this.outerHeight;
           this.outerHeightSmall = 100;
-          this.margin = { top: 10, right: 20, bottom: 10, left: 35 };
+          this.margin = { top: 10, right: 13, bottom: 10, left: 13 };
 
           this.x = d3.scaleTime();
           this.y = d3.scaleLinear();
@@ -7907,6 +7915,7 @@ $__System.register('20', ['5', '6', '10', '21', '22', '23'], function (_export) 
 
             if (next.loaded == !last.loaded) {
               this.load().render();
+              this.gBrush.call(this.brush.move, null);
             }
 
             if (next.hover !== last.hover) {
@@ -7925,9 +7934,8 @@ $__System.register('20', ['5', '6', '10', '21', '22', '23'], function (_export) 
               this.load().render(true);
             }
 
-            if (this.big && next.brushStart !== last.brushStart) {
-              this.load().render();
-            }
+            if (this.big && next.brushStart !== last.brushStart) {}
+            //this.load().render();
 
             // if(next.activeItem !== last.activeItem){
             //   if(!next.activeItem) {
@@ -7958,7 +7966,7 @@ $__System.register('20', ['5', '6', '10', '21', '22', '23'], function (_export) 
             });
 
             s.enter().append("path").on("mouseenter", function (d, i, e) {
-              if (d.key == "other" || !_this3.big) return;
+              if (!_this3.big) return;
 
               var p = d3.select(e[i]).node().getBoundingClientRect();
               var p2 = d3.select(".container").node().getBoundingClientRect();
@@ -7967,14 +7975,26 @@ $__System.register('20', ['5', '6', '10', '21', '22', '23'], function (_export) 
               }, {}).data.key;
               var tooltip = { name: d.key, pos: [p.left - p2.left + _this3.x(time), p.top - p2.top] };
 
-              _this3.state.push({ hover: d.key, tooltip: tooltip });
+              if (d.key == "other") {
+                _this3.state.push({ tooltip: tooltip });
+              } else {
+                _this3.state.push({ hover: d.key, tooltip: tooltip });
+              }
             }).on("mouseleave", function (d) {
-              if (d.key == "other" || !_this3.big) return;
+              if (!_this3.big) return;
               _this3.state.push({ hover: null, tooltip: null });
             }).on("click", function (d) {
               if (d.key == "other" || !_this3.big) return;
-              var active = _this3.state.state.activeItem === d.key;
-              _this3.state.push({ activeItem: active ? null : d.key, event: "brushend" });
+
+              // console.log(this.state.state.active);
+              var key = _this3.state.state.active;
+              var active = _this3.state.state.filters[key] && _this3.state.state.filters[key] === d.key;
+              // this is a good example why actions where invented:
+              var filters = _extends({}, _this3.state.state.filters, _defineProperty({}, key, active ? null : d.key));
+              _this3.state.push({ event: "click", active: key, filters: filters });
+
+              // let active = this.state.state.activeItem === d.key;
+              // this.state.push({ activeItem: active ? null : d.key, event: "brushend" });
             }).attr("d", this.area).style("opacity", 0)
             // .transition(transition)
             // .duration(notransition ? 0 : 800)
@@ -8020,7 +8040,15 @@ $__System.register('20', ['5', '6', '10', '21', '22', '23'], function (_export) 
               this.gYaxis.call(this.yAxis);
             }
 
-            this.gYaxis.style("opacity", 1 - (this.outerHeightInitial - this.outerHeight - 100) / 100).attr("transform", "translate(-10,0)").selectAll("text").attr("transform", "rotate(-90)").attr("x", "0").attr("dy", "-10").attr("text-anchor", "middle");
+            this.gYaxis
+            // .style("opacity", 1-(this.outerHeightInitial-this.outerHeight-100)/100)
+            .style("opacity", 0);
+            //   // .attr("transform", "translate(-10,0)")
+            //   .selectAll("text")
+            //   .attr("transform", "rotate(-90)")
+            //   .attr("x", "0")
+            //   .attr("dy", "-10")
+            //   .attr("text-anchor", "middle")
 
             //   .attr("dx", 30)
           }
@@ -8033,27 +8061,27 @@ $__System.register('20', ['5', '6', '10', '21', '22', '23'], function (_export) 
     }
   };
 });
-$__System.registerDynamic("8", ["24"], true, function($__require, exports, module) {
+$__System.registerDynamic("8", ["25"], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
       GLOBAL = this;
-  var defined = $__require('24');
+  var defined = $__require('25');
   module.exports = function(it) {
     return Object(defined(it));
   };
   return module.exports;
 });
 
-$__System.registerDynamic("25", ["26", "8", "27", "28"], true, function($__require, exports, module) {
+$__System.registerDynamic("26", ["27", "8", "28", "29"], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
       GLOBAL = this;
-  var $ = $__require('26'),
+  var $ = $__require('27'),
       toObject = $__require('8'),
-      IObject = $__require('27');
-  module.exports = $__require('28')(function() {
+      IObject = $__require('28');
+  module.exports = $__require('29')(function() {
     var a = Object.assign,
         A = {},
         B = {},
@@ -8087,45 +8115,45 @@ $__System.registerDynamic("25", ["26", "8", "27", "28"], true, function($__requi
   return module.exports;
 });
 
-$__System.registerDynamic("29", ["2a", "25"], true, function($__require, exports, module) {
+$__System.registerDynamic("2a", ["2b", "26"], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
       GLOBAL = this;
-  var $export = $__require('2a');
-  $export($export.S + $export.F, 'Object', {assign: $__require('25')});
+  var $export = $__require('2b');
+  $export($export.S + $export.F, 'Object', {assign: $__require('26')});
   return module.exports;
 });
 
-$__System.registerDynamic("2b", ["29", "b"], true, function($__require, exports, module) {
+$__System.registerDynamic("2c", ["2a", "b"], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
       GLOBAL = this;
-  $__require('29');
+  $__require('2a');
   module.exports = $__require('b').Object.assign;
   return module.exports;
 });
 
-$__System.registerDynamic("2c", ["2b"], true, function($__require, exports, module) {
+$__System.registerDynamic("2d", ["2c"], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
       GLOBAL = this;
   module.exports = {
-    "default": $__require('2b'),
+    "default": $__require('2c'),
     __esModule: true
   };
   return module.exports;
 });
 
-$__System.registerDynamic("e", ["2c"], true, function($__require, exports, module) {
+$__System.registerDynamic("e", ["2d"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
       global = this,
       GLOBAL = this;
-  var _Object$assign = $__require('2c')["default"];
+  var _Object$assign = $__require('2d')["default"];
   exports["default"] = _Object$assign || function(target) {
     for (var i = 1; i < arguments.length; i++) {
       var source = arguments[i];
@@ -8141,7 +8169,7 @@ $__System.registerDynamic("e", ["2c"], true, function($__require, exports, modul
   return module.exports;
 });
 
-$__System.registerDynamic("2d", ["2e"], true, function($__require, exports, module) {
+$__System.registerDynamic("24", ["2e"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -8165,24 +8193,24 @@ $__System.registerDynamic("2d", ["2e"], true, function($__require, exports, modu
   return module.exports;
 });
 
-$__System.register("2f", ["5", "6", "21", "22", "23", "e", "2d"], function (_export) {
-  var _createClass, _classCallCheck, StateDb, _get, _inherits, _extends, _defineProperty, __hotReload, BarList;
+$__System.register("2f", ["5", "6", "21", "22", "23", "24", "e"], function (_export) {
+  var _createClass, _classCallCheck, StateDb, _get, _inherits, _defineProperty, _extends, __hotReload, BarList;
 
   return {
     setters: [function (_4) {
       _createClass = _4["default"];
     }, function (_5) {
       _classCallCheck = _5["default"];
-    }, function (_6) {
-      StateDb = _6.StateDb;
+    }, function (_7) {
+      StateDb = _7.StateDb;
     }, function (_2) {
       _get = _2["default"];
     }, function (_3) {
       _inherits = _3["default"];
+    }, function (_6) {
+      _defineProperty = _6["default"];
     }, function (_e) {
       _extends = _e["default"];
-    }, function (_d) {
-      _defineProperty = _d["default"];
     }],
     execute: function () {
       "use strict";
@@ -8258,9 +8286,14 @@ $__System.register("2f", ["5", "6", "21", "22", "23", "e", "2d"], function (_exp
             var e = s.enter().append("div").classed("item", true).on("mouseenter", function (d, i, e) {
               var tooltip = null;
               if (d.value / max < 0.15) {
-                var p = d3.select(e[i]).select(".bar").node().getBoundingClientRect();
-                var p2 = d3.select(".container").node().getBoundingClientRect();
-                tooltip = { name: d.value, pos: [p.left - p2.left, p.top - p2.top] };
+                // const p = d3.select(e[i]).select(".bar").node().getBoundingClientRect();
+                // const p2 = d3.select(".container").node().getBoundingClientRect();
+                // tooltip =  { name: d.value, pos: [p.left-p2.left, p.top-p2.top] };
+                // d3.select(e[i]).select(".bar")
+                //   .text(d => `${ d.value }` )
+                //   // .transition()
+                //   .style("width", d=> "20%");
+                // console.log(d.value, d3.select(e[i]).select(".bar"))
               }
               _this2.state.push({ event: "enter", active: _this2.key, hover: d.key });
             }).on("mouseleave", function () {
@@ -8305,11 +8338,15 @@ $__System.register("2f", ["5", "6", "21", "22", "23", "e", "2d"], function (_exp
             });
 
             s.select(".bar").text(function (d) {
-              return d.value / max < 0.15 ? "" : "" + d.value;
+              return "" + d.value;
             })
             // .transition()
             .style("width", function (d) {
-              return d.value / max * 100 + "%";
+              if (d.value / max < 0.15 && _this2.state.state.hover === d.key) {
+                return "18%";
+              } else {
+                return d.value / max * 100 + "%";
+              }
             });
 
             s.select(".right").text(function (d) {
@@ -8370,7 +8407,7 @@ $__System.register('30', ['5', '6', '20', '22', '23', '31', '2f'], function (_ex
           this.divEntities = this.div.append("div").attr("class", "entities");
 
           this.stream = new StreamGraph(state, db, this.divStream);
-          this.stream.paddingTop = 330;
+          this.stream.paddingTop = 350;
           this.stream.outerHeight = this.height - this.stream.paddingTop;
           this.stream.outerHeightInitial = this.stream.outerHeight;
           this.stream.init();
@@ -8541,12 +8578,12 @@ $__System.register('33', ['5', '6', '21', '22', '23'], function (_export) {
         }, {
           key: 'open',
           value: function open() {
-            console.log('oooooopen!');this.div.classed(this.openClass, true).classed(this.closeClass, false);
+            this.div.classed(this.openClass, true).classed(this.closeClass, false);
           }
         }, {
           key: 'close',
           value: function close() {
-            console.log('clooooose!');this.div.classed(this.closeClass, true).classed(this.openClass, false);
+            this.div.classed(this.closeClass, true).classed(this.openClass, false);
           }
         }, {
           key: 'render',
@@ -9021,12 +9058,12 @@ $__System.register("38", [], function (_export) {
 		}
 	};
 });
-$__System.registerDynamic("39", ["2a"], true, function($__require, exports, module) {
+$__System.registerDynamic("39", ["2b"], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
       GLOBAL = this;
-  var $export = $__require('2a');
+  var $export = $__require('2b');
   $export($export.S, 'Number', {parseFloat: parseFloat});
   return module.exports;
 });
@@ -9099,7 +9136,7 @@ $__System.register("3c", ["5", "6", "3b", "3d"], function (_export) {
             this.parentContainer = selector;
 
             this.width = parseInt(this.parentContainer.style("width")) - this.properties.margin.left - this.properties.margin.right;
-            this.height = parseInt(this.parentContainer.style("height")) - this.properties.margin.top - this.properties.margin.bottom;
+            this.height = window.innerHeight - 200 - this.properties.margin.top - this.properties.margin.bottom;
 
             this.outerWidth = this.width + this.properties.margin.left + this.properties.margin.right;
             this.outerHeight = this.height + this.properties.margin.top + this.properties.margin.bottom;
@@ -9662,6 +9699,8 @@ $__System.register('3e', ['5', '6', '22', '23', '31', '38', '3c'], function (_ex
             });
           });
 
+          this.div.append("div").attr("class", "intro").text("Cultural heritage institutions such as museums, archives, and libraries have been digitizing their inventories over the last two decades. The digitization process includes both the digital capture of the artifacts (for example via photography or 3d scanning) as well as the recording of the metadata about the artifact's historical context, material characteristics, and cultural significance. The main promises connected with digitization of cultural assets are long-term preservation and increased levels of access (Smith, 2002, pp.7). This paper is especially concerned with questions related to access, which so far has mostly relied on interface concepts from traditional information retrieval. However, there is an increased unease with a mode of access, which requires people to translate a possibly vague interest into a specific search query. Unlike museum exhibitions or library shelves that may lend themselves better to curiosity-driven browsing of cultural heritage, conventional search interfaces are arguable not particularly inviting. Instead, more 'generosity' is needed in the display of the artifacts' richness and their distribution in the collection");
+
           this.title.html('All tags');
 
           var oh = 0;
@@ -9723,7 +9762,7 @@ $__System.registerDynamic("3f", [], true, function($__require, exports, module) 
   return module.exports;
 });
 
-$__System.registerDynamic("27", ["3f"], true, function($__require, exports, module) {
+$__System.registerDynamic("28", ["3f"], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
@@ -9735,7 +9774,7 @@ $__System.registerDynamic("27", ["3f"], true, function($__require, exports, modu
   return module.exports;
 });
 
-$__System.registerDynamic("24", [], true, function($__require, exports, module) {
+$__System.registerDynamic("25", [], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
@@ -9748,20 +9787,20 @@ $__System.registerDynamic("24", [], true, function($__require, exports, module) 
   return module.exports;
 });
 
-$__System.registerDynamic("40", ["27", "24"], true, function($__require, exports, module) {
+$__System.registerDynamic("40", ["28", "25"], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
       GLOBAL = this;
-  var IObject = $__require('27'),
-      defined = $__require('24');
+  var IObject = $__require('28'),
+      defined = $__require('25');
   module.exports = function(it) {
     return IObject(defined(it));
   };
   return module.exports;
 });
 
-$__System.registerDynamic("28", [], true, function($__require, exports, module) {
+$__System.registerDynamic("29", [], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
@@ -9776,14 +9815,14 @@ $__System.registerDynamic("28", [], true, function($__require, exports, module) 
   return module.exports;
 });
 
-$__System.registerDynamic("9", ["2a", "b", "28"], true, function($__require, exports, module) {
+$__System.registerDynamic("9", ["2b", "b", "29"], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
       GLOBAL = this;
-  var $export = $__require('2a'),
+  var $export = $__require('2b'),
       core = $__require('b'),
-      fails = $__require('28');
+      fails = $__require('29');
   module.exports = function(KEY, exec) {
     var fn = (core.Object || {})[KEY] || Object[KEY],
         exp = {};
@@ -9809,12 +9848,12 @@ $__System.registerDynamic("41", ["40", "9"], true, function($__require, exports,
   return module.exports;
 });
 
-$__System.registerDynamic("42", ["26", "41"], true, function($__require, exports, module) {
+$__System.registerDynamic("42", ["27", "41"], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
       GLOBAL = this;
-  var $ = $__require('26');
+  var $ = $__require('27');
   $__require('41');
   module.exports = function getOwnPropertyDescriptor(it, key) {
     return $.getDesc(it, key);
@@ -9878,12 +9917,12 @@ $__System.registerDynamic("22", ["43"], true, function($__require, exports, modu
   return module.exports;
 });
 
-$__System.registerDynamic("44", ["26"], true, function($__require, exports, module) {
+$__System.registerDynamic("44", ["27"], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
       GLOBAL = this;
-  var $ = $__require('26');
+  var $ = $__require('27');
   module.exports = function create(P, D) {
     return $.create(P, D);
   };
@@ -9913,7 +9952,7 @@ $__System.registerDynamic("46", [], true, function($__require, exports, module) 
   return module.exports;
 });
 
-$__System.registerDynamic("2a", ["46", "b", "47"], true, function($__require, exports, module) {
+$__System.registerDynamic("2b", ["46", "b", "47"], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
@@ -10031,12 +10070,12 @@ $__System.registerDynamic("47", ["4a"], true, function($__require, exports, modu
   return module.exports;
 });
 
-$__System.registerDynamic("4b", ["26", "48", "49", "47"], true, function($__require, exports, module) {
+$__System.registerDynamic("4b", ["27", "48", "49", "47"], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
       GLOBAL = this;
-  var getDesc = $__require('26').getDesc,
+  var getDesc = $__require('27').getDesc,
       isObject = $__require('48'),
       anObject = $__require('49');
   var check = function(O, proto) {
@@ -10067,12 +10106,12 @@ $__System.registerDynamic("4b", ["26", "48", "49", "47"], true, function($__requ
   return module.exports;
 });
 
-$__System.registerDynamic("4c", ["2a", "4b"], true, function($__require, exports, module) {
+$__System.registerDynamic("4c", ["2b", "4b"], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
       GLOBAL = this;
-  var $export = $__require('2a');
+  var $export = $__require('2b');
   $export($export.S, 'Object', {setPrototypeOf: $__require('4b').set});
   return module.exports;
 });
@@ -10217,7 +10256,7 @@ $__System.register("31", ["6", "21", "22", "23"], function (_export) {
 		}
 	};
 });
-$__System.registerDynamic("26", [], true, function($__require, exports, module) {
+$__System.registerDynamic("27", [], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
@@ -10238,12 +10277,12 @@ $__System.registerDynamic("26", [], true, function($__require, exports, module) 
   return module.exports;
 });
 
-$__System.registerDynamic("4f", ["26"], true, function($__require, exports, module) {
+$__System.registerDynamic("4f", ["27"], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
       GLOBAL = this;
-  var $ = $__require('26');
+  var $ = $__require('27');
   module.exports = function defineProperty(it, key, desc) {
     return $.setDesc(it, key, desc);
   };
@@ -10437,8 +10476,10 @@ $__System.register("50", ["5", "6", "3d"], function (_export) {
 					key: "appendTo",
 					value: function appendTo(selector) {
 						this.container = selector;
-						this.width = parseInt(this.container.style("width")) - this.properties.margin.left - this.properties.margin.right, this.height = parseInt(window.innerHeight - 200) - this.properties.margin.top - this.properties.margin.bottom;
-						this.svg = this.container.append("div").attr("class", "visualization").style("width", this.width).style("height", this.height);
+						this.width = parseInt(this.container.style("width")) - this.properties.margin.left - this.properties.margin.right, this.height = window.innerHeight - 200 - this.properties.margin.top - this.properties.margin.bottom;
+
+						this.svg = this.container.append("div").attr("class", "visualization").style("width", this.width + 'px').style("height", this.height + 'px').style("position", "relative");
+
 						this.connectionSVG = this.svg.append('svg').style('position', 'absolute').attr("class", "label-connections").style("width", this.width).style("height", 60);
 						return this;
 					}
@@ -10476,7 +10517,7 @@ $__System.register("50", ["5", "6", "3d"], function (_export) {
 							return Math.abs(a.x1 - a.x0 - Math.abs(b.x1 - b.x0)) || a.value - b.value;
 						});
 
-						this.treemap = d3.treemap().size([this.width, this.height - 60]).tile(d3.treemapSliceDice).round(false).paddingLeft(0).paddingRight(0).paddingTop(0).paddingBottom(0);
+						this.treemap = d3.treemap().size([this.width, this.height - 60]).tile(d3.treemapSliceDice).round(true).paddingLeft(0).paddingRight(0).paddingTop(0).paddingBottom(0);
 
 						this.treemap(this.root);
 						return this;
@@ -10485,13 +10526,12 @@ $__System.register("50", ["5", "6", "3d"], function (_export) {
 					key: "setNodeDimensions",
 					value: function setNodeDimensions(selection) {
 						selection.style("transform", function (d) {
-							return "translate3d(" + d.x0 + "px," + (d.y0 + 60) + "px,0px)";
+							return "translate3d(" + Math.round(d.x0) + "px," + Math.round(d.y0 + 60) + "px,0px)";
 						}).style("width", function (d) {
-							return d.x1 - d.x0 + "px";
+							return Math.round(d.x1 - d.x0) + "px";
 						}).style("height", function (d) {
-							return (d.depth == 1 ? d.y1 - d.y0 : Math.max(1, d.y1 - d.y0)) + 'px';
+							return Math.round(d.depth == 1 ? d.y1 - d.y0 : Math.max(1, d.y1 - d.y0)) + 'px';
 						});
-
 						selection.select(".label").text(function (d) {
 							return d.depth != 0 ? d.data.key : null;
 						});
@@ -10504,7 +10544,7 @@ $__System.register("50", ["5", "6", "3d"], function (_export) {
 					value: function setNodeClass(selection) {
 						selection.attr("class", function (d) {
 							var c = GeiVisUtils.makeSafeForCSS(d.data.key) + " node " + "level-" + d.depth;
-							c += Math.abs(d.x1 - d.x0) < 3 || Math.abs(d.y1 - d.y0) < 3 ? " other" : "";
+							c += (Math.abs(d.x1 - d.x0) < 3 || Math.abs(d.y1 - d.y0) < 3) && d.depth > 1 ? " other" : "";
 							return c;
 						});
 					}
@@ -10519,8 +10559,12 @@ $__System.register("50", ["5", "6", "3d"], function (_export) {
 				}, {
 					key: "checkOverflow",
 					value: function checkOverflow(d, i, array) {
-						var o = GeiVisUtils.checkOverflow(d3.select(this).node());
-						d3.select(this).classed('overflow', o == 'overflow');
+						//let o = GeiVisUtils.checkOverflow( d3.select(this).node() )
+						var w = 80;
+						var h = 13;
+						var el = d3.select(this).node();
+						var o = el.offsetHeight < h || el.offsetWidth < w;
+						d3.select(this).classed('overflow', o);
 					}
 				}, {
 					key: "dKey",
@@ -10540,10 +10584,10 @@ $__System.register("50", ["5", "6", "3d"], function (_export) {
 							var connections = this.connectionSVG.selectAll("path").data(dataLevel1, this.dKey);
 							// enter l1-labels
 							var enteredLabelLevel1 = labelLevel1.enter().append('div').classed('level-1-label', true).style('height', '60').style('transform', function (d, i) {
-								return "translate3d(" + i * w + "px,0px,0px)scale(0,0)";
+								return "translate3d(" + Math.round(i * w) + "px,0px,0px)scale(0,0)";
 							});
 							// update
-							labelLevel1.style('width', w + 'px').html(function (d) {
+							labelLevel1.style('width', Math.round(w) + 'px').html(function (d) {
 								var label = d.data.key == '' ? 'unknown' : d.data.key;
 								return label + "<br/><span>" + d.value + "</span>";
 							}).style('transform', function (d, i) {
@@ -10565,9 +10609,9 @@ $__System.register("50", ["5", "6", "3d"], function (_export) {
 							var enteredNodesLevel1 = nodesLevel1.enter().append('div').call(this.setNodeClass).call(this.setNodeID).call(this.setNodeDimensions);
 							// update
 							nodesLevel1.style('border-left', function (d, i, array) {
-								return i == 0 ? 'none' : null;
+								return i == 0 ? '1px solid #efefef' : null;
 							}).style('border-right', function (d, i, array) {
-								return i == array.length - 1 ? 'none' : null;
+								return i == array.length - 1 ? '1px solid #efefef' : null;
 							}).call(this.setNodeDimensions).call(this.setNodeID);
 							// exit
 							nodesLevel1.exit().remove();
@@ -10621,16 +10665,19 @@ $__System.register("50", ["5", "6", "3d"], function (_export) {
 								// enter l2-nodes
 								var enteredNodesLevel2 = nodesLevel2.enter().append('div').call(this.setNodeClass).call(this.setNodeID).call(this.setNodeDimensions).on("mouseover", function (d, i, array) {
 									_this.svg.selectAll(".node").classed("related", false);
-									_this.svg.selectAll("." + GeiVisUtils.makeSafeForCSS(d.data.key)).classed("related", true);
-									var el = d3.select(array[i]);
-									var o = GeiVisUtils.checkOverflow(el.node());
-									if (el.classed('overflow') || el.classed('other')) {
-										var tPos = d3.mouse(_this.container.node());
-										_this.state.push({ tooltip: { name: d.data.key, pos: tPos } });
+									// only proceed if d.data is not empty
+									if (d.data.key != '' && d.data.key != undefined) {
+										_this.svg.selectAll("." + GeiVisUtils.makeSafeForCSS(d.data.key)).classed("related", true);
+										var el = d3.select(array[i]);
+										if (el.classed('overflow') || el.classed('other')) {
+											var tPos = d3.mouse(_this.container.node());
+											var tooltip = { name: d.data.key + " : " + d.data.value, pos: [tPos[0], _this.container.node().offsetTop + tPos[1]] };
+											_this.state.push({ hover: d.data.key, tooltip: tooltip });
+										}
 									}
 								}).on("mouseout", function (d) {
 									_this.svg.selectAll(".node").classed("related", false);
-									_this.state.push({ tooltip: null });
+									//this.state.push({ tooltip: null })
 								}).on("click", function (d) {
 									var indicesA = _this.data.map(_this.nestings[1][_this.activeNest[1]].accessor).map(function (el, i) {
 										return el == d.data.key ? i : -1;
@@ -10773,11 +10820,7 @@ $__System.register('51', ['5', '6', '22', '23', '31', '50'], function (_export) 
           var select1 = this.div.append("div").classed("select-1 switch", true);
           var select0 = this.div.append("div").classed("select-0 switch", true);
 
-          var oh = 0;
-          oh += parseInt(this.title.style("padding-top"));
-          oh += parseInt(this.title.style("padding-bottom"));
-          oh += parseInt(this.title.style("height"));
-          this.margin = { 'top': oh, 'right': 0, 'bottom': 0, 'left': 0 };
+          this.margin = { 'top': 0, 'right': 0, 'bottom': 0, 'left': 0 };
 
           this.treemap = new NestedTreemap({ 'margin': this.margin });
           this.treemap.layout = "SliceDice";
@@ -10795,6 +10838,8 @@ $__System.register('51', ['5', '6', '22', '23', '31', '50'], function (_export) 
             } }, { name: 'Publisher', accessor: function accessor(d) {
               return d.publisher == undefined ? 'Publisher unbekannt' : d.publisher;
             } }]];
+
+          this.div.append("div").attr("class", "intro").text("Cultural heritage institutions such as museums, archives, and libraries have been digitizing their inventories over the last two decades. The digitization process includes both the digital capture of the artifacts (for example via photography or 3d scanning) as well as the recording of the metadata about the artifact's historical context, material characteristics, and cultural significance. The main promises connected with digitization of cultural assets are long-term preservation and increased levels of access (Smith, 2002, pp.7). This paper is especially concerned with questions related to access, which so far has mostly relied on interface concepts from traditional information retrieval. However, there is an increased unease with a mode of access, which requires people to translate a possibly vague interest into a specific search query. Unlike museum exhibitions or library shelves that may lend themselves better to curiosity-driven browsing of cultural heritage, conventional search interfaces are arguable not particularly inviting. Instead, more 'generosity' is needed in the display of the artifacts' richness and their distribution in the collection");
 
           this.treemap.setNesting(nestings).appendTo(this.div);
 
@@ -10820,7 +10865,8 @@ $__System.register('51', ['5', '6', '22', '23', '31', '50'], function (_export) 
             if (!next.visible.TreemapSection) return;
 
             // update if became visible
-            if (next.visible.TreemapSection !== last.visible.TreemapSection) this.treemap.render("brushmove");
+            if (next.visible.TreemapSection !== last.visible.TreemapSection) this.treemap.updateData(this.db.date.top(Infinity));
+            this.treemap.render("brushmove");
 
             // update if in viewport and brush has changed
             if (next.brushStart !== last.brushStart || next.brushEnd !== last.brushEnd || next.visible.TreemapSection !== last.visible.TreemapSection) {
