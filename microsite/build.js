@@ -113,7 +113,8 @@ $__System.register("4", ["3", "5", "6"], function (_export) {
             timestamp: null,
             visible: { StreamSection: true },
             scrollY: 0,
-            tooltip: {}
+            tooltip: {},
+            filters: {}
           };
           this.history = [];
           this.history.push(objectAssign({}, this.state));
@@ -164,124 +165,54 @@ $__System.register("4", ["3", "5", "6"], function (_export) {
     }
   };
 });
-$__System.registerDynamic("7", ["8"], true, function($__require, exports, module) {
+$__System.registerDynamic("7", ["8", "9"], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
       GLOBAL = this;
-  var defined = $__require('8');
-  module.exports = function(it) {
-    return Object(defined(it));
-  };
+  var toObject = $__require('8');
+  $__require('9')('keys', function($keys) {
+    return function keys(it) {
+      return $keys(toObject(it));
+    };
+  });
   return module.exports;
 });
 
-$__System.registerDynamic("9", ["a", "7", "b", "c"], true, function($__require, exports, module) {
+$__System.registerDynamic("a", ["7", "b"], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
       GLOBAL = this;
-  var $ = $__require('a'),
-      toObject = $__require('7'),
-      IObject = $__require('b');
-  module.exports = $__require('c')(function() {
-    var a = Object.assign,
-        A = {},
-        B = {},
-        S = Symbol(),
-        K = 'abcdefghijklmnopqrst';
-    A[S] = 7;
-    K.split('').forEach(function(k) {
-      B[k] = k;
-    });
-    return a({}, A)[S] != 7 || Object.keys(a({}, B)).join('') != K;
-  }) ? function assign(target, source) {
-    var T = toObject(target),
-        $$ = arguments,
-        $$len = $$.length,
-        index = 1,
-        getKeys = $.getKeys,
-        getSymbols = $.getSymbols,
-        isEnum = $.isEnum;
-    while ($$len > index) {
-      var S = IObject($$[index++]),
-          keys = getSymbols ? getKeys(S).concat(getSymbols(S)) : getKeys(S),
-          length = keys.length,
-          j = 0,
-          key;
-      while (length > j)
-        if (isEnum.call(S, key = keys[j++]))
-          T[key] = S[key];
-    }
-    return T;
-  } : Object.assign;
+  $__require('7');
+  module.exports = $__require('b').Object.keys;
   return module.exports;
 });
 
-$__System.registerDynamic("d", ["e", "9"], true, function($__require, exports, module) {
-  ;
-  var define,
-      global = this,
-      GLOBAL = this;
-  var $export = $__require('e');
-  $export($export.S + $export.F, 'Object', {assign: $__require('9')});
-  return module.exports;
-});
-
-$__System.registerDynamic("f", ["d", "10"], true, function($__require, exports, module) {
-  ;
-  var define,
-      global = this,
-      GLOBAL = this;
-  $__require('d');
-  module.exports = $__require('10').Object.assign;
-  return module.exports;
-});
-
-$__System.registerDynamic("11", ["f"], true, function($__require, exports, module) {
+$__System.registerDynamic("c", ["a"], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
       GLOBAL = this;
   module.exports = {
-    "default": $__require('f'),
+    "default": $__require('a'),
     __esModule: true
   };
   return module.exports;
 });
 
-$__System.registerDynamic("12", ["11"], true, function($__require, exports, module) {
-  "use strict";
-  ;
-  var define,
-      global = this,
-      GLOBAL = this;
-  var _Object$assign = $__require('11')["default"];
-  exports["default"] = _Object$assign || function(target) {
-    for (var i = 1; i < arguments.length; i++) {
-      var source = arguments[i];
-      for (var key in source) {
-        if (Object.prototype.hasOwnProperty.call(source, key)) {
-          target[key] = source[key];
-        }
-      }
-    }
-    return target;
-  };
-  exports.__esModule = true;
-  return module.exports;
-});
-
-$__System.register("13", ["5", "6", "12"], function (_export) {
-  var _createClass, _classCallCheck, _extends, __hotReload, DataBase;
+$__System.register("d", ["5", "6", "e", "c"], function (_export) {
+  var _createClass, _classCallCheck, _extends, _Object$keys, __hotReload, DataBase;
 
   return {
     setters: [function (_) {
       _createClass = _["default"];
     }, function (_2) {
       _classCallCheck = _2["default"];
-    }, function (_3) {
-      _extends = _3["default"];
+    }, function (_e) {
+      _extends = _e["default"];
+    }, function (_c) {
+      _Object$keys = _c["default"];
     }],
     execute: function () {
       "use strict";
@@ -403,6 +334,8 @@ $__System.register("13", ["5", "6", "12"], function (_export) {
               return d.value[k];
             }).order(d3.stackOrderAscending).offset(d3.stackOffsetNone);
 
+            this.filters = {};
+
             return this;
           }
         }, {
@@ -428,7 +361,6 @@ $__System.register("13", ["5", "6", "12"], function (_export) {
         }, {
           key: "stackedHistogram",
           value: function stackedHistogram() {
-            var activeItem = this.state.state.activeItem;
 
             var key = this.state.state.active.substring(0, this.state.state.active.length - 1);
             var keys = this[this.state.state.active].top(20).map(function (d) {
@@ -471,6 +403,7 @@ $__System.register("13", ["5", "6", "12"], function (_export) {
         }, {
           key: "stateChange",
           value: function stateChange(next, curr) {
+            var _this3 = this;
 
             // this.filterTag("Preußen")
 
@@ -480,19 +413,36 @@ $__System.register("13", ["5", "6", "12"], function (_export) {
               } else {
                 this.date.filterRange([next.brushStart, next.brushEnd]);
               }
-
               d3.select("#total").text(this.crossfilter.size());
               d3.select("#active").text(this.all.value());
             }
 
             if (next.activeItem !== curr.activeItem) {
-              var k2 = curr.active.substring(0, curr.active.length - 1);
-              this[k2].filterExact(null);
+              // let k2 = curr.active.substring(0,curr.active.length-1);
+              // this[k2].filterExact(null);
 
-              var k = next.active.substring(0, next.active.length - 1);
-              this[k].filterExact(next.activeItem);
+              // let k = next.active.substring(0,next.active.length-1);
+              // this[k].filterExact(next.activeItem);
+
+              // this.filters[k] = next.activeItem;
 
               //console.log(curr.active, next.active)
+              // console.log(this.filters, Object.keys(this.filters))
+
+              // Object.keys(this.filters).forEach(k=>{
+              //   this[k].filterExact(this.filters[k]);
+              // })
+
+            }
+
+            if (next.filters !== curr.filters) {
+              console.log(next.filters);
+
+              _Object$keys(next.filters).forEach(function (k) {
+                _this3[k.substring(0, k.length - 1)].filterExact(next.filters[k]);
+              });
+              d3.select("#total").text(this.crossfilter.size());
+              d3.select("#active").text(this.all.value());
             }
 
             // if(next.loaded == !curr.loaded){
@@ -549,7 +499,7 @@ $__System.register("13", ["5", "6", "12"], function (_export) {
     }
   };
 });
-$__System.register('14', ['5', '6', '15'], function (_export) {
+$__System.register('f', ['5', '6', '10'], function (_export) {
   var _createClass, _classCallCheck, debounce, fromPairs, ScrollListener;
 
   function __hotReload() {
@@ -648,7 +598,7 @@ $__System.register('14', ['5', '6', '15'], function (_export) {
     }
   };
 });
-$__System.registerDynamic("16", [], true, function($__require, exports, module) {
+$__System.registerDynamic("11", [], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
@@ -753,16 +703,16 @@ $__System.registerDynamic("16", [], true, function($__require, exports, module) 
   return module.exports;
 });
 
-$__System.registerDynamic("17", ["16"], true, function($__require, exports, module) {
+$__System.registerDynamic("12", ["11"], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
       GLOBAL = this;
-  module.exports = $__require('16');
+  module.exports = $__require('11');
   return module.exports;
 });
 
-$__System.registerDynamic("18", [], true, function($__require, exports, module) {
+$__System.registerDynamic("13", [], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
@@ -846,16 +796,16 @@ $__System.registerDynamic("18", [], true, function($__require, exports, module) 
   return module.exports;
 });
 
-$__System.registerDynamic("19", ["18"], true, function($__require, exports, module) {
+$__System.registerDynamic("14", ["13"], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
       GLOBAL = this;
-  module.exports = $__require('18');
+  module.exports = $__require('13');
   return module.exports;
 });
 
-$__System.registerDynamic("1a", [], true, function($__require, exports, module) {
+$__System.registerDynamic("15", [], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
@@ -867,24 +817,24 @@ $__System.registerDynamic("1a", [], true, function($__require, exports, module) 
   return module.exports;
 });
 
-$__System.registerDynamic("1b", ["1a"], true, function($__require, exports, module) {
+$__System.registerDynamic("16", ["15"], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
       GLOBAL = this;
-  module.exports = $__require('1a');
+  module.exports = $__require('15');
   return module.exports;
 });
 
-$__System.registerDynamic("1c", ["17", "19", "1b"], true, function($__require, exports, module) {
+$__System.registerDynamic("17", ["12", "14", "16"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
       global = this,
       GLOBAL = this;
-  var base64 = $__require('17');
-  var ieee754 = $__require('19');
-  var isArray = $__require('1b');
+  var base64 = $__require('12');
+  var ieee754 = $__require('14');
+  var isArray = $__require('16');
   exports.Buffer = Buffer;
   exports.SlowBuffer = SlowBuffer;
   exports.INSPECT_MAX_BYTES = 50;
@@ -2180,34 +2130,34 @@ $__System.registerDynamic("1c", ["17", "19", "1b"], true, function($__require, e
   return module.exports;
 });
 
-$__System.registerDynamic("1d", ["1c"], true, function($__require, exports, module) {
+$__System.registerDynamic("18", ["17"], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
       GLOBAL = this;
-  module.exports = $__require('1c');
+  module.exports = $__require('17');
   return module.exports;
 });
 
-$__System.registerDynamic("1e", ["1d"], true, function($__require, exports, module) {
+$__System.registerDynamic("19", ["18"], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
       GLOBAL = this;
-  module.exports = $__System._nodeRequire ? $__System._nodeRequire('buffer') : $__require('1d');
+  module.exports = $__System._nodeRequire ? $__System._nodeRequire('buffer') : $__require('18');
   return module.exports;
 });
 
-$__System.registerDynamic("1f", ["1e"], true, function($__require, exports, module) {
+$__System.registerDynamic("1a", ["19"], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
       GLOBAL = this;
-  module.exports = $__require('1e');
+  module.exports = $__require('19');
   return module.exports;
 });
 
-$__System.registerDynamic("20", [], true, function($__require, exports, module) {
+$__System.registerDynamic("1b", [], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
@@ -2319,34 +2269,34 @@ $__System.registerDynamic("20", [], true, function($__require, exports, module) 
   return module.exports;
 });
 
-$__System.registerDynamic("21", ["20"], true, function($__require, exports, module) {
+$__System.registerDynamic("1c", ["1b"], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
       GLOBAL = this;
-  module.exports = $__require('20');
+  module.exports = $__require('1b');
   return module.exports;
 });
 
-$__System.registerDynamic("22", ["21"], true, function($__require, exports, module) {
+$__System.registerDynamic("1d", ["1c"], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
       GLOBAL = this;
-  module.exports = $__System._nodeRequire ? process : $__require('21');
+  module.exports = $__System._nodeRequire ? process : $__require('1c');
   return module.exports;
 });
 
-$__System.registerDynamic("23", ["22"], true, function($__require, exports, module) {
+$__System.registerDynamic("1e", ["1d"], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
       GLOBAL = this;
-  module.exports = $__require('22');
+  module.exports = $__require('1d');
   return module.exports;
 });
 
-$__System.registerDynamic("24", ["1f", "23"], true, function($__require, exports, module) {
+$__System.registerDynamic("1f", ["1a", "1e"], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
@@ -7730,20 +7680,20 @@ $__System.registerDynamic("24", ["1f", "23"], true, function($__require, exports
         root._ = _;
       }
     }.call(this));
-  })($__require('1f').Buffer, $__require('23'));
+  })($__require('1a').Buffer, $__require('1e'));
   return module.exports;
 });
 
-$__System.registerDynamic("15", ["24"], true, function($__require, exports, module) {
+$__System.registerDynamic("10", ["1f"], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
       GLOBAL = this;
-  module.exports = $__require('24');
+  module.exports = $__require('1f');
   return module.exports;
 });
 
-$__System.register('25', ['5', '6', '15', '26', '27', '28'], function (_export) {
+$__System.register('20', ['5', '6', '10', '21', '22', '23'], function (_export) {
   var _createClass, _classCallCheck, defer, StateDb, _get, _inherits, __hotReload, StreamGraph;
 
   return {
@@ -7784,7 +7734,7 @@ $__System.register('25', ['5', '6', '15', '26', '27', '28'], function (_export) 
           this.outerHeight = window.innerHeight - 500;
           this.outerHeightInitial = this.outerHeight;
           this.outerHeightSmall = 100;
-          this.margin = { top: 0, right: 20, bottom: 10, left: 30 };
+          this.margin = { top: 10, right: 20, bottom: 10, left: 35 };
 
           this.x = d3.scaleTime();
           this.y = d3.scaleLinear();
@@ -7803,7 +7753,7 @@ $__System.register('25', ['5', '6', '15', '26', '27', '28'], function (_export) 
             return _this.y(d[1]);
           });
           // .curve(d3.curveCardinal)
-          // .curve(d3.curveStepAfter)
+          //.curve(d3.curveStepAfter)
 
           this.div = div;
           this.svg = this.div.append("svg");
@@ -7813,7 +7763,14 @@ $__System.register('25', ['5', '6', '15', '26', '27', '28'], function (_export) 
           this.gYaxis = this.g.append("g").attr("class", "y axis");
           this.gGraph = this.g.append("g").attr("class", "graph");
 
-          this.div.append("div").attr("class", "totals").html('<span id="active">-</span> of <span id="total">-</span> books selected.');
+          this.gBrushLegend = this.g.append("g").attr("class", "brushLegend");
+          this.gBrushLegend.append("text").attr("class", "from").attr("text-anchor", "middle").attr("x", 0).attr("y", 3).text("from");
+
+          this.gBrushLegend.append("text").attr("class", "to").attr("text-anchor", "middle").attr("x", 0).attr("y", 3).text("to");
+
+          this.div.append("div").attr("class", "totals").html('<span id="active">-</span> of <span id="total">-</span> books selected').on("click", function () {
+            _this.gBrush.call(_this.brush.move, null);
+          });
 
           // this.offset = this.div.node().offsetTop;
 
@@ -7839,33 +7796,6 @@ $__System.register('25', ['5', '6', '15', '26', '27', '28'], function (_export) 
         }
 
         _createClass(StreamGraph, [{
-          key: 'brushmove',
-          value: function brushmove() {
-            if (d3.event.sourceEvent.type == "brush") return;
-
-            var domain0 = d3.event.selection.map(this.x.invert);
-            var domain1 = domain0.map(d3.timeYear.round);
-
-            // If empty when rounded, use floor & ceil instead.
-            if (domain1[0] >= domain1[1]) {
-              domain1[0] = d3.timeYear.floor(domain0[0]);
-              domain1[1] = d3.timeYear.ceil(domain0[1]);
-            }
-
-            this.gBrush.call(this.brush.move, domain1.map(this.x));
-            this.state.push({ brushStart: domain1[0], brushEnd: domain1[1], event: "brushmove" });
-          }
-        }, {
-          key: 'brushend',
-          value: function brushend() {
-            var _this2 = this;
-
-            var s = d3.event.selection ? d3.event.selection.map(function (d) {
-              return _this2.x.invert(d);
-            }) : this.db.extent;
-            this.state.push({ brushStart: s[0], brushEnd: s[1], event: "brushend" });
-          }
-        }, {
           key: 'init',
           value: function init() {
 
@@ -7884,10 +7814,53 @@ $__System.register('25', ['5', '6', '15', '26', '27', '28'], function (_export) 
             this.gBrush.call(this.brush);
             this.gBrush.selectAll("rect").attr("height", this.height);
 
+            this.gBrushLegend.select(".from").attr("transform", "translate(" + this.x(this.state.state.brushStart) + "," + this.height / 2 + ")");
+            this.gBrushLegend.select(".to").attr("transform", "translate(" + this.x(this.state.state.brushEnd) + "," + this.height / 2 + ")");
+
             // this.gBrush.selectAll(".resize rect")
             //   .style("visibility", "inherit")
 
             return this;
+          }
+        }, {
+          key: 'brushmove',
+          value: function brushmove() {
+            if (!d3.event.selection || d3.event.sourceEvent.type == "brush") return;
+
+            var domain0 = d3.event.selection.map(this.x.invert);
+            var domain1 = domain0.map(d3.timeYear.round);
+
+            // If empty when rounded, use floor & ceil instead.
+            if (domain1[0] >= domain1[1]) {
+              domain1[0] = d3.timeYear.floor(domain0[0]);
+              domain1[1] = d3.timeYear.ceil(domain0[1]);
+            }
+
+            this.gBrushLegend.select(".from").attr("transform", "translate(" + this.x(domain1[0]) + "," + this.height / 2 + ")").text(domain1[0].getFullYear()).attr("y", function (d) {
+              return domain1[1] - domain1[0] <= 186159996000 ? "-5" : "3";
+            });
+
+            this.gBrushLegend.select(".to").attr("transform", "translate(" + this.x(domain1[1]) + "," + this.height / 2 + ")").text(domain1[1].getFullYear()).attr("y", function (d) {
+              return domain1[1] - domain1[0] <= 186159996000 ? "11" : "3";
+            });
+
+            this.gXaxis.selectAll("text").style("opacity", function (d) {
+              var a = +d + 146159996000 >= +domain1[0] && +d - 146159996000 <= +domain1[1];
+              return a ? 0 : 1;
+            });
+
+            this.gBrush.call(this.brush.move, domain1.map(this.x));
+            this.state.push({ brushStart: domain1[0], brushEnd: domain1[1], event: "brushmove" });
+          }
+        }, {
+          key: 'brushend',
+          value: function brushend() {
+            var _this2 = this;
+
+            var s = d3.event.selection ? d3.event.selection.map(function (d) {
+              return _this2.x.invert(d);
+            }) : this.db.extent;
+            this.state.push({ brushStart: s[0], brushEnd: s[1], event: "brushend" });
           }
         }, {
           key: 'load',
@@ -7947,6 +7920,14 @@ $__System.register('25', ['5', '6', '15', '26', '27', '28'], function (_export) 
               console.log("load2");
               this.load().render(true);
             }
+            if (next.filters !== last.filters) {
+              console.log("load2");
+              this.load().render(true);
+            }
+
+            if (this.big && next.brushStart !== last.brushStart) {
+              this.load().render();
+            }
 
             // if(next.activeItem !== last.activeItem){
             //   if(!next.activeItem) {
@@ -7976,9 +7957,17 @@ $__System.register('25', ['5', '6', '15', '26', '27', '28'], function (_export) 
               return d.key;
             });
 
-            s.enter().append("path").on("mouseenter", function (d) {
+            s.enter().append("path").on("mouseenter", function (d, i, e) {
               if (d.key == "other" || !_this3.big) return;
-              _this3.state.push({ hover: d.key, tooltip: { name: d.key } });
+
+              var p = d3.select(e[i]).node().getBoundingClientRect();
+              var p2 = d3.select(".container").node().getBoundingClientRect();
+              var time = d.reduce(function (h, c) {
+                return h[1] > c[1] ? h : c;
+              }, {}).data.key;
+              var tooltip = { name: d.key, pos: [p.left - p2.left + _this3.x(time), p.top - p2.top] };
+
+              _this3.state.push({ hover: d.key, tooltip: tooltip });
             }).on("mouseleave", function (d) {
               if (d.key == "other" || !_this3.big) return;
               _this3.state.push({ hover: null, tooltip: null });
@@ -8031,8 +8020,8 @@ $__System.register('25', ['5', '6', '15', '26', '27', '28'], function (_export) 
               this.gYaxis.call(this.yAxis);
             }
 
-            this.gYaxis.style("opacity", 1 - (this.outerHeightInitial - this.outerHeight - 100) / 100);
-            //   .selectAll("text")
+            this.gYaxis.style("opacity", 1 - (this.outerHeightInitial - this.outerHeight - 100) / 100).attr("transform", "translate(-10,0)").selectAll("text").attr("transform", "rotate(-90)").attr("x", "0").attr("dy", "-10").attr("text-anchor", "middle");
+
             //   .attr("dx", 30)
           }
         }]);
@@ -8044,8 +8033,140 @@ $__System.register('25', ['5', '6', '15', '26', '27', '28'], function (_export) 
     }
   };
 });
-$__System.register("29", ["5", "6", "26", "27", "28"], function (_export) {
-  var _createClass, _classCallCheck, StateDb, _get, _inherits, __hotReload, BarList;
+$__System.registerDynamic("8", ["24"], true, function($__require, exports, module) {
+  ;
+  var define,
+      global = this,
+      GLOBAL = this;
+  var defined = $__require('24');
+  module.exports = function(it) {
+    return Object(defined(it));
+  };
+  return module.exports;
+});
+
+$__System.registerDynamic("25", ["26", "8", "27", "28"], true, function($__require, exports, module) {
+  ;
+  var define,
+      global = this,
+      GLOBAL = this;
+  var $ = $__require('26'),
+      toObject = $__require('8'),
+      IObject = $__require('27');
+  module.exports = $__require('28')(function() {
+    var a = Object.assign,
+        A = {},
+        B = {},
+        S = Symbol(),
+        K = 'abcdefghijklmnopqrst';
+    A[S] = 7;
+    K.split('').forEach(function(k) {
+      B[k] = k;
+    });
+    return a({}, A)[S] != 7 || Object.keys(a({}, B)).join('') != K;
+  }) ? function assign(target, source) {
+    var T = toObject(target),
+        $$ = arguments,
+        $$len = $$.length,
+        index = 1,
+        getKeys = $.getKeys,
+        getSymbols = $.getSymbols,
+        isEnum = $.isEnum;
+    while ($$len > index) {
+      var S = IObject($$[index++]),
+          keys = getSymbols ? getKeys(S).concat(getSymbols(S)) : getKeys(S),
+          length = keys.length,
+          j = 0,
+          key;
+      while (length > j)
+        if (isEnum.call(S, key = keys[j++]))
+          T[key] = S[key];
+    }
+    return T;
+  } : Object.assign;
+  return module.exports;
+});
+
+$__System.registerDynamic("29", ["2a", "25"], true, function($__require, exports, module) {
+  ;
+  var define,
+      global = this,
+      GLOBAL = this;
+  var $export = $__require('2a');
+  $export($export.S + $export.F, 'Object', {assign: $__require('25')});
+  return module.exports;
+});
+
+$__System.registerDynamic("2b", ["29", "b"], true, function($__require, exports, module) {
+  ;
+  var define,
+      global = this,
+      GLOBAL = this;
+  $__require('29');
+  module.exports = $__require('b').Object.assign;
+  return module.exports;
+});
+
+$__System.registerDynamic("2c", ["2b"], true, function($__require, exports, module) {
+  ;
+  var define,
+      global = this,
+      GLOBAL = this;
+  module.exports = {
+    "default": $__require('2b'),
+    __esModule: true
+  };
+  return module.exports;
+});
+
+$__System.registerDynamic("e", ["2c"], true, function($__require, exports, module) {
+  "use strict";
+  ;
+  var define,
+      global = this,
+      GLOBAL = this;
+  var _Object$assign = $__require('2c')["default"];
+  exports["default"] = _Object$assign || function(target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i];
+      for (var key in source) {
+        if (Object.prototype.hasOwnProperty.call(source, key)) {
+          target[key] = source[key];
+        }
+      }
+    }
+    return target;
+  };
+  exports.__esModule = true;
+  return module.exports;
+});
+
+$__System.registerDynamic("2d", ["2e"], true, function($__require, exports, module) {
+  "use strict";
+  ;
+  var define,
+      global = this,
+      GLOBAL = this;
+  var _Object$defineProperty = $__require('2e')["default"];
+  exports["default"] = function(obj, key, value) {
+    if (key in obj) {
+      _Object$defineProperty(obj, key, {
+        value: value,
+        enumerable: true,
+        configurable: true,
+        writable: true
+      });
+    } else {
+      obj[key] = value;
+    }
+    return obj;
+  };
+  exports.__esModule = true;
+  return module.exports;
+});
+
+$__System.register("2f", ["5", "6", "21", "22", "23", "e", "2d"], function (_export) {
+  var _createClass, _classCallCheck, StateDb, _get, _inherits, _extends, _defineProperty, __hotReload, BarList;
 
   return {
     setters: [function (_4) {
@@ -8058,6 +8179,10 @@ $__System.register("29", ["5", "6", "26", "27", "28"], function (_export) {
       _get = _2["default"];
     }, function (_3) {
       _inherits = _3["default"];
+    }, function (_e) {
+      _extends = _e["default"];
+    }, function (_d) {
+      _defineProperty = _d["default"];
     }],
     execute: function () {
       "use strict";
@@ -8101,7 +8226,7 @@ $__System.register("29", ["5", "6", "26", "27", "28"], function (_export) {
           value: function stateChange(next, last) {
             if (!next.visible.StreamSection) return;
             // console.log(next,last);
-            if (next.brushStart !== last.brushStart || next.brushEnd !== last.brushEnd || next.active !== last.active || next.activeItem !== last.activeItem || next.hover !== last.hover || next.loaded !== last.loaded) {
+            if (next.brushStart !== last.brushStart || next.brushEnd !== last.brushEnd || next.active !== last.active || next.activeItem !== last.activeItem || next.filters !== last.filters || next.hover !== last.hover || next.loaded !== last.loaded) {
               this.render();
             }
           }
@@ -8130,13 +8255,24 @@ $__System.register("29", ["5", "6", "26", "27", "28"], function (_export) {
             var s = this.items.selectAll(".item").data(group, function (d) {
               return d.key;
             });
-            var e = s.enter().append("div").classed("item", true).on("mouseenter", function (d) {
+            var e = s.enter().append("div").classed("item", true).on("mouseenter", function (d, i, e) {
+              var tooltip = null;
+              if (d.value / max < 0.15) {
+                var p = d3.select(e[i]).select(".bar").node().getBoundingClientRect();
+                var p2 = d3.select(".container").node().getBoundingClientRect();
+                tooltip = { name: d.value, pos: [p.left - p2.left, p.top - p2.top] };
+              }
               _this2.state.push({ event: "enter", active: _this2.key, hover: d.key });
             }).on("mouseleave", function () {
               _this2.state.push({ event: "leave", active: _this2.key, hover: null });
             }).on("click", function (d) {
-              var activeItem = _this2.state.state.activeItem === d.key;
-              _this2.state.push({ event: "click", active: _this2.key, activeItem: activeItem ? null : d.key });
+              var active = _this2.state.state.filters[_this2.key] && _this2.state.state.filters[_this2.key] === d.key;
+              // this is a good example why actions where invented:
+              var filters = _extends({}, _this2.state.state.filters, _defineProperty({}, _this2.key, active ? null : d.key));
+              _this2.state.push({ event: "click", active: _this2.key, filters: filters });
+
+              // this.state.push({ event: "click", active: this.key, activeItem: activeItem ? null : d.key });
+              // this.state.push({ event: "click", active: this.key, filter: [d.key] });
               // this.state.push({ filter: { [this.key] : d.key }});
             });
 
@@ -8147,7 +8283,7 @@ $__System.register("29", ["5", "6", "26", "27", "28"], function (_export) {
             }).style("width", function (d) {
               return d.value / max * 100 + "%";
             }).on("mouseenter", function (d) {
-              _this2.state.push({ event: "enter", active: _this2.key, hover: d.key, tooltip: { name: d.value } });
+              _this2.state.push({ event: "enter", active: _this2.key, hover: d.key });
             });
 
             e.append("div").classed("right", true).text(function (d) {
@@ -8162,10 +8298,10 @@ $__System.register("29", ["5", "6", "26", "27", "28"], function (_export) {
             }
 
             s.classed("hover", function (d) {
-              return _this2.state.state.hover === d.key;
+              return !_this2.state.state.filters[_this2.key] && _this2.state.state.hover === d.key;
             });
             s.classed("active", function (d) {
-              return _this2.state.state.activeItem === d.key;
+              return _this2.state.state.filters[_this2.key] && _this2.state.state.filters[_this2.key] === d.key;
             });
 
             s.select(".bar").text(function (d) {
@@ -8194,24 +8330,24 @@ $__System.register("29", ["5", "6", "26", "27", "28"], function (_export) {
     }
   };
 });
-$__System.register('2a', ['5', '6', '25', '27', '28', '29', '2b'], function (_export) {
-  var _createClass, _classCallCheck, StreamGraph, _get, _inherits, BarList, Section, __hotReload, StreamSection;
+$__System.register('30', ['5', '6', '20', '22', '23', '31', '2f'], function (_export) {
+  var _createClass, _classCallCheck, StreamGraph, _get, _inherits, Section, BarList, __hotReload, StreamSection;
 
   return {
     setters: [function (_3) {
       _createClass = _3['default'];
     }, function (_4) {
       _classCallCheck = _4['default'];
-    }, function (_5) {
-      StreamGraph = _5.StreamGraph;
+    }, function (_6) {
+      StreamGraph = _6.StreamGraph;
     }, function (_) {
       _get = _['default'];
     }, function (_2) {
       _inherits = _2['default'];
-    }, function (_6) {
-      BarList = _6.BarList;
-    }, function (_b) {
-      Section = _b.Section;
+    }, function (_5) {
+      Section = _5.Section;
+    }, function (_f) {
+      BarList = _f.BarList;
     }],
     execute: function () {
       'use strict';
@@ -8290,7 +8426,7 @@ $__System.register('2a', ['5', '6', '25', '27', '28', '29', '2b'], function (_ex
     }
   };
 });
-$__System.register("2c", ["5", "6", "27", "28", "2b"], function (_export) {
+$__System.register("32", ["5", "6", "22", "23", "31"], function (_export) {
   var _createClass, _classCallCheck, _get, _inherits, Section, __hotReload, DummySection;
 
   return {
@@ -8302,8 +8438,8 @@ $__System.register("2c", ["5", "6", "27", "28", "2b"], function (_export) {
       _get = _["default"];
     }, function (_2) {
       _inherits = _2["default"];
-    }, function (_b) {
-      Section = _b.Section;
+    }, function (_5) {
+      Section = _5.Section;
     }],
     execute: function () {
       "use strict";
@@ -8350,27 +8486,27 @@ $__System.register("2c", ["5", "6", "27", "28", "2b"], function (_export) {
     }
   };
 });
-$__System.register("2d", ["5", "6", "26", "27", "28"], function (_export) {
+$__System.register('33', ['5', '6', '21', '22', '23'], function (_export) {
   var _createClass, _classCallCheck, StateDb, _get, _inherits, __hotReload, Bookshelf;
 
   return {
     setters: [function (_3) {
-      _createClass = _3["default"];
+      _createClass = _3['default'];
     }, function (_4) {
-      _classCallCheck = _4["default"];
+      _classCallCheck = _4['default'];
     }, function (_5) {
       StateDb = _5.StateDb;
     }, function (_) {
-      _get = _["default"];
+      _get = _['default'];
     }, function (_2) {
-      _inherits = _2["default"];
+      _inherits = _2['default'];
     }],
     execute: function () {
-      "use strict";
+      'use strict';
 
       __hotReload = true;
 
-      _export("__hotReload", __hotReload);
+      _export('__hotReload', __hotReload);
 
       Bookshelf = (function (_StateDb) {
         _inherits(Bookshelf, _StateDb);
@@ -8378,33 +8514,46 @@ $__System.register("2d", ["5", "6", "26", "27", "28"], function (_export) {
         function Bookshelf(state, db, div) {
           _classCallCheck(this, Bookshelf);
 
-          _get(Object.getPrototypeOf(Bookshelf.prototype), "constructor", this).call(this, state, db);
+          _get(Object.getPrototypeOf(Bookshelf.prototype), 'constructor', this).call(this, state, db);
 
-          this.container = div.append("div").attr("class", "bookshelf");
+          this.openClass = 'open fadeInRightBig';
+          this.closeClass = 'closed fadeOutRightBig';
 
+          this.div = div.classed('animated ' + this.openClass, true);
+          this.container = this.div.append("div").classed('bookshelf', true);
+          this.closeButton = this.div.append("a").classed("closeButton", true).text('Close');
+          this.closeButton.on("click", this.close.bind(this));
           return this;
         }
 
         _createClass(Bookshelf, [{
-          key: "stateChange",
+          key: 'stateChange',
           value: function stateChange(next, last) {
-            if (!next.visible.BookshelfSection) return;
-
-            if (next.brushStart !== last.brushStart || next.brushEnd !== last.brushEnd || next.active !== last.active || next.activeItem !== last.activeItem || next.hover !== last.hover || next.loaded !== last.loaded || next.visible.BookshelfSection !== last.visible.BookshelfSection) {
-              this.render();
-            }
-            // console.log(next.brushStart, last.brushStart);
+            if (next.bookshelf != undefined) {
+              console.log(last, next);
+              this.render(next.bookshelf.data);
+              this.open();
+              // console.log(next.bookshelf.data)
+            } else {
+                this.close();
+              }
           }
         }, {
-          key: "render",
-          value: function render() {
-            //console.log( this.state.state);
-            var data = this.db.date.top(150).filter(function (d) {
+          key: 'open',
+          value: function open() {
+            console.log('oooooopen!');this.div.classed(this.openClass, true).classed(this.closeClass, false);
+          }
+        }, {
+          key: 'close',
+          value: function close() {
+            console.log('clooooose!');this.div.classed(this.closeClass, true).classed(this.openClass, false);
+          }
+        }, {
+          key: 'render',
+          value: function render(customData) {
+            var data = customData == undefined ? this.db.date.top(150).filter(function (d) {
               return d.title != "";
-            });
-
-            // console.log(data);
-
+            }) : customData;
             var s = this.container.selectAll(".book").data(data, function (d) {
               return d.id;
             });
@@ -8412,13 +8561,10 @@ $__System.register("2d", ["5", "6", "26", "27", "28"], function (_export) {
             s.enter().append("div").attr("class", "book").text(function (d) {
               return d.title;
             });
-
             s.text(function (d) {
               return d.title;
             });
-
             s.exit().remove();
-
             return this;
           }
         }]);
@@ -8426,11 +8572,11 @@ $__System.register("2d", ["5", "6", "26", "27", "28"], function (_export) {
         return Bookshelf;
       })(StateDb);
 
-      _export("Bookshelf", Bookshelf);
+      _export('Bookshelf', Bookshelf);
     }
   };
 });
-$__System.register('2e', ['5', '6', '27', '28', '2b', '2d'], function (_export) {
+$__System.register('34', ['5', '6', '22', '23', '31', '33'], function (_export) {
   var _createClass, _classCallCheck, _get, _inherits, Section, Bookshelf, __hotReload, BookshelfSection;
 
   return {
@@ -8442,10 +8588,10 @@ $__System.register('2e', ['5', '6', '27', '28', '2b', '2d'], function (_export) 
       _get = _['default'];
     }, function (_2) {
       _inherits = _2['default'];
-    }, function (_b) {
-      Section = _b.Section;
-    }, function (_d) {
-      Bookshelf = _d.Bookshelf;
+    }, function (_5) {
+      Section = _5.Section;
+    }, function (_6) {
+      Bookshelf = _6.Bookshelf;
     }],
     execute: function () {
       'use strict';
@@ -8482,7 +8628,7 @@ $__System.register('2e', ['5', '6', '27', '28', '2b', '2d'], function (_export) 
     }
   };
 });
-$__System.register("2f", ["5", "6", "26", "27", "28"], function (_export) {
+$__System.register("35", ["5", "6", "21", "22", "23"], function (_export) {
   var _createClass, _classCallCheck, StateDb, _get, _inherits, __hotReload, Geomap;
 
   return {
@@ -8516,22 +8662,39 @@ $__System.register("2f", ["5", "6", "26", "27", "28"], function (_export) {
 
           this.div = div;
           this.outerWidth = 1200;
-          this.outerHeight = window.innerHeight - 100;
-          this.margin = { top: 20, right: 20, bottom: 20, left: 20 };
+          this.outerHeight = window.innerHeight - 200;
 
-          this.projection = d3v3.geo.mercator();
+          console.log(this.outerHeight);
+          this.margin = { top: 0, right: 0, bottom: 0, left: 0 };
 
-          this.path = d3v3.geo.path().projection(this.projection);
+          this.projection = d3.geoMercator();
+
+          this.path = d3.geoPath().projection(this.projection);
 
           div.selectAll("*").remove(); // temp fix
 
-          this.svg = d3v3.select(div.node()).append("svg");
+          this.svg = d3.select(div.node()).append("svg");
           this.g = this.svg.append("g");
           this.land = this.g.append("path").attr("class", "land");
           this.rivers = this.g.append("path").attr("class", "river");
 
           this.scale = d3v3.scale.linear().range([1, 20]);
+          this.opacity = d3.scaleLog().range([0.2, 1]);
           this.fontscale = d3v3.scale.linear().range([10, 15]);
+
+          this.geoFit = {
+            "type": "FeatureCollection",
+            "features": [{
+              "type": "Feature",
+              "geometry": {
+                "type": "Polygon",
+                "coordinates": [[[5.7952880859375, 54.16243396806779], [20.9124755859375, 55.07836723201514], [19.8577880859375, 47.27922900257082], [5.2679443359375, 46.92025531537451], [5.7952880859375, 54.16243396806779]]]
+              },
+              "properties": {}
+            }]
+          };
+
+          console.log(this.geoFit);
 
           return this;
         }
@@ -8541,9 +8704,15 @@ $__System.register("2f", ["5", "6", "26", "27", "28"], function (_export) {
           value: function init() {
             this.width = this.outerWidth - this.margin.left - this.margin.right, this.height = this.outerHeight - this.margin.top - this.margin.bottom;
 
-            this.projection.center([16, 49.8]).scale(3500).translate([outerWidth / 2, outerHeight / 2]);
+            this.projection
+            // .center([15, 49])
+            // .scale(3500)
+            // .translate([this.outerWidth / 2, this.outerHeight / 2])
+            .clipExtent([[0, 0], [this.outerWidth, this.outerHeight]]).fitSize([this.outerWidth, this.outerHeight], this.geoFit);
 
             this.svg.attr("width", this.outerWidth).attr("height", this.outerHeight);
+
+            console.log(this.outerHeight);
 
             this.g.attr("transform", "translate(" + this.margin.left + "," + this.margin.top + ")");
 
@@ -8553,7 +8722,6 @@ $__System.register("2f", ["5", "6", "26", "27", "28"], function (_export) {
           key: "stateChange",
           value: function stateChange(next, last) {
             if (next.loaded !== last.loaded) {
-              // console.log(this.db.store);
               this.rivers.datum(topojson.mesh(this.db.store.rivers)).attr("d", this.path);
               this.land.datum(this.db.store.land).attr("d", this.path);
             }
@@ -8580,6 +8748,7 @@ $__System.register("2f", ["5", "6", "26", "27", "28"], function (_export) {
               return d.value;
             });
 
+            this.opacity.domain([0.1, max]);
             this.scale.domain([0.1, max]).clamp(true);
             this.fontscale.domain(d3v3.extent(places, function (d) {
               return d.value;
@@ -8599,28 +8768,51 @@ $__System.register("2f", ["5", "6", "26", "27", "28"], function (_export) {
               return d.key;
             });
 
-            var e = s.enter().append("g");
+            var e = s.enter().append("g").on("mouseenter", function (d, i, l) {
+              d3.select(l[i]).each(function () {
+                this.parentNode.appendChild(this);
+              }).style("opacity", 1).select("text").text(function (d2) {
+                return d.key + " (" + d.value + ")";
+              });
+            }).on("mouseleave", function (d, i, l) {
+              d3.select(l[i]).style("opacity", function (d) {
+                return _this.opacity(d.value);
+              }).select("text").text(function (d2) {
+                return "" + d.key;
+              });
+            });
 
-            e.append("circle");
+            e.append("circle").attr("fill", function (d) {
+              return "#3C7C9B";
+            }).attr("r", function (d) {
+              return _this.scale(d.value);
+            }).style("opacity", function (d) {
+              return d.value ? 1 : 0;
+            });
+
             e.append("text").attr("dx", function (d) {
               return _this.scale(d.value) + 2 + "px";
             }).attr("dy", function (d) {
               return _this.scale(d.value) + 2 + "px";
             }).text(function (d) {
               return d.key;
+            }).style("font-size", function (d) {
+              return _this.fontscale(d.value) + "px";
             });
 
-            s.attr("transform", function (d) {
+            e.merge(s).attr("transform", function (d) {
               var p = _this.projection([d.lon, d.lat]);
               return "translate(" + p[0] + "," + p[1] + ")";
+            }).style("opacity", function (d) {
+              return _this.opacity(d.value);
+            }).style("display", function (d) {
+              return d.value ? "" : "none";
             });
 
             s.select("text").attr("dx", function (d) {
               return _this.scale(d.value) + 2 + "px";
             }).attr("dy", function (d) {
               return _this.scale(d.value) + 2 + "px";
-            }).style("opacity", function (d) {
-              return d.value / max * 4;
             }).style("font-size", function (d) {
               return _this.fontscale(d.value) + "px";
             });
@@ -8629,9 +8821,19 @@ $__System.register("2f", ["5", "6", "26", "27", "28"], function (_export) {
               return "#3C7C9B";
             }).attr("r", function (d) {
               return _this.scale(d.value);
-            }).style("opacity", function (d) {
-              return d.value ? 1 : 0;
             });
+
+            // slow...
+            // e.merge(s).select("text")
+            //   .attr("dx", d=>(this.scale(d.value)+2)+"px")
+            //   .attr("dy", d=>(this.scale(d.value)+2)+"px")
+            //   .style("opacity", d=>((d.value/max)*4))
+            //   .style("font-size", d=>(this.fontscale(d.value)+"px"))
+
+            // e.merge(s).select("circle")
+            //   .attr("fill", d=> "#3C7C9B")
+            //   .attr("r", d => this.scale(d.value))
+            //   .style("opacity", d=>d.value ? 1: 0)
 
             s.exit().remove();
           }
@@ -8644,7 +8846,7 @@ $__System.register("2f", ["5", "6", "26", "27", "28"], function (_export) {
     }
   };
 });
-$__System.register('30', ['5', '6', '27', '28', '2b', '2f'], function (_export) {
+$__System.register('36', ['5', '6', '22', '23', '31', '35'], function (_export) {
   var _createClass, _classCallCheck, _get, _inherits, Section, Geomap, __hotReload, GeomapSection;
 
   return {
@@ -8656,10 +8858,10 @@ $__System.register('30', ['5', '6', '27', '28', '2b', '2f'], function (_export) 
       _get = _['default'];
     }, function (_2) {
       _inherits = _2['default'];
-    }, function (_b) {
-      Section = _b.Section;
-    }, function (_f) {
-      Geomap = _f.Geomap;
+    }, function (_5) {
+      Section = _5.Section;
+    }, function (_6) {
+      Geomap = _6.Geomap;
     }],
     execute: function () {
       'use strict';
@@ -8677,8 +8879,9 @@ $__System.register('30', ['5', '6', '27', '28', '2b', '2f'], function (_export) 
           _get(Object.getPrototypeOf(GeomapSection.prototype), 'constructor', this).call(this, state, db);
 
           this.title.text('Places');
+          this.div.append("div").attr("class", "intro").text("Cultural heritage institutions such as museums, archives, and libraries have been digitizing their inventories over the last two decades. The digitization process includes both the digital capture of the artifacts (for example via photography or 3d scanning) as well as the recording of the metadata about the artifact's historical context, material characteristics, and cultural significance. The main promises connected with digitization of cultural assets are long-term preservation and increased levels of access (Smith, 2002, pp.7). This paper is especially concerned with questions related to access, which so far has mostly relied on interface concepts from traditional information retrieval. However, there is an increased unease with a mode of access, which requires people to translate a possibly vague interest into a specific search query. Unlike museum exhibitions or library shelves that may lend themselves better to curiosity-driven browsing of cultural heritage, conventional search interfaces are arguable not particularly inviting. Instead, more 'generosity' is needed in the display of the artifacts' richness and their distribution in the collection");
           this.geomap = new Geomap(state, db, this.div.append("div"));
-          this.geomap.outerHeight = this.height;
+          //this.geomap.outerHeight = this.height;
           this.geomap.init();
         }
 
@@ -8703,7 +8906,7 @@ $__System.register('30', ['5', '6', '27', '28', '2b', '2f'], function (_export) 
     }
   };
 });
-$__System.register("31", ["5", "6"], function (_export) {
+$__System.register("37", ["5", "6"], function (_export) {
   var _createClass, _classCallCheck, Tooltip;
 
   function __hotReload() {
@@ -8731,7 +8934,7 @@ $__System.register("31", ["5", "6"], function (_export) {
 
           this.containerParent = d3.select(".container");
           this.containerParent.select(".ctooltip").remove();
-          this.container = this.containerParent.append("div").attr("class", "ctooltip");
+          this.container = this.containerParent.append("div").attr("class", "ctooltip").style("visibility", "hidden");
           this.text = this.container.append("div").attr("class", "arrow_box");
         }
 
@@ -8744,7 +8947,8 @@ $__System.register("31", ["5", "6"], function (_export) {
               //console.log("tooltip", next.tooltip)
 
               if (next.tooltip !== null) {
-                var pos = d3.mouse(this.containerParent.node());
+                // const pos = d3.mouse(this.containerParent.node());
+                var pos = next.tooltip.pos;
                 this.container.style("transform", "translate(" + pos[0] + "px," + pos[1] + "px)").style("visibility", "visible");
                 this.text.text(next.tooltip.name);
               } else {
@@ -8761,7 +8965,7 @@ $__System.register("31", ["5", "6"], function (_export) {
     }
   };
 });
-$__System.register("32", [], function (_export) {
+$__System.register("38", [], function (_export) {
 	"use strict";
 
 	var classificationTags;
@@ -8817,39 +9021,39 @@ $__System.register("32", [], function (_export) {
 		}
 	};
 });
-$__System.registerDynamic("33", ["e"], true, function($__require, exports, module) {
+$__System.registerDynamic("39", ["2a"], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
       GLOBAL = this;
-  var $export = $__require('e');
+  var $export = $__require('2a');
   $export($export.S, 'Number', {parseFloat: parseFloat});
   return module.exports;
 });
 
-$__System.registerDynamic("34", ["33"], true, function($__require, exports, module) {
+$__System.registerDynamic("3a", ["39"], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
       GLOBAL = this;
-  $__require('33');
+  $__require('39');
   module.exports = parseFloat;
   return module.exports;
 });
 
-$__System.registerDynamic("35", ["34"], true, function($__require, exports, module) {
+$__System.registerDynamic("3b", ["3a"], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
       GLOBAL = this;
   module.exports = {
-    "default": $__require('34'),
+    "default": $__require('3a'),
     __esModule: true
   };
   return module.exports;
 });
 
-$__System.register("36", ["5", "6", "35", "37"], function (_export) {
+$__System.register("3c", ["5", "6", "3b", "3d"], function (_export) {
   var _createClass, _classCallCheck, _Number$parseFloat, GeiVisUtils, __hotReload, CirclePackedNetwork;
 
   return {
@@ -8857,10 +9061,10 @@ $__System.register("36", ["5", "6", "35", "37"], function (_export) {
       _createClass = _["default"];
     }, function (_2) {
       _classCallCheck = _2["default"];
-    }, function (_3) {
-      _Number$parseFloat = _3["default"];
-    }, function (_4) {
-      GeiVisUtils = _4;
+    }, function (_b) {
+      _Number$parseFloat = _b["default"];
+    }, function (_d) {
+      GeiVisUtils = _d;
     }],
     execute: function () {
       "use strict";
@@ -8877,6 +9081,7 @@ $__System.register("36", ["5", "6", "35", "37"], function (_export) {
           this.properties = properties;
           this.blacklist = [];
           this.years = [0, 0];
+
           this.monad = "";
           return this;
         }
@@ -8898,9 +9103,6 @@ $__System.register("36", ["5", "6", "35", "37"], function (_export) {
 
             this.outerWidth = this.width + this.properties.margin.left + this.properties.margin.right;
             this.outerHeight = this.height + this.properties.margin.top + this.properties.margin.bottom;
-
-            // this.tooltip = new Tooltip('');
-            // this.tooltip.attach(selector._groups[0][0]);
 
             this.container = selector.append("div").attr("id", this.containerName + "-visualization").style("width", this.width + "px").style("height", this.height + "px").style("position", "relative");
             //.style("transform",  d => `translate(${this.properties.margin.left}px,${this.properties.margin.top}px)`);
@@ -8932,10 +9134,10 @@ $__System.register("36", ["5", "6", "35", "37"], function (_export) {
             this.generateLinksAndNodes();
 
             this.maxOccurrence = d3.max(this.transformedData.nodes, function (n) {
-              return n.occurrence;
+              return n.data.occurrence;
             });
             this.minOccurrence = d3.min(this.transformedData.nodes, function (n) {
-              return n.occurrence;
+              return n.data.occurrence;
             });
 
             // fix graph links to map to objects instead of indices
@@ -8946,10 +9148,10 @@ $__System.register("36", ["5", "6", "35", "37"], function (_export) {
 
             this.root = d3.hierarchy({
               children: this.transformedData.nodes.sort(function (a, b) {
-                return b.occurrence - a.occurrence;
+                return b.data.occurrence - a.data.occurrence;
               })
-            }).sum(function (d) {
-              return d.occurrence;
+            }).sum(function (d, i) {
+              return d.data != undefined ? d.data.occurrence : 0;
             });
 
             this.pack(this.root);
@@ -8973,55 +9175,26 @@ $__System.register("36", ["5", "6", "35", "37"], function (_export) {
           value: function setNodeAccessor(nodeAccessor) {
             this.nodeAccessor = nodeAccessor;return this;
           }
-        }, {
-          key: "cacheLinksAndNodes",
-          value: function cacheLinksAndNodes() {
-            var _this2 = this;
-
-            this.networkByYear = d3.nest().key(function (k) {
-              return parseInt(k.year);
-            }).entries(this.data).map(function (m) {
-              var d = _this2.generateLinksAndNodes(m.values);
-              return { year: m.key, data: d };
-            });
-
-            this.networkByYear.filter(function (f) {
-              return f.year == "1820" || f.year == "1911";
-            }).map(function (m) {
-              return m.data;
-            }).map(function (m) {
-              return m.links;
-            });
-
-            d3.nest().key(function (k) {
-              return k.source + "-" + k.target;
-            }).entries();
-
-            return this;
-          }
 
           // this function extracts a network from if given a array with
         }, {
           key: "generateLinksAndNodes",
-          value: function generateLinksAndNodes(newData) {
-            var _this3 = this;
+          value: function generateLinksAndNodes() {
+            var _this2 = this;
 
-            var dataToAnalyze = undefined;
-            if (newData != undefined) {
-              ataToAnalyze = newData;
-            } else {
-              dataToAnalyze = this.data;
-            }
+            var dataToAnalyze = this.data;
+            //if (newData != undefined) { dataToAnalyze = newData; }
+            //else { dataToAnalyze = this.data; }
 
             // extract ALL tags (with duplicates)
             var allTags = [];
             // push all tags of every entry into the global array
             dataToAnalyze.forEach(function (e) {
-              if (e[_this3.nodeAccessor] != undefined) {
-                allTags.push(e[_this3.nodeAccessor].map(function (t) {
+              if (e[_this2.nodeAccessor] != undefined) {
+                allTags.push(e[_this2.nodeAccessor].map(function (t) {
                   return t.trim().toLowerCase();
                 }).filter(function (f) {
-                  return _this3.blacklist.indexOf(f) == -1;
+                  return _this2.blacklist.indexOf(f) == -1;
                 }));
               }
             });
@@ -9031,40 +9204,43 @@ $__System.register("36", ["5", "6", "35", "37"], function (_export) {
             var nodes = nodeSet.values();
             var nodeList = d3.map();
             nodes.forEach(function (e) {
-              nodeList.set(e, 0);
+              nodeList.set(e, { occurrence: 0, entryID: [] });
             });
 
             var linkList = d3.map();
 
             // extract all links
-            dataToAnalyze.forEach(function (e) {
+            dataToAnalyze.forEach(function (e, entryIndex) {
+
+              var summary = d3.permute(e, ["subject", "schoollevel", "schooltype"]);
 
               // this array prevent duplicate links
 
               // if the entry has tags
-              if (e[_this3.nodeAccessor] != undefined) {
+              if (e[_this2.nodeAccessor] != undefined) {
                 (function () {
 
                   var parsedLinks = [];
                   var addedTags = [];
 
-                  var tags = e[_this3.nodeAccessor].map(function (t) {
+                  var tags = e[_this2.nodeAccessor].map(function (t) {
                     return t.trim().toLowerCase();
                   }); // clean the tags again
 
                   //create a link for n-to-n connection
                   tags.filter(function (f) {
-                    return _this3.blacklist.indexOf(f) == -1;
+                    return _this2.blacklist.indexOf(f) == -1;
                   }).forEach(function (tagA) {
                     tags.filter(function (f) {
-                      return _this3.blacklist.indexOf(f) == -1;
+                      return _this2.blacklist.indexOf(f) == -1;
                     }).forEach(function (tagB) {
                       if (tagA != tagB) {
-                        // sort them to prevent duplications
+
+                        // get index to prevent duplications by
                         var indexA = nodes.indexOf(tagA);
                         var indexB = nodes.indexOf(tagB);
 
-                        // construct a unique link ID
+                        // sorting the indices and  construct a unique link ID with them
                         var linkIDs = [indexA, indexB].sort(function (a, b) {
                           return a - b;
                         });
@@ -9075,17 +9251,26 @@ $__System.register("36", ["5", "6", "35", "37"], function (_export) {
                           // increment the value of the connection
                           if (linkList.has(link)) {
                             linkList.set(link, linkList.get(link) + 1);
-                          } else {
-                            linkList.set(link, 1);
                           }
+                          // create the link
+                          else {
+                              linkList.set(link, 1);
+                            }
 
                           if (addedTags.indexOf(tagA) == -1) {
-                            nodeList.set(tagA, nodeList.get(tagA) + 1);
+                            var tagReference = nodeList.get(tagA);
+                            tagReference.occurrence++;
+                            tagReference.entryID.push(entryIndex);
                             addedTags.push(tagA);
                           }
-                          if (addedTags.indexOf(tagB) != -1) {
-                            nodeList.set(tagB, nodeList.get(tagB) + 1);
+                          if (addedTags.indexOf(tagB) == -1) {
+                            var tagReference = nodeList.get(tagB);
+                            tagReference.occurrence++;
+                            tagReference.entryID.push(entryIndex);
                             addedTags.push(tagB);
+
+                            // nodeList.set(tagB, nodeList.get(tagB)+1);
+                            // addedTags.push(tagB);
                           }
 
                           parsedLinks.push(link);
@@ -9107,14 +9292,10 @@ $__System.register("36", ["5", "6", "35", "37"], function (_export) {
             });
 
             var result = { 'nodes': nodes.map(function (n) {
-                return { 'name': n, 'occurrence': nodeList.get(n) };
+                return { 'name': n, 'data': nodeList.get(n) };
               }), 'links': r };
-
-            if (newData != undefined) {
-              return result;
-            } else {
-              this.transformedData = result;return this;
-            }
+            this.transformedData = result;
+            return this;
           }
 
           // renders the whole scene
@@ -9125,245 +9306,302 @@ $__System.register("36", ["5", "6", "35", "37"], function (_export) {
             return this;
           }
         }, {
-          key: "centerNode",
-          value: function centerNode(node) {}
+          key: "setNodeDimensions",
+          value: function setNodeDimensions(selection) {
+            selection.style("width", function (d) {
+              return d.r * 2 + 'px';
+            }).style("height", function (d) {
+              return d.r * 2 + 'px';
+            }).style("border-radius", function (d) {
+              return d.r + 'px';
+            });
+          }
+        }, {
+          key: "setInitalNodePosition",
+          value: function setInitalNodePosition(selection, el) {
+            selection.style("transform", "translate3d(" + this.width / 2 + "px," + this.height / 2 + "px,0px)scale(0,0)");
+          }
+        }, {
+          key: "setNodePosition",
+          value: function setNodePosition(selection) {
+            selection.style("transform", function (d) {
+              return "translate3d(" + (d.x - d.r) + "px," + (d.y - d.r) + "px,0px)scale(1,1)";
+            });
+          }
+        }, {
+          key: "setNodeID",
+          value: function setNodeID(selection) {
+            selection.attr("id", function (d) {
+              return GeiVisUtils.makeSafeForCSS(d.data.name);
+            });
+          }
+        }, {
+          key: "switchToMonad",
+          value: function switchToMonad(data, index, elements) {
+            var _this3 = this;
+
+            var linkedBooks = this.data.filter(function (d, i) {
+              return data.data.data.entryID.indexOf(i) != -1;
+            });
+            var booksBySubject = d3.nest().key(function (d) {
+              return d.subject;
+            }).entries(linkedBooks);
+
+            var clickedElement = d3.select(elements[index]);
+            var d = data.data;
+
+            if (this.monad == d.name) {
+
+              this.monad = "";
+              this.container.selectAll(".node").classed("hidden", false).classed("monadic-related ", false).classed("monad", false).call(this.setNodePosition).call(this.setNodeDimensions);
+            } else {
+              (function () {
+
+                _this3.monad = d.name;
+                var center = [_this3.width / 2 - 50, _this3.height / 2];
+
+                // reset all nodes
+                _this3.container.selectAll(".node").classed("hidden", true).classed("overflow", false).classed("partial", false).classed("monad", false).classed("left", false).classed("right", false).attr("data-balloon", null).attr("data-balloon-pos", null);
+
+                // center this node
+                clickedElement.classed("hidden", false).classed("monad", true).classed("monadic-related", false).style("width", null).style("height", null).style("opacity", 1).style("transform", function (d) {
+                  return "translate3d(" + center[0] + "px," + center[1] + "px,0px)";
+                });
+
+                var linkedNodes = _this3.transformedData.links.filter(function (l) {
+                  return l.source.name == d.name || l.target.name == d.name;
+                }).map(function (l) {
+                  if (l.source.name == d.name) {
+                    return { "strength": l.strength, "node": l.target };
+                  }
+                  if (l.target.name == d.name) {
+                    return { "strength": l.strength, "node": l.source };
+                  }
+                });
+
+                var linkMax = d3.max(linkedNodes, function (l) {
+                  return l.strength;
+                });
+                var linkMin = d3.min(linkedNodes, function (l) {
+                  return l.strength;
+                });
+
+                var indexToPolar = d3.scaleLinear().domain([0, linkedNodes.length]).range([0, Math.PI * 2]);
+                var occurenceToProximity = d3.scaleLinear().domain([linkMax, linkMin]).range([200, _this3.height / 3]);
+                //let occurenceToAlpha = d3.scaleLinear().domain([linkMin, linkMax]).range([0.125, 1.0])
+
+                linkedNodes.forEach(function (l, i) {
+
+                  if (l.node.name != _this3.monad) {
+                    (function () {
+
+                      var n = d3.select("#" + GeiVisUtils.makeSafeForCSS(l.node.name)).style("opacity", 1).classed("hidden", false).classed("monadic-related", true).classed("overflow", false).classed("partial", false);
+
+                      var x = center[0] + Math.sin(indexToPolar(i)) * occurenceToProximity(l.strength) / _this3.occurrenceScale.domain([linkMin, l.node.data.occurrence])(l.strength);
+                      var y = center[1] + Math.cos(indexToPolar(i)) * occurenceToProximity(l.strength) / _this3.occurrenceScale.domain([linkMin, l.node.data.occurrence])(l.strength);
+
+                      var width = n.select(".label").node().offsetWidth;
+                      var height = n.select(".label").node().offsetHeight;
+                      var value = undefined;
+
+                      // decide on the rotation
+                      if (indexToPolar(i) >= Math.PI && indexToPolar(i) <= Math.PI * 2) {
+                        n.classed("right", true);value = 90;
+                      }
+                      if (indexToPolar(i) >= 0 && indexToPolar(i) <= Math.PI) {
+                        n.classed("left", true);value = 270;
+                      }
+
+                      n.style("width", null).style("height", null).style("transform", function (d) {
+                        return "translate3d(" + x + "px," + y + "px,0px)rotate(-" + (indexToPolar(i) * 180 / Math.PI + value) + "deg)";
+                      });
+                    })();
+                  }
+                });
+              })();
+            }
+          }
+        }, {
+          key: "nodeHover",
+          value: function nodeHover(data, index, elements) {
+            var _this4 = this;
+
+            // console.log(this)
+            // console.log(data)
+            // console.log(index)
+            // console.log(elements)
+
+            var hoveredElement = d3.select(elements[index]);
+
+            // deactive all nodes
+            this.container.selectAll(".node").classed("inactive", true).style("transition-delay", null);
+
+            // activate the hovered
+            hoveredElement.classed("inactive", false);
+
+            var d = data.data;
+
+            // search for links from and to this node
+            var links = this.transformedData.links.filter(function (l) {
+              return l.source.name == d.name || l.target.name == d.name;
+            }).map(function (l) {
+              if (l.source.name == d.name) {
+                return { "commonOccurrence": l.strength, "node": l.target };
+              }
+              if (l.target.name == d.name) {
+                return { "commonOccurrence": l.strength, "node": l.source };
+              }
+            });
+
+            // get the min and max values
+            var linkMax = d3.max(links, function (l) {
+              return l.commonOccurrence;
+            });
+            var linkMin = d3.min(links, function (l) {
+              return l.commonOccurrence;
+            });
+
+            // // highlight the nodesg
+            links.forEach(function (link) {
+
+              var selectedNode = d3.select("#" + GeiVisUtils.makeSafeForCSS(link.node.name));
+
+              selectedNode.classed("inactive", false).classed('related', true).style("opacity", _this4.occurrenceScale.domain([linkMin, linkMax]).range([0.5, 1.0])(link.commonOccurrence));
+
+              selectedNode.select(".count").text(link.commonOccurrence);
+            });
+          }
+        }, {
+          key: "nodeUnhover",
+          value: function nodeUnhover(data, index, elements) {
+            this.container.selectAll(".inactive").classed("inactive", false).style("opacity", null);
+            this.container.selectAll(".related").classed("related", false).style("opacity", null);
+            this.container.selectAll('.node').select(".count").text(function (d) {
+              return d.data.data.occurrence;
+            });
+          }
+        }, {
+          key: "checkOverflow",
+          value: function checkOverflow(data, elements) {
+
+            var el = d3.select(this);
+            //    console.log(el.node())
+            var overflow = GeiVisUtils.checkPartialOverflow(el.node(), 10);
+
+            switch (overflow) {
+              case "overflow":
+                el.classed("overflow", true);
+                el.attr("data-balloon", function (d) {
+                  return d.data.name + ": " + d.data.occurrence;
+                });
+                el.attr("data-balloon-pos", "down");
+                break;
+              case "partial-overflow":
+                el.classed("overflow", true).classed("partial", true);
+                el.attr("data-balloon", function (d) {
+                  return d.data.name + ": " + d.data.occurrence;
+                });
+                el.attr("data-balloon-pos", "down");
+                break;
+            }
+          }
 
           // this function gets called to re-render the layout
         }, {
           key: "renderNodes",
           value: function renderNodes(keyframe) {
-
-            var delay = 30;
-
-            switch (keyframe) {
-              case "brushend":
-                delay = 0;break;
-              case "leave-monadic-view":
-                delay = 10;break;
-
-            }
+            var _this5 = this;
 
             var that = this;
-            // update
 
             this.nodes = this.container.selectAll(".node").data(this.root.children, function (e) {
               return e.data.name;
             });
 
-            this.nodes.select(".count").text(function (d) {
-              return d.data.occurrence;
-            });
+            var enteredNodes = undefined,
+                exitedNodes = undefined;
 
-            this.nodes
-            //.classed("transition", true)
-            // clear tolltips
-            .classed("overflow", false).classed("partial", false).attr("data-balloon", null).attr("data-balloon-pos", null)
+            switch (keyframe) {
 
-            // clear monadic
-            .classed("monadic-related", false).classed("hidden", false).classed("monad", false).transition().duration(300).delay(function (d, i) {
-              return i * delay;
-            }).call(setNodeProperties).on("end", checkOverflow);
+              case "brushend":
 
-            if (keyframe == "brushend" || keyframe == "leave-monadic-view") {
-              // enter
-              var enteredNodes = this.nodes.enter().append("div");
-
-              enteredNodes.on("mouseover", over).on("mouseout", out).on("click", switchToMonad).attr("id", function (d) {
-                return GeiVisUtils.makeSafeForCSS(d.data.name);
-              })
-              //.style("transform",  d => `translate3d(${this.width/2-d.r}px,${this.height/2-d.r}px,0px)`)
-              .style("transform", function (d) {
-                return "translate3d(" + (d.x - d.r) + "px," + (d.y - d.r) + "px,0px)";
-              }).style("opacity", 0.0).classed("node", true);
-              //.classed("transition", true);
-
-              enteredNodes.append("span").classed("label", true).text(function (d) {
-                return d.data.name;
-              });
-
-              enteredNodes.append("span").classed("count", true).text(function (d) {
-                return d.data.occurrence;
-              });
-
-              enteredNodes.transition().duration(300)
-              //.delay((d,i) => i*10)
-              .call(setNodeProperties).on("end", checkOverflow);
-            }
-
-            var exitedNodes = this.nodes.exit();
-
-            // exit
-            exitedNodes.transition().duration(100).style("opacity", 0.0).style("width", 0).style("height", 0)
-            // .on("end", checkOverflow)
-            //.style("transform",  d => `translate3d(${this.width/2-d.r}px,${this.height/2-d.r}px,0px)`)
-            .remove();
-
-            function checkOverflow(d) {
-              var el = d3.select(this);
-              var overflow = GeiVisUtils.checkPartialOverflow(el.node(), 14);
-              //el.classed("transition", false);
-              switch (overflow) {
-                case "overflow":
-                  el.classed("overflow", true);
-                  el.attr("data-balloon", function (d) {
-                    return d.data.name + ": " + d.data.occurrence;
-                  });
-                  el.attr("data-balloon-pos", "down");
-                  break;
-                case "partial-overflow":
-                  el.classed("overflow", true).classed("partial", true);
-                  el.attr("data-balloon", function (d) {
-                    return d.data.name + ": " + d.data.occurrence;
-                  });
-                  el.attr("data-balloon-pos", "down");
-                  break;
-              }
-            }
-
-            function switchToMonad(data) {
-              var _this4 = this;
-
-              var d = data.data;
-
-              if (that.monad == d.name) {
-                that.monad = "";
-                that.renderNodes("leave-monadic-view");
-              } else {
-                (function () {
-
-                  that.monad = d.name;
-                  var center = [that.width / 2 - 50, that.height / 2];
-
-                  // reset all nodes
-                  that.container.selectAll(".node").classed("hidden", true).classed("overflow", false).classed("partial", false).classed("monad", false).classed("left", false).classed("right", false).attr("data-balloon", null).attr("data-balloon-pos", null);
-
-                  // center this node
-                  d3.select(_this4).classed("hidden", false).classed("monad", true).classed("monadic-related", false).transition().duration(300).style("width", null).style("height", null).style("opacity", 1).style("transform", function (d) {
-                    return "translate3d(" + center[0] + "px," + center[1] + "px,0px)";
-                  });
-
-                  var linkedNodes = that.transformedData.links.filter(function (l) {
-                    return l.source.name == d.name || l.target.name == d.name;
-                  }).map(function (l) {
-                    if (l.source.name == d.name) {
-                      return { "strength": l.strength, "node": l.target };
-                    }
-                    if (l.target.name == d.name) {
-                      return { "strength": l.strength, "node": l.source };
-                    }
-                  });
-
-                  var linkMax = d3.max(linkedNodes, function (l) {
-                    return l.strength;
-                  });
-                  var linkMin = d3.min(linkedNodes, function (l) {
-                    return l.strength;
-                  });
-
-                  var indexToPolar = d3.scaleLinear().domain([0, linkedNodes.length]).range([0, Math.PI * 2]);
-                  var occurenceToProximity = d3.scaleLinear().domain([linkMax, linkMin]).range([200, that.height / 3]);
-                  //let occurenceToAlpha = d3.scaleLinear().domain([linkMin, linkMax]).range([0.125, 1.0]);
-
-                  linkedNodes.forEach(function (l, i) {
-
-                    if (l.node.name != that.monad) {
-                      (function () {
-
-                        var n = d3.select("#" + GeiVisUtils.makeSafeForCSS(l.node.name)).style("opacity", 1).classed("hidden", false).classed("monadic-related", true).classed("overflow", false).classed("partial", false);
-
-                        var x = center[0] + Math.sin(indexToPolar(i)) * occurenceToProximity(l.strength);
-                        var y = center[1] + Math.cos(indexToPolar(i)) * occurenceToProximity(l.strength);
-
-                        var width = n.select(".label").node().offsetWidth;
-                        var height = n.select(".label").node().offsetHeight;
-                        var value = undefined;
-
-                        if (indexToPolar(i) >= Math.PI && indexToPolar(i) <= Math.PI * 2) {
-                          n.classed("right", true);value = 90;
-                        }
-                        if (indexToPolar(i) >= 0 && indexToPolar(i) <= Math.PI) {
-                          n.classed("left", true);value = 270;
-                        }
-
-                        n.transition().duration(300).delay(function (d, i) {
-                          return i * 30;
-                        }).style("width", null).style("height", null).style("transform", function (d) {
-                          return "translate3d(" + x + "px," + y + "px,0px)rotate(-" + (indexToPolar(i) * 180 / Math.PI + value) + "deg)";
-                        });
-                      })();
-                    }
-                  });
-                })();
-              }
-            }
-
-            // sets the visual props of a node
-            function setNodeProperties(selection) {
-
-              if (keyframe == "brushend" || keyframe == "leave-monadic-view") {
-                selection.style("opacity", 1.0).style("transform", function (d) {
-                  return "translate3d(" + (d.x - d.r) + "px," + (d.y - d.r) + "px,0px)";
-                }).style("width", function (d) {
-                  return d.r * 2 + 'px';
-                }).style("height", function (d) {
-                  return d.r * 2 + 'px';
-                }).style("border-radius", function (d) {
-                  return d.r + 'px';
+                // set the previous data once the user finished brushing
+                this.previousData = d3.map(this.root.children, function (d) {
+                  return d.data.name;
                 });
-              } else {
-                selection.style("opacity", 1.0).style("width", function (d) {
-                  return d.r * 2 + 'px';
-                }).style("height", function (d) {
-                  return d.r * 2 + 'px';
-                }).style("border-radius", function (d) {
-                  return d.r + 'px';
+
+                // turn transitions on!
+                d3.select("#NetworkSection").classed("hasTransition", true);
+
+                // enter
+                enteredNodes = this.nodes.enter().append("div").attr("id", function (d) {
+                  return GeiVisUtils.makeSafeForCSS(d.data.name);
+                }).on("mouseover", this.nodeHover.bind(this)).on("mouseleave", this.nodeUnhover.bind(this)).on("click", this.switchToMonad.bind(this)).classed("node", true).call(this.setInitalNodePosition.bind(this)).call(this.setNodeDimensions).call(this.setNodePosition);
+
+                // add the labels and numbers
+                enteredNodes.append("span").classed("label", true).text(function (d) {
+                  return d.data.name;
                 });
-              }
-            }
+                enteredNodes.append("span").classed("count", true).text(function (d) {
+                  return d.data.data.occurrence;
+                });
 
-            function out() {
-              var n = that.container.selectAll(".node").classed("inactive", false);
-              n.style("opacity", null);
-              n.select('.count').text(function (d) {
-                return d.data.occurrence;
-              });
-            }
+                enteredNodes.call(function (d) {
+                  d.nodes().forEach(function (n) {
+                    return _this5.checkOverflow.bind(n)();
+                  });
+                });
 
-            function over(data) {
+                // update
+                this.nodes.call(this.setNodePosition).call(this.setNodeDimensions).on("transitionend", this.checkOverflow);
 
-              that.container.selectAll(".node").classed("inactive", true);
-              d3.select(this).classed("inactive", false);
+                this.nodes.select(".label").text(function (d) {
+                  return d.data.name;
+                });
+                this.nodes.select(".count").text(function (d) {
+                  return d.data.data.occurrence;
+                });
 
-              var d = data.data;
+                // remove the old ones
+                exitedNodes = this.nodes.exit();
+                exitedNodes.remove();
 
-              var linkedNodes = that.transformedData.links.filter(function (l) {
-                return l.source.name == d.name || l.target.name == d.name;
-              }).map(function (l) {
-                if (l.source.name == d.name) {
-                  return { "strength": l.strength, "node": l.target };
-                }
-                if (l.target.name == d.name) {
-                  return { "strength": l.strength, "node": l.source };
-                }
-              });
+                // this.nodes
+                //   .call( (d) => {
+                //     d.nodes().forEach( n => this.checkOverflow.bind(n)() )
+                //   })
 
-              var linkMax = d3.max(linkedNodes, function (l) {
-                return l.strength;
-              });
-              var linkMin = d3.min(linkedNodes, function (l) {
-                return l.strength;
-              });
+                break;
 
-              // TODO: select all nodes with this array
-              // enter() changes the related ones
-              // .exit() hides the unrelated
+              case "brushmove":
 
-              // // highlight the nodes
-              linkedNodes.forEach(function (f) {
-                var n = d3.select("#" + GeiVisUtils.makeSafeForCSS(f.node.name));
-                n.classed("inactive", false).style("opacity", that.occurrenceScale.domain([linkMin, f.node.occurrence])(f.strength));
-                n.select(".count").text(f.strength);
-              });
+                d3.select("#NetworkSection").classed("hasTransition", false);
+
+                this.nodes.style("opacity", 1).classed("overflow", function (d) {
+                  return d.r < 30;
+                }).classed("partial", false).attr("data-balloon", null).attr("data-balloon-pos", null).classed("monadic-related", false) // clear monadic
+                .classed("monad", false).classed("temporary-hidden", false).call(this.setNodeDimensions).style("transform", function (d) {
+                  var previusValues = _this5.previousData.get(d.data.name);
+                  var translate = "translate3d(" + (previusValues.x - d.r) + "px," + (previusValues.y - d.r) + "px,0px)";
+                  return translate;
+                });
+
+                this.nodes.select(".label").text(function (d) {
+                  return d.data.name;
+                });
+                this.nodes.select(".count").text(function (d) {
+                  return d.data.data.occurrence;
+                });
+
+                // .call( (d) => {
+                //   d.nodes().forEach( n => this.checkOverflow.bind(n)() )
+                // })
+
+                exitedNodes = this.nodes.exit();
+                exitedNodes.style("opacity", 0);
+
+                break;
+
             }
 
             return this;
@@ -9377,8 +9615,8 @@ $__System.register("36", ["5", "6", "35", "37"], function (_export) {
     }
   };
 });
-$__System.register('38', ['5', '6', '27', '28', '32', '36', '2b'], function (_export) {
-  var _createClass, _classCallCheck, _get, _inherits, classificationTags, CirclePackedNetwork, Section, __hotReload, NetworkSection;
+$__System.register('3e', ['5', '6', '22', '23', '31', '38', '3c'], function (_export) {
+  var _createClass, _classCallCheck, _get, _inherits, Section, classificationTags, CirclePackedNetwork, __hotReload, NetworkSection;
 
   return {
     setters: [function (_3) {
@@ -9390,11 +9628,11 @@ $__System.register('38', ['5', '6', '27', '28', '32', '36', '2b'], function (_ex
     }, function (_2) {
       _inherits = _2['default'];
     }, function (_5) {
-      classificationTags = _5.classificationTags;
+      Section = _5.Section;
     }, function (_6) {
-      CirclePackedNetwork = _6.CirclePackedNetwork;
-    }, function (_b) {
-      Section = _b.Section;
+      classificationTags = _6.classificationTags;
+    }, function (_c) {
+      CirclePackedNetwork = _c.CirclePackedNetwork;
     }],
     execute: function () {
       'use strict';
@@ -9442,7 +9680,6 @@ $__System.register('38', ['5', '6', '27', '28', '32', '36', '2b'], function (_ex
             // init
             if (next.loaded != last.loaded) {
               this.network.updateData(this.db.date.top(Infinity));
-              //this.network.cacheLinksAndNodes(this.db.date.top(Infinity))
               this.network.render("brushend");
             }
 
@@ -9455,12 +9692,14 @@ $__System.register('38', ['5', '6', '27', '28', '32', '36', '2b'], function (_ex
         }, {
           key: 'render',
           value: function render(next, last) {
-            this.title.html('All tags from ' + next.brushStart.getFullYear() + ' to ' + next.brushEnd.getFullYear());
+
+            // this simple hack enables brushstart,brushmove and brushend events
+            var event = last.event != next.event && next.event == "brushmove" ? "brushstart" : next.event;
+
             var data = this.db.date.top(Infinity);
             if (data.length > 0) {
-              var keyframe = next.event;
               this.network.updateData(data);
-              this.network.render(keyframe);
+              this.network.render(event);
             }
           }
         }]);
@@ -9472,7 +9711,7 @@ $__System.register('38', ['5', '6', '27', '28', '32', '36', '2b'], function (_ex
     }
   };
 });
-$__System.registerDynamic("39", [], true, function($__require, exports, module) {
+$__System.registerDynamic("3f", [], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
@@ -9484,19 +9723,19 @@ $__System.registerDynamic("39", [], true, function($__require, exports, module) 
   return module.exports;
 });
 
-$__System.registerDynamic("b", ["39"], true, function($__require, exports, module) {
+$__System.registerDynamic("27", ["3f"], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
       GLOBAL = this;
-  var cof = $__require('39');
+  var cof = $__require('3f');
   module.exports = Object('z').propertyIsEnumerable(0) ? Object : function(it) {
     return cof(it) == 'String' ? it.split('') : Object(it);
   };
   return module.exports;
 });
 
-$__System.registerDynamic("8", [], true, function($__require, exports, module) {
+$__System.registerDynamic("24", [], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
@@ -9509,20 +9748,20 @@ $__System.registerDynamic("8", [], true, function($__require, exports, module) {
   return module.exports;
 });
 
-$__System.registerDynamic("3a", ["b", "8"], true, function($__require, exports, module) {
+$__System.registerDynamic("40", ["27", "24"], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
       GLOBAL = this;
-  var IObject = $__require('b'),
-      defined = $__require('8');
+  var IObject = $__require('27'),
+      defined = $__require('24');
   module.exports = function(it) {
     return IObject(defined(it));
   };
   return module.exports;
 });
 
-$__System.registerDynamic("c", [], true, function($__require, exports, module) {
+$__System.registerDynamic("28", [], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
@@ -9537,14 +9776,14 @@ $__System.registerDynamic("c", [], true, function($__require, exports, module) {
   return module.exports;
 });
 
-$__System.registerDynamic("3b", ["e", "10", "c"], true, function($__require, exports, module) {
+$__System.registerDynamic("9", ["2a", "b", "28"], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
       GLOBAL = this;
-  var $export = $__require('e'),
-      core = $__require('10'),
-      fails = $__require('c');
+  var $export = $__require('2a'),
+      core = $__require('b'),
+      fails = $__require('28');
   module.exports = function(KEY, exec) {
     var fn = (core.Object || {})[KEY] || Object[KEY],
         exp = {};
@@ -9556,13 +9795,13 @@ $__System.registerDynamic("3b", ["e", "10", "c"], true, function($__require, exp
   return module.exports;
 });
 
-$__System.registerDynamic("3c", ["3a", "3b"], true, function($__require, exports, module) {
+$__System.registerDynamic("41", ["40", "9"], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
       GLOBAL = this;
-  var toIObject = $__require('3a');
-  $__require('3b')('getOwnPropertyDescriptor', function($getOwnPropertyDescriptor) {
+  var toIObject = $__require('40');
+  $__require('9')('getOwnPropertyDescriptor', function($getOwnPropertyDescriptor) {
     return function getOwnPropertyDescriptor(it, key) {
       return $getOwnPropertyDescriptor(toIObject(it), key);
     };
@@ -9570,38 +9809,38 @@ $__System.registerDynamic("3c", ["3a", "3b"], true, function($__require, exports
   return module.exports;
 });
 
-$__System.registerDynamic("3d", ["a", "3c"], true, function($__require, exports, module) {
+$__System.registerDynamic("42", ["26", "41"], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
       GLOBAL = this;
-  var $ = $__require('a');
-  $__require('3c');
+  var $ = $__require('26');
+  $__require('41');
   module.exports = function getOwnPropertyDescriptor(it, key) {
     return $.getDesc(it, key);
   };
   return module.exports;
 });
 
-$__System.registerDynamic("3e", ["3d"], true, function($__require, exports, module) {
+$__System.registerDynamic("43", ["42"], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
       GLOBAL = this;
   module.exports = {
-    "default": $__require('3d'),
+    "default": $__require('42'),
     __esModule: true
   };
   return module.exports;
 });
 
-$__System.registerDynamic("27", ["3e"], true, function($__require, exports, module) {
+$__System.registerDynamic("22", ["43"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
       global = this,
       GLOBAL = this;
-  var _Object$getOwnPropertyDescriptor = $__require('3e')["default"];
+  var _Object$getOwnPropertyDescriptor = $__require('43')["default"];
   exports["default"] = function get(_x, _x2, _x3) {
     var _again = true;
     _function: while (_again) {
@@ -9639,31 +9878,31 @@ $__System.registerDynamic("27", ["3e"], true, function($__require, exports, modu
   return module.exports;
 });
 
-$__System.registerDynamic("3f", ["a"], true, function($__require, exports, module) {
+$__System.registerDynamic("44", ["26"], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
       GLOBAL = this;
-  var $ = $__require('a');
+  var $ = $__require('26');
   module.exports = function create(P, D) {
     return $.create(P, D);
   };
   return module.exports;
 });
 
-$__System.registerDynamic("40", ["3f"], true, function($__require, exports, module) {
+$__System.registerDynamic("45", ["44"], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
       GLOBAL = this;
   module.exports = {
-    "default": $__require('3f'),
+    "default": $__require('44'),
     __esModule: true
   };
   return module.exports;
 });
 
-$__System.registerDynamic("41", [], true, function($__require, exports, module) {
+$__System.registerDynamic("46", [], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
@@ -9674,14 +9913,14 @@ $__System.registerDynamic("41", [], true, function($__require, exports, module) 
   return module.exports;
 });
 
-$__System.registerDynamic("e", ["41", "10", "42"], true, function($__require, exports, module) {
+$__System.registerDynamic("2a", ["46", "b", "47"], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
       GLOBAL = this;
-  var global = $__require('41'),
-      core = $__require('10'),
-      ctx = $__require('42'),
+  var global = $__require('46'),
+      core = $__require('b'),
+      ctx = $__require('47'),
       PROTOTYPE = 'prototype';
   var $export = function(type, name, source) {
     var IS_FORCED = type & $export.F,
@@ -9723,7 +9962,7 @@ $__System.registerDynamic("e", ["41", "10", "42"], true, function($__require, ex
   return module.exports;
 });
 
-$__System.registerDynamic("43", [], true, function($__require, exports, module) {
+$__System.registerDynamic("48", [], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
@@ -9734,12 +9973,12 @@ $__System.registerDynamic("43", [], true, function($__require, exports, module) 
   return module.exports;
 });
 
-$__System.registerDynamic("44", ["43"], true, function($__require, exports, module) {
+$__System.registerDynamic("49", ["48"], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
       GLOBAL = this;
-  var isObject = $__require('43');
+  var isObject = $__require('48');
   module.exports = function(it) {
     if (!isObject(it))
       throw TypeError(it + ' is not an object!');
@@ -9748,7 +9987,7 @@ $__System.registerDynamic("44", ["43"], true, function($__require, exports, modu
   return module.exports;
 });
 
-$__System.registerDynamic("45", [], true, function($__require, exports, module) {
+$__System.registerDynamic("4a", [], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
@@ -9761,12 +10000,12 @@ $__System.registerDynamic("45", [], true, function($__require, exports, module) 
   return module.exports;
 });
 
-$__System.registerDynamic("42", ["45"], true, function($__require, exports, module) {
+$__System.registerDynamic("47", ["4a"], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
       GLOBAL = this;
-  var aFunction = $__require('45');
+  var aFunction = $__require('4a');
   module.exports = function(fn, that, length) {
     aFunction(fn);
     if (that === undefined)
@@ -9792,14 +10031,14 @@ $__System.registerDynamic("42", ["45"], true, function($__require, exports, modu
   return module.exports;
 });
 
-$__System.registerDynamic("46", ["a", "43", "44", "42"], true, function($__require, exports, module) {
+$__System.registerDynamic("4b", ["26", "48", "49", "47"], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
       GLOBAL = this;
-  var getDesc = $__require('a').getDesc,
-      isObject = $__require('43'),
-      anObject = $__require('44');
+  var getDesc = $__require('26').getDesc,
+      isObject = $__require('48'),
+      anObject = $__require('49');
   var check = function(O, proto) {
     anObject(O);
     if (!isObject(proto) && proto !== null)
@@ -9808,7 +10047,7 @@ $__System.registerDynamic("46", ["a", "43", "44", "42"], true, function($__requi
   module.exports = {
     set: Object.setPrototypeOf || ('__proto__' in {} ? function(test, buggy, set) {
       try {
-        set = $__require('42')(Function.call, getDesc(Object.prototype, '__proto__').set, 2);
+        set = $__require('47')(Function.call, getDesc(Object.prototype, '__proto__').set, 2);
         set(test, []);
         buggy = !(test instanceof Array);
       } catch (e) {
@@ -9828,17 +10067,17 @@ $__System.registerDynamic("46", ["a", "43", "44", "42"], true, function($__requi
   return module.exports;
 });
 
-$__System.registerDynamic("47", ["e", "46"], true, function($__require, exports, module) {
+$__System.registerDynamic("4c", ["2a", "4b"], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
       GLOBAL = this;
-  var $export = $__require('e');
-  $export($export.S, 'Object', {setPrototypeOf: $__require('46').set});
+  var $export = $__require('2a');
+  $export($export.S, 'Object', {setPrototypeOf: $__require('4b').set});
   return module.exports;
 });
 
-$__System.registerDynamic("10", [], true, function($__require, exports, module) {
+$__System.registerDynamic("b", [], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
@@ -9849,36 +10088,36 @@ $__System.registerDynamic("10", [], true, function($__require, exports, module) 
   return module.exports;
 });
 
-$__System.registerDynamic("48", ["47", "10"], true, function($__require, exports, module) {
+$__System.registerDynamic("4d", ["4c", "b"], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
       GLOBAL = this;
-  $__require('47');
-  module.exports = $__require('10').Object.setPrototypeOf;
+  $__require('4c');
+  module.exports = $__require('b').Object.setPrototypeOf;
   return module.exports;
 });
 
-$__System.registerDynamic("49", ["48"], true, function($__require, exports, module) {
+$__System.registerDynamic("4e", ["4d"], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
       GLOBAL = this;
   module.exports = {
-    "default": $__require('48'),
+    "default": $__require('4d'),
     __esModule: true
   };
   return module.exports;
 });
 
-$__System.registerDynamic("28", ["40", "49"], true, function($__require, exports, module) {
+$__System.registerDynamic("23", ["45", "4e"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
       global = this,
       GLOBAL = this;
-  var _Object$create = $__require('40')["default"];
-  var _Object$setPrototypeOf = $__require('49')["default"];
+  var _Object$create = $__require('45')["default"];
+  var _Object$setPrototypeOf = $__require('4e')["default"];
   exports["default"] = function(subClass, superClass) {
     if (typeof superClass !== "function" && superClass !== null) {
       throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
@@ -9896,7 +10135,7 @@ $__System.registerDynamic("28", ["40", "49"], true, function($__require, exports
   return module.exports;
 });
 
-$__System.register("26", ["5", "6"], function (_export) {
+$__System.register("21", ["5", "6"], function (_export) {
 	var _createClass, _classCallCheck, __hotReload, StateDb;
 
 	return {
@@ -9936,7 +10175,7 @@ $__System.register("26", ["5", "6"], function (_export) {
 		}
 	};
 });
-$__System.register("2b", ["6", "26", "27", "28"], function (_export) {
+$__System.register("31", ["6", "21", "22", "23"], function (_export) {
 	var _classCallCheck, StateDb, _get, _inherits, __hotReload, Section;
 
 	return {
@@ -9978,7 +10217,7 @@ $__System.register("2b", ["6", "26", "27", "28"], function (_export) {
 		}
 	};
 });
-$__System.registerDynamic("a", [], true, function($__require, exports, module) {
+$__System.registerDynamic("26", [], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
@@ -9999,37 +10238,37 @@ $__System.registerDynamic("a", [], true, function($__require, exports, module) {
   return module.exports;
 });
 
-$__System.registerDynamic("4a", ["a"], true, function($__require, exports, module) {
+$__System.registerDynamic("4f", ["26"], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
       GLOBAL = this;
-  var $ = $__require('a');
+  var $ = $__require('26');
   module.exports = function defineProperty(it, key, desc) {
     return $.setDesc(it, key, desc);
   };
   return module.exports;
 });
 
-$__System.registerDynamic("4b", ["4a"], true, function($__require, exports, module) {
+$__System.registerDynamic("2e", ["4f"], true, function($__require, exports, module) {
   ;
   var define,
       global = this,
       GLOBAL = this;
   module.exports = {
-    "default": $__require('4a'),
+    "default": $__require('4f'),
     __esModule: true
   };
   return module.exports;
 });
 
-$__System.registerDynamic("5", ["4b"], true, function($__require, exports, module) {
+$__System.registerDynamic("5", ["2e"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
       global = this,
       GLOBAL = this;
-  var _Object$defineProperty = $__require('4b')["default"];
+  var _Object$defineProperty = $__require('2e')["default"];
   exports["default"] = (function() {
     function defineProperties(target, props) {
       for (var i = 0; i < props.length; i++) {
@@ -10068,7 +10307,7 @@ $__System.registerDynamic("6", [], true, function($__require, exports, module) {
   return module.exports;
 });
 
-$__System.register("37", [], function (_export) {
+$__System.register("3d", [], function (_export) {
   "use strict";
 
   var __hotReload;
@@ -10147,7 +10386,7 @@ $__System.register("37", [], function (_export) {
     }
   };
 });
-$__System.register("4c", ["5", "6", "37"], function (_export) {
+$__System.register("50", ["5", "6", "3d"], function (_export) {
 	var _createClass, _classCallCheck, GeiVisUtils, __hotReload, NestedTreemap;
 
 	return {
@@ -10155,8 +10394,8 @@ $__System.register("4c", ["5", "6", "37"], function (_export) {
 			_createClass = _["default"];
 		}, function (_2) {
 			_classCallCheck = _2["default"];
-		}, function (_3) {
-			GeiVisUtils = _3;
+		}, function (_d) {
+			GeiVisUtils = _d;
 		}],
 		execute: function () {
 			"use strict";
@@ -10181,38 +10420,32 @@ $__System.register("4c", ["5", "6", "37"], function (_export) {
 					this.url = {};
 					this.width = {};
 					this.height = {};
-					this.dropdownA = {};
-					this.dropdownB = {};
+					this.activeNest = [];
+					this.nestings = [];
+					this.nestingA = {};
+					this.nestingB = {};
 					this.levelA = "";
 					this.levelB = "";
 					this.format;
 					this.color;
 					this.state;
 					this.layout = "SliceDice";
+					this.order = [];
 				}
 
 				_createClass(NestedTreemap, [{
 					key: "appendTo",
 					value: function appendTo(selector) {
-
 						this.container = selector;
-						//this.createDropdowns();
-
-						this.width = parseInt(this.container.style("width")) - this.properties.margin.left - this.properties.margin.right, this.height = parseInt(this.container.style("height")) - this.properties.margin.top - this.properties.margin.bottom;
-
+						this.width = parseInt(this.container.style("width")) - this.properties.margin.left - this.properties.margin.right, this.height = parseInt(window.innerHeight - 200) - this.properties.margin.top - this.properties.margin.bottom;
 						this.svg = this.container.append("div").attr("class", "visualization").style("width", this.width).style("height", this.height);
-
+						this.connectionSVG = this.svg.append('svg').style('position', 'absolute').attr("class", "label-connections").style("width", this.width).style("height", 60);
 						return this;
 					}
 				}, {
-					key: "setLevelA",
-					value: function setLevelA(string) {
-						this.levelA = string;return this;
-					}
-				}, {
-					key: "setLevelB",
-					value: function setLevelB(string) {
-						this.levelB = string;return this;
+					key: "setState",
+					value: function setState(state) {
+						this.state = state;
 					}
 				}, {
 					key: "relativeColorScale",
@@ -10223,34 +10456,17 @@ $__System.register("4c", ["5", "6", "37"], function (_export) {
 					key: "updateData",
 					value: function updateData(data) {
 
-						this.rawData = data;
-
-						var nesting = d3.nest();
-
-						// if both nestings are of same value, just use the first
-						if (this.levelA != this.levelB) {
-							nesting.key(this.nestings[this.levelA]).key(this.nestings[this.levelB]);
-						} else {
-							nesting.key(this.nestings[this.levelA]);
+						if (data != undefined) {
+							this.data = data;
 						}
 
-						nesting.rollup(function (d) {
+						var nesting = d3.nest();
+						var nstA = this.nestings[0][this.activeNest[0]].accessor;
+						var nstB = this.nestings[1][this.activeNest[1]].accessor;
+						nesting.key(nstA).key(nstB).rollup(function (d) {
 							return d.length;
 						});
-
-						//let hist = d3.histogram().value(h=>h.value).thresholds([2])
-						var nested = nesting.entries(data);
-
-						// let nested = nesting.entries(data).map( d=> {
-						// 	let rHist = hist(d.values);
-						// 	if (rHist.length>1) {
-						// 		let rVal = d3.values(rHist[1]).filter(f=> typeof f === "object");
-						// 		rVal.push({key:"Other", value : d3.sum(rHist[0], s=>s.value)});
-						// 		return { key:d.key, values: rVal };
-						// 	} else {
-						// 		return d;
-						// 	}
-						// });	
+						var nested = nesting.entries(this.data);
 
 						this.root = d3.hierarchy({ key: "all values", values: nested }, function (d) {
 							return d.values;
@@ -10260,175 +10476,251 @@ $__System.register("4c", ["5", "6", "37"], function (_export) {
 							return Math.abs(a.x1 - a.x0 - Math.abs(b.x1 - b.x0)) || a.value - b.value;
 						});
 
-						this.treemap = d3.treemap().size([this.width, this.height]).tile(d3.treemapSliceDice).round(true).paddingLeft(function (d) {
-							switch (d.depth) {
-								case 1:
-									return 1;break;
-								default:
-									return 0;break;
-							}
-						}).paddingRight(function (d) {
-							switch (d.depth) {
-								case 1:
-									return 1;
-								default:
-									return 0;
-							}
-						}).paddingTop(function (d) {
-							switch (d.depth) {
-								case 1:
-									return 30;break;
-								case 2:
-									return 1;break;
-								case 3:
-									return 1;break;
-								default:
-									return 1;break;
-							}
-						}).paddingBottom(function (d) {
-							switch (d.depth) {
-								case 2:
-									return 1;break;
-								//case 3: return 1;
-								default:
-									return 2;break;
-							}
-						});
+						this.treemap = d3.treemap().size([this.width, this.height - 60]).tile(d3.treemapSliceDice).round(false).paddingLeft(0).paddingRight(0).paddingTop(0).paddingBottom(0);
 
 						this.treemap(this.root);
 						return this;
 					}
 				}, {
-					key: "render",
-					value: function render() {
-
-						var that = this;
-
-						function updateNode(s) {
-							s.style("transform", function (d) {
-								return "translate3d(" + d.x0 + "px," + d.y0 + "px,0px)";
-							})
-							//.style("border", d=> (Math.abs(d.x1-d.x0)<3||Math.abs(d.y1-d.y0)<3) ? "none" : null)
-							.style("width", function (d) {
-								return d.x1 - d.x0 + "px";
-							}).style("height", function (d) {
-								return d.y1 - d.y0 + "px";
-							});
-
-							s.each(checkOverflow);
-						}
-
-						//this.svg.selectAll(".node").remove();	
-
-						var data = this.root.descendants().filter(function (d) {
-							return d.depth > 0;
+					key: "setNodeDimensions",
+					value: function setNodeDimensions(selection) {
+						selection.style("transform", function (d) {
+							return "translate3d(" + d.x0 + "px," + (d.y0 + 60) + "px,0px)";
+						}).style("width", function (d) {
+							return d.x1 - d.x0 + "px";
+						}).style("height", function (d) {
+							return (d.depth == 1 ? d.y1 - d.y0 : Math.max(1, d.y1 - d.y0)) + 'px';
 						});
 
-						this.nodes = this.svg.selectAll(".node").data(data, function (d) {
-							return d.data.key;
-						}).call(updateNode).attr("class", function (d) {
-							var c = GeiVisUtils.makeSafeForCSS(d.data.key) + " node " + "level-" + d.depth;
-							c += Math.abs(d.x1 - d.x0) < 3 || Math.abs(d.y1 - d.y0) < 3 ? " other" : "";
-							return c;
-						});
-
-						this.nodes.select(".label").text(function (d) {
+						selection.select(".label").text(function (d) {
 							return d.depth != 0 ? d.data.key : null;
 						});
-						this.nodes.select(".count").text(function (d) {
+						selection.select(".count").text(function (d) {
 							return d.depth != 0 ? d.data.value : null;
 						});
-
-						this.nodes.each(checkOverflow);
-
-						var enteredNodes = this.nodes.enter();
-
-						var appendedNode = enteredNodes.append("div").attr("class", function (d) {
+					}
+				}, {
+					key: "setNodeClass",
+					value: function setNodeClass(selection) {
+						selection.attr("class", function (d) {
 							var c = GeiVisUtils.makeSafeForCSS(d.data.key) + " node " + "level-" + d.depth;
 							c += Math.abs(d.x1 - d.x0) < 3 || Math.abs(d.y1 - d.y0) < 3 ? " other" : "";
 							return c;
-						}).on("mouseover", function (d) {
-							if (d.depth === 2) {
-								that.svg.selectAll(".node").classed("related", false);
-								that.svg.selectAll("." + GeiVisUtils.makeSafeForCSS(d.data.key)).classed("related", true);
-							}
-						}).on("mouseout", function (d) {
-							that.svg.selectAll(".node").classed("related", false);
-						}).attr("id", function (d) {
+						});
+					}
+				}, {
+					key: "setNodeID",
+					value: function setNodeID(selection) {
+						selection.attr("id", function (d) {
 							if (d.depth === 1) return GeiVisUtils.makeSafeForCSS(d.data.key);
 							if (d.depth === 2) return GeiVisUtils.makeSafeForCSS(d.parent.data.key + d.data.key);
-						}).call(updateNode);
-
-						appendedNode.append("span").classed("label", true).text(function (d) {
-							return d.depth != 0 ? d.data.key : null;
 						});
+					}
+				}, {
+					key: "checkOverflow",
+					value: function checkOverflow(d, i, array) {
+						var o = GeiVisUtils.checkOverflow(d3.select(this).node());
+						d3.select(this).classed('overflow', o == 'overflow');
+					}
+				}, {
+					key: "dKey",
+					value: function dKey(d) {
+						var k = d.data.key;
+						k += d.parent != undefined ? d.parent.data.key : 'root';
+						return k;
+					}
+				}, {
+					key: "render",
+					value: function render(mode) {
+						var _this = this;
 
-						appendedNode.append("span").classed("count", true).text(function (d) {
-							return d.depth != 0 ? d.data.value : null;
-						});
-
-						appendedNode.each(checkOverflow);
-
-						function checkOverflow(d) {
-							var el = d3.select(this);
-							var overflow = GeiVisUtils.checkOverflow(el.node());
-							if (overflow == "overflow") {
-								el.classed("overflow", true);
-								el.attr("data-balloon", function (d) {
-									return d.data.key;
-								});
-								el.attr("data-balloon-pos", "up");
-							} else {
-								el.attr("data-balloon", null);
-								el.attr("data-balloon-pos", null);
-								el.classed("overflow", false);
-							}
+						function updateLabels(dataLevel1) {
+							var nodesLevel1 = this.svg.selectAll(".node.level-1").data(dataLevel1, this.dKey);
+							var labelLevel1 = this.svg.selectAll(".level-1-label").data(dataLevel1, this.dKey);
+							var connections = this.connectionSVG.selectAll("path").data(dataLevel1, this.dKey);
+							// enter l1-labels
+							var enteredLabelLevel1 = labelLevel1.enter().append('div').classed('level-1-label', true).style('height', '60').style('transform', function (d, i) {
+								return "translate3d(" + i * w + "px,0px,0px)scale(0,0)";
+							});
+							// update
+							labelLevel1.style('width', w + 'px').html(function (d) {
+								var label = d.data.key == '' ? 'unknown' : d.data.key;
+								return label + "<br/><span>" + d.value + "</span>";
+							}).style('transform', function (d, i) {
+								return "translate3d(" + i * w + "px,0px,0px)scale(1,1)";
+							});
+							// exit
+							labelLevel1.exit().style('transform', function (d, i) {
+								return "translate3d(" + i * w + "px,0px,0px)scale(1,1)";
+							}).remove();
+							// enter connection lines
+							var enteredConnections = connections.enter().append('path').attr('class', function (d) {
+								return 'path ' + d.data.key;
+							}).attr("d", connectionLinePath);
+							// update
+							connections.transition().duration(100).attr("d", connectionLinePath);
+							// exit
+							connections.exit().remove();
+							// enter l1-nodes
+							var enteredNodesLevel1 = nodesLevel1.enter().append('div').call(this.setNodeClass).call(this.setNodeID).call(this.setNodeDimensions);
+							// update
+							nodesLevel1.style('border-left', function (d, i, array) {
+								return i == 0 ? 'none' : null;
+							}).style('border-right', function (d, i, array) {
+								return i == array.length - 1 ? 'none' : null;
+							}).call(this.setNodeDimensions).call(this.setNodeID);
+							// exit
+							nodesLevel1.exit().remove();
 						}
 
-						this.nodes.exit().remove();
+						function connectionLinePath(d, i, array) {
+							var shift = 30;
+							var amt = i / array.length;
+							var vStart = [i * w + w, 0];
+							var vEnd = [d.x0 + (d.x1 - d.x0) * 0.5, 60];
+							var v0 = [vStart[0], vStart[1]];v0[1] += shift - shift * amt;
+							var v1 = [vEnd[0], vEnd[1]];v1[1] -= shift * amt;
+							return line([vStart, v0, v1, vEnd]);
+						}
+
+						var nodes = undefined;
+
+						// data filtered depending on the brushevent
+						var data = this.root.descendants();
+						var dataLevel1 = data.filter(function (d) {
+							return d.depth == 1;
+						});
+						var dataLevel2 = data.filter(function (d) {
+							return d.depth == 2;
+						});
+
+						var m = 20;
+						var w = (this.width - m) / dataLevel1.length;
+						var line = d3.line().x(function (d) {
+							return Math.round(d[0]);
+						}).y(function (d) {
+							return d[1];
+						}).curve(d3.curveMonotoneY);
+
+						switch (mode) {
+							case "brushstart":
+								// not mucho to do?
+								break;
+							case "brushmove":
+
+								this.svg.selectAll(".node.level-2").remove();
+								updateLabels.bind(this)(dataLevel1);
+
+								break;
+							case "brushend":
+
+								updateLabels.bind(this)(dataLevel1);
+
+								var nodesLevel2 = this.svg.selectAll(".node.level-2").data(dataLevel2, this.dKey);
+
+								// enter l2-nodes
+								var enteredNodesLevel2 = nodesLevel2.enter().append('div').call(this.setNodeClass).call(this.setNodeID).call(this.setNodeDimensions).on("mouseover", function (d, i, array) {
+									_this.svg.selectAll(".node").classed("related", false);
+									_this.svg.selectAll("." + GeiVisUtils.makeSafeForCSS(d.data.key)).classed("related", true);
+									var el = d3.select(array[i]);
+									var o = GeiVisUtils.checkOverflow(el.node());
+									if (el.classed('overflow') || el.classed('other')) {
+										var tPos = d3.mouse(_this.container.node());
+										_this.state.push({ tooltip: { name: d.data.key, pos: tPos } });
+									}
+								}).on("mouseout", function (d) {
+									_this.svg.selectAll(".node").classed("related", false);
+									_this.state.push({ tooltip: null });
+								}).on("click", function (d) {
+									var indicesA = _this.data.map(_this.nestings[1][_this.activeNest[1]].accessor).map(function (el, i) {
+										return el == d.data.key ? i : -1;
+									}).filter(function (el) {
+										return el != -1;
+									});
+									var indicesB = _this.data.map(_this.nestings[0][_this.activeNest[0]].accessor).map(function (el, i) {
+										return el == d.parent.data.key ? i : -1;
+									}).filter(function (el) {
+										return el != -1;
+									});
+									var filteredData = _this.data.filter(function (d, i) {
+										return indicesA.indexOf(i) != -1 && indicesB.indexOf(i) != -1;
+									});
+									//console.log(filteredData)
+									// this.state.push({ bookshelf: {data:filteredData} })
+								});
+								// labels
+								enteredNodesLevel2.append("span").classed("label", true).text(function (d) {
+									return d.depth != 0 ? d.data.key : null;
+								});
+								enteredNodesLevel2.append("span").classed("count", true).text(function (d) {
+									return d.depth != 0 ? d.data.value : null;
+								});
+								// check for overflow
+								enteredNodesLevel2.call(function (d) {
+									d.nodes().forEach(function (n) {
+										_this.checkOverflow.bind(n)();
+									});
+								});
+
+								break;
+						}
 
 						return this;
 					}
-
-					// TODO: Make the number of levels dynamic
-
 				}, {
 					key: "createDropdowns",
 					value: function createDropdowns(a, b) {
-						var _this = this;
 
-						var n = d3.keys(this.nestings);
-						this.dropdownA = a.append("select").attr("id", "dropdown-a");
-						this.dropdownB = b.append("select").attr("id", "dropdown-b");
+						var that = this;
 
-						this.dropdownA.on("change", function (sel) {
-							_this.levelA = _this.dropdownA.property("value");_this.updateData(_this.rawData).render();
-						});
-						this.dropdownB.on("change", function (sel) {
-							_this.levelB = _this.dropdownB.property("value");_this.updateData(_this.rawData).render();
-						});
+						this.nestingA = a.append("span").attr("id", "nesting-0").call(createSwitchContent);
+						this.nestingB = b.append("span").attr("id", "nesting-1").call(createSwitchContent);
 
-						this.dropdownA.selectAll("option").data(n).enter().append("option").attr("selected", function (d) {
-							return d == _this.levelA ? "true" : null;
-						}).attr("value", function (d) {
-							return d;
-						}).text(function (d) {
-							return d;
-						});
-						this.dropdownB.selectAll("option").data(n).enter().append("option").attr("selected", function (d) {
-							return d == _this.levelB ? "true" : null;
-						}).attr("value", function (d) {
-							return d;
-						}).text(function (d) {
-							return d;
-						});
+						function createSwitchContent(selection) {
+
+							var target = selection.attr('id');
+							var targetID = target.replace('nesting-', '');
+							var name = that.nestings[targetID][that.activeNest[targetID]].name;
+
+							selection.append('a').attr('href', '#').classed('prev', true).classed(target, true).on("click", switchNesting).text('Previous');
+							selection.append('span').classed('name', true).text(name);
+							selection.append('a').attr('href', '#').classed('next', true).classed(target, true).on("click", switchNesting).text('Next');
+						}
+
+						function switchNesting() {
+							d3.event.preventDefault();
+
+							var direction = d3.select(this).classed('prev') ? -1 : 1;
+							var target = d3.select(this).classed('nesting-0') ? 0 : 1;
+
+							var newNest = that.activeNest[target] + 1 * direction;
+							newNest = newNest > that.nestings[target].length - 1 ? 0 : newNest;
+							newNest = newNest < 0 ? that.nestings[target].length - 1 : newNest;
+
+							that.activeNest[target] = newNest;
+							d3.select('#nesting-' + target).select('.name').text(that.nestings[target][newNest].name);
+							that.updateData();
+							that.render('brushmove');
+							that.render('brushend');
+						}
 
 						return this;
 					}
 				}, {
-					key: "addNesting",
-					value: function addNesting(name, f) {
-						this.nestings[name] = f;return this;
+					key: "setNesting",
+					value: function setNesting(nestings) {
+						this.nestings = nestings;
+						// map-reduce to find the initally activated nestings
+						this.activeNest = nestings.map(function (d) {
+							return d.reduce(function (prev, current, i) {
+								if (prev == -1 && current.isActive == true) {
+									return i;
+								} else {
+									return prev;
+								}
+							}, -1);
+						});
+						return this;
 					}
 				}, {
 					key: "filterData",
@@ -10446,7 +10738,7 @@ $__System.register("4c", ["5", "6", "37"], function (_export) {
 		}
 	};
 });
-$__System.register('4d', ['5', '6', '27', '28', '2b', '4c'], function (_export) {
+$__System.register('51', ['5', '6', '22', '23', '31', '50'], function (_export) {
   var _createClass, _classCallCheck, _get, _inherits, Section, NestedTreemap, __hotReload, TreemapSection;
 
   return {
@@ -10458,10 +10750,10 @@ $__System.register('4d', ['5', '6', '27', '28', '2b', '4c'], function (_export) 
       _get = _['default'];
     }, function (_2) {
       _inherits = _2['default'];
-    }, function (_b) {
-      Section = _b.Section;
-    }, function (_c) {
-      NestedTreemap = _c.NestedTreemap;
+    }, function (_5) {
+      Section = _5.Section;
+    }, function (_6) {
+      NestedTreemap = _6.NestedTreemap;
     }],
     execute: function () {
       'use strict';
@@ -10478,11 +10770,8 @@ $__System.register('4d', ['5', '6', '27', '28', '2b', '4c'], function (_export) 
 
           _get(Object.getPrototypeOf(TreemapSection.prototype), 'constructor', this).call(this, state, db);
 
-          this.title.append("span").classed("verb", true).text("Comparing");
-          this.title.append("span").classed("dropdown-b", true);
-          this.title.append("span").classed("in", true).text("in");
-          this.title.append("span").classed("dropdown-a", true);
-          this.title.append("span").classed("years", true);
+          var select1 = this.div.append("div").classed("select-1 switch", true);
+          var select0 = this.div.append("div").classed("select-0 switch", true);
 
           var oh = 0;
           oh += parseInt(this.title.style("padding-top"));
@@ -10493,19 +10782,27 @@ $__System.register('4d', ['5', '6', '27', '28', '2b', '4c'], function (_export) 
           this.treemap = new NestedTreemap({ 'margin': this.margin });
           this.treemap.layout = "SliceDice";
 
-          this.treemap.setLevelA("Subject").setLevelB("Place").addNesting("Subject", function (d) {
-            return d.subject == undefined ? "Subject unknown" : d.subject;
-          }).addNesting("Schooltype", function (d) {
-            return d.schooltype == undefined ? "Schooltype unknown" : d.schooltype;
-          }).addNesting("Schoollevel", function (d) {
-            return d.schoollevel == undefined ? "Schoollevel unknown" : d.schoollevel;
-          }).addNesting("Place", function (d) {
-            return d.publisher_city == undefined ? "Place unknown" : d.publisher_city;
-          }).addNesting("Publisher", function (d) {
-            return d.publisher == undefined ? "Publisher unbekannt" : d.publisher;
-          }).appendTo(this.div);
+          this.treemap.setState(state);
 
-          this.treemap.createDropdowns(this.title.select(".dropdown-a"), this.title.select(".dropdown-b"));
+          var nestings = [[{ isActive: true, name: 'Subject', accessor: function accessor(d) {
+              return d.subject == undefined ? 'Subject unknown' : d.subject;
+            } }, { name: 'Schooltype', accessor: function accessor(d) {
+              return d.schooltype == undefined ? 'Schooltype unknown' : d.schooltype;
+            } }, { name: 'Schoollevel', accessor: function accessor(d) {
+              return d.schoollevel == undefined ? 'Schoollevel unknown' : d.schoollevel;
+            } }], [{ isActive: true, name: 'Place', accessor: function accessor(d) {
+              return d.publisher_city == undefined ? 'Place unknown' : d.publisher_city;
+            } }, { name: 'Publisher', accessor: function accessor(d) {
+              return d.publisher == undefined ? 'Publisher unbekannt' : d.publisher;
+            } }]];
+
+          this.treemap.setNesting(nestings).appendTo(this.div);
+
+          this.treemap.createDropdowns(select0, select1);
+
+          var height = parseInt(select1.style("height"));
+
+          select1.style('transform', 'rotate(-90deg)translate3d(-' + this.treemap.height + 'px,0, 0)').style('width', this.treemap.height + 'px');
         }
 
         _createClass(TreemapSection, [{
@@ -10513,10 +10810,19 @@ $__System.register('4d', ['5', '6', '27', '28', '2b', '4c'], function (_export) 
           value: function stateChange(next, last) {
 
             // init
-            if (next.loaded != last.loaded) this.treemap.updateData(this.db.date.top(Infinity)).render();
+            if (next.loaded != last.loaded) {
+              this.treemap.updateData(this.db.date.top(Infinity));
+              this.treemap.render("brushmove");
+              this.treemap.render("brushend");
+            }
 
+            // skip if not in viewport
             if (!next.visible.TreemapSection) return;
 
+            // update if became visible
+            if (next.visible.TreemapSection !== last.visible.TreemapSection) this.treemap.render("brushmove");
+
+            // update if in viewport and brush has changed
             if (next.brushStart !== last.brushStart || next.brushEnd !== last.brushEnd || next.visible.TreemapSection !== last.visible.TreemapSection) {
               this.render(next, last);
             }
@@ -10524,12 +10830,12 @@ $__System.register('4d', ['5', '6', '27', '28', '2b', '4c'], function (_export) 
         }, {
           key: 'render',
           value: function render(next, last) {
-            this.title.select(".years").text(' from ' + next.brushStart.getFullYear() + ' to ' + next.brushEnd.getFullYear());
-            var data = this.db.date.top(Infinity);
-            if (data.length > 0) {
-              this.treemap.updateData(data);
-              this.treemap.render();
-            }
+
+            // this simple hack enables brushstart,brushmove and brushend events
+            var event = last.event != next.event && next.event == "brushmove" ? "brushstart" : next.event;
+
+            this.treemap.updateData(this.db.date.top(Infinity));
+            this.treemap.render(event);
           }
         }]);
 
@@ -10540,32 +10846,32 @@ $__System.register('4d', ['5', '6', '27', '28', '2b', '4c'], function (_export) 
     }
   };
 });
-$__System.register('1', ['4', '13', '14', '30', '31', '38', '2a', '2c', '2e', '4d'], function (_export) {
+$__System.register('1', ['4', '30', '32', '34', '36', '37', '51', 'd', 'f', '3e'], function (_export) {
   'use strict';
 
-  var StateMachine, DataBase, ScrollListener, GeomapSection, Tooltip, NetworkSection, StreamSection, DummySection, BookshelfSection, TreemapSection, __hotReload, state, db, scroll, tooltip, streamSection, geomapSection, treemapSection, networkSection, bookshelfSection;
+  var StateMachine, StreamSection, DummySection, BookshelfSection, GeomapSection, Tooltip, TreemapSection, DataBase, ScrollListener, NetworkSection, __hotReload, state, db, scroll, tooltip, bookshelfSection, streamSection, geomapSection, treemapSection, networkSection;
 
   return {
     setters: [function (_) {
       StateMachine = _.StateMachine;
     }, function (_2) {
-      DataBase = _2.DataBase;
+      StreamSection = _2.StreamSection;
     }, function (_3) {
-      ScrollListener = _3.ScrollListener;
+      DummySection = _3.DummySection;
     }, function (_4) {
-      GeomapSection = _4.GeomapSection;
+      BookshelfSection = _4.BookshelfSection;
     }, function (_5) {
-      Tooltip = _5.Tooltip;
+      GeomapSection = _5.GeomapSection;
     }, function (_6) {
-      NetworkSection = _6.NetworkSection;
-    }, function (_a) {
-      StreamSection = _a.StreamSection;
-    }, function (_c) {
-      DummySection = _c.DummySection;
-    }, function (_e) {
-      BookshelfSection = _e.BookshelfSection;
+      Tooltip = _6.Tooltip;
+    }, function (_7) {
+      TreemapSection = _7.TreemapSection;
     }, function (_d) {
-      TreemapSection = _d.TreemapSection;
+      DataBase = _d.DataBase;
+    }, function (_f) {
+      ScrollListener = _f.ScrollListener;
+    }, function (_e) {
+      NetworkSection = _e.NetworkSection;
     }],
     execute: function () {
       __hotReload = true;
@@ -10576,11 +10882,11 @@ $__System.register('1', ['4', '13', '14', '30', '31', '38', '2a', '2c', '2e', '4
       db = new DataBase(state);
       scroll = new ScrollListener(state);
       tooltip = new Tooltip(state);
+      bookshelfSection = new BookshelfSection(state, db);
       streamSection = new StreamSection(state, db);
       geomapSection = new GeomapSection(state, db);
       treemapSection = new TreemapSection(state, db);
       networkSection = new NetworkSection(state, db);
-      bookshelfSection = new BookshelfSection(state, db);
 
       // let dummy = new DummySection(state, db);
 
