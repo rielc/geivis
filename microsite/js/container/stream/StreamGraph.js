@@ -269,7 +269,7 @@ export class StreamGraph extends StateDb {
         
       })
       .on("mouseleave", d=>{
-        if(d.key == "other" || !this.big) return;
+        if(!this.big) return;
         this.state.push({ hover: null, tooltip: null });
       })
       .on("click", d=>{
