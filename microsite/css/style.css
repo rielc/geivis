@@ -489,6 +489,8 @@ header {
     padding: 5px;
     cursor: pointer;
     /* z-index: 10000; */ }
+  #StreamSection .brushLegend {
+    pointer-events: none; }
   #StreamSection .stream {
     background: #FFF;
     z-index: 100; }
@@ -511,7 +513,7 @@ header {
         stroke: rgba(0, 0, 0, 0.1);
         shape-rendering: crispEdges; }
       #StreamSection .stream .axis text {
-        transition: opacity 0.5s; }
+        transitions: opacity 0.5s; }
       #StreamSection .stream .axis .domain {
         display: none; }
       #StreamSection .stream .axis.y line {
@@ -569,7 +571,8 @@ header {
               color: #FFF;
               padding: 1px;
               padding-left: 2px;
-              height: 16px; }
+              height: 16px;
+              overflow: hidden; }
           #StreamSection .entities .entity .items .item .right {
             float: right;
             width: 50%;

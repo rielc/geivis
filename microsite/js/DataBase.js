@@ -115,6 +115,8 @@ export class DataBase {
 
   stackedHistogram(){
 
+    this.date.filterAll();
+    
     const key = this.state.state.active.substring(0,this.state.state.active.length-1);
     let keys = this[this.state.state.active].top(20).map(d => d.key);
     keys.push("other");
@@ -143,6 +145,8 @@ export class DataBase {
     let stack = this.stack.keys(keys.map((d,i) => i))(histogram);
     stack.forEach(d => { d.key = keys[d.key]; })
     //console.log(stack);
+
+    this.date.filterRange([this.state.state.brushStart, this.state.state.brushEnd]);
     
     return stack;
   }

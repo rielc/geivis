@@ -24,7 +24,7 @@ export class ScrollListener {
       const height = parseInt(s.div.style("height")) - 188;
       const visible = (rect.top >= -height && rect.top <= height);
 
-      // console.log(s.name, visible, rect.bottom, s.div.style("height"));
+      // console.log(s.name, visible);
       
       return [s.name, visible];
     });

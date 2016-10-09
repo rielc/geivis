@@ -202,6 +202,7 @@ export class StreamGraph extends StateDb {
     
     if(next.loaded == !last.loaded){
       this.load().render();
+      this.gBrush.call(this.brush.move, null)
     }
 
     if(next.hover !== last.hover){
@@ -221,7 +222,7 @@ export class StreamGraph extends StateDb {
     }
 
     if(this.big && (next.brushStart !== last.brushStart)){
-      this.load().render();
+      //this.load().render();
     }
 
   

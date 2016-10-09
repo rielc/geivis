@@ -36,6 +36,10 @@
         cursor: pointer;
         /* z-index: 10000; */
     }
+
+    .brushLegend {
+        pointer-events:none;
+    }
     
     .stream {
         background: #FFF;
@@ -54,6 +58,7 @@
             font-size: 14px;
             // text-shadow: 0px 0px 2px rgba(255,255,255,0.4), 0px 0px 2px rgba(255,255,255,0.4), 0px 0px 2px rgba(255,255,255,0.4), 0px 0px 2px rgba(255,255,255,0.4), 0px 0px 2px rgba(255,255,255,0.4), 0px 0px 1px rgba(255,255,255,0.4), 0px 0px 1px rgba(255,255,255,0.4), 0px 0px 1px rgba(255,255,255,0.4), 0px 0px 1px rgba(255,255,255,0.4), 0px 0px 1px rgba(255,255,255,0.4), 0px 0px 1px rgba(255,255,255,0.4), 0px 0px 1px rgba(255,255,255,0.4);
         }
+
         .brush {
             .selection {
                 fill: #b00046;
@@ -73,7 +78,7 @@
                 shape-rendering: crispEdges;
             }
             text {
-                transition: opacity 0.5s;
+                transitions: opacity 0.5s;
             }
             .domain {
                 display: none;
@@ -157,6 +162,7 @@
                             padding: 1px;
                             padding-left: 2px;
                             height: 16px;
+                            overflow: hidden;
                         }
                     }
                     .right {
