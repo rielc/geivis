@@ -16,7 +16,7 @@ export class StreamGraph extends StateDb {
     this.outerHeight = window.innerHeight-500;
     this.outerHeightInitial = this.outerHeight;
     this.outerHeightSmall = 100;
-    this.margin = {top: 0, right: 20, bottom: 10, left: 30};
+    this.margin = {top: 10, right: 20, bottom: 10, left: 35};
     
     this.x = d3.scaleTime();
     this.y = d3.scaleLinear();
@@ -43,6 +43,7 @@ export class StreamGraph extends StateDb {
     this.gXaxis = this.g.append("g").attr("class", "x axis");
     this.gYaxis = this.g.append("g").attr("class", "y axis");
     this.gGraph = this.g.append("g").attr("class", "graph");
+
     this.gBrushLegend = this.g.append("g").attr("class", "brushLegend");
     this.gBrushLegend.append("text")
       .attr("class", "from")
@@ -319,8 +320,15 @@ export class StreamGraph extends StateDb {
         .call(this.yAxis)
     }
 
-    this.gYaxis.style("opacity", 1-(this.outerHeightInitial-this.outerHeight-100)/100)
-    //   .selectAll("text")
+    this.gYaxis
+      .style("opacity", 1-(this.outerHeightInitial-this.outerHeight-100)/100)
+      .attr("transform", "translate(-10,0)")
+      .selectAll("text")
+      .attr("transform", "rotate(-90)")
+      .attr("x", "0")
+      .attr("dy", "-10")
+      .attr("text-anchor", "middle")
+
     //   .attr("dx", 30)
   
   }

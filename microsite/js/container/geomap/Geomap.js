@@ -11,7 +11,7 @@ export class Geomap extends StateDb {
     this.div = div;
     this.outerWidth = 1200;
     this.outerHeight = window.innerHeight-100;
-    this.margin = {top: 20, right: 20, bottom: 20, left: 20};
+    this.margin = {top: 0, right: 0, bottom: 0, left: 0};
 
     this.projection = d3.geoMercator();
       

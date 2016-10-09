@@ -29,11 +29,12 @@
     .totals {
         font-size: 12px;
         position: absolute;
-        top: 0px;
-        left: 10px;
-        background: #FFF;
+        top: -6px;
+        right: 20px;
+        /* background: #FFF; */
         padding: 5px;
-        cursor:pointer;
+        cursor: pointer;
+        /* z-index: 10000; */
     }
     
     .stream {
