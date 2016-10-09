@@ -16,7 +16,7 @@ export class StreamGraph extends StateDb {
     this.outerHeight = window.innerHeight-500;
     this.outerHeightInitial = this.outerHeight;
     this.outerHeightSmall = 100;
-    this.margin = {top: 10, right: 20, bottom: 10, left: 35};
+    this.margin = {top: 10, right: 13, bottom: 10, left: 13};
     
     this.x = d3.scaleTime();
     this.y = d3.scaleLinear();
@@ -253,14 +253,20 @@ export class StreamGraph extends StateDb {
     s.enter()
       .append("path")
       .on("mouseenter", (d,i,e)=>{
-        if(d.key == "other" || !this.big) return;
+        if(!this.big) return;
 
         const p = d3.select(e[i]).node().getBoundingClientRect();
         const p2 = d3.select(".container").node().getBoundingClientRect();
         const time = d.reduce((h,c)=>h[1]>c[1]? h:c, {}).data.key;
         const tooltip = { name: d.key, pos: [p.left-p2.left+this.x(time), p.top-p2.top] };
 
-        this.state.push({ hover: d.key, tooltip });
+        if(d.key == "other"){
+          this.state.push({ tooltip });
+        } else {
+          this.state.push({ hover: d.key, tooltip });
+        }
+
+        
       })
       .on("mouseleave", d=>{
         if(d.key == "other" || !this.big) return;
@@ -321,13 +327,14 @@ export class StreamGraph extends StateDb {
     }
 
     this.gYaxis
-      .style("opacity", 1-(this.outerHeightInitial-this.outerHeight-100)/100)
-      .attr("transform", "translate(-10,0)")
-      .selectAll("text")
-      .attr("transform", "rotate(-90)")
-      .attr("x", "0")
-      .attr("dy", "-10")
-      .attr("text-anchor", "middle")
+      // .style("opacity", 1-(this.outerHeightInitial-this.outerHeight-100)/100)
+      .style("opacity", 0)
+    //   // .attr("transform", "translate(-10,0)")
+    //   .selectAll("text")
+    //   .attr("transform", "rotate(-90)")
+    //   .attr("x", "0")
+    //   .attr("dy", "-10")
+    //   .attr("text-anchor", "middle")
 
     //   .attr("dx", 30)
   
