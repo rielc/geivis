@@ -528,7 +528,7 @@ header {
   #StreamSection .entities {
     padding-left: 10px;
     position: absolute;
-    bottom: 20px;
+    bottom: 40px;
     padding-right: 10px; }
     #StreamSection .entities .title {
       font-family: "gravurcondensed-bold";

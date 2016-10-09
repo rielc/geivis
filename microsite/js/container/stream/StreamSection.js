@@ -15,7 +15,7 @@ export class StreamSection extends Section {
   	this.divEntities = this.div.append("div").attr("class", "entities");
 
   	this.stream = new StreamGraph(state, db, this.divStream);
-    this.stream.paddingTop = 330;
+    this.stream.paddingTop = 350;
     this.stream.outerHeight = this.height - this.stream.paddingTop;
     this.stream.outerHeightInitial = this.stream.outerHeight;
     this.stream.init();
