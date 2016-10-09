@@ -13,7 +13,7 @@ export class Tooltip {
     this.containerParent = d3.select(".container");
     this.containerParent.select(".ctooltip").remove();
     this.container = this.containerParent
-      .append("div").attr("class", "ctooltip")
+      .append("div").attr("class", "ctooltip").style("visibility", "hidden")
     this.text = this.container.append("div").attr("class", "arrow_box")
   }
 

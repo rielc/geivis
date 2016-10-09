@@ -33,6 +33,7 @@
         left: 10px;
         background: #FFF;
         padding: 5px;
+        cursor:pointer;
     }
     
     .stream {
@@ -70,6 +71,9 @@
                 stroke: rgba(0, 0, 0, 0.1);
                 shape-rendering: crispEdges;
             }
+            text {
+                transition: opacity 0.5s;
+            }
             .domain {
                 display: none;
             }
@@ -105,14 +109,12 @@
         .entity {
             /* padding: 5px; */
             float: left;
-            width: 278px;
-            margin: 10px;
+            width: 299px;
             padding: 10px;
-            background: rgba(190, 230, 249, 0.26);
             cursor: pointer;
             &.active,
             &.hover {
-                background: #bee6f9;
+                background: #eef9fe;
             }
             .items {
                 float: left;
@@ -125,7 +127,13 @@
                     margin: 1px;
                     float: left;
                     width: 100%;
-                    &.active,
+                    &.active {
+                        .left {
+                            .bar {
+                                background: #b00046;
+                            }
+                        }
+                    }
                     &.hover {
                         .left {
                             .bar {
@@ -135,7 +143,7 @@
                     }
                     .left {
                         float: left;
-                        width: 45%;
+                        width: 50%;
                         padding-right: 5px;
                         .bar {
                             background: #3C7C9B;
@@ -147,7 +155,7 @@
                     }
                     .right {
                         float: right;
-                        width: 55%;
+                        width: 50%;
                         overflow: hidden;
                         height: 12px;
                     }

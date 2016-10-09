@@ -14,7 +14,8 @@ export class StateMachine {
       timestamp:null,
       visible: { StreamSection: true },
       scrollY: 0,
-      tooltip: {}
+      tooltip: {},
+      filters: {}
     }
     this.history = [];
     this.history.push(objectAssign({}, this.state));
