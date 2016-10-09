@@ -1,39 +1,36 @@
 $linegrey: #efefef;
+$width:180px;
 
 #TreemapSection {
 
-	.title {
-		position:absolute;
+
+
+	.selects {
+		margin-top:25px;
+		span {text-transform: uppercase; margin-right:$padding/2; float:left;font-size: 14px;color:grey;}
 	}
 
-
 	.switch {
-		width:100%;
+		width:auto;
+		float:left;
 		height:60px;
-
 
 		span {
 			width:100%;
-			span { text-transform:uppercase; font-size: 20px; color:$grey; text-align:center; width:20%}
+			position:relative;
+
+			span { height:20px; text-transform:uppercase; font-size: 14px; color:#000; text-align:left;}
 			a,span {display:block; float:left; }
-			a.prev { text-align:right; &:before { content: '‹‹'; margin: 0 $padding/3; } }
-			a.next { text-align:left; &:after { content: '››'; margin: 0 $padding/3; } }
-			a,a:active {
-				padding:$padding/3;
-				//background-color: rgba($blue, 0.125);
-				width:40%; 
+			a.prev { position:absolute; width:20px;height:20px;display:block;right:0;top:0; transform:translate(-20px,12px)rotate(-90deg); text-align:center; }
+			a.next { position:absolute; width:20px;height:20px;display:block;right:0;top:0; transform:translate(-20px,-16px)rotate(-90deg); text-align:center; }
+			a {
+				transition:all 0.5s;
 				text-decoration: none;
 				display:block;
 				color:$blue;
 				font-size:14px;
-				transform:translate(0,-5px);
 			}
 		}
-	}
-
-	.select-1 {
-		position:absolute;
-		transform-origin: left bottom;
 	}
 
 
@@ -57,7 +54,7 @@ $linegrey: #efefef;
 		position:absolute;
 		text-align: right;
 		z-index:2 !important;
-		transition: transform 0.4s, width 0.4s, height 0.4s, background-color 0.4s;
+		transition: transform 0.4s, width 0.2s, height 0.4s, background-color 0.4s;
 		letter-spacing: 0.5px;
 		font-family:"gravurcondensed-regular";
 		text-transform: uppercase;
@@ -65,7 +62,7 @@ $linegrey: #efefef;
 		position:absolute;
 		padding-right:10px;
 		font-size: 10px;
-		line-height:18px;
+		line-height:13px;
 		margin-top:-18px;
 		word-wrap: no-wrap;
 		span { color: $grey; }

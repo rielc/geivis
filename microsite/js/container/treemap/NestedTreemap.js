@@ -33,7 +33,7 @@ export class NestedTreemap {
 	appendTo (selector) {
 		this.container = selector;
 	    this.width = parseInt( this.container.style("width") ) - this.properties.margin.left - this.properties.margin.right,
-	    this.height = (window.innerHeight-200) - this.properties.margin.top - this.properties.margin.bottom;
+	    this.height = (window.innerHeight-200-100) - this.properties.margin.top - this.properties.margin.bottom;
 
 		this.svg = this.container
 			.append("div")
@@ -243,7 +243,7 @@ export class NestedTreemap {
 					})
 					.on("mouseout", (d) => {
 						this.svg.selectAll(".node").classed("related", false)
-	        	//this.state.push({ tooltip: null })
+	        	this.state.push({ tooltip: null })
 					})
 					.on("click", (d) => {
 						let indicesA = this.data.map(this.nestings[1][this.activeNest[1]].accessor).map( (el,i)=>el==d.data.key?i:-1).filter(el=>el!=-1)
@@ -292,14 +292,14 @@ export class NestedTreemap {
 				.classed('prev', true)
 				.classed(target, true)
 				.on("click", switchNesting)
-				.text('Previous')
+				.text('‹')
 			selection.append('span').classed('name', true).text(name)
 			selection.append('a')
 				.attr('href', '#')
 				.classed('next', true)
 				.classed(target, true)
 				.on("click", switchNesting)
-				.text('Next')
+				.text('›')
 		}
 
 		function switchNesting() {
