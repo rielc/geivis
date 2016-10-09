@@ -8,11 +8,8 @@ export class TreemapSection extends Section {
   constructor(state, db){
     super(state,db);
 
-    this.title.append("span").classed("verb", true).text("Comparing");
-    this.title.append("span").classed("dropdown-b", true);
-    this.title.append("span").classed("in", true).text("in");
-    this.title.append("span").classed("dropdown-a", true);
-    this.title.append("span").classed("years", true);
+    let select1 = this.div.append("div").classed("select-1 switch", true)
+    let select0 = this.div.append("div").classed("select-0 switch", true)
 
     let oh = 0;
     oh+=parseInt(this.title.style("padding-top"));
@@ -25,17 +22,29 @@ export class TreemapSection extends Section {
 
     this.treemap.setState(state)
 
-    this.treemap
-      .setLevelA("Subject")
-      .setLevelB("Place")
-      .addNesting("Subject", (d) => ((d.subject==undefined) ? "Subject unknown" : d.subject))
-      .addNesting("Schooltype", (d) => ((d.schooltype==undefined) ? "Schooltype unknown" : d.schooltype))
-      .addNesting("Schoollevel", (d) => ((d.schoollevel==undefined) ? "Schoollevel unknown" : d.schoollevel))
-      .addNesting("Place", (d) => ((d.publisher_city==undefined) ? "Place unknown" : d.publisher_city))
-      .addNesting("Publisher", (d) => ((d.publisher==undefined) ? "Publisher unbekannt" : d.publisher ))
-      .appendTo(this.div);
+    let nestings = [
+      [
+        {isActive:true, name:'Subject', accessor:d=>d.subject==undefined?'Subject unknown':d.subject },
+        {name:'Schooltype', accessor: d=>d.schooltype==undefined?'Schooltype unknown':d.schooltype },
+        {name:'Schoollevel', accessor: d=>d.schoollevel==undefined?'Schoollevel unknown':d.schoollevel }
+      ],
+      [
+        {isActive:true, name:'Place', accessor:d=>d.publisher_city==undefined?'Place unknown':d.publisher_city },
+        {name:'Publisher', accessor: d=>d.publisher==undefined?'Publisher unbekannt':d.publisher }
+      ]
+    ]
 
-    this.treemap.createDropdowns(this.title.select(".dropdown-a"), this.title.select(".dropdown-b"));
+    this.treemap
+      .setNesting(nestings)
+      .appendTo(this.div)
+
+    this.treemap.createDropdowns(select0, select1)
+
+    let height = parseInt(select1.style("height"))
+
+    select1
+      .style('transform', `rotate(-90deg)translate3d(-${this.treemap.height}px,0, 0)`)
+      .style('width', this.treemap.height+'px')
   }
 
 
@@ -44,6 +53,7 @@ export class TreemapSection extends Section {
     // init
     if (next.loaded != last.loaded) {
       this.treemap.updateData(this.db.date.top(Infinity))
+      this.treemap.render("brushmove");
       this.treemap.render("brushend");
     }
     

@@ -1,5 +1,38 @@
 #TreemapSection {
 
+	.title {
+		position:absolute;
+	}
+
+
+	.switch {
+		width:100%;
+		border-bottom: 1px solid $bodyBackground;
+		span {
+			width:100%;
+			span { text-transform:uppercase; font-size: 20px; color:$grey; text-align:center; }
+			a,span {display:block; float:left; width:50%; }
+			a.prev { text-align:left; &:before { content: '‹‹'; margin: 0 $padding/3; } }
+			a.next { text-align:right; &:after { content: '››'; margin: 0 $padding/3; } }
+			a,a:active {
+				padding:$padding/3;
+				//background-color: rgba($blue, 0.125);
+				width:25%;
+				text-decoration: none;
+				display:block;
+				color:$blue;
+				font-size:14px;
+			}
+		}
+	}
+
+	.select-1 {
+		position:absolute;
+		transform-origin: left bottom;
+	}
+
+
+
 	.visualization { position:relative; }
 
 	.label-connections {
@@ -9,33 +42,6 @@
 			stroke-width: 0.5px;
 			stroke-linecap: round;
 
-		}
-	}
-
-	.title {
-		span {
-			display:inline;
-		}
-		select {
-			margin:0 10px 0 10px;
-			padding:0;
-			text-align:center;
-			color:$blue;
-  		font-size: 25px;
-  		width:200px;
-  		background-color:transparent;
-			font-family:"gravurcondensed-regular";
-			-webkit-appearance: none;
-			-moz-appearance: none;
-			appearance: none;
-			border-radius:0;
-			border:none;
-			border-bottom: 2px solid $bluelight;
-			background-image:url(../assets/arrow-down.svg);
-			background-size: 10px;
-			background-repeat:no-repeat;
-			background-position:90% 50%;
-			display:inline;
 		}
 	}
 
@@ -54,6 +60,7 @@
 		padding-right:10px;
 		transform:translate(-50%,0px);
 		font-size: 10px;
+		margin-top:5px;
 		span {
 			color: $grey;
 		}

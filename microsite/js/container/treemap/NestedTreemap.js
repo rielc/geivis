@@ -17,8 +17,10 @@ export class NestedTreemap {
 		this.url = {};
 		this.width = {};
 		this.height = {};
-		this.dropdownA = {};
-		this.dropdownB = {};
+		this.activeNest = [];
+		this.nestings = [];
+		this.nestingA = {};
+		this.nestingB = {};
 		this.levelA = "";
 		this.levelB = "";
 		this.format;
@@ -29,33 +31,25 @@ export class NestedTreemap {
 	}
 
 	appendTo (selector) {
-		
 		this.container = selector;
-	    //this.createDropdowns();
-
 	    this.width = parseInt( this.container.style("width") ) - this.properties.margin.left - this.properties.margin.right,
 	    this.height = parseInt( this.container.style("height") ) - this.properties.margin.top - this.properties.margin.bottom;
-
 		this.svg = this.container
 			.append("div")
 			.attr("class", "visualization")
 			.style("width", this.width )
 			.style("height", this.height );
-
 		this.connectionSVG = this.svg
 			.append('svg')
 			.style('position', 'absolute')
 			.attr("class", "label-connections")
 			.style("width", this.width)
 			.style("height", 60);
-
 		return this;
 	}
 
 
 	setState (state) { this.state = state; }
-	setLevelA (string) { this.levelA = string; return this; }
-	setLevelB (string) { this.levelB = string; return this; }
 
 
 	relativeColorScale (initial, value) {
@@ -64,19 +58,17 @@ export class NestedTreemap {
 
 	updateData(data) {
 
-		this.rawData = data;
-
-		let nesting = d3.nest(); 
-
-		// if both nestings are of same value, just use the first
-		if (this.levelA != this.levelB) {
-			nesting.key( this.nestings[this.levelA] ).key( this.nestings[this.levelB] )
-		} else {
-			nesting.key( this.nestings[this.levelA] )
+		if (data != undefined) {
+			this.data = data;
 		}
 
+		let nesting = d3.nest(); 
+		let nstA = this.nestings[0][this.activeNest[0]].accessor
+		let nstB = this.nestings[1][this.activeNest[1]].accessor
+		nesting.key( nstA ).key( nstB )
+
 		nesting.rollup(d=>d.length);
-		let nested = nesting.entries(data);
+		let nested = nesting.entries(this.data);
 
 		this.root = d3
 			.hierarchy( { key : "all values", values : nested }, function(d) { return d.values; })
@@ -139,15 +131,10 @@ export class NestedTreemap {
 
 	render (mode) {
 
-
-
 		function updateLabels (dataLevel1) {
-
-
 				let nodesLevel1 =  this.svg.selectAll(".node.level-1").data(dataLevel1, this.dKey)
 				let labelLevel1 =  this.svg.selectAll(".level-1-label").data(dataLevel1, this.dKey)
 				let connections =  this.connectionSVG.selectAll("path").data(dataLevel1, this.dKey)
-
 				// enter l1-labels
 				let enteredLabelLevel1 = labelLevel1.enter().append('div')
 					.classed('level-1-label', true)
@@ -166,7 +153,6 @@ export class NestedTreemap {
 				.exit()
 					.style('transform',(d,i) => `translate3d(${i*w}px,0px,0px)scale(1,1)`)
 					.remove()
-
 				// enter connection lines
 				let enteredConnections = connections.enter()
 					.append('path')
@@ -178,7 +164,6 @@ export class NestedTreemap {
 					.attr( "d", connectionLinePath)
 				// exit
 				connections.exit().remove()
-
 				// enter l1-nodes
 				let enteredNodesLevel1 = nodesLevel1.enter().append('div')
 					.call(this.setNodeClass)
@@ -197,7 +182,6 @@ export class NestedTreemap {
 					.call(this.setNodeID)
 				// exit
 				nodesLevel1.exit().remove()
-
 		}
 
 		function connectionLinePath (d,i,array) {
@@ -290,35 +274,61 @@ export class NestedTreemap {
 
 	createDropdowns (a,b) {
 
-		var n = d3.keys(this.nestings);
-		this.dropdownA = a.append("select").attr("id", "dropdown-a");
-		this.dropdownB = b.append("select").attr("id", "dropdown-b");
-		
-		this.dropdownA.on("change", (sel) => { this.levelA = this.dropdownA.property("value"); this.updateData(this.rawData).render(); });
-		this.dropdownB.on("change", (sel) => { this.levelB = this.dropdownB.property("value"); this.updateData(this.rawData).render(); });
-		
-		this.dropdownA
-			.selectAll("option")
-			.data(n)
-			.enter()
-			.append("option")
-			.attr("selected", d => d == this.levelA ? "true" : null)
-			.attr("value", (d) => { return d; })
-			.text( (d) => { return d; });
+		let that = this
 
-		this.dropdownB
-			.selectAll("option")
-			.data(n)
-			.enter()
-			.append("option")
-			.attr("selected", d => d == this.levelB ? "true" : null)
-			.attr("value", (d) => { return d; })
-			.text( (d) => { return d; });
+		this.nestingA = a.append("span").attr("id", "nesting-0").call(createSwitchContent)
+		this.nestingB = b.append("span").attr("id", "nesting-1").call(createSwitchContent)
+
+		function createSwitchContent(selection) {
+
+			let target = selection.attr('id')
+			let targetID = target.replace('nesting-', '')
+			let name = that.nestings[targetID][that.activeNest[targetID]].name
+
+			selection.append('a').attr('href', '#')
+				.classed('prev', true)
+				.classed(target, true)
+				.on("click", switchNesting)
+				.text('prev')
+			selection.append('span').classed('name', true).text(name)
+			selection.append('a')
+				.attr('href', '#')
+				.classed('next', true)
+				.classed(target, true)
+				.on("click", switchNesting)
+				.text('next')
+		}
+
+		function switchNesting() {
+			d3.event.preventDefault()
+
+			let direction = d3.select(this).classed('prev') ? -1:1
+			let target = d3.select(this).classed('nesting-0') ? 0:1
+			
+			let newNest = that.activeNest[target]+1*direction
+			newNest = newNest>that.nestings[target].length-1? 0:newNest
+			newNest = newNest<0 ? that.nestings[target].length-1:newNest
+
+			that.activeNest[target] = newNest
+			d3.select('#nesting-'+target).select('.name').text(that.nestings[target][newNest].name)
+			that.updateData()
+			that.render('brushmove')
+			that.render('brushend')
+		}
+
+
 
 		return this;
 	}
 
-	addNesting (name, f) { this.nestings[name] = f; return this;}
+	setNesting (nestings) {
+		this.nestings = nestings
+		// map-reduce to find the initally activated nestings
+		this.activeNest = nestings.map( d => d.reduce((prev,current,i) => {
+			if (prev==-1 && current.isActive==true) { return i } else { return prev } 
+		}, -1))
+		return this
+	}
 
 	filterData( evaluation ) {
 		this.filteredData = this.data.filter(evaluation);

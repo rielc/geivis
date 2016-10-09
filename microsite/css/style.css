@@ -1,3 +1,4 @@
+@charset "UTF-8";
 /*
 	HTML5 Reset :: style.css
 	----------------------------------------------------------
@@ -334,43 +335,75 @@ header .navi a:hover, header .navi a:active {
 }
 
 /* line 3, ../sass/_nested-treemap.scss */
+#TreemapSection .title {
+  position: absolute;
+}
+/* line 8, ../sass/_nested-treemap.scss */
+#TreemapSection .switch {
+  width: 100%;
+  border-bottom: 1px solid #efefef;
+}
+/* line 11, ../sass/_nested-treemap.scss */
+#TreemapSection .switch span {
+  width: 100%;
+}
+/* line 13, ../sass/_nested-treemap.scss */
+#TreemapSection .switch span span {
+  text-transform: uppercase;
+  font-size: 20px;
+  color: #707070;
+  text-align: center;
+}
+/* line 14, ../sass/_nested-treemap.scss */
+#TreemapSection .switch span a, #TreemapSection .switch span span {
+  display: block;
+  float: left;
+  width: 50%;
+}
+/* line 15, ../sass/_nested-treemap.scss */
+#TreemapSection .switch span a.prev {
+  text-align: left;
+}
+/* line 15, ../sass/_nested-treemap.scss */
+#TreemapSection .switch span a.prev:before {
+  content: '‹‹';
+  margin: 0 8.33333px;
+}
+/* line 16, ../sass/_nested-treemap.scss */
+#TreemapSection .switch span a.next {
+  text-align: right;
+}
+/* line 16, ../sass/_nested-treemap.scss */
+#TreemapSection .switch span a.next:after {
+  content: '››';
+  margin: 0 8.33333px;
+}
+/* line 17, ../sass/_nested-treemap.scss */
+#TreemapSection .switch span a, #TreemapSection .switch span a:active {
+  padding: 8.33333px;
+  width: 25%;
+  text-decoration: none;
+  display: block;
+  color: #009ee0;
+  font-size: 14px;
+}
+/* line 29, ../sass/_nested-treemap.scss */
+#TreemapSection .select-1 {
+  position: absolute;
+  transform-origin: left bottom;
+}
+/* line 36, ../sass/_nested-treemap.scss */
 #TreemapSection .visualization {
   position: relative;
 }
-/* line 6, ../sass/_nested-treemap.scss */
+/* line 39, ../sass/_nested-treemap.scss */
 #TreemapSection .label-connections path {
   stroke: #bcbcbc;
   fill: none;
   stroke-width: 0.5px;
   stroke-linecap: round;
 }
-/* line 16, ../sass/_nested-treemap.scss */
-#TreemapSection .title span {
-  display: inline;
-}
-/* line 19, ../sass/_nested-treemap.scss */
-#TreemapSection .title select {
-  margin: 0 10px 0 10px;
-  padding: 0;
-  text-align: center;
-  color: #009ee0;
-  font-size: 25px;
-  width: 200px;
-  background-color: transparent;
-  font-family: "gravurcondensed-regular";
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  border-radius: 0;
-  border: none;
-  border-bottom: 2px solid #61d0ff;
-  background-image: url(../assets/arrow-down.svg);
-  background-size: 10px;
-  background-repeat: no-repeat;
-  background-position: 90% 50%;
-  display: inline;
-}
-/* line 42, ../sass/_nested-treemap.scss */
+/* line 48, ../sass/_nested-treemap.scss */
 #TreemapSection .level-1-label {
   z-index: 800;
   box-sizing: border-box;
@@ -386,12 +419,13 @@ header .navi a:hover, header .navi a:active {
   padding-right: 10px;
   transform: translate(-50%, 0px);
   font-size: 10px;
+  margin-top: 5px;
 }
-/* line 57, ../sass/_nested-treemap.scss */
+/* line 64, ../sass/_nested-treemap.scss */
 #TreemapSection .level-1-label span {
   color: #707070;
 }
-/* line 62, ../sass/_nested-treemap.scss */
+/* line 69, ../sass/_nested-treemap.scss */
 #TreemapSection .node {
   box-sizing: border-box;
   position: absolute;
@@ -399,52 +433,52 @@ header .navi a:hover, header .navi a:active {
   z-index: 2 !important;
   transition: width 0.2s, height 0.2s, transform 0.4s, background-color 0.4s, box-shadow 0.4s;
 }
-/* line 69, ../sass/_nested-treemap.scss */
+/* line 76, ../sass/_nested-treemap.scss */
 #TreemapSection .node.related {
   box-shadow: 0 0 500px 0 #7ad8ff inset;
 }
-/* line 71, ../sass/_nested-treemap.scss */
+/* line 78, ../sass/_nested-treemap.scss */
 #TreemapSection .node.related .label, #TreemapSection .node.related .count {
   color: #009ee0 !important;
 }
-/* line 75, ../sass/_nested-treemap.scss */
+/* line 82, ../sass/_nested-treemap.scss */
 #TreemapSection .node.overflow .label, #TreemapSection .node.overflow .count {
   display: none;
 }
-/* line 78, ../sass/_nested-treemap.scss */
+/* line 85, ../sass/_nested-treemap.scss */
 #TreemapSection .node .label {
   transition: color 0.4s;
   position: absolute;
 }
-/* line 79, ../sass/_nested-treemap.scss */
+/* line 86, ../sass/_nested-treemap.scss */
 #TreemapSection .node .count {
   transition: color 0.4s;
 }
-/* line 81, ../sass/_nested-treemap.scss */
+/* line 88, ../sass/_nested-treemap.scss */
 #TreemapSection .node.other {
   background-color: rgba(190, 230, 249, 0.25);
   box-shadow: 0 0 0 0 #eeeeee inset, 0 0 0 0 #eeeeee inset;
 }
-/* line 87, ../sass/_nested-treemap.scss */
+/* line 94, ../sass/_nested-treemap.scss */
 #TreemapSection .level-1 {
   z-index: 1 !important;
   padding-top: 5px;
   box-shadow: -1px 0 0 0 #efefef inset, 1px 0 0 0 #efefef inset, 0 -1px 0 0 #efefef inset, 0 1px 0 0 #efefef inset;
 }
-/* line 93, ../sass/_nested-treemap.scss */
+/* line 100, ../sass/_nested-treemap.scss */
 #TreemapSection .level-2 {
   box-shadow: 0 -1px 0 0 #eeeeee inset, 0 1px 0 0 #eeeeee inset;
 }
-/* line 96, ../sass/_nested-treemap.scss */
+/* line 103, ../sass/_nested-treemap.scss */
 #TreemapSection .level-2:hover {
   z-index: 3 !important;
   box-shadow: 0 0 500px 0 #ff4a92 inset;
 }
-/* line 99, ../sass/_nested-treemap.scss */
+/* line 106, ../sass/_nested-treemap.scss */
 #TreemapSection .level-2:hover .label, #TreemapSection .level-2:hover .count {
   color: #b00046 !important;
 }
-/* line 101, ../sass/_nested-treemap.scss */
+/* line 108, ../sass/_nested-treemap.scss */
 #TreemapSection .level-2 .label {
   padding-left: 20px;
   text-align: left;
@@ -455,7 +489,7 @@ header .navi a:hover, header .navi a:active {
   font-size: 12px;
   color: #707070 !important;
 }
-/* line 112, ../sass/_nested-treemap.scss */
+/* line 119, ../sass/_nested-treemap.scss */
 #TreemapSection .level-2 .count {
   box-sizing: border-box;
   text-align: right;
@@ -469,13 +503,13 @@ header .navi a:hover, header .navi a:active {
   font-size: 10px;
 }
 
-/* line 127, ../sass/_nested-treemap.scss */
+/* line 134, ../sass/_nested-treemap.scss */
 .dropdown {
   position: relative;
   display: inline-block;
 }
 
-/* line 132, ../sass/_nested-treemap.scss */
+/* line 139, ../sass/_nested-treemap.scss */
 .dropdown .dropdown-menu {
   position: absolute;
   top: 100%;
@@ -491,13 +525,13 @@ header .navi a:hover, header .navi a:active {
   padding: 0;
 }
 
-/* line 147, ../sass/_nested-treemap.scss */
+/* line 154, ../sass/_nested-treemap.scss */
 .dropdown:hover .dropdown-menu {
   display: block;
 }
 
 /** Button Styles **/
-/* line 152, ../sass/_nested-treemap.scss */
+/* line 159, ../sass/_nested-treemap.scss */
 .dropdown button {
   background: #FF6223;
   color: #FFFFFF;
@@ -508,7 +542,7 @@ header .navi a:hover, header .navi a:active {
 }
 
 /** List Item Styles **/
-/* line 162, ../sass/_nested-treemap.scss */
+/* line 169, ../sass/_nested-treemap.scss */
 .dropdown a {
   display: block;
   padding: 0.2em 0.8em;
@@ -518,7 +552,7 @@ header .navi a:hover, header .navi a:active {
 }
 
 /** List Item Hover Styles **/
-/* line 171, ../sass/_nested-treemap.scss */
+/* line 178, ../sass/_nested-treemap.scss */
 .dropdown a:hover {
   background: #BBBBBB;
 }
