@@ -33,7 +33,7 @@ export class NestedTreemap {
 	appendTo (selector) {
 		this.container = selector;
 	    this.width = parseInt( this.container.style("width") ) - this.properties.margin.left - this.properties.margin.right,
-	    this.height = parseInt( this.container.style("height") ) - this.properties.margin.top - this.properties.margin.bottom;
+	    this.height = parseInt( window.innerHeight-200 ) - this.properties.margin.top - this.properties.margin.bottom;
 		this.svg = this.container
 			.append("div")
 			.attr("class", "visualization")
