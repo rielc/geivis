@@ -279,14 +279,14 @@ export class NestedTreemap {
 				.classed('prev', true)
 				.classed(target, true)
 				.on("click", switchNesting)
-				.text('prev')
+				.text('Previous')
 			selection.append('span').classed('name', true).text(name)
 			selection.append('a')
 				.attr('href', '#')
 				.classed('next', true)
 				.classed(target, true)
 				.on("click", switchNesting)
-				.text('next')
+				.text('Next')
 		}
 
 		function switchNesting() {

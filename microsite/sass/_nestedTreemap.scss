@@ -8,20 +8,23 @@
 	.switch {
 		width:100%;
 		border-bottom: 1px solid $bodyBackground;
+		height:60px;
+
 		span {
 			width:100%;
-			span { text-transform:uppercase; font-size: 20px; color:$grey; text-align:center; }
-			a,span {display:block; float:left; width:50%; }
-			a.prev { text-align:left; &:before { content: '‹‹'; margin: 0 $padding/3; } }
-			a.next { text-align:right; &:after { content: '››'; margin: 0 $padding/3; } }
+			span { text-transform:uppercase; font-size: 20px; color:$grey; text-align:center; width:20%}
+			a,span {display:block; float:left; }
+			a.prev { text-align:right; &:before { content: '‹‹'; margin: 0 $padding/3; } }
+			a.next { text-align:left; &:after { content: '››'; margin: 0 $padding/3; } }
 			a,a:active {
 				padding:$padding/3;
 				//background-color: rgba($blue, 0.125);
-				width:25%;
+				width:40%; 
 				text-decoration: none;
 				display:block;
 				color:$blue;
 				font-size:14px;
+				transform:translate(0,-5px);
 			}
 		}
 	}
