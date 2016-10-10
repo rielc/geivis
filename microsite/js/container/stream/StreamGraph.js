@@ -50,14 +50,14 @@ export class StreamGraph extends StateDb {
       .attr("text-anchor", "middle")
       .attr("x", 0)
       .attr("y", 3)
-      .text("from")
+      .text("")
 
     this.gBrushLegend.append("text")
       .attr("class", "to")
       .attr("text-anchor", "middle")
       .attr("x", 0)
       .attr("y", 3)
-      .text("to")
+      .text("")
 
     this.div.append("div")
       .attr("class", "totals")
@@ -113,7 +113,7 @@ export class StreamGraph extends StateDb {
         "translate(" + this.margin.left + "," + this.margin.top + ")"
       );
     this.brush.extent([[0, 0], [this.width, this.height]])
-    this.gBrush.call(this.brush).on("click", ()=>{
+    this.gBrush.call(this.brush).on("dblclick", ()=>{
         this.gBrush.call(this.brush.move, null)
       })
     this.gBrush.selectAll("rect").attr("height", this.height);
@@ -130,7 +130,12 @@ export class StreamGraph extends StateDb {
   }
 
   brushmove() {
-    if(!d3.event.selection || d3.event.sourceEvent.type == "brush") return;
+    if(!d3.event.selection){
+      this.gBrushLegend.style("opacity", 0);
+      this.gXaxis.selectAll("text").style("opacity", 1);
+      return;
+    }
+    if(d3.event.sourceEvent.type == "brush") return;
 
     let domain0 = d3.event.selection.map(this.x.invert);
     let domain1 = domain0.map(d3.timeYear.round);
@@ -141,10 +146,11 @@ export class StreamGraph extends StateDb {
       domain1[1] = d3.timeYear.ceil(domain0[1]);
     }
 
-    this.gBrushLegend.select(".from")
+    this.gBrushLegend.style("opacity", 1).select(".from")
       .attr("transform", "translate("+ this.x(domain1[0]) +","+this.height/2+")")
       .text(domain1[0].getFullYear())
       .attr("y", d=> domain1[1]-domain1[0]<=186159996000 ? "-5":"3" )
+      
 
     this.gBrushLegend.select(".to")
       .attr("transform", "translate("+ this.x(domain1[1]) +","+this.height/2+")")
