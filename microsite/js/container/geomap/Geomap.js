@@ -162,6 +162,12 @@ export class Geomap extends StateDb {
           .select("text")
           .text(d2 => `${d.key}`)
       })
+      .on("click", (d)=> {
+        this.db.place.filterExact(d.key);
+        this.state.push({ bookshelf: false });
+        this.state.push({ bookshelf: true });
+        this.db.place.filterExact(null);
+      })
       
       e.append("circle")
         .attr("fill", d=> "#3C7C9B")
