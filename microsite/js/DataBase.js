@@ -10,6 +10,7 @@ export class DataBase {
     this.state = state;
     this.name = this.constructor.name;
     this.store = {};
+    this.bookshelfData = [];
 
     this.state.subscribe(this);
   }
@@ -111,6 +112,16 @@ export class DataBase {
     this.store = { ...data, ...this.store };
     // console.log(this.store);
     return this;
+  }
+
+  bookshelf(){
+    const visible = this.state.state.visible;
+
+    if(visible.TreemapSection || visible.NetworkSection){
+      return this.bookshelfData;
+    }
+    
+    return this.date.top(150);
   }
 
   stackedHistogram(){

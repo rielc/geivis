@@ -12,8 +12,8 @@ export class Bookshelf extends StateDb {
 
     // this.div = div.classed('animated ' + this.openClass, true)
     this.div = div.classed('open', false)
-      .on("mouseenter", this.open.bind(this) )
-      .on("mouseleave", this.close.bind(this) );
+      .on("mouseenter", ()=>{this.state.push({ bookshelf: true })} )
+      .on("mouseleave", ()=>{this.state.push({ bookshelf: false })} );
     this.container = this.div.append("div").classed('bookshelf', true);
     // this.opener = this.div.append("div").classed('opener', true).on("mouseenter", this.open.bind(this) );
     // this.closeButton = this.div.append("a").classed("closeButton", true).text('Close')
@@ -25,16 +25,15 @@ export class Bookshelf extends StateDb {
  
 
   stateChange(next, last){
-    // if (next.bookshelf!=undefined) {
-    //   console.log(last, next)
-    //   this.render(next.bookshelf.data)
-    //   this.open()
-    //   // console.log(next.bookshelf.data)
-    // } else {
-    //   this.close()
-    // }
     if(next.loaded !== last.loaded){
-      //this.open();
+      //this.state.push({ bookshelf: true });
+    }
+    if(next.bookshelf !== last.bookshelf){
+      if(next.bookshelf){
+        this.open()
+      } else {
+        this.close();
+      }
     }
   }
 
@@ -46,10 +45,10 @@ export class Bookshelf extends StateDb {
     this.div.classed("open", false);
   }
 
-  render(customData) {
-    const data = customData==undefined ? this.db.date.top(150).filter(d => d.title != "") : customData;
+  render() {
+    // const data = customData==undefined ? this.db.date.top(150).filter(d => d.title != "") : customData;
+    const data = this.db.bookshelf();
     let s = this.container.selectAll(".book").data(data, d=>d.id);
-    console.log(data);
 
     s.enter()
       .append("a")
