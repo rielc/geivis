@@ -7772,9 +7772,9 @@ $__System.register('20', ['5', '6', '10', '21', '22', '23', '24', 'e'], function
           this.gGraph = this.g.append("g").attr("class", "graph");
 
           this.gBrushLegend = this.g.append("g").attr("class", "brushLegend");
-          this.gBrushLegend.append("text").attr("class", "from").attr("text-anchor", "middle").attr("x", 0).attr("y", 3).text("from");
+          this.gBrushLegend.append("text").attr("class", "from").attr("text-anchor", "middle").attr("x", 0).attr("y", 3).text("");
 
-          this.gBrushLegend.append("text").attr("class", "to").attr("text-anchor", "middle").attr("x", 0).attr("y", 3).text("to");
+          this.gBrushLegend.append("text").attr("class", "to").attr("text-anchor", "middle").attr("x", 0).attr("y", 3).text("");
 
           this.div.append("div").attr("class", "totals").html('<span id="active">-</span> of <span id="total">-</span> books selected').on("click", function () {
             _this.gBrush.call(_this.brush.move, null);
@@ -7806,6 +7806,7 @@ $__System.register('20', ['5', '6', '10', '21', '22', '23', '24', 'e'], function
         _createClass(StreamGraph, [{
           key: 'init',
           value: function init() {
+            var _this2 = this;
 
             this.width = this.outerWidth - this.margin.left - this.margin.right, this.height = this.outerHeight - this.margin.top - this.margin.bottom;
 
@@ -7819,7 +7820,9 @@ $__System.register('20', ['5', '6', '10', '21', '22', '23', '24', 'e'], function
 
             this.g.attr("transform", "translate(" + this.margin.left + "," + this.margin.top + ")");
             this.brush.extent([[0, 0], [this.width, this.height]]);
-            this.gBrush.call(this.brush);
+            this.gBrush.call(this.brush).on("dblclick", function () {
+              _this2.gBrush.call(_this2.brush.move, null);
+            });
             this.gBrush.selectAll("rect").attr("height", this.height);
 
             this.gBrushLegend.select(".from").attr("transform", "translate(" + this.x(this.state.state.brushStart) + "," + this.height / 2 + ")");
@@ -7833,7 +7836,12 @@ $__System.register('20', ['5', '6', '10', '21', '22', '23', '24', 'e'], function
         }, {
           key: 'brushmove',
           value: function brushmove() {
-            if (!d3.event.selection || d3.event.sourceEvent.type == "brush") return;
+            if (!d3.event.selection) {
+              this.gBrushLegend.style("opacity", 0);
+              this.gXaxis.selectAll("text").style("opacity", 1);
+              return;
+            }
+            if (d3.event.sourceEvent.type == "brush") return;
 
             var domain0 = d3.event.selection.map(this.x.invert);
             var domain1 = domain0.map(d3.timeYear.round);
@@ -7844,7 +7852,7 @@ $__System.register('20', ['5', '6', '10', '21', '22', '23', '24', 'e'], function
               domain1[1] = d3.timeYear.ceil(domain0[1]);
             }
 
-            this.gBrushLegend.select(".from").attr("transform", "translate(" + this.x(domain1[0]) + "," + this.height / 2 + ")").text(domain1[0].getFullYear()).attr("y", function (d) {
+            this.gBrushLegend.style("opacity", 1).select(".from").attr("transform", "translate(" + this.x(domain1[0]) + "," + this.height / 2 + ")").text(domain1[0].getFullYear()).attr("y", function (d) {
               return domain1[1] - domain1[0] <= 186159996000 ? "-5" : "3";
             });
 
@@ -7863,10 +7871,10 @@ $__System.register('20', ['5', '6', '10', '21', '22', '23', '24', 'e'], function
         }, {
           key: 'brushend',
           value: function brushend() {
-            var _this2 = this;
+            var _this3 = this;
 
             var s = d3.event.selection ? d3.event.selection.map(function (d) {
-              return _this2.x.invert(d);
+              return _this3.x.invert(d);
             }) : this.db.extent;
             this.state.push({ brushStart: s[0], brushEnd: s[1], event: "brushend" });
           }
@@ -7957,7 +7965,7 @@ $__System.register('20', ['5', '6', '10', '21', '22', '23', '24', 'e'], function
         }, {
           key: 'render',
           value: function render(transition) {
-            var _this3 = this;
+            var _this4 = this;
 
             //console.log("render stream")
 
@@ -7966,32 +7974,32 @@ $__System.register('20', ['5', '6', '10', '21', '22', '23', '24', 'e'], function
             });
 
             s.enter().append("path").on("mouseenter", function (d, i, e) {
-              if (!_this3.big) return;
+              if (!_this4.big) return;
 
               var p = d3.select(e[i]).node().getBoundingClientRect();
               var p2 = d3.select(".container").node().getBoundingClientRect();
               var time = d.reduce(function (h, c) {
                 return h[1] > c[1] ? h : c;
               }, {}).data.key;
-              var tooltip = { name: d.key, pos: [p.left - p2.left + _this3.x(time), p.top - p2.top] };
+              var tooltip = { name: d.key, pos: [p.left - p2.left + _this4.x(time), p.top - p2.top] };
 
               if (d.key == "other") {
-                _this3.state.push({ tooltip: tooltip });
+                _this4.state.push({ tooltip: tooltip });
               } else {
-                _this3.state.push({ hover: d.key, tooltip: tooltip });
+                _this4.state.push({ hover: d.key, tooltip: tooltip });
               }
             }).on("mouseleave", function (d) {
-              if (!_this3.big) return;
-              _this3.state.push({ hover: null, tooltip: null });
+              if (!_this4.big) return;
+              _this4.state.push({ hover: null, tooltip: null });
             }).on("click", function (d) {
-              if (d.key == "other" || !_this3.big) return;
+              if (d.key == "other" || !_this4.big) return;
 
               // console.log(this.state.state.active);
-              var key = _this3.state.state.active;
-              var active = _this3.state.state.filters[key] && _this3.state.state.filters[key] === d.key;
+              var key = _this4.state.state.active;
+              var active = _this4.state.state.filters[key] && _this4.state.state.filters[key] === d.key;
               // this is a good example why actions where invented:
-              var filters = _extends({}, _this3.state.state.filters, _defineProperty({}, key, active ? null : d.key));
-              _this3.state.push({ event: "click", active: key, filters: filters });
+              var filters = _extends({}, _this4.state.state.filters, _defineProperty({}, key, active ? null : d.key));
+              _this4.state.push({ event: "click", active: key, filters: filters });
 
               // let active = this.state.state.activeItem === d.key;
               // this.state.push({ activeItem: active ? null : d.key, event: "brushend" });
@@ -7999,7 +8007,7 @@ $__System.register('20', ['5', '6', '10', '21', '22', '23', '24', 'e'], function
             // .transition(transition)
             // .duration(notransition ? 0 : 800)
             .style("opacity", function (d) {
-              return d.key == "other" && _this3.big ? 0.3 : 1;
+              return d.key == "other" && _this4.big ? 0.3 : 1;
             });
 
             s.exit().remove();
@@ -8007,20 +8015,20 @@ $__System.register('20', ['5', '6', '10', '21', '22', '23', '24', 'e'], function
             // nasty quickhack
             if (transition) {
               s.classed("active", function (d) {
-                return _this3.big && _this3.state.state.hover == d.key;
+                return _this4.big && _this4.state.state.hover == d.key;
               }).transition()
               // .duration(notransition ? 0 : 800)
               .attr("d", this.area).style("opacity", function (d) {
-                return d.key == "other" && _this3.big ? 0.3 : 1;
+                return d.key == "other" && _this4.big ? 0.3 : 1;
               });
             } else {
               s.classed("active", function (d) {
-                return _this3.big && _this3.state.state.hover == d.key;
+                return _this4.big && _this4.state.state.hover == d.key;
               })
               // .transition()
               // .duration(notransition ? 0 : 800)
               .attr("d", this.area).style("opacity", function (d) {
-                return d.key == "other" && _this3.big ? 0.3 : 1;
+                return d.key == "other" && _this4.big ? 0.3 : 1;
               });
             }
 
@@ -8553,37 +8561,44 @@ $__System.register('33', ['5', '6', '21', '22', '23'], function (_export) {
 
           _get(Object.getPrototypeOf(Bookshelf.prototype), 'constructor', this).call(this, state, db);
 
-          this.openClass = 'open fadeInRightBig';
-          this.closeClass = 'closed fadeOutRightBig';
+          // this.openClass = 'open fadeInRightBig'
+          // this.closeClass = 'closed fadeOutRightBig'
 
-          this.div = div.classed('animated ' + this.openClass, true);
+          // this.div = div.classed('animated ' + this.openClass, true)
+          this.div = div.classed('open', false).on("mouseenter", this.open.bind(this)).on("mouseleave", this.close.bind(this));
           this.container = this.div.append("div").classed('bookshelf', true);
-          this.closeButton = this.div.append("a").classed("closeButton", true).text('Close');
-          this.closeButton.on("click", this.close.bind(this));
+          // this.opener = this.div.append("div").classed('opener', true).on("mouseenter", this.open.bind(this) );
+          // this.closeButton = this.div.append("a").classed("closeButton", true).text('Close')
+          // this.closeButton.on("click", this.close.bind(this) )
+
           return this;
         }
 
         _createClass(Bookshelf, [{
           key: 'stateChange',
           value: function stateChange(next, last) {
-            if (next.bookshelf != undefined) {
-              console.log(last, next);
-              this.render(next.bookshelf.data);
-              this.open();
-              // console.log(next.bookshelf.data)
-            } else {
-                this.close();
-              }
+            // if (next.bookshelf!=undefined) {
+            //   console.log(last, next)
+            //   this.render(next.bookshelf.data)
+            //   this.open()
+            //   // console.log(next.bookshelf.data)
+            // } else {
+            //   this.close()
+            // }
+            if (next.loaded !== last.loaded) {
+              //this.open();
+            }
           }
         }, {
           key: 'open',
           value: function open() {
-            this.div.classed(this.openClass, true).classed(this.closeClass, false);
+            this.div.classed("open", true);
+            this.render();
           }
         }, {
           key: 'close',
           value: function close() {
-            this.div.classed(this.closeClass, true).classed(this.openClass, false);
+            this.div.classed("open", false);
           }
         }, {
           key: 'render',
@@ -8594,12 +8609,18 @@ $__System.register('33', ['5', '6', '21', '22', '23'], function (_export) {
             var s = this.container.selectAll(".book").data(data, function (d) {
               return d.id;
             });
+            console.log(data);
 
-            s.enter().append("div").attr("class", "book").text(function (d) {
-              return d.title;
+            s.enter().append("a").attr("class", "book").attr("href", function (d) {
+              return d.url;
+            }).attr("target", "_blank").html(function (d) {
+              return d.title + ' <i>' + d.publisher + ' ' + d.year + '</i> ';
             });
-            s.text(function (d) {
-              return d.title;
+
+            s.attr("href", function (d) {
+              return d.url;
+            }).html(function (d) {
+              return d.title + ' <i>' + d.publisher + ' ' + d.year + '</i> ';
             });
             s.exit().remove();
             return this;
@@ -8928,7 +8949,7 @@ $__System.register('36', ['5', '6', '22', '23', '31', '35'], function (_export) 
             //	console.log(next.visible.GeomapSection);
 
             if (next.visible.GeomapSection != pev.visible.GeomapSection) {
-              console.log("GeomapSection", next.visible.GeomapSection);
+              // console.log("GeomapSection", next.visible.GeomapSection);
             }
           }
         }, {
@@ -10476,7 +10497,7 @@ $__System.register("50", ["5", "6", "3d"], function (_export) {
 					key: "appendTo",
 					value: function appendTo(selector) {
 						this.container = selector;
-						this.width = parseInt(this.container.style("width")) - this.properties.margin.left - this.properties.margin.right, this.height = window.innerHeight - 200 - this.properties.margin.top - this.properties.margin.bottom;
+						this.width = parseInt(this.container.style("width")) - this.properties.margin.left - this.properties.margin.right, this.height = window.innerHeight - 200 - 100 - this.properties.margin.top - this.properties.margin.bottom;
 
 						this.svg = this.container.append("div").attr("class", "visualization").style("width", this.width + 'px').style("height", this.height + 'px').style("position", "relative");
 
@@ -10677,7 +10698,7 @@ $__System.register("50", ["5", "6", "3d"], function (_export) {
 									}
 								}).on("mouseout", function (d) {
 									_this.svg.selectAll(".node").classed("related", false);
-									//this.state.push({ tooltip: null })
+									_this.state.push({ tooltip: null });
 								}).on("click", function (d) {
 									var indicesA = _this.data.map(_this.nestings[1][_this.activeNest[1]].accessor).map(function (el, i) {
 										return el == d.data.key ? i : -1;
@@ -10729,9 +10750,9 @@ $__System.register("50", ["5", "6", "3d"], function (_export) {
 							var targetID = target.replace('nesting-', '');
 							var name = that.nestings[targetID][that.activeNest[targetID]].name;
 
-							selection.append('a').attr('href', '#').classed('prev', true).classed(target, true).on("click", switchNesting).text('Previous');
+							selection.append('a').attr('href', '#').classed('prev', true).classed(target, true).on("click", switchNesting).text('‹');
 							selection.append('span').classed('name', true).text(name);
-							selection.append('a').attr('href', '#').classed('next', true).classed(target, true).on("click", switchNesting).text('Next');
+							selection.append('a').attr('href', '#').classed('next', true).classed(target, true).on("click", switchNesting).text('›');
 						}
 
 						function switchNesting() {
@@ -10817,16 +10838,7 @@ $__System.register('51', ['5', '6', '22', '23', '31', '50'], function (_export) 
 
           _get(Object.getPrototypeOf(TreemapSection.prototype), 'constructor', this).call(this, state, db);
 
-          var select1 = this.div.append("div").classed("select-1 switch", true);
-          var select0 = this.div.append("div").classed("select-0 switch", true);
-
-          this.margin = { 'top': 0, 'right': 0, 'bottom': 0, 'left': 0 };
-
-          this.treemap = new NestedTreemap({ 'margin': this.margin });
-          this.treemap.layout = "SliceDice";
-
-          this.treemap.setState(state);
-
+          // these accessor functions describe the nesting values
           var nestings = [[{ isActive: true, name: 'Subject', accessor: function accessor(d) {
               return d.subject == undefined ? 'Subject unknown' : d.subject;
             } }, { name: 'Schooltype', accessor: function accessor(d) {
@@ -10839,15 +10851,30 @@ $__System.register('51', ['5', '6', '22', '23', '31', '50'], function (_export) 
               return d.publisher == undefined ? 'Publisher unbekannt' : d.publisher;
             } }]];
 
+          this.margin = { 'top': 0, 'right': 0, 'bottom': 0, 'left': 0 };
+
+          this.title.text('Comparison');
           this.div.append("div").attr("class", "intro").text("Cultural heritage institutions such as museums, archives, and libraries have been digitizing their inventories over the last two decades. The digitization process includes both the digital capture of the artifacts (for example via photography or 3d scanning) as well as the recording of the metadata about the artifact's historical context, material characteristics, and cultural significance. The main promises connected with digitization of cultural assets are long-term preservation and increased levels of access (Smith, 2002, pp.7). This paper is especially concerned with questions related to access, which so far has mostly relied on interface concepts from traditional information retrieval. However, there is an increased unease with a mode of access, which requires people to translate a possibly vague interest into a specific search query. Unlike museum exhibitions or library shelves that may lend themselves better to curiosity-driven browsing of cultural heritage, conventional search interfaces are arguable not particularly inviting. Instead, more 'generosity' is needed in the display of the artifacts' richness and their distribution in the collection");
 
-          this.treemap.setNesting(nestings).appendTo(this.div);
+          this.treemap = new NestedTreemap({ 'margin': this.margin });
+          this.treemap.setState(state);
 
-          this.treemap.createDropdowns(select0, select1);
+          this.treemap.appendTo(this.div);
 
-          var height = parseInt(select1.style("height"));
+          // selects
+          this.selects = this.div.append("div").classed('selects', true);
+          this.selects.append('span').text('Compare');
+          var select1 = this.selects.append("div").classed("select-1 switch", true);
+          this.selects.append('span').text('in');
+          var select0 = this.selects.append("div").classed("select-0 switch", true);
 
-          select1.style('transform', 'rotate(-90deg)translate3d(-' + this.treemap.height + 'px,0, 0)').style('width', this.treemap.height + 'px');
+          this.treemap.setNesting(nestings).createDropdowns(select0, select1);
+
+          // let height = parseInt(select1.style("height"))
+
+          // select1
+          //   .style('transform', `rotate(-90deg)translate3d(-${this.treemap.height}px,0, 0)`)
+          //   .style('width', this.treemap.height+'px')
         }
 
         _createClass(TreemapSection, [{
@@ -10865,21 +10892,22 @@ $__System.register('51', ['5', '6', '22', '23', '31', '50'], function (_export) 
             if (!next.visible.TreemapSection) return;
 
             // update if became visible
-            if (next.visible.TreemapSection !== last.visible.TreemapSection) this.treemap.updateData(this.db.date.top(Infinity));
-            this.treemap.render("brushmove");
-
-            // update if in viewport and brush has changed
-            if (next.brushStart !== last.brushStart || next.brushEnd !== last.brushEnd || next.visible.TreemapSection !== last.visible.TreemapSection) {
-              this.render(next, last);
+            if (next.visible.TreemapSection !== last.visible.TreemapSection) {
+              this.treemap.updateData(this.db.date.top(Infinity));
+              this.treemap.render("brushmove");
+            } else {
+              // update if in viewport and brush has changed
+              if (next.brushStart !== last.brushStart || next.brushEnd !== last.brushEnd || next.loaded !== last.loaded || next.visible.TreemapSection !== last.visible.TreemapSection) {
+                this.treemap.updateData(this.db.date.top(Infinity));
+                this.render(next, last);
+              }
             }
           }
         }, {
           key: 'render',
           value: function render(next, last) {
-
             // this simple hack enables brushstart,brushmove and brushend events
             var event = last.event != next.event && next.event == "brushmove" ? "brushstart" : next.event;
-
             this.treemap.updateData(this.db.date.top(Infinity));
             this.treemap.render(event);
           }
@@ -10895,7 +10923,7 @@ $__System.register('51', ['5', '6', '22', '23', '31', '50'], function (_export) 
 $__System.register('1', ['4', '30', '32', '34', '36', '37', '51', 'd', 'f', '3e'], function (_export) {
   'use strict';
 
-  var StateMachine, StreamSection, DummySection, BookshelfSection, GeomapSection, Tooltip, TreemapSection, DataBase, ScrollListener, NetworkSection, __hotReload, state, db, scroll, tooltip, bookshelfSection, streamSection, geomapSection, treemapSection, networkSection;
+  var StateMachine, StreamSection, DummySection, BookshelfSection, GeomapSection, Tooltip, TreemapSection, DataBase, ScrollListener, NetworkSection, __hotReload, state, db, scroll, tooltip, bookshelfSection, streamSection, geomapSection;
 
   return {
     setters: [function (_) {
@@ -10931,8 +10959,9 @@ $__System.register('1', ['4', '30', '32', '34', '36', '37', '51', 'd', 'f', '3e'
       bookshelfSection = new BookshelfSection(state, db);
       streamSection = new StreamSection(state, db);
       geomapSection = new GeomapSection(state, db);
-      treemapSection = new TreemapSection(state, db);
-      networkSection = new NetworkSection(state, db);
+
+      // let treemapSection = new TreemapSection(state, db);
+      // let networkSection = new NetworkSection(state, db);
 
       // let dummy = new DummySection(state, db);
 

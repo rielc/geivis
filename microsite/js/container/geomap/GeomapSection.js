@@ -22,7 +22,7 @@ export class GeomapSection extends Section {
   //	console.log(next.visible.GeomapSection);
 
   	if(next.visible.GeomapSection != pev.visible.GeomapSection){
-  	  console.log("GeomapSection", next.visible.GeomapSection);
+  	  // console.log("GeomapSection", next.visible.GeomapSection);
   	}
   }
 
