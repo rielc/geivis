@@ -11,7 +11,13 @@ export class GeomapSection extends Section {
     this.title.text(`Places`);
     this.div.append("div")
       .attr("class", "intro")
-      .text("Cultural heritage institutions such as museums, archives, and libraries have been digitizing their inventories over the last two decades. The digitization process includes both the digital capture of the artifacts (for example via photography or 3d scanning) as well as the recording of the metadata about the artifact's historical context, material characteristics, and cultural significance. The main promises connected with digitization of cultural assets are long-term preservation and increased levels of access (Smith, 2002, pp.7). This paper is especially concerned with questions related to access, which so far has mostly relied on interface concepts from traditional information retrieval. However, there is an increased unease with a mode of access, which requires people to translate a possibly vague interest into a specific search query. Unlike museum exhibitions or library shelves that may lend themselves better to curiosity-driven browsing of cultural heritage, conventional search interfaces are arguable not particularly inviting. Instead, more 'generosity' is needed in the display of the artifacts' richness and their distribution in the collection")
+      .text(`
+        Each book got a publisher and a place where it originated. In this visualization the geographical distribution
+        of the selection in time is shown as a bubblemap. The big timestream above is now compressed into a small timeslider
+        which will work from now on as a tool to customize each visualization. By dragging on the timeline you can
+        select a specific timespan to be visualized underneath. Doubleclick on the selection to clear the start and 
+        end time. 
+      `)
     this.geomap = new Geomap(state,db, this.div.append("div"))
     //this.geomap.outerHeight = this.height;
     this.geomap.init();

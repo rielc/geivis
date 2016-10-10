@@ -16,6 +16,7 @@ $introSidePadding: 100px;
     -moz-column-count: 2; /* Firefox */
     column-count: 2;
     color:$grey;
+    column-gap: 50px;
     
     a { color:#000; text-decoration:none; }
   }

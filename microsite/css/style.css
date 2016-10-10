@@ -240,7 +240,8 @@ header {
     -moz-column-count: 2;
     /* Firefox */
     column-count: 2;
-    color: #707070; }
+    color: #707070;
+    column-gap: 50px; }
     #intro p a {
       color: #000;
       text-decoration: none; }
@@ -2799,9 +2800,7 @@ header {
     font-size: 20px;
     top: 30px;
     text-transform: uppercase;
-    color: darkgrey;
-    /* background: white; */
-    }
+    color: darkgrey; }
   #BookshelfSection .closeButton {
     position: absolute;
     top: 25px;
@@ -3277,7 +3276,9 @@ section {
     -webkit-column-count: 2;
     -moz-column-count: 2;
     column-count: 2;
-    margin-bottom: 60px; }
+    margin-bottom: 60px;
+    column-gap: 50px;
+    color: #707070; }
 
 .control {
   width: 100%; }

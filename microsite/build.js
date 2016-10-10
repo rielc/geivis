@@ -8853,6 +8853,11 @@ $__System.register("35", ["5", "6", "21", "22", "23"], function (_export) {
               }).select("text").text(function (d2) {
                 return "" + d.key;
               });
+            }).on("click", function (d) {
+              _this.db.place.filterExact(d.key);
+              _this.state.push({ bookshelf: false });
+              _this.state.push({ bookshelf: true });
+              _this.db.place.filterExact(null);
             });
 
             e.append("circle").attr("fill", function (d) {
@@ -8952,7 +8957,7 @@ $__System.register('36', ['5', '6', '22', '23', '31', '35'], function (_export) 
           _get(Object.getPrototypeOf(GeomapSection.prototype), 'constructor', this).call(this, state, db);
 
           this.title.text('Places');
-          this.div.append("div").attr("class", "intro").text("Cultural heritage institutions such as museums, archives, and libraries have been digitizing their inventories over the last two decades. The digitization process includes both the digital capture of the artifacts (for example via photography or 3d scanning) as well as the recording of the metadata about the artifact's historical context, material characteristics, and cultural significance. The main promises connected with digitization of cultural assets are long-term preservation and increased levels of access (Smith, 2002, pp.7). This paper is especially concerned with questions related to access, which so far has mostly relied on interface concepts from traditional information retrieval. However, there is an increased unease with a mode of access, which requires people to translate a possibly vague interest into a specific search query. Unlike museum exhibitions or library shelves that may lend themselves better to curiosity-driven browsing of cultural heritage, conventional search interfaces are arguable not particularly inviting. Instead, more 'generosity' is needed in the display of the artifacts' richness and their distribution in the collection");
+          this.div.append("div").attr("class", "intro").text('\n        Each book got a publisher and a place where it originated. In this visualization the geographical distribution\n        of the selection in time is shown as a bubblemap. The big timestream above is now compressed into a small timeslider\n        which will work from now on as a tool to customize each visualization. By dragging on the timeline you can\n        select a specific timespan to be visualized underneath. Doubleclick on the selection to clear the start and \n        end time. \n      ');
           this.geomap = new Geomap(state, db, this.div.append("div"));
           //this.geomap.outerHeight = this.height;
           this.geomap.init();
