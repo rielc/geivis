@@ -31,7 +31,7 @@ export class TreemapSection extends Section {
 
     this.treemap = new NestedTreemap( {'margin':this.margin} )
     this.treemap.setState(state)
-
+    this.treemap.setDB(db)
     this.treemap.appendTo(this.div)
 
 

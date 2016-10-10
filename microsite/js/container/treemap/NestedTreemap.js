@@ -5,29 +5,18 @@ import * as GeiVisUtils from "../../lib/GeiVisUtils.js";
 export class NestedTreemap {
 
 	constructor( props ) {
-		this.properties = props;
-	 	this.container = {};
-		this.svg = {};
-		this.root = {};
-		this.data;
-		this.filteredData = {};
-		this.treemap = {};
-		this.nested = {};
-		this.nestings = {};
-		this.url = {};
-		this.width = {};
-		this.height = {};
-		this.activeNest = [];
-		this.nestings = [];
-		this.nestingA = {};
-		this.nestingB = {};
-		this.levelA = "";
-		this.levelB = "";
-		this.format;
-		this.color;
-		this.state;
-		this.layout = "SliceDice";
-		this.order = [];
+		this.properties = props
+	 	this.container = {}
+		this.svg = {}
+		this.root = {}
+		this.data
+		this.treemap = {}
+		this.width = {}
+		this.height = {}
+		this.activeNest = []
+		this.nestings = []
+		this.state = {}
+		this.db = {}
 	}
 
 	appendTo (selector) {
@@ -52,7 +41,8 @@ export class NestedTreemap {
 	}
 
 
-	setState (state) { this.state = state; }
+	setState (state) { this.state = state; console.log(this.state) }
+	setDB (db) { this.db = db; console.log(this.db) }
 
 
 	relativeColorScale (initial, value) {
@@ -249,8 +239,9 @@ export class NestedTreemap {
 						let indicesA = this.data.map(this.nestings[1][this.activeNest[1]].accessor).map( (el,i)=>el==d.data.key?i:-1).filter(el=>el!=-1)
 						let indicesB = this.data.map(this.nestings[0][this.activeNest[0]].accessor).map( (el,i)=>el==d.parent.data.key?i:-1).filter(el=>el!=-1)
 						let filteredData = this.data.filter((d,i)=>indicesA.indexOf(i)!=-1&&indicesB.indexOf(i)!=-1)
-						//console.log(filteredData)
-	        	// this.state.push({ bookshelf: {data:filteredData} })
+						this.state.push({ bookshelf: false })
+	        	this.db.bookshelfData = filteredData
+						this.state.push({ bookshelf: true })
 					})
 				// labels
 				enteredNodesLevel2
@@ -331,12 +322,6 @@ export class NestedTreemap {
 			if (prev==-1 && current.isActive==true) { return i } else { return prev } 
 		}, -1))
 		return this
-	}
-
-	filterData( evaluation ) {
-		this.filteredData = this.data.filter(evaluation);
-		this.update();
-		return this;
 	}
 
 }
