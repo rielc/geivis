@@ -3,7 +3,7 @@
     &.hasTransition {
         .node {
             transition-timing-function: cubic-bezier(.78,.06,.58,1);
-            transition: transform 0.4s, opacity 0.4s, border 0.4s;
+            transition: width 0.4s , height 0.4s, transform 0.4s, opacity 0.4s, border 0.4s;
       }  
 
     }

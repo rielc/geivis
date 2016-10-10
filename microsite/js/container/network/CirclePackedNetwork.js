@@ -5,14 +5,18 @@ import * as GeiVisUtils from "../../lib/GeiVisUtils.js"
 export class CirclePackedNetwork {
 
   constructor (properties) {
-    this.povNode = null;
-    this.properties = properties;
-    this.blacklist = [];
-    this.years = [0,0];
-
+    this.povNode = null
+    this.properties = properties
+    this.blacklist = []
+    this.years = [0,0]
     this.monad = ""
+    this.state = {}
+    this.db = {}
     return this
   }
+
+  setState (state) { this.state = state }
+  setDB (db) { this.db = db }
 
   setOccurrenceScale (scale) {
     this.occurrenceScale = scale
@@ -23,12 +27,11 @@ export class CirclePackedNetwork {
     this.containerName = selector.attr("id")
     this.parentContainer = selector
   
-    this.width = parseInt( this.parentContainer.style("width") ) - this.properties.margin.left - this.properties.margin.right;
-    this.height = (window.innerHeight-200) - this.properties.margin.top - this.properties.margin.bottom;
+    this.width = parseInt( this.parentContainer.style("width") ) - this.properties.margin.left - this.properties.margin.right
+    this.height = (window.innerHeight-200) - this.properties.margin.top - this.properties.margin.bottom
 
-    this.outerWidth = this.width + this.properties.margin.left + this.properties.margin.right;
-    this.outerHeight = this.height + this.properties.margin.top + this.properties.margin.bottom;
-
+    this.outerWidth = this.width + this.properties.margin.left + this.properties.margin.right
+    this.outerHeight = this.height + this.properties.margin.top + this.properties.margin.bottom
 
     this.container = 
       selector
@@ -36,16 +39,15 @@ export class CirclePackedNetwork {
       .attr("id", this.containerName+"-visualization")
       .style("width", this.width+"px")
       .style("height", this.height+"px")
-      .style("position", "relative");
+      .style("position", "relative")
       //.style("transform",  d => `translate(${this.properties.margin.left}px,${this.properties.margin.top}px)`);
 
     this.pack = 
       d3.pack()
       .size([this.width,this.height])
-      .padding(10);
+      .padding(20)
     
-
-    return this;
+    return this
   }
 
   makeArrayUnique (a) {
@@ -238,10 +240,8 @@ export class CirclePackedNetwork {
       let linkedBooks = this.data.filter( (d,i) => { return (data.data.data.entryID.indexOf(i) != -1) } )
       let booksBySubject = d3.nest().key( (d) => d.subject ).entries(linkedBooks)
 
-
       let clickedElement = d3.select(elements[index])
       let d = data.data
-
 
       if (this.monad == d.name) {
 
@@ -254,6 +254,18 @@ export class CirclePackedNetwork {
           .call(this.setNodeDimensions)
 
       } else {
+
+        const linkedIDs = data.data.data.entryID
+        const taggedBooks = this.data.reduce( (p,c,i,a) => {
+          if(linkedIDs.indexOf(i)!=-1){
+            p.push(c);return p;
+          } else {
+            return p;
+          }}, [] )
+
+        this.state.push({ bookshelf: false })
+        this.db.bookshelfData = taggedBooks
+        this.state.push({ bookshelf: true })
 
         this.monad = d.name;
         let center = [this.width/2-50,this.height/2]
@@ -289,7 +301,9 @@ export class CirclePackedNetwork {
         let linkMax = d3.max(linkedNodes, l=>l.strength)
         let linkMin = d3.min(linkedNodes, l=>l.strength)
 
-        let indexToPolar = d3.scaleLinear().domain([0,linkedNodes.length]).range([0, Math.PI*2])
+        let range = linkedNodes.length<3 ? [Math.PI*0.5, Math.PI*2.5]:[0, Math.PI*2]
+
+        let indexToPolar = d3.scaleLinear().domain([0,linkedNodes.length]).range(range)
         let occurenceToProximity = d3.scaleLinear().domain([linkMax,linkMin]).range([200, this.height/3])
         //let occurenceToAlpha = d3.scaleLinear().domain([linkMin, linkMax]).range([0.125, 1.0])
 
@@ -332,21 +346,13 @@ export class CirclePackedNetwork {
 
   nodeHover ( data, index, elements ) {
 
-    // console.log(this)
-    // console.log(data)
-    // console.log(index)
-    // console.log(elements)
-
     let hoveredElement = d3.select(elements[index]);
-
     // deactive all nodes
     this.container.selectAll(".node").classed("inactive", true).style("transition-delay", null)
-    
     // activate the hovered
     hoveredElement.classed("inactive", false)
-    
+  
     let d = data.data;
-
     // search for links from and to this node
     let links = this.transformedData.links.filter( l => (l.source.name == d.name || l.target.name == d.name) )
       .map(l => {
@@ -383,23 +389,27 @@ export class CirclePackedNetwork {
 
 
   checkOverflow ( data, elements ) {
-    
-    let el = d3.select(this)
-//    console.log(el.node())
-    let overflow = GeiVisUtils.checkPartialOverflow(el.node(), 10)
 
-    switch (overflow) {
-      case "overflow":
-        el.classed("overflow", true)
-        el.attr("data-balloon", d=>d.data.name+": "+d.data.occurrence)
-        el.attr("data-balloon-pos", "down")
-      break
-      case "partial-overflow":
+    console.log('checkOverflow call')
+
+    let el = d3.select(this)
+    //let overflow = GeiVisUtils.checkPartialOverflow(el.node(), 11)
+
+    if (el.node().offsetWidth < 40)
         el.classed("overflow", true).classed("partial", true)
-        el.attr("data-balloon", d=>d.data.name+": "+d.data.occurrence)
-        el.attr("data-balloon-pos", "down")
-      break
-    }
+
+    if (el.node().offsetWidth < 11)
+        el.classed("overflow", true).classed("partial", false)
+
+
+    // switch (overflow) {
+    //   case "overflow":
+    //     el.classed("overflow", true).classed("partial", false)
+    //   break
+    //   case "partial-overflow":
+    //     el.classed("overflow", true).classed("partial", true)
+    //   break
+    // }
   }
 
 
@@ -445,15 +455,19 @@ export class CirclePackedNetwork {
 
         enteredNodes
           .call( (d) => {
+            console.log('enterednodes overflow')
             d.nodes().forEach( n => this.checkOverflow.bind(n)() )
+            console.log('enterednodes overflow finished')
+
           })
 
-
+        console.log('update overflow')
         // update
         this.nodes
           .call(this.setNodePosition)
           .call(this.setNodeDimensions)
           .on("transitionend", this.checkOverflow)
+          console.log('update overflow finished')
 
         this.nodes.select(".label").text(d => d.data.name)
         this.nodes.select(".count").text(d => d.data.data.occurrence)
@@ -478,8 +492,6 @@ export class CirclePackedNetwork {
           .style("opacity", 1)
           .classed("overflow", d => (d.r < 30))
           .classed("partial", false)
-          .attr("data-balloon", null)
-          .attr("data-balloon-pos", null)
           .classed("monadic-related", false) // clear monadic
           .classed("monad", false)
           .classed("temporary-hidden", false)

@@ -29,7 +29,7 @@ export class NestedTreemap {
 			.attr("class", "visualization")
 			.style("width", this.width+'px' )
 			.style("height", this.height+'px' )
-      .style("position", "relative");
+      .style("position", "relative")
 
 		this.connectionSVG = this.svg
 			.append('svg')
@@ -37,12 +37,11 @@ export class NestedTreemap {
 			.attr("class", "label-connections")
 			.style("width", this.width)
 			.style("height", 60);
-		return this;
+		return this
 	}
 
-
-	setState (state) { this.state = state; console.log(this.state) }
-	setDB (db) { this.db = db; console.log(this.db) }
+	setState (state) { this.state = state }
+	setDB (db) { this.db = db }
 
 
 	relativeColorScale (initial, value) {
@@ -54,17 +53,17 @@ export class NestedTreemap {
 
 		if (data != undefined) { this.data = data; }
 
-		let nesting = d3.nest(); 
+		let nesting = d3.nest()
 		let nstA = this.nestings[0][this.activeNest[0]].accessor
 		let nstB = this.nestings[1][this.activeNest[1]].accessor
 		nesting.key(nstA).key(nstB).rollup(d=>d.length)
-		let nested = nesting.entries(this.data);
+		let nested = nesting.entries(this.data)
 
 
 		this.root = d3
-			.hierarchy( { key : "all values", values : nested }, function(d) { return d.values; })
+			.hierarchy( { key : "all values", values : nested }, function(d) { return d.values })
 			.sum( d => d.value  )
-			.sort( (b, a) => { return ( Math.abs((a.x1-a.x0)-Math.abs(b.x1-b.x0)) || (a.value - b.value) ); } );
+			.sort( (b, a) => { return ( Math.abs((a.x1-a.x0)-Math.abs(b.x1-b.x0)) || (a.value - b.value) ) } )
 
 
 		this.treemap = d3.treemap()
@@ -76,8 +75,8 @@ export class NestedTreemap {
 			.paddingTop(0)
 			.paddingBottom(0)
 
-		this.treemap(this.root);
-		return this;
+		this.treemap(this.root)
+		return this
 	}
 
 
