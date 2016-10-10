@@ -150,10 +150,12 @@ function parseFile(content) {
                     }
                 }
 
-                if (type.match("006Y")) {
-                    var id = subfield[0]._;
-                    if (id == "") console.log("leer")
-                    newBook.id = id;
+                if (type.match("009P")) {
+                    if(subfield[1]){
+                        newBook.url = subfield[1]._;
+                    } else {
+                        newBook.url = subfield[0]._;
+                    }
                 }
                 // online resource
                 if (type.match("009")) {
