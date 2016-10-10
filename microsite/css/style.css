@@ -3837,12 +3837,12 @@ header .navi a:hover, header .navi a:active {
   height: 100%;
   transition: right 1s;
 }
-/* line 17, ../sass/_BookshelfSection.scss */
+/* line 19, ../sass/_BookshelfSection.scss */
 #BookshelfSection.open {
   right: 0px;
   color: black;
 }
-/* line 22, ../sass/_BookshelfSection.scss */
+/* line 24, ../sass/_BookshelfSection.scss */
 #BookshelfSection .title {
   position: absolute;
   padding: 0;
@@ -3855,14 +3855,14 @@ header .navi a:hover, header .navi a:active {
   text-transform: uppercase;
   color: darkgrey;
 }
-/* line 35, ../sass/_BookshelfSection.scss */
+/* line 37, ../sass/_BookshelfSection.scss */
 #BookshelfSection .closeButton {
   position: absolute;
   top: 25px;
   right: 25px;
   cursor: pointer;
 }
-/* line 42, ../sass/_BookshelfSection.scss */
+/* line 44, ../sass/_BookshelfSection.scss */
 #BookshelfSection .opener {
   position: absolute;
   left: 0;
@@ -3870,13 +3870,13 @@ header .navi a:hover, header .navi a:active {
   width: 20px;
   top: 0;
 }
-/* line 51, ../sass/_BookshelfSection.scss */
+/* line 53, ../sass/_BookshelfSection.scss */
 #BookshelfSection .bookshelf {
   overflow: scroll;
   background-color: #fff;
   padding: 20px;
 }
-/* line 55, ../sass/_BookshelfSection.scss */
+/* line 57, ../sass/_BookshelfSection.scss */
 #BookshelfSection .bookshelf .book {
   font-size: 12px;
   padding: 4px;
@@ -3886,20 +3886,24 @@ header .navi a:hover, header .navi a:active {
   display: block;
   text-decoration: none;
 }
-/* line 63, ../sass/_BookshelfSection.scss */
+/* line 65, ../sass/_BookshelfSection.scss */
+#BookshelfSection .bookshelf .book i {
+  color: #707070;
+}
+/* line 66, ../sass/_BookshelfSection.scss */
 #BookshelfSection .bookshelf .book:nth-child(odd) {
   background: rgba(190, 230, 249, 0.37);
 }
-/* line 66, ../sass/_BookshelfSection.scss */
+/* line 67, ../sass/_BookshelfSection.scss */
 #BookshelfSection .bookshelf .book:nth-child(even) {
   color: #3c3c3c;
 }
-/* line 69, ../sass/_BookshelfSection.scss */
+/* line 68, ../sass/_BookshelfSection.scss */
 #BookshelfSection .bookshelf .book:hover {
   color: black;
   text-decoration: underline;
 }
-/* line 74, ../sass/_BookshelfSection.scss */
+/* line 73, ../sass/_BookshelfSection.scss */
 #BookshelfSection .bookshelf .bookOld {
   z-index: 1;
   font-family: 'gravurcondensed-regular';
@@ -3916,7 +3920,7 @@ header .navi a:hover, header .navi a:active {
   cursor: pointer;
   border-left: 5px solid #dadada;
 }
-/* line 91, ../sass/_BookshelfSection.scss */
+/* line 90, ../sass/_BookshelfSection.scss */
 #BookshelfSection .bookshelf .bookOld:hover {
   border-color: #71091f;
   z-index: 100;

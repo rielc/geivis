@@ -7,11 +7,13 @@
     margin-left: auto;
     margin-right: auto;
     top: 0;
+    // top: 190px;
     width: 550px;
     box-shadow: 0 0pc 25px 0 rgba(0, 0, 0, 0.15);
     z-index: 999;
     background-color: #fff;
     height: 100%;
+    // height: calc(100% - 200px);
     transition: right 1s;
 
    	&.open {
@@ -60,16 +62,13 @@
         	cursor: pointer;
         	display: block;
         	text-decoration: none;
-        	&:nth-child(odd) {
-			    background: rgba(190, 230, 249, 0.37)
-			}
-        	&:nth-child(even) {
-        		color: #3c3c3c;
-			}
-			&:hover {
-				color: black;
-				text-decoration: underline;
-			}
+          i { color:$grey; }
+        	&:nth-child(odd) { background: rgba(190, 230, 249, 0.37) }
+        	&:nth-child(even) { color: #3c3c3c; }
+    			&:hover {
+    				color: black;
+    				text-decoration: underline;
+    			}
         }
         .bookOld {
             z-index: 1;

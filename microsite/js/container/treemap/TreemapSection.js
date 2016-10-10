@@ -66,6 +66,7 @@ export class TreemapSection extends Section {
 
     // skip if not in viewport
     if (!next.visible.TreemapSection) return;
+    this.db.bookshelfData = this.db.date.top(Infinity)
 
     // update if became visible
     if (next.visible.TreemapSection !== last.visible.TreemapSection)

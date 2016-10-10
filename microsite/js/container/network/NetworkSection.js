@@ -35,7 +35,7 @@ export class NetworkSection extends Section {
 
     this.network = new
       CirclePackedNetwork( {'margin':this.margin} )
-      .setBlacklist([])
+      .setBlacklist(this.blacklist)
       .setNodeAccessor("RSWKTag")
       .setOccurrenceScale( d3.scaleLinear().domain([0,1]).range([0.5, 1.0])  )
       .append(this.div)
@@ -54,6 +54,7 @@ export class NetworkSection extends Section {
     }
 
     if (!next.visible.NetworkSection) return;
+    this.db.bookshelfData = this.db.date.top(Infinity)
 
     if (  next.brushStart !== last.brushStart
           || next.brushEnd !== last.brushEnd
