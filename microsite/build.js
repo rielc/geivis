@@ -8957,7 +8957,7 @@ $__System.register('36', ['5', '6', '22', '23', '31', '35'], function (_export) 
           _get(Object.getPrototypeOf(GeomapSection.prototype), 'constructor', this).call(this, state, db);
 
           this.title.text('Places');
-          this.div.append("div").attr("class", "intro").text('\n        Each book got a publisher and a place where it originated. In this visualization the geographical distribution\n        of the selection in time is shown as a bubblemap. The big timestream above is now compressed into a small timeslider\n        which will work from now on as a tool to customize each visualization. By dragging on the timeline you can\n        select a specific timespan to be visualized underneath. Doubleclick on the selection to clear the start and \n        end time. \n      ');
+          this.div.append("div").attr("class", "intro").text('\n        Each book got a publisher and a place where it originated. In this visualization the geographical distribution\n        of the selection in time is shown as a bubble map. Each bubble represents the amout of books beeing \n        published at the geographical location. The big timestream above is now compressed into a small timeslider\n        which will work from now on as a tool to customize each visualization. By dragging on the timeline you can\n        select a specific timespan to be visualized underneath. Doubleclick on the selection to clear the start and \n        end time. \n      ');
           this.geomap = new Geomap(state, db, this.div.append("div"));
           //this.geomap.outerHeight = this.height;
           this.geomap.init();

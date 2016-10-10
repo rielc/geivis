@@ -13,7 +13,8 @@ export class GeomapSection extends Section {
       .attr("class", "intro")
       .text(`
         Each book got a publisher and a place where it originated. In this visualization the geographical distribution
-        of the selection in time is shown as a bubblemap. The big timestream above is now compressed into a small timeslider
+        of the selection in time is shown as a bubble map. Each bubble represents the amout of books beeing 
+        published at the geographical location. The big timestream above is now compressed into a small timeslider
         which will work from now on as a tool to customize each visualization. By dragging on the timeline you can
         select a specific timespan to be visualized underneath. Doubleclick on the selection to clear the start and 
         end time. 
