@@ -113,7 +113,9 @@ export class StreamGraph extends StateDb {
         "translate(" + this.margin.left + "," + this.margin.top + ")"
       );
     this.brush.extent([[0, 0], [this.width, this.height]])
-    this.gBrush.call(this.brush);
+    this.gBrush.call(this.brush).on("click", ()=>{
+        this.gBrush.call(this.brush.move, null)
+      })
     this.gBrush.selectAll("rect").attr("height", this.height);
 
     this.gBrushLegend.select(".from")
