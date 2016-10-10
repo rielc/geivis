@@ -232,6 +232,7 @@ $__System.register("d", ["5", "6", "e", "c"], function (_export) {
           this.state = state;
           this.name = this.constructor.name;
           this.store = {};
+          this.bookshelfData = [];
 
           this.state.subscribe(this);
         }
@@ -357,6 +358,17 @@ $__System.register("d", ["5", "6", "e", "c"], function (_export) {
             this.store = _extends({}, data, this.store);
             // console.log(this.store);
             return this;
+          }
+        }, {
+          key: "bookshelf",
+          value: function bookshelf() {
+            var visible = this.state.state.visible;
+
+            if (visible.TreemapSection || visible.NetworkSection) {
+              return this.bookshelfData;
+            }
+
+            return this.date.top(150);
           }
         }, {
           key: "stackedHistogram",
@@ -8557,6 +8569,8 @@ $__System.register('33', ['5', '6', '21', '22', '23'], function (_export) {
         _inherits(Bookshelf, _StateDb);
 
         function Bookshelf(state, db, div) {
+          var _this = this;
+
           _classCallCheck(this, Bookshelf);
 
           _get(Object.getPrototypeOf(Bookshelf.prototype), 'constructor', this).call(this, state, db);
@@ -8565,7 +8579,11 @@ $__System.register('33', ['5', '6', '21', '22', '23'], function (_export) {
           // this.closeClass = 'closed fadeOutRightBig'
 
           // this.div = div.classed('animated ' + this.openClass, true)
-          this.div = div.classed('open', false).on("mouseenter", this.open.bind(this)).on("mouseleave", this.close.bind(this));
+          this.div = div.classed('open', false).on("mouseenter", function () {
+            _this.state.push({ bookshelf: true });
+          }).on("mouseleave", function () {
+            _this.state.push({ bookshelf: false });
+          });
           this.container = this.div.append("div").classed('bookshelf', true);
           // this.opener = this.div.append("div").classed('opener', true).on("mouseenter", this.open.bind(this) );
           // this.closeButton = this.div.append("a").classed("closeButton", true).text('Close')
@@ -8577,16 +8595,15 @@ $__System.register('33', ['5', '6', '21', '22', '23'], function (_export) {
         _createClass(Bookshelf, [{
           key: 'stateChange',
           value: function stateChange(next, last) {
-            // if (next.bookshelf!=undefined) {
-            //   console.log(last, next)
-            //   this.render(next.bookshelf.data)
-            //   this.open()
-            //   // console.log(next.bookshelf.data)
-            // } else {
-            //   this.close()
-            // }
             if (next.loaded !== last.loaded) {
-              //this.open();
+              //this.state.push({ bookshelf: true });
+            }
+            if (next.bookshelf !== last.bookshelf) {
+              if (next.bookshelf) {
+                this.open();
+              } else {
+                this.close();
+              }
             }
           }
         }, {
@@ -8602,14 +8619,12 @@ $__System.register('33', ['5', '6', '21', '22', '23'], function (_export) {
           }
         }, {
           key: 'render',
-          value: function render(customData) {
-            var data = customData == undefined ? this.db.date.top(150).filter(function (d) {
-              return d.title != "";
-            }) : customData;
+          value: function render() {
+            // const data = customData==undefined ? this.db.date.top(150).filter(d => d.title != "") : customData;
+            var data = this.db.bookshelf();
             var s = this.container.selectAll(".book").data(data, function (d) {
               return d.id;
             });
-            console.log(data);
 
             s.enter().append("a").attr("class", "book").attr("href", function (d) {
               return d.url;
@@ -10923,7 +10938,7 @@ $__System.register('51', ['5', '6', '22', '23', '31', '50'], function (_export) 
 $__System.register('1', ['4', '30', '32', '34', '36', '37', '51', 'd', 'f', '3e'], function (_export) {
   'use strict';
 
-  var StateMachine, StreamSection, DummySection, BookshelfSection, GeomapSection, Tooltip, TreemapSection, DataBase, ScrollListener, NetworkSection, __hotReload, state, db, scroll, tooltip, bookshelfSection, streamSection, geomapSection;
+  var StateMachine, StreamSection, DummySection, BookshelfSection, GeomapSection, Tooltip, TreemapSection, DataBase, ScrollListener, NetworkSection, __hotReload, state, db, scroll, tooltip, bookshelfSection, streamSection, geomapSection, treemapSection, networkSection;
 
   return {
     setters: [function (_) {
@@ -10959,9 +10974,8 @@ $__System.register('1', ['4', '30', '32', '34', '36', '37', '51', 'd', 'f', '3e'
       bookshelfSection = new BookshelfSection(state, db);
       streamSection = new StreamSection(state, db);
       geomapSection = new GeomapSection(state, db);
-
-      // let treemapSection = new TreemapSection(state, db);
-      // let networkSection = new NetworkSection(state, db);
+      treemapSection = new TreemapSection(state, db);
+      networkSection = new NetworkSection(state, db);
 
       // let dummy = new DummySection(state, db);
 

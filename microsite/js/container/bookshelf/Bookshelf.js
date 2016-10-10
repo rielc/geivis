@@ -12,8 +12,8 @@ export class Bookshelf extends StateDb {
 
     // this.div = div.classed('animated ' + this.openClass, true)
     this.div = div.classed('open', false)
-      .on("mouseenter", ()=>{this.state.push({ bookshelf: true })} )
-      .on("mouseleave", ()=>{this.state.push({ bookshelf: false })} );
+      .on("mouseenter", ()=>{ this.state.push({ bookshelf: true }) } )
+      .on("mouseleave", ()=>{ this.state.push({ bookshelf: false }) } );
     this.container = this.div.append("div").classed('bookshelf', true);
     // this.opener = this.div.append("div").classed('opener', true).on("mouseenter", this.open.bind(this) );
     // this.closeButton = this.div.append("a").classed("closeButton", true).text('Close')
