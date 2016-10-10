@@ -526,26 +526,56 @@ header .navi a:hover, header .navi a:active {
 }
 
 /* line 4, ../sass/_circlePackedNetwork.scss */
+#NetworkSection .openBookshelf {
+  transition: opacity 0.4s;
+  font-size: 14px;
+  position: absolute;
+  right: 0;
+  top: 50%;
+  margin: 0;
+  padding: 10px;
+  display: block;
+  transform: translate(0, 0);
+  color: #009ee0;
+  background-color: #e0f6ff;
+}
+/* line 16, ../sass/_circlePackedNetwork.scss */
+#NetworkSection .openBookshelf.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+/* line 19, ../sass/_circlePackedNetwork.scss */
+#NetworkSection .info {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  margin: 0;
+  padding: 0;
+  display: block;
+  transform: translate(0, -50%);
+  color: #707070;
+}
+/* line 31, ../sass/_circlePackedNetwork.scss */
 #NetworkSection.hasTransition .node {
   transition-timing-function: cubic-bezier(0.78, 0.06, 0.58, 1);
   transition: width 0.4s , height 0.4s, transform 0.4s, opacity 0.4s, border 0.4s;
 }
-/* line 11, ../sass/_circlePackedNetwork.scss */
+/* line 38, ../sass/_circlePackedNetwork.scss */
 #NetworkSection .node {
   position: absolute;
   text-align: center;
   box-sizing: border-box;
-  background-color: #009ee0;
+  background-color: #BEE6F9;
   cursor: pointer;
 }
-/* line 20, ../sass/_circlePackedNetwork.scss */
+/* line 47, ../sass/_circlePackedNetwork.scss */
 #NetworkSection .node:hover {
   background-color: rgba(176, 0, 70, 0.3);
   opacity: 1 !important;
 }
-/* line 25, ../sass/_circlePackedNetwork.scss */
+/* line 52, ../sass/_circlePackedNetwork.scss */
 #NetworkSection .node .label {
-  color: #fff;
+  color: #000;
   text-transform: capitalize;
   font-size: 12px;
   font-weight: bold;
@@ -554,56 +584,57 @@ header .navi a:hover, header .navi a:active {
   top: 50%;
   transform: translate(0, -50%);
 }
-/* line 36, ../sass/_circlePackedNetwork.scss */
+/* line 63, ../sass/_circlePackedNetwork.scss */
 #NetworkSection .node .count {
-  color: #fff;
+  color: #000;
   font-size: 14px;
   display: block;
   position: relative;
   top: 50%;
   transform: translate(0, -50%);
 }
-/* line 45, ../sass/_circlePackedNetwork.scss */
+/* line 72, ../sass/_circlePackedNetwork.scss */
 #NetworkSection .node.overflow {
   overflow: visible;
 }
-/* line 46, ../sass/_circlePackedNetwork.scss */
+/* line 73, ../sass/_circlePackedNetwork.scss */
 #NetworkSection .node.overflow > .label {
   display: none !important;
 }
-/* line 47, ../sass/_circlePackedNetwork.scss */
+/* line 74, ../sass/_circlePackedNetwork.scss */
 #NetworkSection .node.overflow > .count {
   display: none !important;
 }
-/* line 52, ../sass/_circlePackedNetwork.scss */
+/* line 79, ../sass/_circlePackedNetwork.scss */
 #NetworkSection .node.overflow.partial {
   overflow: visible;
 }
-/* line 53, ../sass/_circlePackedNetwork.scss */
+/* line 80, ../sass/_circlePackedNetwork.scss */
 #NetworkSection .node.overflow.partial > .label {
   display: none !important;
 }
-/* line 54, ../sass/_circlePackedNetwork.scss */
+/* line 81, ../sass/_circlePackedNetwork.scss */
 #NetworkSection .node.overflow.partial > .count {
+  font-size: 12px;
   display: block !important;
 }
-/* line 59, ../sass/_circlePackedNetwork.scss */
+/* line 86, ../sass/_circlePackedNetwork.scss */
 #NetworkSection .node.inactive {
   opacity: 0.1 !important;
 }
-/* line 62, ../sass/_circlePackedNetwork.scss */
+/* line 89, ../sass/_circlePackedNetwork.scss */
 #NetworkSection .node.inactive > .label {
   display: none !important;
 }
-/* line 63, ../sass/_circlePackedNetwork.scss */
+/* line 90, ../sass/_circlePackedNetwork.scss */
 #NetworkSection .node.inactive > .count {
   display: none !important;
 }
-/* line 67, ../sass/_circlePackedNetwork.scss */
+/* line 94, ../sass/_circlePackedNetwork.scss */
 #NetworkSection .node.hidden {
   display: none;
 }
-/* line 69, ../sass/_circlePackedNetwork.scss */
+/* line 96, ../sass/_circlePackedNetwork.scss */
 #NetworkSection .node.monad {
   border: none;
   background-color: transparent;
@@ -613,7 +644,7 @@ header .navi a:hover, header .navi a:active {
   opacity: 1;
   border: 5px solid rgba(176, 0, 70, 0.3);
 }
-/* line 78, ../sass/_circlePackedNetwork.scss */
+/* line 105, ../sass/_circlePackedNetwork.scss */
 #NetworkSection .node.monad > .label {
   width: 100px;
   top: 0;
@@ -621,11 +652,11 @@ header .navi a:hover, header .navi a:active {
   display: block !important;
   color: #707070;
 }
-/* line 85, ../sass/_circlePackedNetwork.scss */
+/* line 112, ../sass/_circlePackedNetwork.scss */
 #NetworkSection .node.monad > .count {
   display: none !important;
 }
-/* line 90, ../sass/_circlePackedNetwork.scss */
+/* line 117, ../sass/_circlePackedNetwork.scss */
 #NetworkSection .node.monadic-related {
   border: none;
   background-color: transparent;
@@ -634,11 +665,11 @@ header .navi a:hover, header .navi a:active {
   overflow: visible;
   opacity: 1;
 }
-/* line 98, ../sass/_circlePackedNetwork.scss */
+/* line 125, ../sass/_circlePackedNetwork.scss */
 #NetworkSection .node.monadic-related.inactive {
   opacity: 0 !important;
 }
-/* line 102, ../sass/_circlePackedNetwork.scss */
+/* line 129, ../sass/_circlePackedNetwork.scss */
 #NetworkSection .node.monadic-related > .label {
   width: 100px;
   top: 0;
@@ -646,23 +677,23 @@ header .navi a:hover, header .navi a:active {
   display: block !important;
   color: #707070;
 }
-/* line 109, ../sass/_circlePackedNetwork.scss */
+/* line 136, ../sass/_circlePackedNetwork.scss */
 #NetworkSection .node.monadic-related > .count {
   display: none !important;
 }
-/* line 111, ../sass/_circlePackedNetwork.scss */
+/* line 138, ../sass/_circlePackedNetwork.scss */
 #NetworkSection .node.monadic-related.left {
   border-left: 5px solid rgba(0, 158, 224, 0.1);
 }
-/* line 112, ../sass/_circlePackedNetwork.scss */
+/* line 139, ../sass/_circlePackedNetwork.scss */
 #NetworkSection .node.monadic-related.left .label {
   text-align: left;
 }
-/* line 115, ../sass/_circlePackedNetwork.scss */
+/* line 142, ../sass/_circlePackedNetwork.scss */
 #NetworkSection .node.monadic-related.right {
   border-right: 5px solid rgba(0, 158, 224, 0.1);
 }
-/* line 116, ../sass/_circlePackedNetwork.scss */
+/* line 143, ../sass/_circlePackedNetwork.scss */
 #NetworkSection .node.monadic-related.right .label {
   text-align: right;
 }
@@ -3834,7 +3865,6 @@ header .navi a:hover, header .navi a:active {
   box-shadow: 0 0pc 25px 0 rgba(0, 0, 0, 0.15);
   z-index: 999;
   background-color: #fff;
-  height: 100%;
   transition: right 1s;
 }
 /* line 19, ../sass/_BookshelfSection.scss */

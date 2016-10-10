@@ -1,5 +1,32 @@
 #NetworkSection {
 
+
+    .openBookshelf {
+        transition:opacity 0.4s;
+        font-size: 14px;
+        position:absolute;
+        right:0;
+        top:50%;
+        margin:0;
+        padding:10px;
+        display:block;
+        transform:translate(0,0);
+        color:$blue;
+        background-color: lighten($blue, 50%);
+        &.hidden {opacity:0;pointer-events:none;}
+    }
+
+    .info {
+        position:absolute;
+        left:0;
+        top:50%;
+        margin:0;
+        padding:0;
+        display:block;
+        transform:translate(0,-50%);
+        color:$grey;
+    }
+
     &.hasTransition {
         .node {
             transition-timing-function: cubic-bezier(.78,.06,.58,1);
@@ -13,7 +40,7 @@
         //display:block;
         text-align:center;
         box-sizing: border-box;
-        background-color: $blue;
+        background-color: #BEE6F9;
         cursor: pointer;
 
         
@@ -23,7 +50,7 @@
         }
 
         .label {
-            color:#fff;
+            color:#000;
             text-transform: capitalize;
             font-size: 12px;
             font-weight: bold;
@@ -34,7 +61,7 @@
         }
 
         .count {
-            color:#fff;
+            color:#000;
             font-size: 14px;
             display:block;
             position:relative;
@@ -51,7 +78,7 @@
 
         &.overflow.partial {
             > .label { display:none !important }
-            > .count { display:block !important }
+            > .count { font-size:12px; display:block !important }
             overflow:visible;
             //z-index:0 !important;
         }
