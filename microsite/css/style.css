@@ -503,22 +503,23 @@ header .navi a:hover, header .navi a:active {
 }
 /* line 125, ../sass/_nestedTreemap.scss */
 #TreemapSection .level-2 {
+  cursor: pointer;
   border-top: 1px solid #efefef;
 }
-/* line 129, ../sass/_nestedTreemap.scss */
+/* line 131, ../sass/_nestedTreemap.scss */
 #TreemapSection .level-2:hover {
   z-index: 3 !important;
   background-color: #ffb0cf;
 }
-/* line 132, ../sass/_nestedTreemap.scss */
+/* line 134, ../sass/_nestedTreemap.scss */
 #TreemapSection .level-2:hover .label, #TreemapSection .level-2:hover .count {
   color: #000;
 }
-/* line 135, ../sass/_nestedTreemap.scss */
+/* line 137, ../sass/_nestedTreemap.scss */
 #TreemapSection .level-2 span {
   color: #707070;
 }
-/* line 137, ../sass/_nestedTreemap.scss */
+/* line 139, ../sass/_nestedTreemap.scss */
 #TreemapSection .level-2 .label {
   pointer-events: none;
   padding-left: 20px;
@@ -530,7 +531,7 @@ header .navi a:hover, header .navi a:active {
   font-size: 10px;
   color: #000;
 }
-/* line 149, ../sass/_nestedTreemap.scss */
+/* line 151, ../sass/_nestedTreemap.scss */
 #TreemapSection .level-2 .count {
   color: #bdbdbd;
   pointer-events: none;
