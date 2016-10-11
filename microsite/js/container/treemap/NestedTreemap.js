@@ -31,6 +31,16 @@ export class NestedTreemap {
 			.style("height", this.height+'px' )
       .style("position", "relative")
 
+
+    this.loadButton = this.container
+    	.append('a')
+    	.classed('loadButton', true)
+    	.on('click', (d)=> { 
+    		this.render('brushmove')
+  	    this.render('brushend')
+  	    this.hideButton.bind(this)()
+  	  })
+
 		this.connectionSVG = this.svg
 			.append('svg')
 			.style('position', 'absolute')
@@ -42,6 +52,13 @@ export class NestedTreemap {
 
 	setState (state) { this.state = state }
 	setDB (db) { this.db = db }
+
+	hideButton() { this.loadButton.classed('hidden', true) }	
+	showButton() { 
+		this.loadButton
+		.classed('hidden', false)
+		.text(`Click to load ${this.nestings[1][this.activeNest[1]].name} data`) 
+	}
 
 
 	relativeColorScale (initial, value) {
@@ -207,6 +224,8 @@ export class NestedTreemap {
 
 			break;
 			case "brushend" :
+
+				this.hideButton()
 
 				updateLabels.bind(this)(dataLevel1)
 

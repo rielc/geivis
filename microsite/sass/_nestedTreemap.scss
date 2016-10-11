@@ -3,6 +3,22 @@ $width:180px;
 
 #TreemapSection {
 
+  .loadButton {
+  		z-index:99;
+      transition:opacity 0.4s;
+      font-size: 14px;
+      position:absolute;
+      right:50%;
+      top:50%;
+      padding:20px;
+      display:block;
+      transform:translate(50%,50%);
+      color:$blue;
+      background-color: lighten($blue, 50%);
+      cursor: pointer;
+      &.hidden {opacity:0;pointer-events:none;}
+  }
+
 
 
 	.selects {

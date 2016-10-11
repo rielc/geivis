@@ -73,6 +73,7 @@ export class CirclePackedNetwork {
 
   updateData ( data ) {
     this.data = data;
+
     this.data.forEach(d=> {
       if (d[this.nodeAccessor]!=undefined) {
         d[this.nodeAccessor] = this.makeArrayUnique(d[this.nodeAccessor]);
@@ -263,6 +264,8 @@ export class CirclePackedNetwork {
 
   switchToMonad ( data, index, elements ) {
 
+      let monadRadius = (this.height-200)/2
+
       let linkedBooks = this.data.filter( (d,i) => { return (data.data.data.entryID.indexOf(i) != -1) } )
       let booksBySubject = d3.nest().key( (d) => d.subject ).entries(linkedBooks)
 
@@ -331,8 +334,15 @@ export class CirclePackedNetwork {
         let range = linkedNodes.length<3 ? [Math.PI*0.5, Math.PI*2.5]:[0, Math.PI*2]
 
         let indexToPolar = d3.scaleLinear().domain([0,linkedNodes.length]).range(range)
-        let occurenceToProximity = d3.scaleLinear().domain([linkMax,linkMin]).range([200, (this.height-200)/3])
+        let occurenceToProximity = d3.scaleLinear().domain([linkMax,linkMin]).range([200, monadRadius])
         //let occurenceToAlpha = d3.scaleLinear().domain([linkMin, linkMax]).range([0.125, 1.0])
+
+      let sizeAdjustment = monadRadius/(linkedNodes.reduce( (p,c,i,a)=> {
+        let value = occurenceToProximity(c.strength)/this.occurrenceScale.domain([linkMin, c.node.data.occurrence])(c.strength)
+        return value>p?value:p 
+      }, 0))
+
+      console.log(sizeAdjustment)
 
         linkedNodes.forEach( (l,i) => {
 
@@ -341,31 +351,34 @@ export class CirclePackedNetwork {
             let n = 
               d3.select( "#"+GeiVisUtils.makeSafeForCSS( l.node.name ) )
               .style("opacity", 1)
-              .style("transition-delay", (d,i)=>(i*0.1)+'s')
+              .style("transition-delay", (d,i)=>`${i*0.2}s`)
               .classed("hidden", false)
               .classed("monadic-related", true)
               .classed("overflow", false)
               .classed("partial", false)
 
-            // /this.occurrenceScale.domain([linkMin, l.node.data.occurrence])(l.strength)
-            // /this.occurrenceScale.domain([linkMin, l.node.data.occurrence])(l.strength)
+              console.log(monadRadius)
 
-            let x = center[0]+(Math.sin(indexToPolar(i))*occurenceToProximity(l.strength)/this.occurrenceScale.domain([linkMin, l.node.data.occurrence])(l.strength));
-            let y = center[1]+(Math.cos(indexToPolar(i))*occurenceToProximity(l.strength)/this.occurrenceScale.domain([linkMin, l.node.data.occurrence])(l.strength));
+            let relationDivision = (this.occurrenceScale.domain([linkMin, l.node.data.occurrence])(l.strength))*2
+            let proximity = Math.min(occurenceToProximity(l.strength)/relationDivision, monadRadius)
 
+            let xBase = Math.sin(indexToPolar(i))*proximity;
+            let yBase = Math.cos(indexToPolar(i))*proximity;
 
-            let width = n.select(".label").node().offsetWidth;
-            let height = n.select(".label").node().offsetHeight;
-            let value;
+            let pos = [ center[0]+xBase, center[1]+yBase ]
+
+            let width = n.select(".label").node().offsetWidth
+            let height = n.select(".label").node().offsetHeight
+
+            let value
 
             // decide on the rotation
             if (indexToPolar(i) >= Math.PI && indexToPolar(i) <= Math.PI*2) { n.classed("right", true); value = 90; }
             if (indexToPolar(i) >= 0 && indexToPolar(i) <= Math.PI) { n.classed("left", true); value = 270; }
 
-            n
-              .style("width", null)
+            n.style("width", null)
               .style("height", null)
-              .style("transform", d => `translate3d(${x}px,${y}px,0px)rotate(-${(indexToPolar(i)*180/Math.PI)+(value)}deg)`);
+              .style("transform", d => `translate3d(${pos[0]}px,${pos[1]}px,0px)rotate(-${(indexToPolar(i)*180/Math.PI)+(value)}deg)`)
           }
 
         })
@@ -396,7 +409,6 @@ export class CirclePackedNetwork {
     let linkMin = d3.min(links, l=>l.commonOccurrence)
 
 
-
     // // highlight the nodesg
     links.forEach( link => {
 
@@ -405,7 +417,7 @@ export class CirclePackedNetwork {
         selectedNode
           .classed("inactive", false)
           .classed('related', true)
-          .style("opacity", this.occurrenceScale.domain([linkMin, linkMax]).range([0.5, 1.0])(link.commonOccurrence) )
+          .style("opacity", this.occurrenceScale.domain([linkMin, linkMax]).range([0.25, 1.0])(link.commonOccurrence) )
 
         selectedNode.select(".count").text(link.commonOccurrence)
 
@@ -452,12 +464,13 @@ export class CirclePackedNetwork {
       .selectAll(".node")
       .data(this.root.children, e=>e.data.name )
 
+    this.openBookshelfButton.classed('hidden', true)
+
     let enteredNodes, exitedNodes
 
     switch (keyframe) {
 
       case "brushend":
-
      
         // set the previous data once the user finished brushing
         this.previousData = d3.map(this.root.children, d => d.data.name)
@@ -486,6 +499,7 @@ export class CirclePackedNetwork {
         this.nodes
           .classed("hidden", false)
           .classed("monadic-related", false)
+          .classed("monad", false)
           .call(this.setNodePosition)
           .call(this.setNodeDimensions)
           .call(this.setOverflowClass)

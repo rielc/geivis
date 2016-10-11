@@ -22,10 +22,9 @@ export class NetworkSection extends Section {
 
    this.div.append("div")
       .attr("class", "intro")
-      .text("Cultural heritage institutions such as museums, archives, and libraries have been digitizing their inventories over the last two decades. The digitization process includes both the digital capture of the artifacts (for example via photography or 3d scanning) as well as the recording of the metadata about the artifact's historical context, material characteristics, and cultural significance. The main promises connected with digitization of cultural assets are long-term preservation and increased levels of access (Smith, 2002, pp.7). This paper is especially concerned with questions related to access, which so far has mostly relied on interface concepts from traditional information retrieval. However, there is an increased unease with a mode of access, which requires people to translate a possibly vague interest into a specific search query. Unlike museum exhibitions or library shelves that may lend themselves better to curiosity-driven browsing of cultural heritage, conventional search interfaces are arguable not particularly inviting. Instead, more 'generosity' is needed in the display of the artifacts' richness and their distribution in the collection")
+      .text("This visualization shows the distribution of tags throughout the currently selected timeframe. The size of a circle represent the number of books with that tag. On hover you can see the other tags that were given in conjunction. The opacity of the other circles indicates how often they were given in conjunction. By clicking on a circle you can see it’s neighbourhood: Other related tags form a circle around the selected tag. Their relation is caluclated by the number of shared occurrences and by how much of their own occurrence is shared together with the selected tag. Clicking on the link shows the corresponding books for each tag. Clicking on the centered node or changing the timeframe leaves this view.")
  
-
-    this.title.html(`All tags`);
+    this.title.html(`Tags`);
 
     let oh = 0;
     oh+=parseInt(this.title.style("padding-top"));

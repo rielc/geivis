@@ -334,11 +334,31 @@ header .navi a:hover, header .navi a:active {
   text-decoration: none;
 }
 
-/* line 8, ../sass/_nestedTreemap.scss */
+/* line 6, ../sass/_nestedTreemap.scss */
+#TreemapSection .loadButton {
+  z-index: 99;
+  transition: opacity 0.4s;
+  font-size: 14px;
+  position: absolute;
+  right: 50%;
+  top: 50%;
+  padding: 20px;
+  display: block;
+  transform: translate(50%, 50%);
+  color: #009ee0;
+  background-color: #e0f6ff;
+  cursor: pointer;
+}
+/* line 19, ../sass/_nestedTreemap.scss */
+#TreemapSection .loadButton.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+/* line 24, ../sass/_nestedTreemap.scss */
 #TreemapSection .selects {
   margin-top: 25px;
 }
-/* line 10, ../sass/_nestedTreemap.scss */
+/* line 26, ../sass/_nestedTreemap.scss */
 #TreemapSection .selects span {
   text-transform: uppercase;
   margin-right: 12.5px;
@@ -346,18 +366,18 @@ header .navi a:hover, header .navi a:active {
   font-size: 14px;
   color: grey;
 }
-/* line 13, ../sass/_nestedTreemap.scss */
+/* line 29, ../sass/_nestedTreemap.scss */
 #TreemapSection .switch {
   width: auto;
   float: left;
   height: 60px;
 }
-/* line 18, ../sass/_nestedTreemap.scss */
+/* line 34, ../sass/_nestedTreemap.scss */
 #TreemapSection .switch span {
   width: 100%;
   position: relative;
 }
-/* line 22, ../sass/_nestedTreemap.scss */
+/* line 38, ../sass/_nestedTreemap.scss */
 #TreemapSection .switch span span {
   height: 20px;
   text-transform: uppercase;
@@ -365,12 +385,12 @@ header .navi a:hover, header .navi a:active {
   color: #000;
   text-align: left;
 }
-/* line 23, ../sass/_nestedTreemap.scss */
+/* line 39, ../sass/_nestedTreemap.scss */
 #TreemapSection .switch span a, #TreemapSection .switch span span {
   display: block;
   float: left;
 }
-/* line 24, ../sass/_nestedTreemap.scss */
+/* line 40, ../sass/_nestedTreemap.scss */
 #TreemapSection .switch span a.prev {
   position: absolute;
   width: 20px;
@@ -381,7 +401,7 @@ header .navi a:hover, header .navi a:active {
   transform: translate(-20px, 12px) rotate(-90deg);
   text-align: center;
 }
-/* line 25, ../sass/_nestedTreemap.scss */
+/* line 41, ../sass/_nestedTreemap.scss */
 #TreemapSection .switch span a.next {
   position: absolute;
   width: 20px;
@@ -392,7 +412,7 @@ header .navi a:hover, header .navi a:active {
   transform: translate(-20px, -16px) rotate(-90deg);
   text-align: center;
 }
-/* line 26, ../sass/_nestedTreemap.scss */
+/* line 42, ../sass/_nestedTreemap.scss */
 #TreemapSection .switch span a {
   transition: all 0.5s;
   text-decoration: none;
@@ -400,18 +420,18 @@ header .navi a:hover, header .navi a:active {
   color: #009ee0;
   font-size: 14px;
 }
-/* line 38, ../sass/_nestedTreemap.scss */
+/* line 54, ../sass/_nestedTreemap.scss */
 #TreemapSection .visualization {
   position: relative;
 }
-/* line 41, ../sass/_nestedTreemap.scss */
+/* line 57, ../sass/_nestedTreemap.scss */
 #TreemapSection .label-connections path {
   stroke: #bcbcbc;
   fill: none;
   stroke-width: 0.5px;
   stroke-linecap: round;
 }
-/* line 50, ../sass/_nestedTreemap.scss */
+/* line 66, ../sass/_nestedTreemap.scss */
 #TreemapSection .level-1-label {
   z-index: 800;
   box-sizing: border-box;
@@ -430,11 +450,11 @@ header .navi a:hover, header .navi a:active {
   margin-top: -18px;
   word-wrap: no-wrap;
 }
-/* line 68, ../sass/_nestedTreemap.scss */
+/* line 84, ../sass/_nestedTreemap.scss */
 #TreemapSection .level-1-label span {
   color: #707070;
 }
-/* line 72, ../sass/_nestedTreemap.scss */
+/* line 88, ../sass/_nestedTreemap.scss */
 #TreemapSection .node {
   box-sizing: border-box;
   font-family: "gravurcondensed-regular";
@@ -444,35 +464,35 @@ header .navi a:hover, header .navi a:active {
   z-index: 2 !important;
   transition: width 0.2s, height 0.2s, transform 0.4s, background-color 0.4s, box-shadow 0.4s;
 }
-/* line 81, ../sass/_nestedTreemap.scss */
+/* line 97, ../sass/_nestedTreemap.scss */
 #TreemapSection .node.related {
   background-color: #e0f6ff;
 }
-/* line 83, ../sass/_nestedTreemap.scss */
+/* line 99, ../sass/_nestedTreemap.scss */
 #TreemapSection .node.related .label, #TreemapSection .node.related .count {
   color: #000;
 }
-/* line 87, ../sass/_nestedTreemap.scss */
+/* line 103, ../sass/_nestedTreemap.scss */
 #TreemapSection .node.overflow .label, #TreemapSection .node.overflow .count {
   display: none;
 }
-/* line 90, ../sass/_nestedTreemap.scss */
+/* line 106, ../sass/_nestedTreemap.scss */
 #TreemapSection .node .label {
   transition: color 0.4s;
   position: absolute;
 }
-/* line 91, ../sass/_nestedTreemap.scss */
+/* line 107, ../sass/_nestedTreemap.scss */
 #TreemapSection .node .count {
   transition: color 0.4s;
   position: absolute;
 }
-/* line 93, ../sass/_nestedTreemap.scss */
+/* line 109, ../sass/_nestedTreemap.scss */
 #TreemapSection .node.other {
   background-color: rgba(238, 238, 238, 0.75);
   border: none;
   box-shadow: none, none;
 }
-/* line 100, ../sass/_nestedTreemap.scss */
+/* line 116, ../sass/_nestedTreemap.scss */
 #TreemapSection .level-1 {
   pointer-events: none;
   padding-top: 5px;
@@ -481,24 +501,24 @@ header .navi a:hover, header .navi a:active {
   border-left: 2px solid #efefef;
   border-right: 2px solid #efefef;
 }
-/* line 109, ../sass/_nestedTreemap.scss */
+/* line 125, ../sass/_nestedTreemap.scss */
 #TreemapSection .level-2 {
   border-top: 1px solid #efefef;
 }
-/* line 113, ../sass/_nestedTreemap.scss */
+/* line 129, ../sass/_nestedTreemap.scss */
 #TreemapSection .level-2:hover {
   z-index: 3 !important;
   background-color: #ffb0cf;
 }
-/* line 116, ../sass/_nestedTreemap.scss */
+/* line 132, ../sass/_nestedTreemap.scss */
 #TreemapSection .level-2:hover .label, #TreemapSection .level-2:hover .count {
   color: #000;
 }
-/* line 119, ../sass/_nestedTreemap.scss */
+/* line 135, ../sass/_nestedTreemap.scss */
 #TreemapSection .level-2 span {
   color: #707070;
 }
-/* line 121, ../sass/_nestedTreemap.scss */
+/* line 137, ../sass/_nestedTreemap.scss */
 #TreemapSection .level-2 .label {
   pointer-events: none;
   padding-left: 20px;
@@ -510,7 +530,7 @@ header .navi a:hover, header .navi a:active {
   font-size: 10px;
   color: #000;
 }
-/* line 133, ../sass/_nestedTreemap.scss */
+/* line 149, ../sass/_nestedTreemap.scss */
 #TreemapSection .level-2 .count {
   color: #bdbdbd;
   pointer-events: none;
@@ -538,13 +558,14 @@ header .navi a:hover, header .navi a:active {
   transform: translate(0, 0);
   color: #009ee0;
   background-color: #e0f6ff;
+  cursor: pointer;
 }
-/* line 16, ../sass/_circlePackedNetwork.scss */
+/* line 17, ../sass/_circlePackedNetwork.scss */
 #NetworkSection .openBookshelf.hidden {
   opacity: 0;
   pointer-events: none;
 }
-/* line 19, ../sass/_circlePackedNetwork.scss */
+/* line 20, ../sass/_circlePackedNetwork.scss */
 #NetworkSection .info {
   position: absolute;
   left: 0;
@@ -555,12 +576,12 @@ header .navi a:hover, header .navi a:active {
   transform: translate(0, -50%);
   color: #707070;
 }
-/* line 31, ../sass/_circlePackedNetwork.scss */
+/* line 32, ../sass/_circlePackedNetwork.scss */
 #NetworkSection.hasTransition .node {
   transition-timing-function: cubic-bezier(0.78, 0.06, 0.58, 1);
   transition: width 0.4s , height 0.4s, transform 0.4s, opacity 0.4s, border 0.4s;
 }
-/* line 38, ../sass/_circlePackedNetwork.scss */
+/* line 39, ../sass/_circlePackedNetwork.scss */
 #NetworkSection .node {
   position: absolute;
   text-align: center;
@@ -568,12 +589,12 @@ header .navi a:hover, header .navi a:active {
   background-color: #BEE6F9;
   cursor: pointer;
 }
-/* line 47, ../sass/_circlePackedNetwork.scss */
+/* line 48, ../sass/_circlePackedNetwork.scss */
 #NetworkSection .node:hover {
   background-color: rgba(176, 0, 70, 0.3);
   opacity: 1 !important;
 }
-/* line 52, ../sass/_circlePackedNetwork.scss */
+/* line 53, ../sass/_circlePackedNetwork.scss */
 #NetworkSection .node .label {
   color: #000;
   text-transform: capitalize;
@@ -584,7 +605,7 @@ header .navi a:hover, header .navi a:active {
   top: 50%;
   transform: translate(0, -50%);
 }
-/* line 63, ../sass/_circlePackedNetwork.scss */
+/* line 64, ../sass/_circlePackedNetwork.scss */
 #NetworkSection .node .count {
   color: #000;
   font-size: 14px;
@@ -593,48 +614,48 @@ header .navi a:hover, header .navi a:active {
   top: 50%;
   transform: translate(0, -50%);
 }
-/* line 72, ../sass/_circlePackedNetwork.scss */
+/* line 73, ../sass/_circlePackedNetwork.scss */
 #NetworkSection .node.overflow {
   overflow: visible;
 }
-/* line 73, ../sass/_circlePackedNetwork.scss */
+/* line 74, ../sass/_circlePackedNetwork.scss */
 #NetworkSection .node.overflow > .label {
   display: none !important;
 }
-/* line 74, ../sass/_circlePackedNetwork.scss */
+/* line 75, ../sass/_circlePackedNetwork.scss */
 #NetworkSection .node.overflow > .count {
   display: none !important;
 }
-/* line 79, ../sass/_circlePackedNetwork.scss */
+/* line 80, ../sass/_circlePackedNetwork.scss */
 #NetworkSection .node.overflow.partial {
   overflow: visible;
 }
-/* line 80, ../sass/_circlePackedNetwork.scss */
+/* line 81, ../sass/_circlePackedNetwork.scss */
 #NetworkSection .node.overflow.partial > .label {
   display: none !important;
 }
-/* line 81, ../sass/_circlePackedNetwork.scss */
+/* line 82, ../sass/_circlePackedNetwork.scss */
 #NetworkSection .node.overflow.partial > .count {
   font-size: 12px;
   display: block !important;
 }
-/* line 86, ../sass/_circlePackedNetwork.scss */
+/* line 87, ../sass/_circlePackedNetwork.scss */
 #NetworkSection .node.inactive {
-  opacity: 0.1 !important;
+  opacity: 0.0 !important;
 }
-/* line 89, ../sass/_circlePackedNetwork.scss */
+/* line 90, ../sass/_circlePackedNetwork.scss */
 #NetworkSection .node.inactive > .label {
   display: none !important;
 }
-/* line 90, ../sass/_circlePackedNetwork.scss */
+/* line 91, ../sass/_circlePackedNetwork.scss */
 #NetworkSection .node.inactive > .count {
   display: none !important;
 }
-/* line 94, ../sass/_circlePackedNetwork.scss */
+/* line 95, ../sass/_circlePackedNetwork.scss */
 #NetworkSection .node.hidden {
   display: none;
 }
-/* line 96, ../sass/_circlePackedNetwork.scss */
+/* line 97, ../sass/_circlePackedNetwork.scss */
 #NetworkSection .node.monad {
   border: none;
   background-color: transparent;
@@ -644,7 +665,7 @@ header .navi a:hover, header .navi a:active {
   opacity: 1;
   border: 5px solid rgba(176, 0, 70, 0.3);
 }
-/* line 105, ../sass/_circlePackedNetwork.scss */
+/* line 106, ../sass/_circlePackedNetwork.scss */
 #NetworkSection .node.monad > .label {
   width: 100px;
   top: 0;
@@ -652,11 +673,11 @@ header .navi a:hover, header .navi a:active {
   display: block !important;
   color: #707070;
 }
-/* line 112, ../sass/_circlePackedNetwork.scss */
+/* line 113, ../sass/_circlePackedNetwork.scss */
 #NetworkSection .node.monad > .count {
   display: none !important;
 }
-/* line 117, ../sass/_circlePackedNetwork.scss */
+/* line 118, ../sass/_circlePackedNetwork.scss */
 #NetworkSection .node.monadic-related {
   border: none;
   background-color: transparent;
@@ -665,11 +686,11 @@ header .navi a:hover, header .navi a:active {
   overflow: visible;
   opacity: 1;
 }
-/* line 125, ../sass/_circlePackedNetwork.scss */
+/* line 126, ../sass/_circlePackedNetwork.scss */
 #NetworkSection .node.monadic-related.inactive {
   opacity: 0 !important;
 }
-/* line 129, ../sass/_circlePackedNetwork.scss */
+/* line 130, ../sass/_circlePackedNetwork.scss */
 #NetworkSection .node.monadic-related > .label {
   width: 100px;
   top: 0;
@@ -677,23 +698,23 @@ header .navi a:hover, header .navi a:active {
   display: block !important;
   color: #707070;
 }
-/* line 136, ../sass/_circlePackedNetwork.scss */
+/* line 137, ../sass/_circlePackedNetwork.scss */
 #NetworkSection .node.monadic-related > .count {
   display: none !important;
 }
-/* line 138, ../sass/_circlePackedNetwork.scss */
+/* line 139, ../sass/_circlePackedNetwork.scss */
 #NetworkSection .node.monadic-related.left {
   border-left: 5px solid rgba(0, 158, 224, 0.1);
 }
-/* line 139, ../sass/_circlePackedNetwork.scss */
+/* line 140, ../sass/_circlePackedNetwork.scss */
 #NetworkSection .node.monadic-related.left .label {
   text-align: left;
 }
-/* line 142, ../sass/_circlePackedNetwork.scss */
+/* line 143, ../sass/_circlePackedNetwork.scss */
 #NetworkSection .node.monadic-related.right {
   border-right: 5px solid rgba(0, 158, 224, 0.1);
 }
-/* line 143, ../sass/_circlePackedNetwork.scss */
+/* line 144, ../sass/_circlePackedNetwork.scss */
 #NetworkSection .node.monadic-related.right .label {
   text-align: right;
 }
@@ -3865,6 +3886,7 @@ header .navi a:hover, header .navi a:active {
   box-shadow: 0 0pc 25px 0 rgba(0, 0, 0, 0.15);
   z-index: 999;
   background-color: #fff;
+  height: 100%;
   transition: right 1s;
 }
 /* line 19, ../sass/_BookshelfSection.scss */

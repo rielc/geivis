@@ -8629,7 +8629,7 @@ $__System.register('33', ['5', '6', '21', '22', '23'], function (_export) {
             s.enter().append("a").attr("class", "book").attr("href", function (d) {
               return d.url;
             }).attr("target", "_blank").html(function (d) {
-              return d.title + ' <i>' + d.publisher + ' ' + d.year + '</i> ';
+              return d.title.replace('@', '') + ' <i>' + d.publisher + ' ' + d.year + '</i> ';
             });
 
             s.attr("href", function (d) {
@@ -9159,12 +9159,24 @@ $__System.register("3c", ["5", "6", "3b", "3d"], function (_export) {
           this.properties = properties;
           this.blacklist = [];
           this.years = [0, 0];
-
           this.monad = "";
+          this.state = {};
+          this.db = {};
+          this.openBookshelfButton = {};
           return this;
         }
 
         _createClass(CirclePackedNetwork, [{
+          key: "setState",
+          value: function setState(state) {
+            this.state = state;
+          }
+        }, {
+          key: "setDB",
+          value: function setDB(db) {
+            this.db = db;
+          }
+        }, {
           key: "setOccurrenceScale",
           value: function setOccurrenceScale(scale) {
             this.occurrenceScale = scale;
@@ -9173,6 +9185,8 @@ $__System.register("3c", ["5", "6", "3b", "3d"], function (_export) {
         }, {
           key: "append",
           value: function append(selector) {
+            var _this = this;
+
             this.containerName = selector.attr("id");
             this.parentContainer = selector;
 
@@ -9185,7 +9199,13 @@ $__System.register("3c", ["5", "6", "3b", "3d"], function (_export) {
             this.container = selector.append("div").attr("id", this.containerName + "-visualization").style("width", this.width + "px").style("height", this.height + "px").style("position", "relative");
             //.style("transform",  d => `translate(${this.properties.margin.left}px,${this.properties.margin.top}px)`);
 
-            this.pack = d3.pack().size([this.width, this.height]).padding(10);
+            this.openBookshelfButton = this.container.append('a').classed('openBookshelf', true).classed('hidden', true).html('show tagged books').on('click', function () {
+              _this.state.push({ bookshelf: false });
+              _this.db.bookshelfData = _this.bookshelfData;
+              _this.state.push({ bookshelf: true });
+            });
+
+            this.pack = d3.pack().size([this.width, this.height]).padding(20);
 
             return this;
           }
@@ -9200,12 +9220,13 @@ $__System.register("3c", ["5", "6", "3b", "3d"], function (_export) {
         }, {
           key: "updateData",
           value: function updateData(data) {
-            var _this = this;
+            var _this2 = this;
 
             this.data = data;
+
             this.data.forEach(function (d) {
-              if (d[_this.nodeAccessor] != undefined) {
-                d[_this.nodeAccessor] = _this.makeArrayUnique(d[_this.nodeAccessor]);
+              if (d[_this2.nodeAccessor] != undefined) {
+                d[_this2.nodeAccessor] = _this2.makeArrayUnique(d[_this2.nodeAccessor]);
               }
             });
 
@@ -9220,8 +9241,8 @@ $__System.register("3c", ["5", "6", "3b", "3d"], function (_export) {
 
             // fix graph links to map to objects instead of indices
             this.transformedData.links.forEach(function (d, i) {
-              d.source = isNaN(d.source) ? d.source : _this.transformedData.nodes[d.source];
-              d.target = isNaN(d.target) ? d.target : _this.transformedData.nodes[d.target];
+              d.source = isNaN(d.source) ? d.source : _this2.transformedData.nodes[d.source];
+              d.target = isNaN(d.target) ? d.target : _this2.transformedData.nodes[d.target];
             });
 
             this.root = d3.hierarchy({
@@ -9258,7 +9279,7 @@ $__System.register("3c", ["5", "6", "3b", "3d"], function (_export) {
         }, {
           key: "generateLinksAndNodes",
           value: function generateLinksAndNodes() {
-            var _this2 = this;
+            var _this3 = this;
 
             var dataToAnalyze = this.data;
             //if (newData != undefined) { dataToAnalyze = newData; }
@@ -9268,11 +9289,11 @@ $__System.register("3c", ["5", "6", "3b", "3d"], function (_export) {
             var allTags = [];
             // push all tags of every entry into the global array
             dataToAnalyze.forEach(function (e) {
-              if (e[_this2.nodeAccessor] != undefined) {
-                allTags.push(e[_this2.nodeAccessor].map(function (t) {
+              if (e[_this3.nodeAccessor] != undefined) {
+                allTags.push(e[_this3.nodeAccessor].map(function (t) {
                   return t.trim().toLowerCase();
                 }).filter(function (f) {
-                  return _this2.blacklist.indexOf(f) == -1;
+                  return _this3.blacklist.indexOf(f) == -1;
                 }));
               }
             });
@@ -9295,22 +9316,22 @@ $__System.register("3c", ["5", "6", "3b", "3d"], function (_export) {
               // this array prevent duplicate links
 
               // if the entry has tags
-              if (e[_this2.nodeAccessor] != undefined) {
+              if (e[_this3.nodeAccessor] != undefined) {
                 (function () {
 
                   var parsedLinks = [];
                   var addedTags = [];
 
-                  var tags = e[_this2.nodeAccessor].map(function (t) {
+                  var tags = e[_this3.nodeAccessor].map(function (t) {
                     return t.trim().toLowerCase();
                   }); // clean the tags again
 
                   //create a link for n-to-n connection
                   tags.filter(function (f) {
-                    return _this2.blacklist.indexOf(f) == -1;
+                    return _this3.blacklist.indexOf(f) == -1;
                   }).forEach(function (tagA) {
                     tags.filter(function (f) {
-                      return _this2.blacklist.indexOf(f) == -1;
+                      return _this3.blacklist.indexOf(f) == -1;
                     }).forEach(function (tagB) {
                       if (tagA != tagB) {
 
@@ -9395,9 +9416,25 @@ $__System.register("3c", ["5", "6", "3b", "3d"], function (_export) {
             });
           }
         }, {
+          key: "setOverflowClass",
+          value: function setOverflowClass(selection) {
+
+            // if (el.node().offsetWidth < 40)
+            //     el.classed("overflow", true).classed("partial", true)
+
+            // if (el.node().offsetWidth < 11)
+            //     el.classed("overflow", true).classed("partial", false)
+
+            selection.classed('overflow', function (d) {
+              return d.r * 2 < 66;
+            }).classed('partial', function (d) {
+              return d.r * 2 > 11 && d.r * 2 < 66;
+            });
+          }
+        }, {
           key: "setInitalNodePosition",
           value: function setInitalNodePosition(selection, el) {
-            selection.style("transform", "translate3d(" + this.width / 2 + "px," + this.height / 2 + "px,0px)scale(0,0)");
+            selection.style("transform", "translate3d(600px," + window.innerHeight / 2 + "px,0px)scale(0,0)");
           }
         }, {
           key: "setNodePosition",
@@ -9416,7 +9453,9 @@ $__System.register("3c", ["5", "6", "3b", "3d"], function (_export) {
         }, {
           key: "switchToMonad",
           value: function switchToMonad(data, index, elements) {
-            var _this3 = this;
+            var _this4 = this;
+
+            var monadRadius = (this.height - 200) / 2;
 
             var linkedBooks = this.data.filter(function (d, i) {
               return data.data.data.entryID.indexOf(i) != -1;
@@ -9431,22 +9470,39 @@ $__System.register("3c", ["5", "6", "3b", "3d"], function (_export) {
             if (this.monad == d.name) {
 
               this.monad = "";
-              this.container.selectAll(".node").classed("hidden", false).classed("monadic-related ", false).classed("monad", false).call(this.setNodePosition).call(this.setNodeDimensions);
+              this.render('brushmove');
+              this.render('brushend');
+              this.openBookshelfButton.classed('hidden', true);
             } else {
               (function () {
 
-                _this3.monad = d.name;
-                var center = [_this3.width / 2 - 50, _this3.height / 2];
+                var linkedIDs = data.data.data.entryID;
+                var taggedBooks = _this4.data.reduce(function (p, c, i, a) {
+                  if (linkedIDs.indexOf(i) != -1) {
+                    p.push(c);return p;
+                  } else {
+                    return p;
+                  }
+                }, []);
+
+                console.log(data.data.data.occurrence);
+
+                // copy the data into the bookshelf && show the button
+                _this4.bookshelfData = taggedBooks;
+                _this4.openBookshelfButton.classed('hidden', false).html("show all <span>" + data.data.data.occurrence + "</span> books <br/>tagged with <span>'" + data.data.name + "'</span>");
+
+                _this4.monad = d.name;
+                var center = [_this4.width / 2 - 50, _this4.height / 2];
 
                 // reset all nodes
-                _this3.container.selectAll(".node").classed("hidden", true).classed("overflow", false).classed("partial", false).classed("monad", false).classed("left", false).classed("right", false).attr("data-balloon", null).attr("data-balloon-pos", null);
+                _this4.container.selectAll(".node").classed("hidden", true).classed("overflow", false).classed("partial", false).classed("monad", false).classed("left", false).classed("right", false).attr("data-balloon", null).attr("data-balloon-pos", null);
 
                 // center this node
                 clickedElement.classed("hidden", false).classed("monad", true).classed("monadic-related", false).style("width", null).style("height", null).style("opacity", 1).style("transform", function (d) {
                   return "translate3d(" + center[0] + "px," + center[1] + "px,0px)";
                 });
 
-                var linkedNodes = _this3.transformedData.links.filter(function (l) {
+                var linkedNodes = _this4.transformedData.links.filter(function (l) {
                   return l.source.name == d.name || l.target.name == d.name;
                 }).map(function (l) {
                   if (l.source.name == d.name) {
@@ -9464,22 +9520,41 @@ $__System.register("3c", ["5", "6", "3b", "3d"], function (_export) {
                   return l.strength;
                 });
 
-                var indexToPolar = d3.scaleLinear().domain([0, linkedNodes.length]).range([0, Math.PI * 2]);
-                var occurenceToProximity = d3.scaleLinear().domain([linkMax, linkMin]).range([200, _this3.height / 3]);
+                var range = linkedNodes.length < 3 ? [Math.PI * 0.5, Math.PI * 2.5] : [0, Math.PI * 2];
+
+                var indexToPolar = d3.scaleLinear().domain([0, linkedNodes.length]).range(range);
+                var occurenceToProximity = d3.scaleLinear().domain([linkMax, linkMin]).range([200, monadRadius]);
                 //let occurenceToAlpha = d3.scaleLinear().domain([linkMin, linkMax]).range([0.125, 1.0])
+
+                var sizeAdjustment = monadRadius / linkedNodes.reduce(function (p, c, i, a) {
+                  var value = occurenceToProximity(c.strength) / _this4.occurrenceScale.domain([linkMin, c.node.data.occurrence])(c.strength);
+                  return value > p ? value : p;
+                }, 0);
+
+                console.log(sizeAdjustment);
 
                 linkedNodes.forEach(function (l, i) {
 
-                  if (l.node.name != _this3.monad) {
+                  if (l.node.name != _this4.monad) {
                     (function () {
 
-                      var n = d3.select("#" + GeiVisUtils.makeSafeForCSS(l.node.name)).style("opacity", 1).classed("hidden", false).classed("monadic-related", true).classed("overflow", false).classed("partial", false);
+                      var n = d3.select("#" + GeiVisUtils.makeSafeForCSS(l.node.name)).style("opacity", 1).style("transition-delay", function (d, i) {
+                        return i * 0.2 + "s";
+                      }).classed("hidden", false).classed("monadic-related", true).classed("overflow", false).classed("partial", false);
 
-                      var x = center[0] + Math.sin(indexToPolar(i)) * occurenceToProximity(l.strength) / _this3.occurrenceScale.domain([linkMin, l.node.data.occurrence])(l.strength);
-                      var y = center[1] + Math.cos(indexToPolar(i)) * occurenceToProximity(l.strength) / _this3.occurrenceScale.domain([linkMin, l.node.data.occurrence])(l.strength);
+                      console.log(monadRadius);
+
+                      var relationDivision = _this4.occurrenceScale.domain([linkMin, l.node.data.occurrence])(l.strength) * 2;
+                      var proximity = Math.min(occurenceToProximity(l.strength) / relationDivision, monadRadius);
+
+                      var xBase = Math.sin(indexToPolar(i)) * proximity;
+                      var yBase = Math.cos(indexToPolar(i)) * proximity;
+
+                      var pos = [center[0] + xBase, center[1] + yBase];
 
                       var width = n.select(".label").node().offsetWidth;
                       var height = n.select(".label").node().offsetHeight;
+
                       var value = undefined;
 
                       // decide on the rotation
@@ -9491,7 +9566,7 @@ $__System.register("3c", ["5", "6", "3b", "3d"], function (_export) {
                       }
 
                       n.style("width", null).style("height", null).style("transform", function (d) {
-                        return "translate3d(" + x + "px," + y + "px,0px)rotate(-" + (indexToPolar(i) * 180 / Math.PI + value) + "deg)";
+                        return "translate3d(" + pos[0] + "px," + pos[1] + "px,0px)rotate(-" + (indexToPolar(i) * 180 / Math.PI + value) + "deg)";
                       });
                     })();
                   }
@@ -9502,23 +9577,15 @@ $__System.register("3c", ["5", "6", "3b", "3d"], function (_export) {
         }, {
           key: "nodeHover",
           value: function nodeHover(data, index, elements) {
-            var _this4 = this;
-
-            // console.log(this)
-            // console.log(data)
-            // console.log(index)
-            // console.log(elements)
+            var _this5 = this;
 
             var hoveredElement = d3.select(elements[index]);
-
             // deactive all nodes
-            this.container.selectAll(".node").classed("inactive", true).style("transition-delay", null);
-
+            this.container.selectAll(".node").classed("inactive", true);
             // activate the hovered
             hoveredElement.classed("inactive", false);
 
             var d = data.data;
-
             // search for links from and to this node
             var links = this.transformedData.links.filter(function (l) {
               return l.source.name == d.name || l.target.name == d.name;
@@ -9544,7 +9611,7 @@ $__System.register("3c", ["5", "6", "3b", "3d"], function (_export) {
 
               var selectedNode = d3.select("#" + GeiVisUtils.makeSafeForCSS(link.node.name));
 
-              selectedNode.classed("inactive", false).classed('related', true).style("opacity", _this4.occurrenceScale.domain([linkMin, linkMax]).range([0.5, 1.0])(link.commonOccurrence));
+              selectedNode.classed("inactive", false).classed('related', true).style("opacity", _this5.occurrenceScale.domain([linkMin, linkMax]).range([0.25, 1.0])(link.commonOccurrence));
 
               selectedNode.select(".count").text(link.commonOccurrence);
             });
@@ -9563,38 +9630,35 @@ $__System.register("3c", ["5", "6", "3b", "3d"], function (_export) {
           value: function checkOverflow(data, elements) {
 
             var el = d3.select(this);
-            //    console.log(el.node())
-            var overflow = GeiVisUtils.checkPartialOverflow(el.node(), 10);
+            //let overflow = GeiVisUtils.checkPartialOverflow(el.node(), 11)
 
-            switch (overflow) {
-              case "overflow":
-                el.classed("overflow", true);
-                el.attr("data-balloon", function (d) {
-                  return d.data.name + ": " + d.data.occurrence;
-                });
-                el.attr("data-balloon-pos", "down");
-                break;
-              case "partial-overflow":
-                el.classed("overflow", true).classed("partial", true);
-                el.attr("data-balloon", function (d) {
-                  return d.data.name + ": " + d.data.occurrence;
-                });
-                el.attr("data-balloon-pos", "down");
-                break;
-            }
+            if (el.node().offsetWidth < 40) el.classed("overflow", true).classed("partial", true);
+
+            if (el.node().offsetWidth < 11) el.classed("overflow", true).classed("partial", false);
+
+            // switch (overflow) {
+            //   case "overflow":
+            //     el.classed("overflow", true).classed("partial", false)
+            //   break
+            //   case "partial-overflow":
+            //     el.classed("overflow", true).classed("partial", true)
+            //   break
+            // }
           }
 
           // this function gets called to re-render the layout
         }, {
           key: "renderNodes",
           value: function renderNodes(keyframe) {
-            var _this5 = this;
+            var _this6 = this;
 
             var that = this;
 
             this.nodes = this.container.selectAll(".node").data(this.root.children, function (e) {
               return e.data.name;
             });
+
+            this.openBookshelfButton.classed('hidden', true);
 
             var enteredNodes = undefined,
                 exitedNodes = undefined;
@@ -9614,7 +9678,7 @@ $__System.register("3c", ["5", "6", "3b", "3d"], function (_export) {
                 // enter
                 enteredNodes = this.nodes.enter().append("div").attr("id", function (d) {
                   return GeiVisUtils.makeSafeForCSS(d.data.name);
-                }).on("mouseover", this.nodeHover.bind(this)).on("mouseleave", this.nodeUnhover.bind(this)).on("click", this.switchToMonad.bind(this)).classed("node", true).call(this.setInitalNodePosition.bind(this)).call(this.setNodeDimensions).call(this.setNodePosition);
+                }).classed("node", true).call(this.setNodeDimensions).call(this.setInitalNodePosition).call(this.setOverflowClass).on("mouseover", this.nodeHover.bind(this)).on("mouseleave", this.nodeUnhover.bind(this)).on("click", this.switchToMonad.bind(this)).call(this.setNodePosition);
 
                 // add the labels and numbers
                 enteredNodes.append("span").classed("label", true).text(function (d) {
@@ -9624,14 +9688,8 @@ $__System.register("3c", ["5", "6", "3b", "3d"], function (_export) {
                   return d.data.data.occurrence;
                 });
 
-                enteredNodes.call(function (d) {
-                  d.nodes().forEach(function (n) {
-                    return _this5.checkOverflow.bind(n)();
-                  });
-                });
-
                 // update
-                this.nodes.call(this.setNodePosition).call(this.setNodeDimensions).on("transitionend", this.checkOverflow);
+                this.nodes.classed("hidden", false).classed("monadic-related", false).classed("monad", false).call(this.setNodePosition).call(this.setNodeDimensions).call(this.setOverflowClass);
 
                 this.nodes.select(".label").text(function (d) {
                   return d.data.name;
@@ -9644,22 +9702,15 @@ $__System.register("3c", ["5", "6", "3b", "3d"], function (_export) {
                 exitedNodes = this.nodes.exit();
                 exitedNodes.remove();
 
-                // this.nodes
-                //   .call( (d) => {
-                //     d.nodes().forEach( n => this.checkOverflow.bind(n)() )
-                //   })
-
                 break;
 
               case "brushmove":
 
                 d3.select("#NetworkSection").classed("hasTransition", false);
 
-                this.nodes.style("opacity", 1).classed("overflow", function (d) {
-                  return d.r < 30;
-                }).classed("partial", false).attr("data-balloon", null).attr("data-balloon-pos", null).classed("monadic-related", false) // clear monadic
-                .classed("monad", false).classed("temporary-hidden", false).call(this.setNodeDimensions).style("transform", function (d) {
-                  var previusValues = _this5.previousData.get(d.data.name);
+                this.nodes.style("opacity", 1).classed("monadic-related", false) // clear monadic
+                .classed("monad", false).classed("temporary-hidden", false).call(this.setNodeDimensions).call(this.setOverflowClass).style("transform", function (d) {
+                  var previusValues = _this6.previousData.get(d.data.name);
                   var translate = "translate3d(" + (previusValues.x - d.r) + "px," + (previusValues.y - d.r) + "px,0px)";
                   return translate;
                 });
@@ -9740,9 +9791,9 @@ $__System.register('3e', ['5', '6', '22', '23', '31', '38', '3c'], function (_ex
             });
           });
 
-          this.div.append("div").attr("class", "intro").text("Cultural heritage institutions such as museums, archives, and libraries have been digitizing their inventories over the last two decades. The digitization process includes both the digital capture of the artifacts (for example via photography or 3d scanning) as well as the recording of the metadata about the artifact's historical context, material characteristics, and cultural significance. The main promises connected with digitization of cultural assets are long-term preservation and increased levels of access (Smith, 2002, pp.7). This paper is especially concerned with questions related to access, which so far has mostly relied on interface concepts from traditional information retrieval. However, there is an increased unease with a mode of access, which requires people to translate a possibly vague interest into a specific search query. Unlike museum exhibitions or library shelves that may lend themselves better to curiosity-driven browsing of cultural heritage, conventional search interfaces are arguable not particularly inviting. Instead, more 'generosity' is needed in the display of the artifacts' richness and their distribution in the collection");
+          this.div.append("div").attr("class", "intro").text("This visualization shows the distribution of tags throughout the currently selected timeframe. The size of a circle represent the number of books with that tag. On hover you can see the other tags that were given in conjunction. The opacity of the other circles indicates how often they were given in conjunction. By clicking on a circle you can see it’s neighbourhood: Other related tags form a circle around the selected tag. Their relation is caluclated by the number of shared occurrences and by how much of their own occurrence is shared together with the selected tag. Clicking on the link shows the corresponding books for each tag. Clicking on the centered node or changing the timeframe leaves this view.");
 
-          this.title.html('All tags');
+          this.title.html('Tags');
 
           var oh = 0;
           oh += parseInt(this.title.style("padding-top"));
@@ -9751,6 +9802,9 @@ $__System.register('3e', ['5', '6', '22', '23', '31', '38', '3c'], function (_ex
           this.margin = { 'top': oh, 'right': 0, 'bottom': 0, 'left': 0 };
 
           this.network = new CirclePackedNetwork({ 'margin': this.margin }).setBlacklist(this.blacklist).setNodeAccessor("RSWKTag").setOccurrenceScale(d3.scaleLinear().domain([0, 1]).range([0.5, 1.0])).append(this.div);
+
+          this.network.setState(state);
+          this.network.setDB(db);
         }
 
         _createClass(NetworkSection, [{
@@ -9764,6 +9818,7 @@ $__System.register('3e', ['5', '6', '22', '23', '31', '38', '3c'], function (_ex
             }
 
             if (!next.visible.NetworkSection) return;
+            this.db.bookshelfData = this.db.date.top(Infinity);
 
             if (next.brushStart !== last.brushStart || next.brushEnd !== last.brushEnd || next.visible.NetworkSection !== last.visible.NetworkSection) {
               this.render(next, last);
@@ -10505,10 +10560,18 @@ $__System.register("50", ["5", "6", "3d"], function (_export) {
 				_createClass(NestedTreemap, [{
 					key: "appendTo",
 					value: function appendTo(selector) {
+						var _this = this;
+
 						this.container = selector;
 						this.width = parseInt(this.container.style("width")) - this.properties.margin.left - this.properties.margin.right, this.height = window.innerHeight - 200 - 100 - this.properties.margin.top - this.properties.margin.bottom;
 
 						this.svg = this.container.append("div").attr("class", "visualization").style("width", this.width + 'px').style("height", this.height + 'px').style("position", "relative");
+
+						this.loadButton = this.container.append('a').classed('loadButton', true).on('click', function (d) {
+							_this.render('brushmove');
+							_this.render('brushend');
+							_this.hideButton.bind(_this)();
+						});
 
 						this.connectionSVG = this.svg.append('svg').style('position', 'absolute').attr("class", "label-connections").style("width", this.width).style("height", 60);
 						return this;
@@ -10516,12 +10579,22 @@ $__System.register("50", ["5", "6", "3d"], function (_export) {
 				}, {
 					key: "setState",
 					value: function setState(state) {
-						this.state = state;console.log(this.state);
+						this.state = state;
 					}
 				}, {
 					key: "setDB",
 					value: function setDB(db) {
-						this.db = db;console.log(this.db);
+						this.db = db;
+					}
+				}, {
+					key: "hideButton",
+					value: function hideButton() {
+						this.loadButton.classed('hidden', true);
+					}
+				}, {
+					key: "showButton",
+					value: function showButton() {
+						this.loadButton.classed('hidden', false).text("Click to load " + this.nestings[1][this.activeNest[1]].name + " data");
 					}
 				}, {
 					key: "relativeColorScale",
@@ -10611,7 +10684,7 @@ $__System.register("50", ["5", "6", "3d"], function (_export) {
 				}, {
 					key: "render",
 					value: function render(mode) {
-						var _this = this;
+						var _this2 = this;
 
 						function updateLabels(dataLevel1) {
 							var nodesLevel1 = this.svg.selectAll(".node.level-1").data(dataLevel1, this.dKey);
@@ -10693,43 +10766,45 @@ $__System.register("50", ["5", "6", "3d"], function (_export) {
 								break;
 							case "brushend":
 
+								this.hideButton();
+
 								updateLabels.bind(this)(dataLevel1);
 
 								var nodesLevel2 = this.svg.selectAll(".node.level-2").data(dataLevel2, this.dKey);
 
 								// enter l2-nodes
 								var enteredNodesLevel2 = nodesLevel2.enter().append('div').call(this.setNodeClass).call(this.setNodeID).call(this.setNodeDimensions).on("mouseover", function (d, i, array) {
-									_this.svg.selectAll(".node").classed("related", false);
+									_this2.svg.selectAll(".node").classed("related", false);
 									// only proceed if d.data is not empty
 									if (d.data.key != '' && d.data.key != undefined) {
-										_this.svg.selectAll("." + GeiVisUtils.makeSafeForCSS(d.data.key)).classed("related", true);
+										_this2.svg.selectAll("." + GeiVisUtils.makeSafeForCSS(d.data.key)).classed("related", true);
 										var el = d3.select(array[i]);
 										if (el.classed('overflow') || el.classed('other')) {
-											var tPos = d3.mouse(_this.container.node());
-											var tooltip = { name: d.data.key + " : " + d.data.value, pos: [tPos[0], _this.container.node().offsetTop + tPos[1]] };
-											_this.state.push({ hover: d.data.key, tooltip: tooltip });
+											var tPos = d3.mouse(_this2.container.node());
+											var tooltip = { name: d.data.key + " : " + d.data.value, pos: [tPos[0], _this2.container.node().offsetTop + tPos[1]] };
+											_this2.state.push({ hover: d.data.key, tooltip: tooltip });
 										}
 									}
 								}).on("mouseout", function (d) {
-									_this.svg.selectAll(".node").classed("related", false);
-									_this.state.push({ tooltip: null });
+									_this2.svg.selectAll(".node").classed("related", false);
+									_this2.state.push({ tooltip: null });
 								}).on("click", function (d) {
-									var indicesA = _this.data.map(_this.nestings[1][_this.activeNest[1]].accessor).map(function (el, i) {
+									var indicesA = _this2.data.map(_this2.nestings[1][_this2.activeNest[1]].accessor).map(function (el, i) {
 										return el == d.data.key ? i : -1;
 									}).filter(function (el) {
 										return el != -1;
 									});
-									var indicesB = _this.data.map(_this.nestings[0][_this.activeNest[0]].accessor).map(function (el, i) {
+									var indicesB = _this2.data.map(_this2.nestings[0][_this2.activeNest[0]].accessor).map(function (el, i) {
 										return el == d.parent.data.key ? i : -1;
 									}).filter(function (el) {
 										return el != -1;
 									});
-									var filteredData = _this.data.filter(function (d, i) {
+									var filteredData = _this2.data.filter(function (d, i) {
 										return indicesA.indexOf(i) != -1 && indicesB.indexOf(i) != -1;
 									});
-									_this.state.push({ bookshelf: false });
-									_this.db.bookshelfData = filteredData;
-									_this.state.push({ bookshelf: true });
+									_this2.state.push({ bookshelf: false });
+									_this2.db.bookshelfData = filteredData;
+									_this2.state.push({ bookshelf: true });
 								});
 								// labels
 								enteredNodesLevel2.append("span").classed("label", true).text(function (d) {
@@ -10741,7 +10816,7 @@ $__System.register("50", ["5", "6", "3d"], function (_export) {
 								// check for overflow
 								enteredNodesLevel2.call(function (d) {
 									d.nodes().forEach(function (n) {
-										_this.checkOverflow.bind(n)();
+										_this2.checkOverflow.bind(n)();
 									});
 								});
 
@@ -10862,7 +10937,7 @@ $__System.register('51', ['5', '6', '22', '23', '31', '50'], function (_export) 
           this.margin = { 'top': 0, 'right': 0, 'bottom': 0, 'left': 0 };
 
           this.title.text('Comparison');
-          this.div.append("div").attr("class", "intro").text("Cultural heritage institutions such as museums, archives, and libraries have been digitizing their inventories over the last two decades. The digitization process includes both the digital capture of the artifacts (for example via photography or 3d scanning) as well as the recording of the metadata about the artifact's historical context, material characteristics, and cultural significance. The main promises connected with digitization of cultural assets are long-term preservation and increased levels of access (Smith, 2002, pp.7). This paper is especially concerned with questions related to access, which so far has mostly relied on interface concepts from traditional information retrieval. However, there is an increased unease with a mode of access, which requires people to translate a possibly vague interest into a specific search query. Unlike museum exhibitions or library shelves that may lend themselves better to curiosity-driven browsing of cultural heritage, conventional search interfaces are arguable not particularly inviting. Instead, more 'generosity' is needed in the display of the artifacts' richness and their distribution in the collection");
+          this.div.append("div").attr("class", "intro").text("In this visualization you can compare two of the aforementioned facets by grouping them in succession. The groupings show for example the ratio of certain places in all subjects and enable the search for trends and the already mentioned comparison. You can change the first and second level groupings through the switches on the lefthand bottom side. Hovering over a single highlights the cell (i.e. a publisher) and shows other cells of the same type (i.e. the same publisher in other subjects). You can also see all the books for any cell by clicking on it.");
 
           this.treemap = new NestedTreemap({ 'margin': this.margin });
           this.treemap.setState(state);
@@ -10898,11 +10973,13 @@ $__System.register('51', ['5', '6', '22', '23', '31', '50'], function (_export) 
 
             // skip if not in viewport
             if (!next.visible.TreemapSection) return;
+            this.db.bookshelfData = this.db.date.top(Infinity);
 
             // update if became visible
             if (next.visible.TreemapSection !== last.visible.TreemapSection) {
               this.treemap.updateData(this.db.date.top(Infinity));
               this.treemap.render("brushmove");
+              this.treemap.showButton();
             } else {
               // update if in viewport and brush has changed
               if (next.brushStart !== last.brushStart || next.brushEnd !== last.brushEnd || next.loaded !== last.loaded || next.visible.TreemapSection !== last.visible.TreemapSection) {

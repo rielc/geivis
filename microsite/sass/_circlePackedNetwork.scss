@@ -13,6 +13,7 @@
         transform:translate(0,0);
         color:$blue;
         background-color: lighten($blue, 50%);
+        cursor: pointer;
         &.hidden {opacity:0;pointer-events:none;}
     }
 
@@ -85,7 +86,7 @@
 
         &.inactive {
             //box-shadow:  0 0 0 1px rgba($blue, 1.0) inset, 0 0 0 1000px rgba(#fff, 1.0) inset;
-            opacity: 0.1 !important;
+            opacity: 0.0 !important;
             > .label { display:none !important }
             > .count { display:none !important }
         }
