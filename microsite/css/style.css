@@ -617,8 +617,7 @@ header {
             background: #b00046; }
           #StreamSection .entities .entity .items .item .left {
             float: left;
-            width: 50%;
-            padding-right: 5px; }
+            width: 50%; }
             #StreamSection .entities .entity .items .item .left .bar {
               background: #3C7C9B;
               float: right;
@@ -626,8 +625,10 @@ header {
               padding: 1px;
               padding-left: 2px;
               height: 16px;
-              overflow: hidden; }
+              overflow: hidden;
+              transition: 0.7s width; }
           #StreamSection .entities .entity .items .item .right {
+            padding-left: 5px;
             float: right;
             width: 50%;
             overflow: hidden;

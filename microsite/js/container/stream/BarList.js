@@ -59,10 +59,12 @@ export class BarList extends StateDb {
 
     // console.log(group);
 
-    let s = this.items.selectAll(".item").data(group, d=>d.key);
+    let s = this.items.selectAll(".item").data(group, d=>{
+    console.log(d); return d.key;
+    });
     let e = s.enter()
       .append("div")
-      .classed("item", true)
+      .attr("class", "item")
       .on("mouseenter", (d,i,e)=>{
         let tooltip = null;
         if(d.value/max < 0.15){
@@ -95,7 +97,7 @@ export class BarList extends StateDb {
       .classed("bar", true)
       // .classed("hidden", d=> d.value/max < 0.2 )
       .text(d => d.value/max < 0.15 ? `` : `${ d.value }` )
-      .style("width", d=> `${ (d.value / max)*100 }%`)
+      .style("width", d=> `${ 0*100 }%`)
       .on("mouseenter", (d)=>{
         this.state.push({ event: "enter", active: this.key, hover: d.key });
       })
@@ -108,19 +110,18 @@ export class BarList extends StateDb {
       this.items.selectAll(".item").sort((a,b) => b.value - a.value)
     }
 
-    s.classed("hover", d=> !this.state.state.filters[this.key] && this.state.state.hover === d.key)
+    s.classed("hover", d=> !this.state.state.filters[this.key] && this.state.state.active === this.key && this.state.state.hover === d.key)
     s.classed("active", d=> this.state.state.filters[this.key] && this.state.state.filters[this.key]===d.key)
     
-    s.select(".bar")
+    s.merge(e).select(".bar")
       .text(d => `${ d.value }` )
       // .transition()
       .style("width", d=> {
-        if(d.value/max < 0.15 && this.state.state.hover === d.key){
+        if(d.value/max < 0.15 && this.state.state.hover === d.key && this.state.state.active === this.key){
           return "18%";
         } else {
           return `${ (d.value / max)*100 }%`;
         }
-        
       });
 
     s.select(".right")

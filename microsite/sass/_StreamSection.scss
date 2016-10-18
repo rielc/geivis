@@ -154,7 +154,7 @@
                     .left {
                         float: left;
                         width: 50%;
-                        padding-right: 5px;
+                        
                         .bar {
                             background: #3C7C9B;
                             float: right;
@@ -163,9 +163,11 @@
                             padding-left: 2px;
                             height: 16px;
                             overflow: hidden;
+                            transition: 0.7s width;
                         }
                     }
                     .right {
+                        padding-left: 5px;
                         float: right;
                         width: 50%;
                         overflow: hidden;
