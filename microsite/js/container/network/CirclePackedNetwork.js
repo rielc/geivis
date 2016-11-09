@@ -389,16 +389,13 @@ export class CirclePackedNetwork {
 
 
   nodeHover ( data, index, elements ) {
-
     let hoveredElement = d3.select(elements[index]);
-    // deactive all nodes
-    this.container.selectAll(".node").classed("inactive", true)
-    // activate the hovered
-    hoveredElement.classed("inactive", false)
-  
+    this.container.selectAll(".node").classed("inactive", true) // deactive all nodes
+    hoveredElement.classed("inactive", false) // activate the hovered
     let d = data.data;
     // search for links from and to this node
-    let links = this.transformedData.links.filter( l => (l.source.name == d.name || l.target.name == d.name) )
+    let links = this.transformedData.links
+      .filter( l => (l.source.name == d.name || l.target.name == d.name) )
       .map(l => {
         if (l.source.name == d.name) { return { "commonOccurrence" : l.strength, "node":l.target } }
         if (l.target.name == d.name) { return { "commonOccurrence" : l.strength, "node":l.source } }
@@ -408,26 +405,30 @@ export class CirclePackedNetwork {
     let linkMax = d3.max(links, l=>l.commonOccurrence)
     let linkMin = d3.min(links, l=>l.commonOccurrence)
 
-
     // // highlight the nodesg
     links.forEach( link => {
-
       let selectedNode = d3.select( "#"+GeiVisUtils.makeSafeForCSS( link.node.name ) )
-
         selectedNode
           .classed("inactive", false)
           .classed('related', true)
           .style("opacity", this.occurrenceScale.domain([linkMin, linkMax]).range([0.25, 1.0])(link.commonOccurrence) )
-
         selectedNode.select(".count").text(link.commonOccurrence)
-
     });
+
+    // show tooltip if needed
+    if (hoveredElement.classed('overflow')) {
+      const noun = d.data.occurrence>1 ? 'Bücher' : 'Buch'
+      const tooltip = { name: `${d.name} : ${d.data.occurrence} ${noun}` , pos: [data.x, this.container.node().offsetTop + this.container.node().parentElement.offsetTop+data.y-data.r-5] };
+      this.state.push({ hover: d.name, tooltip });
+    }
+
 }
 
   nodeUnhover ( data, index, elements ) {
     this.container.selectAll(".inactive").classed("inactive", false).style("opacity", null)
     this.container.selectAll(".related").classed("related", false).style("opacity", null)
     this.container.selectAll('.node').select(".count").text(d => d.data.data.occurrence )
+    this.state.push({ tooltip: null })
 }
 
 
