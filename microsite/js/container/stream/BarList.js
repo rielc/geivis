@@ -60,7 +60,8 @@ export class BarList extends StateDb {
     // console.log(group);
 
     let s = this.items.selectAll(".item").data(group, d=>{
-      //console.log(d); return d.key;
+      //console.log(d);
+      return d.key;
     });
     let e = s.enter()
       .append("div")
