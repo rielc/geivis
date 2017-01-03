@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "jspm": {
     "dependencies": {
-      "lodash": "npm:lodash@4.13.1",
+      "lodash": "npm:lodash@^4.17.4",
       "object-assign": "npm:object-assign@^4.1.0"
     },
     "devDependencies": {
@@ -16,6 +16,6 @@
     "start": "node jspm-server"
   },
   "devDependencies": {
-    "jspm": "^0.16.48"
+    "jspm": "^0.16.39"
   }
 }
