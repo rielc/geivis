@@ -40,7 +40,7 @@ export class DataBase {
   }
 
   init(_data, _geocode){
-    this.data = _data.filter(d=>d.year && d.year <= 1918 && d.year >= 1720);
+    this.data = _data.filter(d=>d.year && d.year <= 1920 && d.year >= 1718);
     this.geocode = _geocode;
 
     this.data.forEach(d => {
@@ -60,8 +60,8 @@ export class DataBase {
       d.place = d.place || "none";
     })
 
-    console.log(this.data[0])
     this.extent = d3.extent(this.data, d => d.date);
+    //console.log(this.extent, this.data[0])
 
     this.crossfilter = crossfilter(this.data);
     this.all = this.crossfilter.groupAll();

@@ -14,7 +14,6 @@
     "start": "node jspm-server"
   },
   "devDependencies": {
-    "jspm-dev-server": "^0.4.1",
     "jspm": "^0.16.48"
   }
 }
