@@ -1,7 +1,9 @@
 {
+  "name": "GEI VIZ",
+  "version": "0.1.0",
   "jspm": {
     "dependencies": {
-      "lodash": "npm:lodash@^4.13.1",
+      "lodash": "npm:lodash@4.13.1",
       "object-assign": "npm:object-assign@^4.1.0"
     },
     "devDependencies": {
@@ -10,7 +12,10 @@
       "core-js": "npm:core-js@^1.1.4"
     }
   },
+  "scripts": {
+    "start": "node jspm-server"
+  },
   "devDependencies": {
-    "jspm": "^0.16.39"
+    "jspm": "^0.16.48"
   }
 }
