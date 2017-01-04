@@ -40,9 +40,9 @@ export class DataBase {
   }
 
   init(_data, _geocode){
-    this.data = _data.filter(d=>d.year && d.year <= 1920 && d.year >= 1718);
+    this.data = _data.filter(d=>d.year <= 1920 && d.year >= 1717);
     this.geocode = _geocode;
-
+    
     this.data.forEach(d => {
       d.date = this.formater(d.year);
       d.year = parseInt(d.year);
@@ -61,7 +61,9 @@ export class DataBase {
     })
 
     this.extent = d3.extent(this.data, d => d.date);
-    //console.log(this.extent, this.data[0])
+    this.extent[1] = new Date(+this.extent[1]+10000);
+    
+    console.log(this.extent)
 
     this.crossfilter = crossfilter(this.data);
     this.all = this.crossfilter.groupAll();
@@ -172,10 +174,11 @@ export class DataBase {
       if(next.brushStart*1 === next.brushEnd*1){
         this.date.filterAll();
       } else {
-        this.date.filterRange([next.brushStart, next.brushEnd]);
+        // hack for filterRange see https://github.com/crossfilter/crossfilter/wiki/Crossfilter-Gotchas#filterrange-does-not-include-the-top-point
+        const brushStart = next.brushStart;
+        const brushEnd = +next.brushEnd+10000; 
+        this.date.filterRange([brushStart, brushEnd]);
       }
-      d3.select("#total").text(this.crossfilter.size());
-      d3.select("#active").text(this.all.value());
     }
 
     if(next.activeItem !== curr.activeItem){
@@ -204,8 +207,7 @@ export class DataBase {
       Object.keys(next.filters).forEach(k=>{
         this[k.substring(0,k.length-1)].filterExact(next.filters[k]);
       })
-      d3.select("#total").text(this.crossfilter.size());
-      d3.select("#active").text(this.all.value());
+
     }
 
 

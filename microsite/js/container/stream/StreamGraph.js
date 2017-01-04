@@ -164,11 +164,14 @@ export class StreamGraph extends StateDb {
 
     this.gBrush.call(this.brush.move, domain1.map(this.x))
     this.state.push({ brushStart: domain1[0], brushEnd: domain1[1], event: "brushmove" });
+
+    this.gGraph.classed("brushing", true);
   }
 
   brushend() {
     let s = d3.event.selection ? d3.event.selection.map(d=> this.x.invert(d)) : this.db.extent;
     this.state.push({ brushStart: s[0], brushEnd: s[1], event: "brushend" });
+    this.gGraph.classed("brushing", false);
   }
 
   load(){
@@ -231,6 +234,12 @@ export class StreamGraph extends StateDb {
 
     if(this.big && (next.brushStart !== last.brushStart)){
       //this.load().render();
+    }
+
+    if(next.brushStart !== last.brushStart || next.brushEnd !== last.brushEnd){
+      //this.load().render();
+      d3.select("#total").text(this.db.crossfilter.size());
+      d3.select("#active").text(this.db.all.value());
     }
 
   
@@ -354,7 +363,7 @@ export class StreamGraph extends StateDb {
     //   .attr("text-anchor", "middle")
 
     //   .attr("dx", 30)
-  
+
   }
 
 }

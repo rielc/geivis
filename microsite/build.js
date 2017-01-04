@@ -278,7 +278,7 @@ $__System.register("d", ["5", "6", "e", "c"], function (_export) {
             var _this2 = this;
 
             this.data = _data.filter(function (d) {
-              return d.year && d.year <= 1920 && d.year >= 1718;
+              return d.year <= 1920 && d.year >= 1717;
             });
             this.geocode = _geocode;
 
@@ -304,7 +304,9 @@ $__System.register("d", ["5", "6", "e", "c"], function (_export) {
             this.extent = d3.extent(this.data, function (d) {
               return d.date;
             });
-            //console.log(this.extent, this.data[0])
+            this.extent[1] = new Date(+this.extent[1] + 10000);
+
+            console.log(this.extent);
 
             this.crossfilter = crossfilter(this.data);
             this.all = this.crossfilter.groupAll();
@@ -438,10 +440,11 @@ $__System.register("d", ["5", "6", "e", "c"], function (_export) {
               if (next.brushStart * 1 === next.brushEnd * 1) {
                 this.date.filterAll();
               } else {
-                this.date.filterRange([next.brushStart, next.brushEnd]);
+                // hack for filterRange see https://github.com/crossfilter/crossfilter/wiki/Crossfilter-Gotchas#filterrange-does-not-include-the-top-point
+                var brushStart = next.brushStart;
+                var brushEnd = +next.brushEnd + 10000;
+                this.date.filterRange([brushStart, brushEnd]);
               }
-              d3.select("#total").text(this.crossfilter.size());
-              d3.select("#active").text(this.all.value());
             }
 
             if (next.activeItem !== curr.activeItem) {
@@ -468,8 +471,6 @@ $__System.register("d", ["5", "6", "e", "c"], function (_export) {
               _Object$keys(next.filters).forEach(function (k) {
                 _this3[k.substring(0, k.length - 1)].filterExact(next.filters[k]);
               });
-              d3.select("#total").text(this.crossfilter.size());
-              d3.select("#active").text(this.all.value());
             }
 
             // if(next.loaded == !curr.loaded){
@@ -6574,6 +6575,8 @@ $__System.register('12', ['5', '6', '10', '13', '14', '15', '16', 'e'], function
 
             this.gBrush.call(this.brush.move, domain1.map(this.x));
             this.state.push({ brushStart: domain1[0], brushEnd: domain1[1], event: "brushmove" });
+
+            this.gGraph.classed("brushing", true);
           }
         }, {
           key: 'brushend',
@@ -6584,6 +6587,7 @@ $__System.register('12', ['5', '6', '10', '13', '14', '15', '16', 'e'], function
               return _this3.x.invert(d);
             }) : this.db.extent;
             this.state.push({ brushStart: s[0], brushEnd: s[1], event: "brushend" });
+            this.gGraph.classed("brushing", false);
           }
         }, {
           key: 'load',
@@ -6649,8 +6653,15 @@ $__System.register('12', ['5', '6', '10', '13', '14', '15', '16', 'e'], function
               this.load().render(true);
             }
 
-            if (this.big && next.brushStart !== last.brushStart) {}
-            //this.load().render();
+            if (this.big && next.brushStart !== last.brushStart) {
+              //this.load().render();
+            }
+
+            if (next.brushStart !== last.brushStart || next.brushEnd !== last.brushEnd) {
+              //this.load().render();
+              d3.select("#total").text(this.db.crossfilter.size());
+              d3.select("#active").text(this.db.all.value());
+            }
 
             // if(next.activeItem !== last.activeItem){
             //   if(!next.activeItem) {

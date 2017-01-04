@@ -52,6 +52,9 @@
             box-shadow: 0 12px 13px -9px rgba(0, 0, 0, 0.18);
             position: fixed;
             top: 88px;
+            .graph path {
+                pointer-events:none;
+            }
         }
         text {
             font-family: "gravurcondensed-regular";
@@ -92,11 +95,16 @@
                 }
             }
         }
-        .graph path {
-            cursor: pointer;
-            fill: #BEE6F9;
-            &.active {
-                fill: #b00046;
+        .graph {
+            path {
+                cursor: pointer;
+                fill: #BEE6F9;
+                &.active {
+                    fill: #b00046;
+                }
+            }
+            &.brushing path {
+                pointer-events:none;
             }
         }
     }
