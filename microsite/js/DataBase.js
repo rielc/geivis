@@ -61,9 +61,6 @@ export class DataBase {
     })
 
     this.extent = d3.extent(this.data, d => d.date);
-    this.extent[1] = new Date(+this.extent[1]+10000);
-    
-    console.log(this.extent)
 
     this.crossfilter = crossfilter(this.data);
     this.all = this.crossfilter.groupAll();
@@ -175,9 +172,7 @@ export class DataBase {
         this.date.filterAll();
       } else {
         // hack for filterRange see https://github.com/crossfilter/crossfilter/wiki/Crossfilter-Gotchas#filterrange-does-not-include-the-top-point
-        const brushStart = next.brushStart;
-        const brushEnd = +next.brushEnd+10000; 
-        this.date.filterRange([brushStart, brushEnd]);
+        this.date.filterRange([next.brushStart, next.brushEnd.setMonth(2)]);
       }
     }
 
