@@ -304,9 +304,6 @@ $__System.register("d", ["5", "6", "e", "c"], function (_export) {
             this.extent = d3.extent(this.data, function (d) {
               return d.date;
             });
-            this.extent[1] = new Date(+this.extent[1] + 10000);
-
-            console.log(this.extent);
 
             this.crossfilter = crossfilter(this.data);
             this.all = this.crossfilter.groupAll();
@@ -441,9 +438,7 @@ $__System.register("d", ["5", "6", "e", "c"], function (_export) {
                 this.date.filterAll();
               } else {
                 // hack for filterRange see https://github.com/crossfilter/crossfilter/wiki/Crossfilter-Gotchas#filterrange-does-not-include-the-top-point
-                var brushStart = next.brushStart;
-                var brushEnd = +next.brushEnd + 10000;
-                this.date.filterRange([brushStart, brushEnd]);
+                this.date.filterRange([next.brushStart, next.brushEnd.setMonth(2)]);
               }
             }
 
