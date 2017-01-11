@@ -6523,7 +6523,7 @@ $__System.register('12', ['5', '6', '10', '13', '14', '15', '16', 'e'], function
 
             this.g.attr("transform", "translate(" + this.margin.left + "," + this.margin.top + ")");
             this.brush.extent([[0, 0], [this.width, this.height]]);
-            this.gBrush.call(this.brush).on("dblclick", function () {
+            this.gBrush.call(this.brush).on("click", function () {
               _this2.gBrush.call(_this2.brush.move, null);
             });
             this.gBrush.selectAll("rect").attr("height", this.height);
