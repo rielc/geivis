@@ -42,6 +42,10 @@ export class StateMachine {
     this.subscriber.push(c);
   }
 
+  unsubscribe(c){
+    this.subscriber = this.subscriber.filter(s => s !== c);
+  }
+
   broadcast(){
     // console.log("broadcast", this.state.brushEnd, this.state.brushEnd);
     // console.log(this.subscriber);
