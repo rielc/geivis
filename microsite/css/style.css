@@ -2848,7 +2848,7 @@ header {
     font-size: 20px;
     top: 30px;
     text-transform: uppercase;
-    color: darkgrey; }
+    color: #b00046; }
   #BookshelfSection .closeButton {
     position: absolute;
     top: 25px;
@@ -3296,6 +3296,12 @@ body {
     margin: auto auto;
     width: 1200px;
     background-color: #fff; }
+
+a.anchor {
+  display: block;
+  position: relative;
+  top: -188px;
+  visibility: hidden; }
 
 p {
   font: 12px "egyptienne", sans-serif; }

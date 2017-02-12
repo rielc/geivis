@@ -19,6 +19,8 @@
 @font-face { font-family: "gravurcondensed-bold"; src: url("gravurcondensed-bold.woff") format('woff'); }
 @font-face { font-family: "egyptienne"; src: url("egyptienne.woff") format('woff'); }
 
+
+
 body {
   font: 10px "gravurcondensed-regular", sans-serif;
   margin:0;
@@ -32,6 +34,13 @@ body {
     background-color:#fff;
   }
   }
+
+a.anchor {
+  display: block;
+  position: relative;
+  top: -188px;
+  visibility: hidden;
+}
 
 
 p { font: 12px "egyptienne", sans-serif; }
