@@ -28,8 +28,7 @@ export class DataBase {
       this.add({land});
       this.init(data,geocode);
 
-      this.state.push({ loaded: true, keyframe:true })
-
+      this.state.push({ loaded: true, keyframe:true });
 
     })
     })
@@ -40,24 +39,28 @@ export class DataBase {
   }
 
   init(_data, _geocode){
-    this.data = _data.filter(d=>d.year <= 1920 && d.year >= 1717);
+    this.data = _data;
+    this.data = _data.filter(d=>d.year <= 1920);
     this.geocode = _geocode;
+
+    // _data.filter(d=>d.year > 1920).forEach(d=> console.log(d))
+    // console.log(_data.filter(d=>d.year > 1920))
     
     this.data.forEach(d => {
       d.date = this.formater(d.year);
       d.year = parseInt(d.year);
-      d.place = d.publisher_city;
-
-      const geo = _geocode.find(g => g.name === d.place);
-      d.lat = geo ? +geo.lat : null;
-      d.lon = geo ? +geo.lon : null;
+      // console.log(d.year);
 
       d.RSWKTag = d.RSWKTag.split(",");
 
       d.publisher = d.publisher || "none";
       d.schoollevel = d.schoollevel || "none";
       d.subject = d.subject || "none";
-      d.place = d.place || "none";
+      d.place = d.publisher_city || "none";
+
+      const geo = _geocode.find(g => g.name === d.place);
+      d.lat = geo ? +geo.lat : null;
+      d.lon = geo ? +geo.lon : null;
     })
 
     this.extent = d3.extent(this.data, d => d.date);
@@ -90,6 +93,9 @@ export class DataBase {
       .offset(d3.stackOffsetNone);
 
     this.filters = {};
+
+
+    console.log(this.dates.all().map(d => d.key.getFullYear()));
 
     return this;
   }
@@ -152,6 +158,7 @@ export class DataBase {
     }
 
     const histogram = this.dates.reduce(reduceAdd, reduceRemove, reduceInitial).all();
+    // console.log(histogram);
     let stack = this.stack.keys(keys.map((d,i) => i))(histogram);
     stack.forEach(d => { d.key = keys[d.key]; })
     //console.log(stack);
