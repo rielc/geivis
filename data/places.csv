@@ -1,56 +1,69 @@
 "place","toPlace","num"
-"Halle",,89
+"Straßburg",,15
+"Nürnberg",,42
+"Berlin",,346
+"Leipzig",,810
+"St. Gallen",,0
+"Stuttgart",,71
+"Halle",,90
 "Lobenstein",,2
-"Stuttgart",,69
-"München",,150
+"München",,152
 "Würzburg",,5
-"Nürnberg",,41
 "Augsburg",,9
 "Paßau",,0
 "Augustæ Vindelicorum",,0
 "Erlangen",,11
-"Berlin",,340
 "Calw",,3
 "Hamburg",,34
-"Leipzig",,802
 "Prag",,0
-"Bielefeld [u.a.]",,95
-"Leipzig [u.a.]",,163
-"Breslau",,356
+"Leipzig [u.a.]",,187
+"Bielefeld [u.a.]",,117
+"Breslau",,358
 "Halle (Saale)",,3
-"Essen",,24
+"Essen",,25
 "Braunschweig",,102
 "Berlin [u.a.]",,51
 "München [u.a.]",,36
 "Freiburg im Breisgau [u.a.]",,25
 "Erlangen [u.a.]",,4
 "Paderborn",,43
-"Hannover",,97
-"Halle a.d.S.",,58
-"Weinheim [u.a.]",,3
-"Hannover-List [u.a.]",,21
+"Hannover",,104
+"Halle a.S.",,60
+"Dortmund",,3
+"Frankfurt am Main",,41
+"Frankfurt a.M.",,20
+"Bochum",,0
+"Vohwinkel",,0
+"Wittenberg",,17
 "Langensalza",,86
+"Zweibrücken",,1
+"Leutkirch",,0
+"Altenburg",,15
+"Halle a. S.",,21
+"Wittlich",,1
+"Hannover-List [u.a.]",,21
+"Weinheim [u.a.]",,3
 "Halle a. d. Saale",,6
 "Halle a. d. S.",,14
-"Trier",,20
+"Trier",,22
 "Wien",,8
-"Düsseldorf",,45
-"Cöthen",,8
-"Gotha",,49
-"Regensburg",,18
-"Ansbach",,6
-"Halle a.S.",,58
-"Münster i. Westf.",,3
-"Magdeburg",,8
+"Halle a.d.S.",,60
 "Aachen",,6
 "Frankfurt a.M. [u.a.]",,6
 "Frankfurt am Main [u.a.]",,4
 "Göttingen",,29
 "Bielefeld",,16
+"Düsseldorf",,45
 "Mannheim [u.a.]",,1
 "Bühl (Baden)",,4
 "Braunschweig [u.a.]",,6
 "Erfurt",,9
+"Cöthen",,8
+"Gotha",,49
+"Regensburg",,18
+"Ansbach",,6
+"Münster i. Westf.",,3
+"Magdeburg",,8
 "Münster i.W.",,9
 "Münster in Westf.",,9
 "Gebweiler",,0
@@ -58,32 +71,27 @@
 "Karlsruhe",,16
 "Gießen",,13
 "Hildesheim",,2
-"Altenburg",,14
 "Dresden",,64
 "Bielefeld [u. a.]",,0
 "Berlin [u.a.] ",,0
 "Dresden [u.a.]",,10
 "Kempten",,6
 "Habelschwerdt",,6
-"Bamberg",,22
-"Freiburg im Breisgau",,22
+"Bamberg",,24
+"Freiburg im Breisgau",,24
+"Köln",,23
 "Speyer a.Rh.",,0
-"Zweibrücken",,1
-"Wittenberg",,17
-"Straßburg",,13
 "Rostock",,4
 "Schleswig",,9
 "Saarbrücken",,0
 "Schwabach",,1
-"Halle a. S.",,21
-"Frankfurt a.M.",,19
 "Hannover [u. a.]",,0
 "Münster i. W.",,4
 "Rinteln",,3
 "Danzig",,17
 "Detmold",,0
 "Kempten [u.a.]",,1
-"Hannover [u.a.]",,35
+"Hannover [u.a.]",,37
 "Nagold",,1
 "Minden i.W.",,1
 "Bonndorf (bad. Schwarzwald)",,0
@@ -103,20 +111,19 @@
 "Oldenburg",,13
 "Neubrandenburg",,6
 "Heiligenstadt (Eichsfeld)",,0
-"Wiesbaden",,22
+"Wiesbaden",,23
 "Hannover-List",,5
 "Wolfenbüttel",,13
 "Bayreuth",,1
 "Gera",,11
 "Cassel",,7
 "Bunzlau",,3
-"Kiel",,2
+"Kiel",,3
 "Neuwied [u.a.]",,0
-"Lahr",,2
+"Lahr",,3
 "Halle a.d. Saale",,0
 "Osnabrück",,4
 "Neumark, Westpr.",,0
-"Köln",,21
 "Freiburg i.B.",,1
 "Meißen",,4
 "Annaberg",,4
@@ -132,16 +139,13 @@
 "Bonndorf",,0
 "Elberfeld",,14
 "Weißenfels",,0
+"Arnsberg i.W.",,1
+"Stuttgart [u.a.]",,0
+"Wittlich [u.a.]",,0
 "Wismar",,1
 "Metz",,1
 "Dessau",,1
 "Verl. der Buchh. des Waisenhauses",,0
-"Arnsberg i.W.",,1
-"Stuttgart [u.a.]",,0
-"Wittlich [u.a.]",,0
-"Wittlich",,1
-"Frankfurt am Main",,36
-"Karlsruhe i.B.",,1
 "Bruchsal",,0
 "Flensburg",,6
 "Münster in Westfalen",,0
@@ -172,7 +176,6 @@
 "Kreuznach [u.a.]",,0
 "Straubing",,0
 "Mainz",,28
-"Dortmund",,2
 "Leipzig [u. a.]",,0
 "Eßlingen",,6
 "Holzminden",,0
@@ -207,12 +210,13 @@
 "Königsberg",,11
 "Wismar [u.a.]",,1
 "Coburg",,2
+"Karlsruhe i.B.",,1
+"Eßlingen [u.a.]",,0
 "Tübingen",,1
 "Jena",,4
 "Quedlinburg",,1
 "Harburg",,2
 "Oberhausen [u.a.]",,0
-"Eßlingen [u.a.]",,0
 "Coblenz",,1
 "Stolp",,0
 "Halle a/S.",,1
@@ -295,6 +299,8 @@
 "Lemgo",,0
 "Hirschberg",,0
 "Germantown, [Pa.]",,0
+"Grünstadt",,1
+"Chemnitz-Gablenz",,0
 "Hamm",,0
 "Görlitz",,3
 "Germantaun",,0
@@ -309,9 +315,6 @@
 "W Budéschiie",,0
 "Elmshorn",,1
 "Berlin und Stettin",,0
-"Grünstadt",,1
-"Chemnitz-Gablenz",,0
-"Berlin [u. a.]",,0
 "Budißin",,0
 "Leipzig und Frankfurt",,0
 "Mühlhausen",,0
@@ -325,7 +328,7 @@
 "Ebersdorf",,0
 "Wienn",,5
 "Halle im Magdeburgischen",,0
-"Augspurg",,3
+"Augspurg",,2
 "Halle, in Magdeburg",,0
 "Thorn",,0
 "Halle im Magdeburg.",,0
@@ -333,6 +336,7 @@
 "Dantzig",,0
 "[Erffurt]",,0
 "Ienae",,0
+"Berlin [u. a.]",,0
 "Münster (Westf.)",,1
 "Wurzen",,0
 "Karlsruhe [u.a.]",,0
@@ -348,6 +352,3 @@
 "Rappenau",,0
 "Goslar a. Harz",,1
 "Cöln a. Rh.",,0
-"Bochum",,0
-"Vohwinkel",,0
-"Leutkirch",,0
