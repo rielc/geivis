@@ -75,8 +75,9 @@ export class ScrollListener {
       // offset = document.getElementById(section).offsetTop;
       offset = document.getElementById(section).getBoundingClientRect().top;
       // console.log(offset)
+      this.scrollTo(offset);
     }
-    this.scrollTo(offset);
+    
   }
 
   destroy(){
