@@ -169,8 +169,21 @@ export class StreamGraph extends StateDb {
   }
 
   brushend() {
-    let s = d3.event.selection ? d3.event.selection.map(d=> this.x.invert(d)) : this.db.extent;
-    this.state.push({ brushStart: s[0], brushEnd: s[1], event: "brushend" });
+    // let s = d3.event.selection ? d3.event.selection.map(d=> this.x.invert(d)) : this.db.extent;
+    
+    if(!d3.event.selection){
+     this.state.push({ brushStart: this.db.extent[0], brushEnd: d3.timeYear.ceil(this.db.extent[1]), event: "brushend" });
+    } else {
+      let domain0 = d3.event.selection.map(this.x.invert);
+      let domain1 = domain0.map(d3.timeYear.round);
+
+      // If empty when rounded, use floor & ceil instead.
+      if (domain1[0] >= domain1[1]) {
+        domain1[0] = d3.timeYear.floor(domain0[0]);
+        domain1[1] = d3.timeYear.ceil(domain0[1]);
+      }
+      this.state.push({ brushStart: domain1[0], brushEnd: domain1[1], event: "brushend" });
+    }
     this.gGraph.classed("brushing", false);
   }
 

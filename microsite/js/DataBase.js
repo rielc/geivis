@@ -40,7 +40,7 @@ export class DataBase {
 
   init(_data, _geocode){
     this.data = _data;
-    this.data = _data.filter(d=>d.year <= 1920);
+    // this.data = _data.filter(d=>d.year <= 1920);
     this.geocode = _geocode;
 
     // _data.filter(d=>d.year > 1920).forEach(d=> console.log(d))
@@ -94,8 +94,7 @@ export class DataBase {
 
     this.filters = {};
 
-
-    console.log(this.dates.all().map(d => d.key.getFullYear()));
+    this.years = this.dates.all().map(d => d.key.getFullYear());
 
     return this;
   }
@@ -158,8 +157,32 @@ export class DataBase {
     }
 
     const histogram = this.dates.reduce(reduceAdd, reduceRemove, reduceInitial).all();
-    // console.log(histogram);
-    let stack = this.stack.keys(keys.map((d,i) => i))(histogram);
+
+    // let lastYear = histogram[0].key.getFullYear();
+    // histogram.forEach(d => {
+    //   const now = d.key.getFullYear();
+    //   if(now != lastYear){
+    //     const diff = now-lastYear;
+    //   }
+    //   console.log(d.key.getFullYear());
+    // })
+
+    const yearlookup = histogram.reduce((prev, cur)=>{
+      prev[cur.key.getFullYear()] = cur;
+      return prev;
+    }, {})
+
+    const histogramNum = histogram[0].value.length;
+
+    const histogramFilled = d3.range(this.extent[0].getFullYear(), this.extent[1].getFullYear()).map(d => {
+      return yearlookup[d] || { key: new Date(d, 0, 1), value: d3.range(histogramNum).map(()=>0) };
+    });
+
+    // console.log(yearlookup, histogramFilled);
+
+    // console.log(histogram, histogramFilled);
+
+    let stack = this.stack.keys(keys.map((d,i) => i))(histogramFilled);
     stack.forEach(d => { d.key = keys[d.key]; })
     //console.log(stack);
 
@@ -179,6 +202,7 @@ export class DataBase {
         this.date.filterAll();
       } else {
         // hack for filterRange see https://github.com/crossfilter/crossfilter/wiki/Crossfilter-Gotchas#filterrange-does-not-include-the-top-point
+        console.log("filter", next.event, [next.brushStart, next.brushEnd.setMonth(2)])
         this.date.filterRange([next.brushStart, next.brushEnd.setMonth(2)]);
       }
     }
