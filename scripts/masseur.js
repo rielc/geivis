@@ -137,6 +137,7 @@ function parseFile(content) {
                 if (type == "011@") { newBook.year = subfield[0]._; }
                 if (type == "028A") { newBook.author = subfield[0]._ + " " + subfield[1]._; }
                 if (type == "021A") { newBook.title = subfield[0]._; }
+                if (type == "036C") { newBook.titleAlt = subfield[0]._; }
 
 
                 //subfield.map(d=>d._).filter(d => d ? d.match("http") : null).forEach(d => console.log(d))
