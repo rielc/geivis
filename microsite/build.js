@@ -131,7 +131,8 @@ $__System.register("4", ["3", "5", "6"], function (_export) {
             visible: { StreamSection: true },
             scrollY: 0,
             tooltip: {},
-            filters: {}
+            filters: {},
+            language: "de"
           };
           this.history = [];
           this.history.push(objectAssign({}, this.state));
@@ -356,9 +357,7 @@ $__System.register("d", ["5", "6", "e", "c"], function (_export) {
 
             this.filters = {};
 
-            this.years = this.dates.all().map(function (d) {
-              return d.key.getFullYear();
-            });
+            // this.years = this.dates.all().map(d => d.key.getFullYear());
 
             return this;
           }
@@ -7043,31 +7042,72 @@ $__System.registerDynamic("17", ["21"], true, function ($__require, exports, mod
   exports.__esModule = true;
   return module.exports;
 });
-$__System.register("22", ["5", "6", "14", "15", "16", "17", "e"], function (_export) {
-  var _createClass, _classCallCheck, StateDb, _get, _inherits, _defineProperty, _extends, __hotReload, BarList;
+$__System.register('22', [], function (_export) {
+	'use strict';
+
+	var translations;
+
+	_export('translate', translate);
+
+	function translate(text, lang) {
+
+		var translated = translations[text];
+
+		if (!translated) {
+			console.warn(text, "is not translated");
+			return text;
+		}
+
+		return translated[lang] || text;
+	}
+
+	return {
+		setters: [],
+		execute: function () {
+			translations = {
+				'subjects': {
+					de: 'Schulfächer'
+				},
+				'schoollevels': {
+					de: 'Bildungslevel'
+				},
+				'publishers': {
+					de: 'Verlage'
+				},
+				'places': {
+					de: 'Verlagsorte'
+				}
+			};
+		}
+	};
+});
+$__System.register('23', ['5', '6', '14', '15', '16', '17', '22', 'e'], function (_export) {
+  var _createClass, _classCallCheck, StateDb, _get, _inherits, _defineProperty, translate, _extends, __hotReload, BarList;
 
   return {
     setters: [function (_4) {
-      _createClass = _4["default"];
+      _createClass = _4['default'];
     }, function (_5) {
-      _classCallCheck = _5["default"];
+      _classCallCheck = _5['default'];
     }, function (_7) {
       StateDb = _7.StateDb;
     }, function (_2) {
-      _get = _2["default"];
+      _get = _2['default'];
     }, function (_3) {
-      _inherits = _3["default"];
+      _inherits = _3['default'];
     }, function (_6) {
-      _defineProperty = _6["default"];
+      _defineProperty = _6['default'];
+    }, function (_8) {
+      translate = _8.translate;
     }, function (_e) {
-      _extends = _e["default"];
+      _extends = _e['default'];
     }],
     execute: function () {
-      "use strict";
+      'use strict';
 
       __hotReload = true;
 
-      _export("__hotReload", __hotReload);
+      _export('__hotReload', __hotReload);
 
       BarList = (function (_StateDb) {
         _inherits(BarList, _StateDb);
@@ -7077,7 +7117,7 @@ $__System.register("22", ["5", "6", "14", "15", "16", "17", "e"], function (_exp
 
           _classCallCheck(this, BarList);
 
-          _get(Object.getPrototypeOf(BarList.prototype), "constructor", this).call(this, state, db);
+          _get(Object.getPrototypeOf(BarList.prototype), 'constructor', this).call(this, state, db);
 
           this.div = div.append("div").classed("entity", true);
           this.div.append("div").classed("title", true).text(this.key);
@@ -7093,14 +7133,14 @@ $__System.register("22", ["5", "6", "14", "15", "16", "17", "e"], function (_exp
         }
 
         _createClass(BarList, [{
-          key: "Key",
+          key: 'Key',
           value: function Key(_) {
             if (!arguments.length) return this.key;
             this.key = _;
             return this;
           }
         }, {
-          key: "stateChange",
+          key: 'stateChange',
           value: function stateChange(next, last) {
             if (!next.visible.StreamSection) return;
             // console.log(next,last);
@@ -7109,12 +7149,12 @@ $__System.register("22", ["5", "6", "14", "15", "16", "17", "e"], function (_exp
             }
           }
         }, {
-          key: "render",
+          key: 'render',
           value: function render() {
             var _this2 = this;
 
             var size = this.db[this.key].size();
-            this.div.select(".title").text(this.key);
+            this.div.select(".title").text(translate(this.key, this.state.state.language));
             this.div.classed("active", this.state.state.active === this.key);
             this.div.classed("hover", this.state.state.hover === this.key);
             this.div.on("mouseenter", function (d) {
@@ -7163,15 +7203,15 @@ $__System.register("22", ["5", "6", "14", "15", "16", "17", "e"], function (_exp
             e.append("div").classed("left", true).append("div").classed("bar", true)
             // .classed("hidden", d=> d.value/max < 0.2 )
             .text(function (d) {
-              return d.value / max < 0.15 ? "" : "" + d.value;
+              return d.value / max < 0.15 ? '' : '' + d.value;
             }).style("width", function (d) {
-              return 0 * 100 + "%";
+              return 0 * 100 + '%';
             }).on("mouseenter", function (d) {
               _this2.state.push({ event: "enter", active: _this2.key, hover: d.key });
             });
 
             e.append("div").classed("right", true).text(function (d) {
-              return "" + d.key;
+              return '' + d.key;
             });
 
             if (this.state.state.event == "brushend" || this.state.state.event == "click") {
@@ -7189,19 +7229,19 @@ $__System.register("22", ["5", "6", "14", "15", "16", "17", "e"], function (_exp
             });
 
             s.merge(e).select(".bar").text(function (d) {
-              return "" + d.value;
+              return '' + d.value;
             })
             // .transition()
             .style("width", function (d) {
               if (d.value / max < 0.15 && _this2.state.state.hover === d.key && _this2.state.state.active === _this2.key) {
                 return "18%";
               } else {
-                return d.value / max * 100 + "%";
+                return d.value / max * 100 + '%';
               }
             });
 
             s.select(".right").text(function (d) {
-              return "" + d.key;
+              return '' + d.key;
             });
 
             s.exit().remove();
@@ -7214,11 +7254,11 @@ $__System.register("22", ["5", "6", "14", "15", "16", "17", "e"], function (_exp
         return BarList;
       })(StateDb);
 
-      _export("BarList", BarList);
+      _export('BarList', BarList);
     }
   };
 });
-$__System.register('23', ['5', '6', '13', '15', '16', '22', '24'], function (_export) {
+$__System.register('24', ['5', '6', '13', '15', '16', '23', '25'], function (_export) {
   var _createClass, _classCallCheck, StreamGraph, _get, _inherits, BarList, Section, __hotReload, StreamSection;
 
   return {
@@ -7314,7 +7354,7 @@ $__System.register('23', ['5', '6', '13', '15', '16', '22', '24'], function (_ex
     }
   };
 });
-$__System.register("25", ["5", "6", "15", "16", "24"], function (_export) {
+$__System.register("26", ["5", "6", "15", "16", "25"], function (_export) {
   var _createClass, _classCallCheck, _get, _inherits, Section, __hotReload, DummySection;
 
   return {
@@ -7374,7 +7414,7 @@ $__System.register("25", ["5", "6", "15", "16", "24"], function (_export) {
     }
   };
 });
-$__System.register('26', ['5', '6', '14', '15', '16'], function (_export) {
+$__System.register('27', ['5', '6', '14', '15', '16'], function (_export) {
   var _createClass, _classCallCheck, StateDb, _get, _inherits, __hotReload, Bookshelf;
 
   return {
@@ -7480,7 +7520,7 @@ $__System.register('26', ['5', '6', '14', '15', '16'], function (_export) {
     }
   };
 });
-$__System.register('27', ['5', '6', '15', '16', '24', '26'], function (_export) {
+$__System.register('28', ['5', '6', '15', '16', '25', '27'], function (_export) {
   var _createClass, _classCallCheck, _get, _inherits, Section, Bookshelf, __hotReload, BookshelfSection;
 
   return {
@@ -7532,7 +7572,7 @@ $__System.register('27', ['5', '6', '15', '16', '24', '26'], function (_export) 
     }
   };
 });
-$__System.register("28", ["5", "6", "14", "15", "16"], function (_export) {
+$__System.register("29", ["5", "6", "14", "15", "16"], function (_export) {
   var _createClass, _classCallCheck, StateDb, _get, _inherits, __hotReload, Geomap;
 
   return {
@@ -7763,7 +7803,7 @@ $__System.register("28", ["5", "6", "14", "15", "16"], function (_export) {
     }
   };
 });
-$__System.register('29', ['5', '6', '15', '16', '24', '28'], function (_export) {
+$__System.register('2a', ['5', '6', '15', '16', '25', '29'], function (_export) {
   var _createClass, _classCallCheck, _get, _inherits, Section, Geomap, __hotReload, GeomapSection;
 
   return {
@@ -7823,7 +7863,7 @@ $__System.register('29', ['5', '6', '15', '16', '24', '28'], function (_export) 
     }
   };
 });
-$__System.register("2a", ["5", "6"], function (_export) {
+$__System.register("2b", ["5", "6"], function (_export) {
   var _createClass, _classCallCheck, Tooltip;
 
   function __hotReload() {
@@ -7882,7 +7922,7 @@ $__System.register("2a", ["5", "6"], function (_export) {
     }
   };
 });
-$__System.register("2b", [], function (_export) {
+$__System.register("2c", [], function (_export) {
 	"use strict";
 
 	var classificationTags;
@@ -7938,7 +7978,7 @@ $__System.register("2b", [], function (_export) {
 		}
 	};
 });
-$__System.registerDynamic('2c', ['1e'], true, function ($__require, exports, module) {
+$__System.registerDynamic('2d', ['1e'], true, function ($__require, exports, module) {
   var define,
       global = this || self,
       GLOBAL = global;
@@ -7947,24 +7987,24 @@ $__System.registerDynamic('2c', ['1e'], true, function ($__require, exports, mod
   $export($export.S, 'Number', { parseFloat: parseFloat });
   return module.exports;
 });
-$__System.registerDynamic('2d', ['2c'], true, function ($__require, exports, module) {
+$__System.registerDynamic('2e', ['2d'], true, function ($__require, exports, module) {
   var define,
       global = this || self,
       GLOBAL = global;
   /* */
-  $__require('2c');
+  $__require('2d');
   module.exports = parseFloat;
   return module.exports;
 });
-$__System.registerDynamic("2e", ["2d"], true, function ($__require, exports, module) {
+$__System.registerDynamic("2f", ["2e"], true, function ($__require, exports, module) {
   var define,
       global = this || self,
       GLOBAL = global;
   /* */
-  module.exports = { "default": $__require("2d"), __esModule: true };
+  module.exports = { "default": $__require("2e"), __esModule: true };
   return module.exports;
 });
-$__System.register("2f", ["5", "6", "30", "2e"], function (_export) {
+$__System.register("30", ["5", "6", "31", "2f"], function (_export) {
   var _createClass, _classCallCheck, GeiVisUtils, _Number$parseFloat, __hotReload, CirclePackedNetwork;
 
   return {
@@ -7974,8 +8014,8 @@ $__System.register("2f", ["5", "6", "30", "2e"], function (_export) {
       _classCallCheck = _2["default"];
     }, function (_3) {
       GeiVisUtils = _3;
-    }, function (_e) {
-      _Number$parseFloat = _e["default"];
+    }, function (_f) {
+      _Number$parseFloat = _f["default"];
     }],
     execute: function () {
       "use strict";
@@ -8579,8 +8619,8 @@ $__System.register("2f", ["5", "6", "30", "2e"], function (_export) {
     }
   };
 });
-$__System.register('31', ['5', '6', '15', '16', '24', '2b', '2f'], function (_export) {
-  var _createClass, _classCallCheck, _get, _inherits, Section, classificationTags, CirclePackedNetwork, __hotReload, NetworkSection;
+$__System.register('32', ['5', '6', '15', '16', '25', '30', '2c'], function (_export) {
+  var _createClass, _classCallCheck, _get, _inherits, Section, CirclePackedNetwork, classificationTags, __hotReload, NetworkSection;
 
   return {
     setters: [function (_3) {
@@ -8593,10 +8633,10 @@ $__System.register('31', ['5', '6', '15', '16', '24', '2b', '2f'], function (_ex
       _inherits = _2['default'];
     }, function (_5) {
       Section = _5.Section;
-    }, function (_b) {
-      classificationTags = _b.classificationTags;
-    }, function (_f) {
-      CirclePackedNetwork = _f.CirclePackedNetwork;
+    }, function (_6) {
+      CirclePackedNetwork = _6.CirclePackedNetwork;
+    }, function (_c) {
+      classificationTags = _c.classificationTags;
     }],
     execute: function () {
       'use strict';
@@ -8680,7 +8720,7 @@ $__System.register('31', ['5', '6', '15', '16', '24', '2b', '2f'], function (_ex
     }
   };
 });
-$__System.registerDynamic("32", [], true, function ($__require, exports, module) {
+$__System.registerDynamic("33", [], true, function ($__require, exports, module) {
   var define,
       global = this || self,
       GLOBAL = global;
@@ -8692,12 +8732,12 @@ $__System.registerDynamic("32", [], true, function ($__require, exports, module)
   };
   return module.exports;
 });
-$__System.registerDynamic('1b', ['32'], true, function ($__require, exports, module) {
+$__System.registerDynamic('1b', ['33'], true, function ($__require, exports, module) {
   var define,
       global = this || self,
       GLOBAL = global;
   /* */
-  var cof = $__require('32');
+  var cof = $__require('33');
   module.exports = Object('z').propertyIsEnumerable(0) ? Object : function (it) {
     return cof(it) == 'String' ? it.split('') : Object(it);
   };
@@ -8714,7 +8754,7 @@ $__System.registerDynamic("18", [], true, function ($__require, exports, module)
   };
   return module.exports;
 });
-$__System.registerDynamic('33', ['1b', '18'], true, function ($__require, exports, module) {
+$__System.registerDynamic('34', ['1b', '18'], true, function ($__require, exports, module) {
   var define,
       global = this || self,
       GLOBAL = global;
@@ -8758,12 +8798,12 @@ $__System.registerDynamic('9', ['1e', 'b', '1c'], true, function ($__require, ex
     };
     return module.exports;
 });
-$__System.registerDynamic('34', ['33', '9'], true, function ($__require, exports, module) {
+$__System.registerDynamic('35', ['34', '9'], true, function ($__require, exports, module) {
   var define,
       global = this || self,
       GLOBAL = global;
   /* */
-  var toIObject = $__require('33');
+  var toIObject = $__require('34');
   $__require('9')('getOwnPropertyDescriptor', function ($getOwnPropertyDescriptor) {
     return function getOwnPropertyDescriptor(it, key) {
       return $getOwnPropertyDescriptor(toIObject(it), key);
@@ -8771,34 +8811,34 @@ $__System.registerDynamic('34', ['33', '9'], true, function ($__require, exports
   });
   return module.exports;
 });
-$__System.registerDynamic('35', ['1a', '34'], true, function ($__require, exports, module) {
+$__System.registerDynamic('36', ['1a', '35'], true, function ($__require, exports, module) {
   var define,
       global = this || self,
       GLOBAL = global;
   /* */
   var $ = $__require('1a');
-  $__require('34');
+  $__require('35');
   module.exports = function getOwnPropertyDescriptor(it, key) {
     return $.getDesc(it, key);
   };
   return module.exports;
 });
-$__System.registerDynamic("36", ["35"], true, function ($__require, exports, module) {
+$__System.registerDynamic("37", ["36"], true, function ($__require, exports, module) {
   var define,
       global = this || self,
       GLOBAL = global;
   /* */
-  module.exports = { "default": $__require("35"), __esModule: true };
+  module.exports = { "default": $__require("36"), __esModule: true };
   return module.exports;
 });
-$__System.registerDynamic("15", ["36"], true, function ($__require, exports, module) {
+$__System.registerDynamic("15", ["37"], true, function ($__require, exports, module) {
   /* */
   "use strict";
 
   var define,
       global = this || self,
       GLOBAL = global;
-  var _Object$getOwnPropertyDescriptor = $__require("36")["default"];
+  var _Object$getOwnPropertyDescriptor = $__require("37")["default"];
   exports["default"] = function get(_x, _x2, _x3) {
     var _again = true;
     _function: while (_again) {
@@ -8834,7 +8874,7 @@ $__System.registerDynamic("15", ["36"], true, function ($__require, exports, mod
   exports.__esModule = true;
   return module.exports;
 });
-$__System.registerDynamic('37', ['1a'], true, function ($__require, exports, module) {
+$__System.registerDynamic('38', ['1a'], true, function ($__require, exports, module) {
   var define,
       global = this || self,
       GLOBAL = global;
@@ -8845,15 +8885,15 @@ $__System.registerDynamic('37', ['1a'], true, function ($__require, exports, mod
   };
   return module.exports;
 });
-$__System.registerDynamic("38", ["37"], true, function ($__require, exports, module) {
+$__System.registerDynamic("39", ["38"], true, function ($__require, exports, module) {
   var define,
       global = this || self,
       GLOBAL = global;
   /* */
-  module.exports = { "default": $__require("37"), __esModule: true };
+  module.exports = { "default": $__require("38"), __esModule: true };
   return module.exports;
 });
-$__System.registerDynamic('39', [], true, function ($__require, exports, module) {
+$__System.registerDynamic('3a', [], true, function ($__require, exports, module) {
   var define,
       global = this || self,
       GLOBAL = global;
@@ -8863,14 +8903,14 @@ $__System.registerDynamic('39', [], true, function ($__require, exports, module)
 
   return module.exports;
 });
-$__System.registerDynamic('1e', ['39', 'b', '3a'], true, function ($__require, exports, module) {
+$__System.registerDynamic('1e', ['3a', 'b', '3b'], true, function ($__require, exports, module) {
   var define,
       global = this || self,
       GLOBAL = global;
   /* */
-  var global = $__require('39'),
+  var global = $__require('3a'),
       core = $__require('b'),
-      ctx = $__require('3a'),
+      ctx = $__require('3b'),
       PROTOTYPE = 'prototype';
   var $export = function (type, name, source) {
     var IS_FORCED = type & $export.F,
@@ -8908,7 +8948,7 @@ $__System.registerDynamic('1e', ['39', 'b', '3a'], true, function ($__require, e
   module.exports = $export;
   return module.exports;
 });
-$__System.registerDynamic('3b', [], true, function ($__require, exports, module) {
+$__System.registerDynamic('3c', [], true, function ($__require, exports, module) {
   var define,
       global = this || self,
       GLOBAL = global;
@@ -8918,19 +8958,19 @@ $__System.registerDynamic('3b', [], true, function ($__require, exports, module)
   };
   return module.exports;
 });
-$__System.registerDynamic('3c', ['3b'], true, function ($__require, exports, module) {
+$__System.registerDynamic('3d', ['3c'], true, function ($__require, exports, module) {
   var define,
       global = this || self,
       GLOBAL = global;
   /* */
-  var isObject = $__require('3b');
+  var isObject = $__require('3c');
   module.exports = function (it) {
     if (!isObject(it)) throw TypeError(it + ' is not an object!');
     return it;
   };
   return module.exports;
 });
-$__System.registerDynamic('3d', [], true, function ($__require, exports, module) {
+$__System.registerDynamic('3e', [], true, function ($__require, exports, module) {
   var define,
       global = this || self,
       GLOBAL = global;
@@ -8941,12 +8981,12 @@ $__System.registerDynamic('3d', [], true, function ($__require, exports, module)
   };
   return module.exports;
 });
-$__System.registerDynamic('3a', ['3d'], true, function ($__require, exports, module) {
+$__System.registerDynamic('3b', ['3e'], true, function ($__require, exports, module) {
   var define,
       global = this || self,
       GLOBAL = global;
   /* */
-  var aFunction = $__require('3d');
+  var aFunction = $__require('3e');
   module.exports = function (fn, that, length) {
     aFunction(fn);
     if (that === undefined) return fn;
@@ -8970,14 +9010,14 @@ $__System.registerDynamic('3a', ['3d'], true, function ($__require, exports, mod
   };
   return module.exports;
 });
-$__System.registerDynamic('3e', ['1a', '3b', '3c', '3a'], true, function ($__require, exports, module) {
+$__System.registerDynamic('3f', ['1a', '3c', '3d', '3b'], true, function ($__require, exports, module) {
   var define,
       global = this || self,
       GLOBAL = global;
   /* */
   var getDesc = $__require('1a').getDesc,
-      isObject = $__require('3b'),
-      anObject = $__require('3c');
+      isObject = $__require('3c'),
+      anObject = $__require('3d');
   var check = function (O, proto) {
     anObject(O);
     if (!isObject(proto) && proto !== null) throw TypeError(proto + ": can't set as prototype!");
@@ -8985,7 +9025,7 @@ $__System.registerDynamic('3e', ['1a', '3b', '3c', '3a'], true, function ($__req
   module.exports = {
     set: Object.setPrototypeOf || ('__proto__' in {} ? function (test, buggy, set) {
       try {
-        set = $__require('3a')(Function.call, getDesc(Object.prototype, '__proto__').set, 2);
+        set = $__require('3b')(Function.call, getDesc(Object.prototype, '__proto__').set, 2);
         set(test, []);
         buggy = !(test instanceof Array);
       } catch (e) {
@@ -9001,13 +9041,13 @@ $__System.registerDynamic('3e', ['1a', '3b', '3c', '3a'], true, function ($__req
   };
   return module.exports;
 });
-$__System.registerDynamic('3f', ['1e', '3e'], true, function ($__require, exports, module) {
+$__System.registerDynamic('40', ['1e', '3f'], true, function ($__require, exports, module) {
   var define,
       global = this || self,
       GLOBAL = global;
   /* */
   var $export = $__require('1e');
-  $export($export.S, 'Object', { setPrototypeOf: $__require('3e').set });
+  $export($export.S, 'Object', { setPrototypeOf: $__require('3f').set });
   return module.exports;
 });
 $__System.registerDynamic('b', [], true, function ($__require, exports, module) {
@@ -9020,32 +9060,32 @@ $__System.registerDynamic('b', [], true, function ($__require, exports, module) 
 
   return module.exports;
 });
-$__System.registerDynamic('40', ['3f', 'b'], true, function ($__require, exports, module) {
+$__System.registerDynamic('41', ['40', 'b'], true, function ($__require, exports, module) {
   var define,
       global = this || self,
       GLOBAL = global;
   /* */
-  $__require('3f');
+  $__require('40');
   module.exports = $__require('b').Object.setPrototypeOf;
   return module.exports;
 });
-$__System.registerDynamic("41", ["40"], true, function ($__require, exports, module) {
+$__System.registerDynamic("42", ["41"], true, function ($__require, exports, module) {
   var define,
       global = this || self,
       GLOBAL = global;
   /* */
-  module.exports = { "default": $__require("40"), __esModule: true };
+  module.exports = { "default": $__require("41"), __esModule: true };
   return module.exports;
 });
-$__System.registerDynamic("16", ["38", "41"], true, function ($__require, exports, module) {
+$__System.registerDynamic("16", ["39", "42"], true, function ($__require, exports, module) {
   /* */
   "use strict";
 
   var define,
       global = this || self,
       GLOBAL = global;
-  var _Object$create = $__require("38")["default"];
-  var _Object$setPrototypeOf = $__require("41")["default"];
+  var _Object$create = $__require("39")["default"];
+  var _Object$setPrototypeOf = $__require("42")["default"];
   exports["default"] = function (subClass, superClass) {
     if (typeof superClass !== "function" && superClass !== null) {
       throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
@@ -9101,7 +9141,7 @@ $__System.register("14", ["5", "6"], function (_export) {
 		}
 	};
 });
-$__System.register("24", ["6", "14", "15", "16"], function (_export) {
+$__System.register("25", ["6", "14", "15", "16"], function (_export) {
 	var _classCallCheck, StateDb, _get, _inherits, __hotReload, Section;
 
 	return {
@@ -9165,7 +9205,7 @@ $__System.registerDynamic("1a", [], true, function ($__require, exports, module)
   };
   return module.exports;
 });
-$__System.registerDynamic('42', ['1a'], true, function ($__require, exports, module) {
+$__System.registerDynamic('43', ['1a'], true, function ($__require, exports, module) {
   var define,
       global = this || self,
       GLOBAL = global;
@@ -9176,12 +9216,12 @@ $__System.registerDynamic('42', ['1a'], true, function ($__require, exports, mod
   };
   return module.exports;
 });
-$__System.registerDynamic("21", ["42"], true, function ($__require, exports, module) {
+$__System.registerDynamic("21", ["43"], true, function ($__require, exports, module) {
   var define,
       global = this || self,
       GLOBAL = global;
   /* */
-  module.exports = { "default": $__require("42"), __esModule: true };
+  module.exports = { "default": $__require("43"), __esModule: true };
   return module.exports;
 });
 $__System.registerDynamic("5", ["21"], true, function ($__require, exports, module) {
@@ -9227,7 +9267,7 @@ $__System.registerDynamic("6", [], true, function ($__require, exports, module) 
   exports.__esModule = true;
   return module.exports;
 });
-$__System.register("30", [], function (_export) {
+$__System.register("31", [], function (_export) {
   "use strict";
 
   var __hotReload;
@@ -9306,7 +9346,7 @@ $__System.register("30", [], function (_export) {
     }
   };
 });
-$__System.register("43", ["5", "6", "30"], function (_export) {
+$__System.register("44", ["5", "6", "31"], function (_export) {
 	var _createClass, _classCallCheck, GeiVisUtils, __hotReload, NestedTreemap;
 
 	return {
@@ -9674,7 +9714,7 @@ $__System.register("43", ["5", "6", "30"], function (_export) {
 		}
 	};
 });
-$__System.register('44', ['5', '6', '15', '16', '24', '43'], function (_export) {
+$__System.register('45', ['5', '6', '15', '16', '25', '44'], function (_export) {
   var _createClass, _classCallCheck, _get, _inherits, Section, NestedTreemap, __hotReload, TreemapSection;
 
   return {
@@ -9790,10 +9830,10 @@ $__System.register('44', ['5', '6', '15', '16', '24', '43'], function (_export) 
     }
   };
 });
-$__System.register('1', ['4', '11', '23', '25', '27', '29', '31', '44', 'd', 'f', '2a'], function (_export) {
+$__System.register('1', ['4', '11', '24', '26', '28', '32', '45', 'd', 'f', '2a', '2b'], function (_export) {
   'use strict';
 
-  var StateMachine, Router, StreamSection, DummySection, BookshelfSection, GeomapSection, NetworkSection, TreemapSection, DataBase, ScrollListener, Tooltip, __hotReload, state, db, scroll, router, tooltip, bookshelfSection, streamSection, geomapSection, treemapSection, networkSection;
+  var StateMachine, Router, StreamSection, DummySection, BookshelfSection, NetworkSection, TreemapSection, DataBase, ScrollListener, GeomapSection, Tooltip, __hotReload, state, db, scroll, router, tooltip, bookshelfSection, streamSection, geomapSection, treemapSection, networkSection;
 
   return {
     setters: [function (_) {
@@ -9807,17 +9847,17 @@ $__System.register('1', ['4', '11', '23', '25', '27', '29', '31', '44', 'd', 'f'
     }, function (_5) {
       BookshelfSection = _5.BookshelfSection;
     }, function (_6) {
-      GeomapSection = _6.GeomapSection;
+      NetworkSection = _6.NetworkSection;
     }, function (_7) {
-      NetworkSection = _7.NetworkSection;
-    }, function (_8) {
-      TreemapSection = _8.TreemapSection;
+      TreemapSection = _7.TreemapSection;
     }, function (_d) {
       DataBase = _d.DataBase;
     }, function (_f) {
       ScrollListener = _f.ScrollListener;
     }, function (_a) {
-      Tooltip = _a.Tooltip;
+      GeomapSection = _a.GeomapSection;
+    }, function (_b) {
+      Tooltip = _b.Tooltip;
     }],
     execute: function () {
       __hotReload = true;
