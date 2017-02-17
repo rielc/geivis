@@ -94,7 +94,7 @@ export class DataBase {
 
     this.filters = {};
 
-    this.years = this.dates.all().map(d => d.key.getFullYear());
+    // this.years = this.dates.all().map(d => d.key.getFullYear());
 
     return this;
   }

@@ -1,5 +1,6 @@
 export let __hotReload = true
 import {StateDb} from '../../StateDb';
+import {translate} from '../../Translations';
 
 export class BarList extends StateDb {
 
@@ -44,7 +45,7 @@ export class BarList extends StateDb {
   render(){
 
     const size = this.db[this.key].size();
-    this.div.select(".title").text(this.key);
+    this.div.select(".title").text(translate(this.key, this.state.state.language));
     this.div.classed("active", this.state.state.active === this.key);
     this.div.classed("hover", this.state.state.hover === this.key);
     this.div

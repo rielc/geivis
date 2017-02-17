@@ -15,7 +15,8 @@ export class StateMachine {
       visible: { StreamSection: true },
       scrollY: 0,
       tooltip: {},
-      filters: {}
+      filters: {},
+      language: "de"
     }
     this.history = [];
     this.history.push(objectAssign({}, this.state));
