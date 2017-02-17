@@ -155,12 +155,14 @@ export class Geomap extends StateDb {
           .style("opacity", 1)
           .select("text")
           .text(d2 => `${d.key} (${d.value})`)
+          .style("opacity", 1)
       })
       .on("mouseleave", (d,i,l)=> {
         d3.select(l[i])
           .style("opacity", d=>this.opacity(d.value))
           .select("text")
           .text(d2 => `${d.key}`)
+          .style("opacity", ()=> i<15 ? 1 : 0)
       })
       .on("click", (d)=> {
         this.db.place.filterExact(d.key);
@@ -174,11 +176,20 @@ export class Geomap extends StateDb {
         .attr("r", d => this.scale(d.value))
         .style("opacity", d=>d.value ? 1: 0)
 
+      e.append("circle")
+        .attr("fill", "none")
+        .attr("stroke", "none")
+        .attr("pointer-events", "all")
+        .attr("r", 10)
+
       e.append("text")
         .attr("dx", d=>(this.scale(d.value)+2)+"px")
         .attr("dy", d=>(this.scale(d.value)+2)+"px")
         .text(d => d.key)
         .style("font-size", d=>(this.fontscale(d.value)+"px"))
+        .style("opacity", (d,i)=> i<15 ? 1 : 0)
+
+
       
       e.merge(s)
         .attr("transform", d=> {
@@ -186,6 +197,7 @@ export class Geomap extends StateDb {
           return `translate(${p[0]},${p[1]})`;
         })
         .style("opacity", d=>this.opacity(d.value))
+        // .style("opacity", (d,i)=> i<15 ? 1 : 0)
         .style("display", d=> d.value ? "": "none")
 
 
