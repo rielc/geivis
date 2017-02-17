@@ -1,0 +1,354 @@
+"place","toPlace","num"
+"Straßburg",,15
+"Nürnberg",,42
+"Berlin",,346
+"Leipzig",,810
+"St. Gallen",,0
+"Stuttgart",,71
+"Halle",,90
+"Lobenstein",,2
+"München",,152
+"Würzburg",,5
+"Augsburg",,9
+"Paßau",,0
+"Augustæ Vindelicorum",,0
+"Erlangen",,11
+"Calw",,3
+"Hamburg",,34
+"Prag",,0
+"Leipzig [u.a.]",,187
+"Bielefeld [u.a.]",,117
+"Breslau",,358
+"Halle (Saale)",,3
+"Essen",,25
+"Braunschweig",,102
+"Berlin [u.a.]",,51
+"München [u.a.]",,36
+"Freiburg im Breisgau [u.a.]",,25
+"Erlangen [u.a.]",,4
+"Paderborn",,43
+"Hannover",,104
+"Halle a.S.",,60
+"Dortmund",,3
+"Frankfurt am Main",,41
+"Frankfurt a.M.",,20
+"Bochum",,0
+"Vohwinkel",,0
+"Wittenberg",,17
+"Langensalza",,86
+"Zweibrücken",,1
+"Leutkirch",,0
+"Altenburg",,15
+"Halle a. S.",,21
+"Wittlich",,1
+"Hannover-List [u.a.]",,21
+"Weinheim [u.a.]",,3
+"Halle a. d. Saale",,6
+"Halle a. d. S.",,14
+"Trier",,22
+"Wien",,8
+"Halle a.d.S.",,60
+"Aachen",,6
+"Frankfurt a.M. [u.a.]",,6
+"Frankfurt am Main [u.a.]",,4
+"Göttingen",,29
+"Bielefeld",,16
+"Düsseldorf",,45
+"Mannheim [u.a.]",,1
+"Bühl (Baden)",,4
+"Braunschweig [u.a.]",,6
+"Erfurt",,9
+"Cöthen",,8
+"Gotha",,49
+"Regensburg",,18
+"Ansbach",,6
+"Münster i. Westf.",,3
+"Magdeburg",,8
+"Münster i.W.",,9
+"Münster in Westf.",,9
+"Gebweiler",,0
+"Diessen vor München",,0
+"Karlsruhe",,16
+"Gießen",,13
+"Hildesheim",,2
+"Dresden",,64
+"Bielefeld [u. a.]",,0
+"Berlin [u.a.] ",,0
+"Dresden [u.a.]",,10
+"Kempten",,6
+"Habelschwerdt",,6
+"Bamberg",,24
+"Freiburg im Breisgau",,24
+"Köln",,23
+"Speyer a.Rh.",,0
+"Rostock",,4
+"Schleswig",,9
+"Saarbrücken",,0
+"Schwabach",,1
+"Hannover [u. a.]",,0
+"Münster i. W.",,4
+"Rinteln",,3
+"Danzig",,17
+"Detmold",,0
+"Kempten [u.a.]",,1
+"Hannover [u.a.]",,37
+"Nagold",,1
+"Minden i.W.",,1
+"Bonndorf (bad. Schwarzwald)",,0
+"Kattowitz",,0
+"Schwerin i. M.",,0
+"Glogau",,8
+"Hof a.S.",,1
+"Stettin",,1
+"Frankfurt a. M.",,8
+"Delmenhorst",,0
+"[Breslau]",,0
+"Bautzen",,0
+"Hildburghausen",,11
+"Dresden-A.",,0
+"Marburg",,1
+"Bonn",,3
+"Oldenburg",,13
+"Neubrandenburg",,6
+"Heiligenstadt (Eichsfeld)",,0
+"Wiesbaden",,23
+"Hannover-List",,5
+"Wolfenbüttel",,13
+"Bayreuth",,1
+"Gera",,11
+"Cassel",,7
+"Bunzlau",,3
+"Kiel",,3
+"Neuwied [u.a.]",,0
+"Lahr",,3
+"Halle a.d. Saale",,0
+"Osnabrück",,4
+"Neumark, Westpr.",,0
+"Freiburg i.B.",,1
+"Meißen",,4
+"Annaberg",,4
+"Minden i. W.",,0
+"Lüneburg",,4
+"Greiz",,0
+"Stolberg (Rheinl.)",,0
+"Krefeld",,0
+"Weimar",,13
+"Gütersloh",,10
+"Konitz",,1
+"Paderborn [u.a.]",,10
+"Bonndorf",,0
+"Elberfeld",,14
+"Weißenfels",,0
+"Arnsberg i.W.",,1
+"Stuttgart [u.a.]",,0
+"Wittlich [u.a.]",,0
+"Wismar",,1
+"Metz",,1
+"Dessau",,1
+"Verl. der Buchh. des Waisenhauses",,0
+"Bruchsal",,0
+"Flensburg",,6
+"Münster in Westfalen",,0
+"Neu-Ruppin",,0
+"Coesfeld",,0
+"Harburg a. d. Elbe",,1
+"Weinheim (Baden)",,0
+"Münster",,32
+"Cöln",,1
+"Altona",,15
+"Merseburg",,1
+"Delitzsch",,0
+"Erfurt [u.a.]",,2
+"Freiburg i. B.",,2
+"Düren",,0
+"Osterburg",,0
+"Dessau [u.a.]",,1
+"Osterwieck/Harz",,1
+"Merseburg a/S.",,1
+"Brandenburg a. H.",,0
+"Königsberg i. Pr.",,1
+"Ludwigshafen a. Rh.",,0
+"Tönning a. d. Eider",,0
+"Köln am Rhein",,0
+"Kreuznach",,7
+"Neustadt-Leipzig",,0
+"Heidelberg",,23
+"Kreuznach [u.a.]",,0
+"Straubing",,0
+"Mainz",,28
+"Leipzig [u. a.]",,0
+"Eßlingen",,6
+"Holzminden",,0
+"Groß-Lichterfelde",,0
+"Heilbronn",,2
+"Calw [u. a.]",,0
+"Köln [u.a.]",,4
+"Tauberbischofsheim",,0
+"Greifswald",,0
+"Dillenburg",,3
+"Freiburg",,6
+"Rudolstadt",,0
+"Nördlingen",,2
+"Emden",,1
+" Löbau",,0
+"Rodenberg",,0
+"Harburg an der Elbe",,0
+"Sondershausen",,3
+"Potsdam",,5
+"Ludwigshafen",,2
+"Gebweiler [u.a.]",,0
+"Grimma",,1
+"Gütersloh [u.a.]",,2
+"Striegau",,0
+"Calw [u.a.]",,2
+"Eschweiler",,0
+"Eisenach",,1
+"Darmstadt",,5
+"Ruhrort",,0
+"Nordhausen",,0
+"Kattowitz O.-S.",,2
+"Königsberg",,11
+"Wismar [u.a.]",,1
+"Coburg",,2
+"Karlsruhe i.B.",,1
+"Eßlingen [u.a.]",,0
+"Tübingen",,1
+"Jena",,4
+"Quedlinburg",,1
+"Harburg",,2
+"Oberhausen [u.a.]",,0
+"Coblenz",,1
+"Stolp",,0
+"Halle a/S.",,1
+"Zwickau",,2
+"Einbeck",,1
+"Landshut",,1
+"Koblenz",,5
+"Oppenheim a.Rh. [u.a.]",,1
+"Hof",,0
+"Amberg",,0
+"Würzburg [u.a.]",,0
+"Heiligenstadt",,0
+"Wesel",,4
+"Regensburg [u.a.]",,0
+"Eisleben",,8
+"Augsburg [u.a.]",,0
+"Aschersleben",,0
+"Giessen",,1
+"Döbeln",,0
+"Blankenburg",,1
+"Soest",,2
+"Hanover",,2
+"Lübeck",,0
+"Passau",,2
+"Glogau [u.a.]",,0
+"Emmerich",,2
+"Waldenburg",,0
+"Recklinghausen",,0
+"Moers",,0
+"Mülheim am Rhein",,0
+"Duisburg",,1
+"Saalfeld",,0
+"Ulm",,0
+"Frankfurt",,2
+"Kopenhagen",,0
+"Reutlingen",,5
+"Werl",,0
+"Hamburg [u.a.]",,0
+"Helmstedt",,0
+"Weilburg",,1
+"Halberstadt",,1
+"Schwelm",,0
+"Dil[l]ingen",,0
+"Bremen",,1
+"Carlsruhe",,2
+"Belle-Vue bei Constanz",,0
+"Oldenburg/Holstein",,0
+"Solingen",,0
+"[S.l.]",,7
+"Schweidnitz",,0
+"Prenzlau",,0
+"Mannheim",,0
+"Meurs",,0
+"Meissen",,1
+"[s.n.]",,0
+"Stendal",,2
+"Ehingen a.d.D.",,0
+"Celle",,1
+"Minden",,0
+"Neustadt an d. Orla",,0
+"Pesth",,0
+"Brandenburg",,2
+"Elberfeld [u.a.]",,0
+"Büdingen",,0
+"Neustadt a.d.O.",,0
+"Crefeld",,0
+"Ilmenau",,0
+"Herborn",,0
+"Nürnberg [u.a.]",,0
+"Mößkirch",,0
+"Ludwigsburg",,0
+"Bamberg [u.a.]",,0
+"Frankfurt/Main",,0
+"Frankfurt am Mayn",,1
+"Innsbruck",,0
+"Giesen  und Darmstadt",,0
+"Schnepfenthal",,1
+"Leipsic",,0
+"Chemnitz",,1
+"Lemgo",,0
+"Hirschberg",,0
+"Germantown, [Pa.]",,0
+"Grünstadt",,1
+"Chemnitz-Gablenz",,0
+"Hamm",,0
+"Görlitz",,3
+"Germantaun",,0
+"Philadelphia",,0
+"Bamberg und Würzburg",,0
+"Mülheim am Rheine",,0
+"[Görlitz]",,0
+"Koburg",,0
+"Schwerin",,0
+"Sulzbach",,0
+"Frankfurt und Leipzig",,0
+"W Budéschiie",,0
+"Elmshorn",,1
+"Berlin und Stettin",,0
+"Budißin",,0
+"Leipzig und Frankfurt",,0
+"Mühlhausen",,0
+"Wernigerode",,0
+"Stutgart",,1
+"[s.l.]",,1
+"Noribergæ",,0
+"[Frankfurt",,2
+"[Franckfurt",,0
+"[Straßburg]",,0
+"Ebersdorf",,0
+"Wienn",,5
+"Halle im Magdeburgischen",,0
+"Augspurg",,2
+"Halle, in Magdeburg",,0
+"Thorn",,0
+"Halle im Magdeburg.",,0
+"Dreßden und Leipzig",,0
+"Dantzig",,0
+"[Erffurt]",,0
+"Ienae",,0
+"Berlin [u. a.]",,0
+"Münster (Westf.)",,1
+"Wurzen",,0
+"Karlsruhe [u.a.]",,0
+"Straßburg i.E.",,1
+"Stadthagen",,0
+"Arnsberg i. Westf.",,1
+"Frankfurt a. M. [u.a.]",,0
+"Straßburg i. E. [u.a.]",,0
+"Straßburg i. E.",,0
+"Rostock i. M.",,0
+"Goslar a. H.",,1
+"Groß-Strehlitz",,0
+"Rappenau",,0
+"Goslar a. Harz",,1
+"Cöln a. Rh.",,0

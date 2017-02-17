@@ -55,7 +55,7 @@ export class Bookshelf extends StateDb {
       .attr("class", "book")
       .attr("href", d=>d.url)
       .attr("target", "_blank")
-      .html(d=>`${d.title.replace('@', '')} <i>${d.publisher} ${d.year}</i> `)
+      .html(d=>`${d.title.replace('@', '') || d.titleAlt} <i>${d.publisher} ${d.year}</i> `)
 
     s
       .attr("href", d=>d.url)
