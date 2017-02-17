@@ -22,8 +22,9 @@ export class NetworkSection extends Section {
 
    this.div.append("div")
       .attr("class", "intro")
-      .text("This visualization shows the distribution of tags throughout the currently selected timeframe. The size of a circle represent the number of books with that tag. On hover you can see the other tags that were given in conjunction. The opacity of the other circles indicates how often they were given in conjunction. By clicking on a circle you can see it’s neighbourhood: Other related tags form a circle around the selected tag. Their relation is caluclated by the number of shared occurrences and by how much of their own occurrence is shared together with the selected tag. Clicking on the link shows the corresponding books for each tag. Clicking on the centered node or changing the timeframe leaves this view.")
- 
+      .text(`
+        Diese Visualisierung veranschaulicht die Verteilung der Schlagwörter in GEI-Digital. Wählen Sie eine Zeitspanne aus und es werden Ihnen die für diesen Zeitraum vergebenen Schlagwörter in Form von Kreisen angezeigt. Die Größe eines Kreises stellt die Anzahl der Schulbücher dar, die mit dem gleichen Schlagwort in GEI-Digital erfasst sind. Um die Hauptschlagwörter gruppieren sich weitere Schlagwort-Kreise, die mit den Hauptschlagwörtern in Verbindung stehen. Wenn Sie auf ein Schlagwort klicken, öffnet sich eine Ansicht mit weiteren verwandten Schlagwörtern. Per Mausklick können Sie sich die zu den Schlagwörtern passenden Schulbücher im Menü Books anzeigen lassen. Durch Klicken auf den zentrierten Knoten oder durch Ändern des Zeitrahmens verlassen Sie die ausgewählte Ansicht. 
+      `);
     this.title.html(`Tags`);
 
     let oh = 0;

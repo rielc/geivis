@@ -26,8 +26,10 @@ export class TreemapSection extends Section {
     this.title.text(`Comparison`);
     this.div.append("div")
       .attr("class", "intro")
-      .text("In this visualization you can compare two of the aforementioned facets by grouping them in succession. The groupings show for example the ratio of certain places in all subjects and enable the search for trends and the already mentioned comparison. You can change the first and second level groupings through the switches on the lefthand bottom side. Hovering over a single highlights the cell (i.e. a publisher) and shows other cells of the same type (i.e. the same publisher in other subjects). You can also see all the books for any cell by clicking on it.")
-
+      .text(`
+        In dieser Visualisierung können Sie die Facetten Verlage und Verlagsorte mit den Facetten Schulfächer und Bildungslevel kombinieren und sich quantitative Vergleiche anzeigen lassen. Durch die Kombination Verlage mit Schulfächern werden zum Beispiel die Aktivitäten der Verlage entlang der Schulfächer dargestellt. 
+        Wählen Sie durch Ziehen mit gedrückter Maustaste auf der Zeitleiste eine Zeitspanne aus und treffen Sie Ihre Facetten-Auswahl mit den Schaltern links unten auf der Seite. Die Ergebnisse Ihrer Auswahl werden nacheinander gruppiert als Tabelle dargestellt. Fahren Sie mit der Maus über eine der Zellen, können Sie das in der Zelle markierte Topic in seiner relationalen Verteilung verfolgen. Bei Klick auf die markierte Zelle, werden Ihnen die zur Auswahl passenden Schulbücher angezeigt.
+      `);
 
     this.treemap = new NestedTreemap( {'margin':this.margin} )
     this.treemap.setState(state)

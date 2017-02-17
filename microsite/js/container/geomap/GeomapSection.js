@@ -12,12 +12,7 @@ export class GeomapSection extends Section {
     this.div.append("div")
       .attr("class", "intro")
       .text(`
-        Each book got a publisher and a place where it originated. In this visualization the geographical distribution
-        of the selection in time is shown as a bubble map. Each bubble represents the amout of books beeing 
-        published at the geographical location. The big timestream above is now compressed into a small timeslider
-        which will work from now on as a tool to customize each visualization. By dragging on the timeline you can
-        select a specific timespan to be visualized underneath. Doubleclick on the selection to clear the start and 
-        end time. 
+        Die Visualisierung bezieht sich auf Verlagsorte in der Schulbuchsammlung GEI-Digital. Wählen Sie durch Ziehen mit gedrückter Maustaste auf der Zeitleiste eine Zeitspanne aus und es wird Ihnen die entsprechende geographische Verteilung der Verlagsorte angezeigt. Die Größe der Blasen repräsentiert die Menge der Bücher, die an dem jeweiligen Verlagsort veröffentlicht wurden. Klicken Sie auf eine der Blasen, dann gelangen Sie zu den in GEI-Digital vorhandenen Schulbüchern. Start- und Endzeit können durch Doppelklick auf der Zeitleiste neu ausgewählt werden.
       `)
     this.geomap = new Geomap(state,db, this.div.append("div"))
     //this.geomap.outerHeight = this.height;
