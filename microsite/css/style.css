@@ -629,8 +629,7 @@ header {
               padding: 1px;
               padding-left: 2px;
               height: 16px;
-              overflow: hidden;
-              transition: 0.7s width; }
+              overflow: hidden; }
           #StreamSection .entities .entity .items .item .right {
             padding-left: 5px;
             float: right;
