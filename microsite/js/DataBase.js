@@ -202,7 +202,7 @@ export class DataBase {
         this.date.filterAll();
       } else {
         // hack for filterRange see https://github.com/crossfilter/crossfilter/wiki/Crossfilter-Gotchas#filterrange-does-not-include-the-top-point
-        console.log("filter", next.event, [next.brushStart, next.brushEnd.setMonth(2)])
+        // console.log("filter", next.event, [next.brushStart, next.brushEnd.setMonth(2)])
         this.date.filterRange([next.brushStart, next.brushEnd.setMonth(2)]);
       }
     }
