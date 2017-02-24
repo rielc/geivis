@@ -1,354 +1,353 @@
-"place","toPlace","num"
-"Straßburg",,15
-"Nürnberg",,42
-"Berlin",,346
-"Leipzig",,810
-"St. Gallen",,0
-"Stuttgart",,71
-"Halle",,90
-"Lobenstein",,2
-"München",,152
-"Würzburg",,5
-"Augsburg",,9
-"Paßau",,0
-"Augustæ Vindelicorum",,0
-"Erlangen",,11
-"Calw",,3
-"Hamburg",,34
-"Prag",,0
-"Leipzig [u.a.]",,187
-"Bielefeld [u.a.]",,117
-"Breslau",,358
-"Halle (Saale)",,3
-"Essen",,25
-"Braunschweig",,102
-"Berlin [u.a.]",,51
-"München [u.a.]",,36
-"Freiburg im Breisgau [u.a.]",,25
-"Erlangen [u.a.]",,4
-"Paderborn",,43
-"Hannover",,104
-"Halle a.S.",,60
-"Dortmund",,3
-"Frankfurt am Main",,41
-"Frankfurt a.M.",,20
-"Bochum",,0
-"Vohwinkel",,0
-"Wittenberg",,17
-"Langensalza",,86
-"Zweibrücken",,1
-"Leutkirch",,0
-"Altenburg",,15
-"Halle a. S.",,21
-"Wittlich",,1
-"Hannover-List [u.a.]",,21
-"Weinheim [u.a.]",,3
-"Halle a. d. Saale",,6
-"Halle a. d. S.",,14
-"Trier",,22
-"Wien",,8
-"Halle a.d.S.",,60
-"Aachen",,6
-"Frankfurt a.M. [u.a.]",,6
-"Frankfurt am Main [u.a.]",,4
-"Göttingen",,29
-"Bielefeld",,16
-"Düsseldorf",,45
-"Mannheim [u.a.]",,1
-"Bühl (Baden)",,4
-"Braunschweig [u.a.]",,6
-"Erfurt",,9
-"Cöthen",,8
-"Gotha",,49
-"Regensburg",,18
-"Ansbach",,6
-"Münster i. Westf.",,3
-"Magdeburg",,8
-"Münster i.W.",,9
-"Münster in Westf.",,9
-"Gebweiler",,0
-"Diessen vor München",,0
-"Karlsruhe",,16
-"Gießen",,13
-"Hildesheim",,2
-"Dresden",,64
-"Bielefeld [u. a.]",,0
-"Berlin [u.a.] ",,0
-"Dresden [u.a.]",,10
-"Kempten",,6
-"Habelschwerdt",,6
-"Bamberg",,24
-"Freiburg im Breisgau",,24
-"Köln",,23
-"Speyer a.Rh.",,0
-"Rostock",,4
-"Schleswig",,9
-"Saarbrücken",,0
-"Schwabach",,1
-"Hannover [u. a.]",,0
-"Münster i. W.",,4
-"Rinteln",,3
-"Danzig",,17
-"Detmold",,0
-"Kempten [u.a.]",,1
-"Hannover [u.a.]",,37
-"Nagold",,1
-"Minden i.W.",,1
-"Bonndorf (bad. Schwarzwald)",,0
-"Kattowitz",,0
-"Schwerin i. M.",,0
-"Glogau",,8
-"Hof a.S.",,1
-"Stettin",,1
-"Frankfurt a. M.",,8
-"Delmenhorst",,0
-"[Breslau]",,0
-"Bautzen",,0
-"Hildburghausen",,11
-"Dresden-A.",,0
-"Marburg",,1
-"Bonn",,3
-"Oldenburg",,13
-"Neubrandenburg",,6
-"Heiligenstadt (Eichsfeld)",,0
-"Wiesbaden",,23
-"Hannover-List",,5
-"Wolfenbüttel",,13
-"Bayreuth",,1
-"Gera",,11
-"Cassel",,7
-"Bunzlau",,3
-"Kiel",,3
-"Neuwied [u.a.]",,0
-"Lahr",,3
-"Halle a.d. Saale",,0
-"Osnabrück",,4
-"Neumark, Westpr.",,0
-"Freiburg i.B.",,1
-"Meißen",,4
-"Annaberg",,4
-"Minden i. W.",,0
-"Lüneburg",,4
-"Greiz",,0
-"Stolberg (Rheinl.)",,0
-"Krefeld",,0
-"Weimar",,13
-"Gütersloh",,10
-"Konitz",,1
-"Paderborn [u.a.]",,10
-"Bonndorf",,0
-"Elberfeld",,14
-"Weißenfels",,0
-"Arnsberg i.W.",,1
-"Stuttgart [u.a.]",,0
-"Wittlich [u.a.]",,0
-"Wismar",,1
-"Metz",,1
-"Dessau",,1
-"Verl. der Buchh. des Waisenhauses",,0
-"Bruchsal",,0
-"Flensburg",,6
-"Münster in Westfalen",,0
-"Neu-Ruppin",,0
-"Coesfeld",,0
-"Harburg a. d. Elbe",,1
-"Weinheim (Baden)",,0
-"Münster",,32
-"Cöln",,1
-"Altona",,15
-"Merseburg",,1
-"Delitzsch",,0
-"Erfurt [u.a.]",,2
-"Freiburg i. B.",,2
-"Düren",,0
-"Osterburg",,0
-"Dessau [u.a.]",,1
-"Osterwieck/Harz",,1
-"Merseburg a/S.",,1
-"Brandenburg a. H.",,0
-"Königsberg i. Pr.",,1
-"Ludwigshafen a. Rh.",,0
-"Tönning a. d. Eider",,0
-"Köln am Rhein",,0
-"Kreuznach",,7
-"Neustadt-Leipzig",,0
-"Heidelberg",,23
-"Kreuznach [u.a.]",,0
-"Straubing",,0
-"Mainz",,28
-"Leipzig [u. a.]",,0
-"Eßlingen",,6
-"Holzminden",,0
-"Groß-Lichterfelde",,0
-"Heilbronn",,2
-"Calw [u. a.]",,0
-"Köln [u.a.]",,4
-"Tauberbischofsheim",,0
-"Greifswald",,0
-"Dillenburg",,3
-"Freiburg",,6
-"Rudolstadt",,0
-"Nördlingen",,2
-"Emden",,1
-" Löbau",,0
-"Rodenberg",,0
-"Harburg an der Elbe",,0
-"Sondershausen",,3
-"Potsdam",,5
-"Ludwigshafen",,2
-"Gebweiler [u.a.]",,0
-"Grimma",,1
-"Gütersloh [u.a.]",,2
-"Striegau",,0
-"Calw [u.a.]",,2
-"Eschweiler",,0
-"Eisenach",,1
-"Darmstadt",,5
-"Ruhrort",,0
-"Nordhausen",,0
-"Kattowitz O.-S.",,2
-"Königsberg",,11
-"Wismar [u.a.]",,1
-"Coburg",,2
-"Karlsruhe i.B.",,1
-"Eßlingen [u.a.]",,0
-"Tübingen",,1
-"Jena",,4
-"Quedlinburg",,1
-"Harburg",,2
-"Oberhausen [u.a.]",,0
-"Coblenz",,1
-"Stolp",,0
-"Halle a/S.",,1
-"Zwickau",,2
-"Einbeck",,1
-"Landshut",,1
-"Koblenz",,5
-"Oppenheim a.Rh. [u.a.]",,1
-"Hof",,0
-"Amberg",,0
-"Würzburg [u.a.]",,0
-"Heiligenstadt",,0
-"Wesel",,4
-"Regensburg [u.a.]",,0
-"Eisleben",,8
-"Augsburg [u.a.]",,0
-"Aschersleben",,0
-"Giessen",,1
-"Döbeln",,0
-"Blankenburg",,1
-"Soest",,2
-"Hanover",,2
-"Lübeck",,0
-"Passau",,2
-"Glogau [u.a.]",,0
-"Emmerich",,2
-"Waldenburg",,0
-"Recklinghausen",,0
-"Moers",,0
-"Mülheim am Rhein",,0
-"Duisburg",,1
-"Saalfeld",,0
-"Ulm",,0
-"Frankfurt",,2
-"Kopenhagen",,0
-"Reutlingen",,5
-"Werl",,0
-"Hamburg [u.a.]",,0
-"Helmstedt",,0
-"Weilburg",,1
-"Halberstadt",,1
-"Schwelm",,0
-"Dil[l]ingen",,0
-"Bremen",,1
-"Carlsruhe",,2
-"Belle-Vue bei Constanz",,0
-"Oldenburg/Holstein",,0
-"Solingen",,0
-"[S.l.]",,7
-"Schweidnitz",,0
-"Prenzlau",,0
-"Mannheim",,0
-"Meurs",,0
-"Meissen",,1
-"[s.n.]",,0
-"Stendal",,2
-"Ehingen a.d.D.",,0
-"Celle",,1
-"Minden",,0
-"Neustadt an d. Orla",,0
-"Pesth",,0
-"Brandenburg",,2
-"Elberfeld [u.a.]",,0
-"Büdingen",,0
-"Neustadt a.d.O.",,0
-"Crefeld",,0
-"Ilmenau",,0
-"Herborn",,0
-"Nürnberg [u.a.]",,0
-"Mößkirch",,0
-"Ludwigsburg",,0
-"Bamberg [u.a.]",,0
-"Frankfurt/Main",,0
-"Frankfurt am Mayn",,1
-"Innsbruck",,0
-"Giesen  und Darmstadt",,0
-"Schnepfenthal",,1
-"Leipsic",,0
-"Chemnitz",,1
-"Lemgo",,0
-"Hirschberg",,0
-"Germantown, [Pa.]",,0
-"Grünstadt",,1
-"Chemnitz-Gablenz",,0
-"Hamm",,0
-"Görlitz",,3
-"Germantaun",,0
-"Philadelphia",,0
-"Bamberg und Würzburg",,0
-"Mülheim am Rheine",,0
-"[Görlitz]",,0
-"Koburg",,0
-"Schwerin",,0
-"Sulzbach",,0
-"Frankfurt und Leipzig",,0
-"W Budéschiie",,0
-"Elmshorn",,1
-"Berlin und Stettin",,0
-"Budißin",,0
-"Leipzig und Frankfurt",,0
-"Mühlhausen",,0
-"Wernigerode",,0
-"Stutgart",,1
-"[s.l.]",,1
-"Noribergæ",,0
-"[Frankfurt",,2
-"[Franckfurt",,0
-"[Straßburg]",,0
-"Ebersdorf",,0
-"Wienn",,5
-"Halle im Magdeburgischen",,0
-"Augspurg",,2
-"Halle, in Magdeburg",,0
-"Thorn",,0
-"Halle im Magdeburg.",,0
-"Dreßden und Leipzig",,0
-"Dantzig",,0
-"[Erffurt]",,0
-"Ienae",,0
-"Berlin [u. a.]",,0
-"Münster (Westf.)",,1
-"Wurzen",,0
-"Karlsruhe [u.a.]",,0
-"Straßburg i.E.",,1
-"Stadthagen",,0
-"Arnsberg i. Westf.",,1
-"Frankfurt a. M. [u.a.]",,0
-"Straßburg i. E. [u.a.]",,0
-"Straßburg i. E.",,0
-"Rostock i. M.",,0
-"Goslar a. H.",,1
-"Groß-Strehlitz",,0
-"Rappenau",,0
-"Goslar a. Harz",,1
-"Cöln a. Rh.",,0
+place,toPlace,lat,lng,oldPlace,num
+Leipzig,Leipzig,51.3396955,12.3730747,,802
+Breslau,Breslau,51.1078852,17.0385376,,356
+Berlin,Berlin,52.5200066,13.404954,,340
+Leipzig [u.a.],Leipzig,51.3396955,12.3730747,,163
+München,München,48.1351253,11.5819806,,150
+Braunschweig,Braunschweig,52.2688736,10.5267696,,102
+Hannover,Hannover,52.3758916,9.7320104,,97
+Bielefeld [u.a.],Bielefeld,52.0302285,8.5324708,,95
+Halle,Halle,51.4969802,11.9688029,,89
+Langensalza,Bad Langensalza,51.1093159,10.6445189,Langensalza,86
+Stuttgart,Stuttgart,48.7758459,9.1829321,,69
+Dresden,Dresden,51.0504088,13.7372621,,64
+Halle a.d.S.,Halle (Saale),51.4969802,11.9688029,,58
+Halle a.S.,Halle (Saale),51.4969802,11.9688029,,58
+Berlin [u.a.],Berlin,52.5200066,13.404954,,51
+Gotha,Gotha,50.9469188,10.7092884,,49
+Düsseldorf,Düsseldorf,51.2277411,6.7734556,,45
+Paderborn,Paderborn,51.7189205,8.7575093,,43
+Nürnberg,Nürnberg,49.4254092,11.0796553,,41
+Frankfurt am Main,Frankfurt am Main,50.1109221,8.6821267,,36
+München [u.a.],München,48.1351253,11.5819806,,36
+Hannover [u.a.],Hannover,52.3758916,9.7320104,,35
+Hamburg,Hamburg,53.5510846,9.9936818,,34
+Münster,Münster,51.9606649,7.6261347,,32
+Göttingen,Göttingen,51.5412804,9.9158035,,29
+Mainz,Mainz,49.9928617,8.2472526,,28
+Freiburg im Breisgau [u.a.],Freiburg im Breisgau,47.9990077,7.8421043,,25
+Essen,Essen,51.4556432,7.0115552,,24
+Heidelberg,Heidelberg,49.3987524,8.6724335,,23
+Bamberg,Bamberg,49.8988135,10.9027636,,22
+Freiburg im Breisgau,Freiburg im Breisgau,47.9990077,7.8421043,,22
+Wiesbaden,Wiesbaden,50.0782184,8.2397608,,22
+Halle a. S.,Halle (Saale),51.4969802,11.9688029,,21
+Hannover-List [u.a.],Vahrenwald-List,52.3996378,9.7493829,Hannover-List,21
+Köln,Köln,50.937531,6.9602786,,21
+Trier,Trier,49.749992,6.6371433,,20
+Frankfurt a.M.,Frankfurt am Main,50.1109221,8.6821267,,19
+Regensburg,Regensburg,49.0134297,12.1016236,,18
+Danzig,Danzig,54.3520252,18.6466384,,17
+Wittenberg,Wittenberg,51.8739831,12.6279659,,17
+Bielefeld,Bielefeld,52.0302285,8.5324708,,16
+Karlsruhe,Karlsruhe,49.0068901,8.4036527,,16
+Altona,Hamburg,53.5510846,9.9936818,,15
+Altenburg,Altenburg,50.9931202,12.4366572,,14
+Elberfeld,Elberfeld,51.2492123,7.1129837,,14
+Halle a. d. S.,Halle (Saale),51.4969802,11.9688029,,14
+Gießen,Gießen,50.5840512,8.6784031,,13
+Oldenburg,Oldenburg,53.1434501,8.2145521,,13
+Straßburg,Straßburg,48.5734053,7.7521113,,13
+Weimar,Weimar,50.9794934,11.3235439,,13
+Wolfenbüttel,Wolfenbüttel,52.1640413,10.5408484,,13
+Erlangen,Erlangen,49.5896744,11.0119611,,11
+Gera,Gera,50.8850706,12.0807203,,11
+Hildburghausen,Hildburghausen,50.4263293,10.7312097,,11
+Königsberg,Königsberg,54.7104264,20.4522144,,11
+Dresden [u.a.],Dresden,51.0504088,13.7372621,,10
+Gütersloh,Gütersloh,51.9032375,8.3857535,,10
+Paderborn [u.a.],Paderborn,51.7189205,8.7575093,,10
+Augsburg,Augsburg,48.3705449,10.89779,,9
+Erfurt,Erfurt,50.9847679,11.0298799,,9
+Münster i.W.,Münster,51.9606649,7.6261347,,9
+Münster in Westf.,Münster,51.9606649,7.6261347,,9
+Schleswig,Schleswig,54.5239312,9.563227,,9
+Cöthen,Köthen (Anhalt),51.7505762,11.9802357,Cöthen,8
+Eisleben,Eisleben,51.5195173,11.5576749,,8
+Frankfurt a. M.,Frankfurt am Main,50.1109221,8.6821267,,8
+Glogau,Głogów,51.6635852,16.0846672,Glogau,8
+Magdeburg,Magdeburg,52.1205333,11.6276237,,8
+Wien,Wien,48.2081743,16.3738189,,8
+[S.l.],,,,,7
+Cassel,Kassel,51.3127114,9.4797461,Cassel,7
+Kreuznach,Bad Kreuznach,49.8440162,7.8731346,Kreuznach,7
+Aachen,Aachen,50.7753455,6.0838868,,6
+Ansbach,Ansbach,49.3004246,10.5719357,,6
+Braunschweig [u.a.],Braunschweig,52.2688736,10.5267696,,6
+Eßlingen,Eßlingen,49.9147828,6.527101,,6
+Flensburg,Flensburg,54.7937431,9.4469964,,6
+Frankfurt a.M. [u.a.],Frankfurt am Main,50.1109221,8.6821267,,6
+Freiburg,Freiburg im Breisgau,47.9990077,7.8421043,,6
+Habelschwerdt,Bystrzyca Kłodzka,50.2990907,16.6417942,Habelschwerdt,6
+Halle a. d. Saale,Halle (Saale),51.4969802,11.9688029,,6
+Kempten,Kempten (Allgäu),47.7285699,10.3157835,,6
+Neubrandenburg,Neubrandenburg,53.5678292,13.2779269,,6
+Darmstadt,Darmstadt,49.8728253,8.6511929,,5
+Hannover-List,Vahrenwald-List,52.3996378,9.7493829,Hannover-List,5
+Koblenz,Koblenz,50.3569429,7.5889959,,5
+Potsdam,Potsdam,52.3905689,13.0644729,,5
+Reutlingen,Reutlingen,48.5069389,9.2038043,,5
+Wienn,Wien,48.2081743,16.3738189,Wienn,5
+Würzburg,Würzburg,49.7913044,9.9533548,,5
+Annaberg,Annaberg,47.8717277,15.3760583,,4
+Bühl (Baden),Bühl,48.6954722,8.1380604,,4
+Erlangen [u.a.],Erlangen,49.5896744,11.0119611,,4
+Frankfurt am Main [u.a.],Frankfurt am Main,50.1109221,8.6821267,,4
+Jena,Jena,50.927054,11.5892372,,4
+Köln [u.a.],Köln,50.937531,6.9602786,,4
+Lüneburg,Lüneburg,53.2464214,10.4115179,,4
+Meißen,Meißen,51.1617842,13.4976592,,4
+Münster i. W.,Münster,51.9606649,7.6261347,,4
+Osnabrück,Osnabrück,52.2799112,8.0471788,,4
+Rostock,Rostock,54.0924406,12.0991466,,4
+Wesel,Wesel,51.6643079,6.6295679,,4
+Augspurg,Augsburg,48.3705449,10.89779,Augspurg,3
+Bonn,Bonn,50.73743,7.0982068,,3
+Bunzlau,Bolesławiec,51.2658553,15.5657397,Bunzlau,3
+Calw,Calw,48.7122107,8.7472439,,3
+Dillenburg,Dillenburg,50.7452841,8.2807631,,3
+Görlitz,Görlitz,51.1506269,14.968707,,3
+Halle (Saale),Halle (Saale),51.4969802,11.9688029,,3
+Münster i. Westf.,Münster,51.9606649,7.6261347,,3
+Rinteln,Rinteln,52.2020461,9.0759703,,3
+Sondershausen,Sondershausen,51.3691898,10.8710502,,3
+Weinheim [u.a.],Weinheim,49.544964,8.6602703,,3
+[Frankfurt,Frankfurt am Main,50.1109221,8.6821267,Frankfurt,2
+Brandenburg,Brandenburg,52.1313922,13.2162494,,2
+Calw [u.a.],Calw,48.7122107,8.7472439,,2
+Carlsruhe,Karlsruhe,49.0068901,8.4036527,Carlsruhe,2
+Coburg,Coburg,50.2612094,10.962695,,2
+Dortmund,Dortmund,51.5135872,7.4652981,,2
+Emmerich,Emmerich am Rhein,51.8395929,6.2517303,,2
+Erfurt [u.a.],Erfurt,50.9847679,11.0298799,,2
+Frankfurt,Frankfurt am Main,50.1109221,8.6821267,,2
+Freiburg i. B.,Freiburg im Breisgau,47.9990077,7.8421043,,2
+Gütersloh [u.a.],Gütersloh,51.9032375,8.3857535,,2
+Hanover,Hannover,52.3758916,9.7320104,Hanover,2
+Harburg,Harburg,53.4607785,9.9834184,,2
+Heilbronn,Heilbronn,49.1426929,9.210879,,2
+Hildesheim,Hildesheim,52.154778,9.9579652,,2
+Kattowitz O.-S.,Katowice,50.2648919,19.0237815,Kattowitz,2
+Kiel,Kiel,54.3232927,10.1227652,,2
+Lahr,Lahr/Schwarzwald,48.33915,7.8781487,Lahr,2
+Lobenstein,Lobenstein,50.4416512,11.6325528,,2
+Ludwigshafen,Ludwigshafen am Rhein,49.47741,8.44518,Ludwigshafen,2
+Nördlingen,Nördlingen,48.8508157,10.4894906,,2
+Passau,Passau,48.5667364,13.4319466,,2
+Soest,Soest,51.5711476,8.105754,,2
+Stendal,Stendal,52.6041444,11.8517729,,2
+Zwickau,Zwickau,50.7102169,12.4733725,,2
+[s.l.],,,,,1
+Arnsberg i. Westf.,Arnsberg Westf,51.4052211,8.0670428,,1
+Arnsberg i.W.,Arnsberg Westf,51.4052211,8.0670428,,1
+Bayreuth,Bayreuth,49.9456399,11.5713346,,1
+Blankenburg,Blankenburg,51.8164261,10.9773091,,1
+Bremen,Bremen,53.0792962,8.8016937,,1
+Celle,Celle,52.6175963,10.0628515,,1
+Chemnitz,Chemnitz,50.827845,12.9213697,,1
+Coblenz,Koblenz,50.3569429,7.5889959,Coblenz,1
+Cöln,Köln,50.937531,6.9602786,Cöln,1
+Dessau,Dessau,51.8308166,12.2423302,,1
+Dessau [u.a.],Dessau,51.8308166,12.2423302,,1
+Duisburg,Duisburg,51.4344079,6.7623293,,1
+Einbeck,Einbeck,51.8205718,9.8683087,,1
+Eisenach,Eisenach,50.9795715,10.3146872,,1
+Elmshorn,Elmshorn,53.7513549,9.6632521,,1
+Emden,Emden,53.3594029,7.2060095,,1
+Frankfurt am Mayn,Frankfurt am Main,50.1109221,8.6821267,,1
+Freiburg i.B.,Freiburg im Breisgau,47.9990077,7.8421043,,1
+Giessen,Gießen,50.5840512,8.6784031,Giessen,1
+Goslar a. H.,Goslar,51.9059531,10.4289963,,1
+Goslar a. Harz,Goslar,51.9059531,10.4289963,,1
+Grimma,Grimma,51.2364426,12.7202313,,1
+Grünstadt,Grünstadt,49.5633016,8.1683938,,1
+Halberstadt,Halberstadt,51.8948709,11.0496159,,1
+Halle a/S.,Halle (Saale),51.4969802,11.9688029,,1
+Harburg a. d. Elbe,Hamburg-Harburg,53.4607785,9.9834184,,1
+Hof a.S.,Hof,42.6999368,-74.9232137,,1
+Karlsruhe i.B.,Karlsruhe,49.0068901,8.4036527,,1
+Kempten [u.a.],Kempten (Allgäu),47.7285699,10.3157835,,1
+Königsberg i. Pr.,Königsberg,54.7104264,20.4522144,,1
+Konitz,Chojnice,53.6944002,17.5569252,Konitz,1
+Landshut,Landshut,48.5441917,12.1468532,,1
+Mannheim [u.a.],Mannheim,49.4874592,8.4660395,,1
+Marburg,Marburg,50.8021728,8.7667933,,1
+Meissen,Meißen,51.1617842,13.4976592,Meissen,1
+Merseburg,Merseburg,51.3563278,11.9917462,,1
+Merseburg a/S.,Merseburg,51.3563278,11.9917462,,1
+Metz,Metz,49.1193089,6.1757156,,1
+Minden i.W.,Minden,38.9540739,-119.7657332,,1
+Münster (Westf.),Münster,51.9606649,7.6261347,,1
+Nagold,Nagold,48.5474083,8.7234746,,1
+Oppenheim a.Rh. [u.a.],Oppenheim,49.8519223,8.3602742,,1
+Osterwieck/Harz,Osterwieck,51.9720556,10.711473,,1
+Quedlinburg,Quedlinburg,51.7920562,11.141448,,1
+Schnepfenthal,Schnepfenthal,50.8837651,10.5741951,,1
+Schwabach,Schwabach,49.3284557,11.0247098,,1
+Stettin,Stettin,53.4285438,14.5528116,,1
+Straßburg i.E.,Straßburg,48.5734053,7.7521113,,1
+Stutgart,Stuttgart,48.7758459,9.1829321,Stutgart,1
+Tübingen,Tübingen,48.5216364,9.0576448,,1
+Weilburg,Weilburg,50.4859255,8.2722569,,1
+Wismar,Wismar,53.8979416,11.4516022,,1
+Wismar [u.a.],Wismar,53.8979416,11.4516022,,1
+Wittlich,Wittlich,49.986944,6.889722,,1
+Zweibrücken,Zweibrücken,49.2450528,7.3634022,,1
+ Löbau,Löbau,51.0962292,14.6701781,,0
+[Breslau],Breslau,51.1078852,17.0385376,,0
+[Erffurt],Erfurt,50.9847679,11.0298799,Erffurt,0
+[Franckfurt,Frankfurt,50.1109221,8.6821267,Franckfurt,0
+[Görlitz],Görlitz,51.1506269,14.968707,,0
+[s.n.],,,,,0
+[Straßburg],Straßburg,48.5734053,7.7521113,,0
+Amberg,Amberg,49.4403198,11.8633445,,0
+Aschersleben,Aschersleben,51.7591297,11.4619062,,0
+Augsburg [u.a.],Augsburg,48.3705449,10.89779,,0
+Augustæ Vindelicorum,Augusta Vindelicorum,48.3705449,10.89779,Augustæ Vindelicorum,0
+Bamberg [u.a.],Bamberg,49.8988135,10.9027636,,0
+Bamberg und Würzburg,Bamberg,49.8988135,10.9027636,,0
+Bautzen,Bautzen,51.182293,14.4237749,,0
+Belle-Vue bei Constanz,Konstanz,47.6779496,9.1732384,,0
+Berlin [u. a.],Berlin,52.5200066,13.404954,,0
+Berlin [u.a.] ,Berlin,52.5200066,13.404954,,0
+Berlin und Stettin,Berlin,52.5200066,13.404954,,0
+Bielefeld [u. a.],Bielefeld,52.0302285,8.5324708,,0
+Bochum,Bochum,51.4818445,7.2162363,,0
+Bonndorf,Bonndorf im Schwarzwald,47.8164048,8.3372044,,0
+Bonndorf (bad. Schwarzwald),Bonndorf im Schwarzwald,47.8164048,8.3372044,,0
+Brandenburg a. H.,Brandenburg,52.1313922,13.2162494,,0
+Bruchsal,Bruchsal,49.1249712,8.5844108,,0
+Büdingen,Büdingen,50.2862963,9.1113838,,0
+Budißin,Bautzen,51.182293,14.4237749,Budißin,0
+Calw [u. a.],Calw,48.7122107,8.7472439,,0
+Chemnitz-Gablenz,Chemnitz-Gablenz,50.8225743,12.9539094,,0
+Coesfeld,Coesfeld,51.9382944,7.1675831,,0
+Cöln a. Rh.,Köln,50.937531,6.9602786,Cöln,0
+Crefeld,Krefeld,51.3387609,6.5853417,Crefeld,0
+Dantzig,Danzig,54.3520252,18.6466384,Dantzig,0
+Delitzsch,Delitzsch,51.525574,12.3380993,,0
+Delmenhorst,Delmenhorst,53.0521886,8.6355932,,0
+Detmold,Detmold,51.9384783,8.868638,,0
+Diessen vor München,Dießen am Ammersee,47.9479298,11.1032858,Diessen vor München,0
+Dil[l]ingen,Dillingen an der Donau,48.5790918,10.4940239,,0
+Döbeln,Döbeln,51.1229322,13.1167196,,0
+Dresden-A.,Dresden,51.0504088,13.7372621,,0
+Dreßden und Leipzig,Dresden,51.0504088,13.7372621,,0
+Düren,Düren,50.8029513,6.481105,,0
+Ebersdorf,Ebersdorf,50.2208366,11.0713862,,0
+Ehingen a.d.D.,Ehingen,48.2928997,9.6612347,,0
+Elberfeld [u.a.],Elberfeld,51.249266,7.1129837,,0
+Eschweiler,Eschweiler,50.8107322,6.263075,,0
+Eßlingen [u.a.],Eßlingen,49.9147828,6.527101,,0
+Frankfurt a. M. [u.a.],Frankfurt am Main,50.1109221,8.6821267,,0
+Frankfurt und Leipzig,Frankfurt am Main,50.1109221,8.6821267,,0
+Frankfurt/Main,Frankfurt am Main,50.1109221,8.6821267,,0
+Gebweiler,Gebweiler,47.911586,7.209336,,0
+Gebweiler [u.a.],Gebweiler,47.911586,7.209336,,0
+Germantaun,Germantaun,43.2286174,-88.1103691,,0
+"Germantown, [Pa.]",Germantaun,43.2286174,-88.1103691,,0
+Giesen  und Darmstadt,Gießen,50.5840512,8.6784031,,0
+Glogau [u.a.],Glogau,51.6635852,16.0846672,,0
+Greifswald,Greifswald,54.0865463,13.3923414,,0
+Greiz,Greiz,50.6585555,12.2077126,,0
+Groß-Lichterfelde,Groß-Lichterfelde,52.4293696,13.3077015,,0
+Groß-Strehlitz,Groß-Strehlitz,50.51092,18.29987,,0
+Halle a.d. Saale,Halle (Saale),51.4969802,11.9688029,,0
+Halle im Magdeburg.,Halle (Saale),51.4969802,11.9688029,,0
+Halle im Magdeburgischen,Halle (Saale),51.4969802,11.9688029,,0
+"Halle, in Magdeburg",Halle (Saale),51.4969802,11.9688029,,0
+Hamburg [u.a.],Hamburg,53.5510846,9.9936818,,0
+Hamm,Hamm,51.6738583,7.8159816,,0
+Hannover [u. a.],Hannover,52.3758916,9.7320104,,0
+Harburg an der Elbe,Hamburg-Harburg,53.4607785,9.9834184,,0
+Heiligenstadt,Heiligenstadt,48.274479,16.3347264,,0
+Heiligenstadt (Eichsfeld),Heiligenstadt,48.274479,16.3347264,,0
+Helmstedt,Helmstedt,52.228966,11.009544,,0
+Herborn,Herborn,50.6784088,8.2997096,,0
+Hirschberg,Hirschberg an der Bergstraße,49.508533,8.6557901,,0
+Hof,Hof,50.311232,11.8191993,,0
+Holzminden,Holzminden,51.8238111,9.4558926,,0
+Ienae,Jena,50.927054,11.5892372,Ienae,0
+Ilmenau,Ilmenau,50.6843502,10.9254728,,0
+Innsbruck,Innsbruck,47.2692124,11.4041024,,0
+Karlsruhe [u.a.],Karlsruhe,49.0068901,8.4036527,,0
+Kattowitz,Katowice,50.2648919,19.0237815,Kattowitz,0
+Koburg,Coburg,50.2612094,10.962695,Koburg,0
+Köln am Rhein,Köln,50.937531,6.9602786,,0
+Kopenhagen,Kopenhagen,55.6760968,12.5683371,,0
+Krefeld,Krefeld,51.3387609,6.5853417,,0
+Kreuznach [u.a.],Bad Kreuznach,49.8440162,7.8731346,,0
+Leipsic,Leipzig,51.3396955,12.3730747,Leipsic,0
+Leipzig [u. a.],Leipzig,51.3396955,12.3730747,,0
+Leipzig und Frankfurt,Leipzig,51.3396955,12.3730747,,0
+Lemgo,Lemgo,52.0266732,8.9018625,,0
+Leutkirch,Leutkirch im Allgäu,47.826741,10.0213851,,0
+Lübeck,Lübeck,53.8654673,10.6865593,,0
+Ludwigsburg,Ludwigsburg,48.8940624,9.195464,,0
+Ludwigshafen a. Rh.,Ludwigshafen am Rhein,49.47741,8.44518,,0
+Mannheim,Mannheim,49.4874592,8.4660395,,0
+Meurs,Moers,51.4516041,6.6408148,Meurs,0
+Minden,Minden,38.9540739,-119.7657332,,0
+Minden i. W.,Minden,38.9540739,-119.7657332,,0
+Moers,Moers,51.4516041,6.6408148,,0
+Mößkirch,Meßkirch,47.9944211,9.1156399,Mößkirch,0
+Mühlhausen,Mühlhausen/Thüringen,51.2098649,10.4571001,,0
+Mülheim am Rhein,Mülheim an der Ruhr,51.4185682,6.8845226,Mülheim am Rhein,0
+Mülheim am Rheine,Mülheim an der Ruhr,51.4185682,6.8845226,Mülheim am Rheine,0
+Münster in Westfalen,Münster,51.9606649,7.6261347,,0
+Neu-Ruppin,Neuruppin,52.9154545,12.7990783,,0
+"Neumark, Westpr.",Neumark,50.6603972,12.355937,,0
+Neustadt a.d.O.,Neustadt,49.3501864,8.1486886,,0
+Neustadt an d. Orla,Neustadt,49.3501864,8.1486886,,0
+Neustadt-Leipzig,"Neustadt, Leipzig",51.3467535,12.4030344,,0
+Neuwied [u.a.],Neuwied,50.4361866,7.4664546,,0
+Nordhausen,Nordhausen,51.4990791,10.791581,,0
+Noribergæ,Nürnberg,49.4254092,11.0796553,Noribergæ,0
+Nürnberg [u.a.],Nürnberg,49.4254092,11.0796553,,0
+Oberhausen [u.a.],Oberhausen,51.4963341,6.8637765,,0
+Oldenburg/Holstein,Oldenburg,53.1434501,8.2145521,,0
+Osterburg,Oldenburg,53.1434501,8.2145521,,0
+Paßau,Passau,48.5667364,13.4319466,Paßau,0
+Pesth,Budapest,47.497912,19.040235,Pesth,0
+Philadelphia,Philadelphia,39.9525839,-75.1652215,,0
+Prag,Prag,50.0755381,14.4378005,,0
+Prenzlau,Prenzlau,53.3173433,13.8633409,,0
+Rappenau,Bad Rappenau,49.240169,9.1020153,,0
+Recklinghausen,Recklinghausen,51.6140649,7.1979453,,0
+Regensburg [u.a.],Regensburg,49.0134297,12.1016236,,0
+Rodenberg,Rodenberg,52.3123137,9.3570771,,0
+Rostock i. M.,Rostock,54.0924406,12.0991466,,0
+Rudolstadt,Rudolstadt,50.7182972,11.3336548,,0
+Ruhrort,Ruhrort,51.4499282,6.7483238,,0
+Saalfeld,Saalfeld/Saale,50.6492736,11.3661502,,0
+Saarbrücken,Saarbrücken,49.2401572,6.9969327,,0
+Schweidnitz,Świdnica,50.8498434,16.475679,Schweidnitz,0
+Schwelm,Schwelm,51.2882674,7.291086,,0
+Schwerin,Schwerin,53.6355022,11.4012499,,0
+Schwerin i. M.,Schwerin,53.6355022,11.4012499,,0
+Solingen,Solingen,51.1702072,7.0831408,,0
+Speyer a.Rh.,Speyer,49.3172765,8.4412172,,0
+Stadthagen,Stadthagen,52.3252099,9.1998226,,0
+Stolberg (Rheinl.),Stolberg,50.7730884,6.2251934,,0
+Stolp,Słupsk,54.464148,17.0284824,Stolp,0
+Straßburg i. E.,Straßburg,48.5734053,7.7521113,,0
+Straßburg i. E. [u.a.],Straßburg,48.5734053,7.7521113,,0
+Straubing,Straubing,48.8777333,12.5801538,,0
+Striegau,Strzegom,50.9800804,16.3203424,Striegau,0
+Stuttgart [u.a.],Stuttgart,48.7758459,9.1829321,,0
+Sulzbach,Sulzbach an der Murr,49.003352,9.5025263,Sulzbach,0
+Tauberbischofsheim,Tauberbischofsheim,49.6263199,9.6559606,,0
+Thorn,Toruń,53.0137902,18.5984437,Thorn,0
+Tönning a. d. Eider,Tönning,54.3157227,8.9381144,,0
+Ulm,Ulm,32.528282,-92.073415,,0
+Verl. der Buchh. des Waisenhauses,Halle (Saale),51.4969802,11.9688029,,0
+Vohwinkel,Vohwinkel,51.2337172,7.0645395,,0
+W Budéschiie,Bautzen,51.182293,14.4237749,,0
+Waldenburg,Wałbrzych,50.7840092,16.2843553,Waldenburg,0
+Weinheim (Baden),Weinheim,49.544964,8.6602703,,0
+Weißenfels,Weißenfels,51.1972771,11.9689146,,0
+Werl,Werl,51.5583773,7.9114426,,0
+Wernigerode,Wernigerode,51.8368113,10.7844266,,0
+Wittlich [u.a.],Wittlich,49.986944,6.889722,,0
+Würzburg [u.a.],Würzburg,49.7913044,9.9533548,,0
+Wurzen,Wurzen,51.3698806,12.7436557,,0
