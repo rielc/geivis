@@ -20,16 +20,18 @@ export class DataBase {
     // this.state.push({ loading: true });
 
     d3.csv("data/data.csv", (data)=> {
+    d3.csv("data/places.csv", (places)=> {
     d3.csv("data/geocode.csv", (geocode)=> {
     d3.json("data/map/topo.json", (rivers)=> {
     d3.json("data/map/landbig.json", (land)=> {
 
       this.add({rivers});
       this.add({land});
-      this.init(data,geocode);
+      this.init(data,places,geocode);
 
       this.state.push({ loaded: true, keyframe:true });
 
+    })
     })
     })
     })
@@ -38,8 +40,16 @@ export class DataBase {
     return this;
   }
 
-  init(_data, _geocode){
+  placesInit(places){
+    return places.reduce((prev, cur)=>{
+      prev[cur.place] = cur;
+      return prev;
+    }, {})
+  }
+
+  init(_data, _places, _geocode){
     this.data = _data;
+    this.places = this.placesInit(_places);
     // this.data = _data.filter(d=>d.year <= 1920);
     this.geocode = _geocode;
 
@@ -49,18 +59,19 @@ export class DataBase {
     this.data.forEach(d => {
       d.date = this.formater(d.year);
       d.year = parseInt(d.year);
-      // console.log(d.year);
 
       d.RSWKTag = d.RSWKTag.split(",");
 
       d.publisher = d.publisher || "none";
       d.schoollevel = d.schoollevel || "none";
       d.subject = d.subject || "none";
-      d.place = d.publisher_city || "none";
+      // d.place = d.publisher_city || "none";
+      d.placeRef = this.places[d.publisher_city];
+      if(!d.placeRef){ console.warn("no place for", d.publisher_city); }
 
-      const geo = _geocode.find(g => g.name === d.place);
-      d.lat = geo ? +geo.lat : null;
-      d.lon = geo ? +geo.lon : null;
+      d.place = d.placeRef ? d.placeRef.toPlace : "none";
+      d.lat = d.placeRef ? d.placeRef.lat : null;
+      d.lon = d.placeRef ? d.placeRef.lng : null;
     })
 
     this.extent = d3.extent(this.data, d => d.date);
