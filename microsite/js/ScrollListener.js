@@ -42,39 +42,44 @@ export class ScrollListener {
       console.log("check", next.visible)
 
        this.check();
-       this.scrollTo(next.scrollY);
+       //this.scrollTo(next.scrollY);
     }
   }
 
   scrollTo(pos){
     // scrollTo(0,pos);
     // this.syntetic = true;
+    this.state.push({ scrolling: true });
+
+    const top = document.body.scrollTop || window.scrollY;
+    // console.log(top, window.scrollY);
+
+    console.log("scrollTo", top, pos)
+
 
     d3.select("body")
       .transition()
       .duration(1000)
-      .tween("scroll", this.scrollTween(pos))
-      // .on("end", ()=> { 
-      //   this.syntetic = false;
-      //   this.check();
-      // })
+      .tween("scroll", this.scrollTween(pos, top))
+      .on("end", ()=> { 
+        this.state.push({ scrolling: false });
+        this.check();
+      })
   }
 
-  scrollTween(offset) {
-    const top = this.scrollY;
+  scrollTween(offset, top) {
     return function() {
       var i = d3.interpolateNumber(top, top+offset);
-      return function(t) { scrollTo(0, i(t)); };
+      return function(t) { window.scrollTo(0, i(t)); };
     };
   }
 
   scrollToSection(section){
     console.log("scrollToSection", section);
-    let offset = 0;
     if(section != ""){
-      // offset = document.getElementById(section).offsetTop;
-      offset = document.getElementById(section).getBoundingClientRect().top;
-      // console.log(offset)
+      // let offset2 = document.getElementById(section).offsetTop;
+      const offset = document.getElementById(section).getBoundingClientRect().top;
+      // const offset2 = document.getElementById(section+"Section").getBoundingClientRect().top;
       this.scrollTo(offset);
     }
     
