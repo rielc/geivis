@@ -2,12 +2,20 @@
 
 a webbased visualization of schoolbooks for the Georg-Eckert-Institut
 
+## prerequisites
+
+__jspm__
+- `npm install jspm -g`
+- `npm install jspm-server -g`
+
+__node version__
+- `nvm use v6.9.1`
+
+
 ## setup
 
 - `cd microsite`
-- `npm install jspm -g`
-- `npm install jspm-server -g`
-- `jspm init`
+- `jspm install`
 - `jspm-server`
 
 ## build
