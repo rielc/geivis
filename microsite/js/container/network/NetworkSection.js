@@ -35,7 +35,8 @@ export class NetworkSection extends Section {
 
     this.network = new
       CirclePackedNetwork( {'margin':this.margin} )
-      .setBlacklist(this.blacklist)
+      .setBlacklist([])
+      //.setBlacklist(this.blacklist)
       .setNodeAccessor("RSWKTag")
       .setOccurrenceScale( d3.scaleLinear().domain([0,1]).range([0.5, 1.0])  )
       .append(this.div)
