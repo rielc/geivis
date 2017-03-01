@@ -17,6 +17,19 @@ export class Router {
     window.addEventListener("hashchange", this.hashchange);
   }
 
+
+  // simple hack to highlight the current nav-points
+  updateNavi (section) {
+    d3.select('.navi').selectAll('a')
+      .each((f,i,a)=>{
+        if (a[i].hash.replace('#/', '')==section) {
+          a[i].className = 'link active'
+        } else {
+          a[i].className = 'link'
+        }
+      })
+  }
+
   stateChange(next, prev){
 
     if(!next.scrolling && (next.activeSection != prev.activeSection)){
@@ -24,6 +37,9 @@ export class Router {
       const oldHash = window.location.hash;
       if(newHash != oldHash) {
         console.log("push", newHash)
+
+        this.updateNavi(newHash.replace('#/','')) // simple hack to highlight the current nav-points
+
         history.pushState(null, null, newHash);
         // window.location.hash = newHash;
       }
@@ -35,6 +51,9 @@ export class Router {
     const section = window.location.hash.slice(2);
     console.log("hashchange", section, hashchange);
     console.log(window.scrollY);
+
+    this.updateNavi(section) // simple hack to highlight the current nav-points
+
     // setTimeout(() => {
     //   this.scroll.scrollToSection(section);
     // }, 10)

@@ -29,7 +29,7 @@ header {
 			letter-spacing: 1px;
 			font-family:"gravurcondensed-bold";
 			text-transform: uppercase;
-			&:hover, &:active { color:$blue; }
+			&:hover, &:active,&.active { color:$blue; }
 		}
 	}
 }
