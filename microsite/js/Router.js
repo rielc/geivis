@@ -18,27 +18,13 @@ export class Router {
   }
 
 
-  // simple hack to highlight the current nav-points
-  updateNavi (section) {
-    d3.select('.navi').selectAll('a')
-      .each((f,i,a)=>{
-        if (a[i].hash.replace('#/', '')==section) {
-          a[i].className = 'link active'
-        } else {
-          a[i].className = 'link'
-        }
-      })
-  }
-
   stateChange(next, prev){
 
     if(!next.scrolling && (next.activeSection != prev.activeSection)){
       const newHash = '#/' + next.activeSection.replace("Section", "");
       const oldHash = window.location.hash;
       if(newHash != oldHash) {
-        console.log("push", newHash)
-
-        this.updateNavi(newHash.replace('#/','')) // simple hack to highlight the current nav-points
+        // console.log("push", newHash)
 
         history.pushState(null, null, newHash);
         // window.location.hash = newHash;
@@ -47,17 +33,15 @@ export class Router {
   }
 
   hashchange (hashchange) {
-    hashchange.preventDefault();
+    // there is still a bug when a hashchange is triggered via the history
+    
     const section = window.location.hash.slice(2);
-    console.log("hashchange", section, hashchange);
-    console.log(window.scrollY);
+    // console.log("hashchange", section, hashchange);
+    // console.log(window.scrollY);
 
-    this.updateNavi(section) // simple hack to highlight the current nav-points
-
-    // setTimeout(() => {
-    //   this.scroll.scrollToSection(section);
-    // }, 10)
     this.scroll.scrollToSection(section);
+    hashchange.preventDefault();
+
     return false;
   }
 

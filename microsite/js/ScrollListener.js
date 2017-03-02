@@ -44,7 +44,20 @@ export class ScrollListener {
        this.check();
        //this.scrollTo(next.scrollY);
     }
+
+    if((next.activeSection != prev.activeSection)){
+      this.updateNavi(next.activeSection);
+    }
   }
+
+  updateNavi (section) {
+    const activeLink = section.replace("Section", "");
+    d3.select('.navi').selectAll('a')
+      .classed("active", (d,i,a)=>{
+        return a[i].hash.replace('#/', '') == activeLink;
+      })
+  }
+
 
   scrollTo(pos){
     // scrollTo(0,pos);
