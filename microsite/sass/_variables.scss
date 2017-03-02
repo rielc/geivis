@@ -7,6 +7,7 @@ $red: #b00046;
 $blue: #009ee0;
 $bluelight: lighten($blue, 25%);
 $bluelighter: lighten($blue, 50%);
-$grey: desaturate($blue, 100%);
+// $grey: desaturate($blue, 100%);
+$grey: #404040;
 
 $padding: 25px;
