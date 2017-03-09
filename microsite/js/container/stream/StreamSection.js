@@ -7,23 +7,23 @@ import {BarList} from './BarList'
 export class StreamSection extends Section {
 
   constructor(state, db){
-  	super(state,db);
+    super(state,db);
 
     // this.title.html("<strong>GEORG ECKERT INSTITUTE</strong> / Visualized Collection Prototype");
 
-  	this.divStream = this.div.append("div").attr("class", "stream");
-  	this.divEntities = this.div.append("div").attr("class", "entities");
+    this.divStream = this.div.append("div").attr("class", "stream");
+    this.divEntities = this.div.append("div").attr("class", "entities");
 
-  	this.stream = new StreamGraph(state, db, this.divStream);
+    this.stream = new StreamGraph(state, db, this.divStream);
     this.stream.paddingTop = 350;
     this.stream.outerHeight = this.height - this.stream.paddingTop;
     this.stream.outerHeightInitial = this.stream.outerHeight;
     this.stream.init();
 
-  	this.listSubjects = new BarList(state, db, this.divEntities).Key("subjects");
-  	this.listSchoollevels = new BarList(state, db, this.divEntities).Key("schoollevels");
-  	this.listPublishers = new BarList(state, db, this.divEntities).Key("publishers");
-  	this.listPlaces = new BarList(state, db, this.divEntities).Key("places");
+    this.listSubjects = new BarList(state, db, this.divEntities).Key("subjects");
+    this.listSchoollevels = new BarList(state, db, this.divEntities).Key("schoollevels");
+    this.listPublishers = new BarList(state, db, this.divEntities).Key("publishers");
+    this.listPlaces = new BarList(state, db, this.divEntities).Key("places");
 
   }
 

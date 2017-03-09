@@ -10,6 +10,7 @@
 @import "_ctooltip.scss";
 
 
+
 // tooltips
 @import "_tooltip.scss";
 @import "_balloon.scss";
@@ -17,9 +18,27 @@
 
 @font-face { font-family: "gravurcondensed-regular"; src: url("gravurcondensed-regular.woff") format('woff'); }
 @font-face { font-family: "gravurcondensed-bold"; src: url("gravurcondensed-bold.woff") format('woff'); }
-@font-face { font-family: "egyptienne"; src: url("egyptienne.woff") format('woff'); }
 
+@font-face { 
+  font-family: "egyptienne"; 
+  src: url("egyptienne-normal.woff") format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
 
+@font-face { 
+  font-family: "egyptienne"; 
+  src: url("egyptienne-italic.woff") format('woff');
+  font-weight: normal;
+  font-style: italic;
+}
+
+@font-face { 
+  font-family: "egyptienne"; 
+  src: url("egyptienne-bold.woff") format('woff');
+  font-weight: bold;
+  font-style: normal;
+}
 
 body {
   font: 10px "gravurcondensed-regular", sans-serif;
@@ -55,7 +74,15 @@ section {
   margin-bottom: 40px;
   width:100%;
   flex-direction:column;
-  // height:calc(100vh - 188px);
+
+
+  p {
+    font-family: "egyptienne";
+    color:#222;
+    font-size:16px;
+    line-height:24px;
+  }
+
 
   h2.title {
     font-face:"gravurcondensed-bold";
@@ -74,22 +101,25 @@ section {
   }
 
   .intro {
-    -webkit-font-smoothing: antialiased;
-    // font-family: "egyptienne";
-    font-family:  -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-    font-size: 16px;
-    line-height: 24px;
-    // -webkit-column-count: 2; /* Chrome, Safari, Opera */
-    // -moz-column-count: 2; /* Firefox */
-    // column-count: 2;
-    color:$grey;
-    // column-gap: 100px;
-    width: 50%;
-
+    font-family: "egyptienne";
     margin-bottom: 60px;
-  
+    color:#222222;
+    width:100%;
+    display:flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    p {
+      // columns
+      font-size:16px;
+      line-height:24px;
+      width:calc(50% - 25px);
+      flex:1;
+      margin-bottom: 20px;
+      color:#222;
+      &:nth-of-type(even) { margin-left:25px; }
+      &:nth-of-type(odd) { margin-right:25px;}
+    }
   }
-  
 }
 
 

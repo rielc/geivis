@@ -19,4 +19,16 @@ export class Section extends StateDb {
 	  this.height = parseInt(this.div.style("height"))
 	}
 
+	setIntro (content) {
+		this.intro = this.div
+			.append('div')
+			.classed('intro', true)
+		this.intro	
+			.selectAll('p')
+			.data(content)
+			.enter()
+			.append('p')
+			.html(d=>d)
+	}
+
 }

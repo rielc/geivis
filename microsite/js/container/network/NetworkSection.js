@@ -9,22 +9,22 @@ export class NetworkSection extends Section {
     super(state,db);
 
 
-  // gabriel modules init
-  // create a blacklist of tags to ignore because they are part of the classification
-  this.blacklist = []; 
-  d3.values(classificationTags).forEach( e1 => {
-    d3.values(e1).forEach( e2 => {
-      e2.forEach( e3 => { 
-        this.blacklist.push(e3);
-      }); 
+    // gabriel modules init
+    // create a blacklist of tags to ignore because they are part of the classification
+    this.blacklist = []; 
+    d3.values(classificationTags).forEach( e1 => {
+      d3.values(e1).forEach( e2 => {
+        e2.forEach( e3 => { 
+          this.blacklist.push(e3);
+        }); 
+      });
     });
-  });
 
-   this.div.append("div")
-      .attr("class", "intro")
-      .text(`
-        Diese Visualisierung veranschaulicht die Verteilung der Schlagwörter in GEI-Digital. Wählen Sie eine Zeitspanne aus und es werden Ihnen die für diesen Zeitraum vergebenen Schlagwörter in Form von Kreisen angezeigt. Die Größe eines Kreises stellt die Anzahl der Schulbücher dar, die mit dem gleichen Schlagwort in GEI-Digital erfasst sind. Um die Hauptschlagwörter gruppieren sich weitere Schlagwort-Kreise, die mit den Hauptschlagwörtern in Verbindung stehen. Wenn Sie auf ein Schlagwort klicken, öffnet sich eine Ansicht mit weiteren verwandten Schlagwörtern. Per Mausklick können Sie sich die zu den Schlagwörtern passenden Schulbücher im Menü Books anzeigen lassen. Durch Klicken auf den zentrierten Knoten oder durch Ändern des Zeitrahmens verlassen Sie die ausgewählte Ansicht. 
-      `);
+    this.setIntro([
+      `Diese Visualisierung veranschaulicht die Verteilung der Schlagwörter in GEI-Digital. Wählen Sie eine Zeitspanne aus und es werden Ihnen die für diesen Zeitraum vergebenen Schlagwörter in Form von Kreisen angezeigt. Die Größe eines Kreises stellt die Anzahl der Schulbücher dar, die mit dem gleichen Schlagwort in GEI-Digital erfasst sind. Um die Hauptschlagwörter gruppieren sich weitere Schlagwort-Kreise, die mit den Hauptschlagwörtern in Verbindung stehen.`,
+      `Wenn Sie auf ein Schlagwort klicken, öffnet sich eine Ansicht mit weiteren verwandten Schlagwörtern. Per Mausklick können Sie sich die zu den Schlagwörtern passenden Schulbücher im Menü Books anzeigen lassen. Durch Klicken auf den zentrierten Knoten oder durch Ändern des Zeitrahmens verlassen Sie die ausgewählte Ansicht.`
+    ]);
+
     this.title.html(`Tags`);
 
     let oh = 0;

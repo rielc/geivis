@@ -6,16 +6,19 @@ header {
 	position: fixed;
 	z-index: 500;
 	background: #FFF;
+	box-shadow:0 2px 0 0 rgba($bodyBackground, 1);
 	top:0px;
 
 	.logo {
 		float: left;
 	}
 	.navi {
-		box-shadow:0 1px 0 0 rgba($bodyBackground, 1);
 		float: right;
+		 top: 14px;
+		 position:relative;
 		text-transform: uppercase;
 		padding-top: 10px;
+		border-bottom: 2px solid rgba(#eaeaea,0.5);
 
 		a {
 			box-sizing:border-box;
@@ -24,12 +27,37 @@ header {
 			width: 25%;
 			float: left;
 			padding: 0 $padding*2 0 $padding*2;
-			font-size: 20px;
+			font-size: 18px;
 			text-align: center;
-			letter-spacing: 1px;
 			font-family:"gravurcondensed-bold";
 			text-transform: uppercase;
-			&:hover, &:active,&.active { color:$blue; }
+			
+			span {
+				z-index:5;
+				position:relative;
+			}
+
+
+			&:after {
+				z-index:4;
+				display:block;
+				position:absolute;
+				transition:transform 0.5s, opacity 0.5s;
+				content:'';
+				width:calc(700px / 4);
+				height:80px;
+				background-color:#f4f4f4;
+				opacity:0.0;
+				transform:translate(-$padding*2,-100%) scale(1,0);
+				transform-origin: 50% 100%;
+			}
+			&:hover, &:active,&.active { 
+				color:$blue;
+				&:after {
+				opacity:0.75;
+					transform:translate(-$padding*2,-100%) scale(1,1);
+				}
+			}
 		}
 	}
 }

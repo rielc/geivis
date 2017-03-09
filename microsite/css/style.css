@@ -275,20 +275,23 @@ header {
   position: fixed;
   z-index: 500;
   background: #FFF;
+  box-shadow: 0 2px 0 0 white;
   top: 0px;
 }
-/* line 11, ../sass/_header.scss */
+/* line 12, ../sass/_header.scss */
 header .logo {
   float: left;
 }
-/* line 14, ../sass/_header.scss */
+/* line 15, ../sass/_header.scss */
 header .navi {
-  box-shadow: 0 1px 0 0 white;
   float: right;
+  top: 14px;
+  position: relative;
   text-transform: uppercase;
   padding-top: 10px;
+  border-bottom: 2px solid rgba(234, 234, 234, 0.5);
 }
-/* line 20, ../sass/_header.scss */
+/* line 23, ../sass/_header.scss */
 header .navi a {
   box-sizing: border-box;
   color: #b00046;
@@ -296,42 +299,68 @@ header .navi a {
   width: 25%;
   float: left;
   padding: 0 50px 0 50px;
-  font-size: 20px;
+  font-size: 18px;
   text-align: center;
-  letter-spacing: 1px;
   font-family: "gravurcondensed-bold";
   text-transform: uppercase;
 }
-/* line 32, ../sass/_header.scss */
+/* line 35, ../sass/_header.scss */
+header .navi a span {
+  z-index: 5;
+  position: relative;
+}
+/* line 41, ../sass/_header.scss */
+header .navi a:after {
+  z-index: 4;
+  display: block;
+  position: absolute;
+  transition: transform 0.5s, opacity 0.5s;
+  content: '';
+  width: calc(700px / 4);
+  height: 80px;
+  background-color: #f4f4f4;
+  opacity: 0.0;
+  transform: translate(-50px, -100%) scale(1, 0);
+  transform-origin: 50% 100%;
+}
+/* line 54, ../sass/_header.scss */
 header .navi a:hover, header .navi a:active, header .navi a.active {
   color: #009ee0;
 }
+/* line 56, ../sass/_header.scss */
+header .navi a:hover:after, header .navi a:active:after, header .navi a.active:after {
+  opacity: 0.75;
+  transform: translate(-50px, -100%) scale(1, 1);
+}
 
-/* line 4, ../sass/_intro.scss */
+/* line 6, ../sass/_intro.scss */
 #intro {
   margin-top: 118px;
   margin-bottom: 70px;
-  height: auto;
-  height: auto;
+  height: 216px;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
 }
-/* line 10, ../sass/_intro.scss */
+/* line 15, ../sass/_intro.scss */
+#intro em {
+  color: #888888;
+}
+/* line 17, ../sass/_intro.scss */
 #intro p {
-  -webkit-font-smoothing: antialiased;
-  font-family: "egyptienne";
-  font-size: 16px;
-  line-height: 24px;
-  -webkit-column-count: 2;
-  /* Chrome, Safari, Opera */
-  -moz-column-count: 2;
-  /* Firefox */
-  column-count: 2;
-  color: #707070;
-  column-gap: 50px;
+  width: calc(50% - 25px);
+  flex: 1;
+  margin-bottom: 20px;
+  color: #222;
 }
-/* line 21, ../sass/_intro.scss */
-#intro p a {
-  color: #000;
-  text-decoration: none;
+/* line 22, ../sass/_intro.scss */
+#intro p:nth-of-type(even) {
+  margin-left: 25px;
+}
+/* line 23, ../sass/_intro.scss */
+#intro p:nth-of-type(odd) {
+  margin-right: 25px;
 }
 
 /* line 6, ../sass/_nestedTreemap.scss */
@@ -452,7 +481,7 @@ header .navi a:hover, header .navi a:active, header .navi a.active {
 }
 /* line 84, ../sass/_nestedTreemap.scss */
 #TreemapSection .level-1-label span {
-  color: #707070;
+  color: #404040;
 }
 /* line 88, ../sass/_nestedTreemap.scss */
 #TreemapSection .node {
@@ -517,7 +546,7 @@ header .navi a:hover, header .navi a:active, header .navi a.active {
 }
 /* line 137, ../sass/_nestedTreemap.scss */
 #TreemapSection .level-2 span {
-  color: #707070;
+  color: #404040;
 }
 /* line 139, ../sass/_nestedTreemap.scss */
 #TreemapSection .level-2 .label {
@@ -533,7 +562,7 @@ header .navi a:hover, header .navi a:active, header .navi a.active {
 }
 /* line 151, ../sass/_nestedTreemap.scss */
 #TreemapSection .level-2 .count {
-  color: #bdbdbd;
+  color: #8d8d8d;
   pointer-events: none;
   box-sizing: border-box;
   text-align: right;
@@ -575,7 +604,7 @@ header .navi a:hover, header .navi a:active, header .navi a.active {
   padding: 0;
   display: block;
   transform: translate(0, -50%);
-  color: #707070;
+  color: #404040;
 }
 /* line 32, ../sass/_circlePackedNetwork.scss */
 #NetworkSection.hasTransition .node {
@@ -672,7 +701,7 @@ header .navi a:hover, header .navi a:active, header .navi a.active {
   top: 0;
   transform: translate(0, 0);
   display: block !important;
-  color: #707070;
+  color: #404040;
 }
 /* line 113, ../sass/_circlePackedNetwork.scss */
 #NetworkSection .node.monad > .count {
@@ -697,7 +726,7 @@ header .navi a:hover, header .navi a:active, header .navi a.active {
   top: 0;
   transform: translate(0, 0);
   display: block !important;
-  color: #707070;
+  color: #404040;
 }
 /* line 137, ../sass/_circlePackedNetwork.scss */
 #NetworkSection .node.monadic-related > .count {
@@ -3949,7 +3978,7 @@ header .navi a:hover, header .navi a:active, header .navi a.active {
 }
 /* line 65, ../sass/_BookshelfSection.scss */
 #BookshelfSection .bookshelf .book i {
-  color: #707070;
+  color: #404040;
 }
 /* line 66, ../sass/_BookshelfSection.scss */
 #BookshelfSection .bookshelf .book:nth-child(odd) {
@@ -4511,16 +4540,30 @@ header .navi a:hover, header .navi a:active, header .navi a.active {
 }
 @font-face {
   font-family: "egyptienne";
-  src: url("egyptienne.woff") format("woff");
+  src: url("egyptienne-normal.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
 }
-/* line 24, ../sass/style.scss */
+@font-face {
+  font-family: "egyptienne";
+  src: url("egyptienne-italic.woff") format("woff");
+  font-weight: normal;
+  font-style: italic;
+}
+@font-face {
+  font-family: "egyptienne";
+  src: url("egyptienne-bold.woff") format("woff");
+  font-weight: bold;
+  font-style: normal;
+}
+/* line 43, ../sass/style.scss */
 body {
   font: 10px "gravurcondensed-regular", sans-serif;
   margin: 0;
   padding: 0;
   background-color: #FFF;
 }
-/* line 30, ../sass/style.scss */
+/* line 49, ../sass/style.scss */
 body .container {
   position: relative;
   margin: auto auto;
@@ -4528,7 +4571,7 @@ body .container {
   background-color: #fff;
 }
 
-/* line 38, ../sass/style.scss */
+/* line 57, ../sass/style.scss */
 a.anchor {
   display: block;
   position: relative;
@@ -4536,12 +4579,12 @@ a.anchor {
   visibility: hidden;
 }
 
-/* line 46, ../sass/style.scss */
+/* line 65, ../sass/style.scss */
 p {
   font: 12px "egyptienne", sans-serif;
 }
 
-/* line 51, ../sass/style.scss */
+/* line 70, ../sass/style.scss */
 section {
   background-color: #fff;
   position: relative;
@@ -4550,66 +4593,88 @@ section {
   width: 100%;
   flex-direction: column;
 }
-/* line 60, ../sass/style.scss */
+/* line 79, ../sass/style.scss */
+section p {
+  font-family: "egyptienne";
+  color: #222;
+  font-size: 16px;
+  line-height: 24px;
+}
+/* line 87, ../sass/style.scss */
 section h2.title {
   font-face: "gravurcondensed-bold";
   box-sizing: border-box;
   padding: 25px 0;
   font-size: 25px;
-  color: #707070;
+  color: #404040;
   font-weight: bold;
   text-align: left;
 }
-/* line 69, ../sass/style.scss */
+/* line 96, ../sass/style.scss */
 section h2.title .years {
   font-face: "gravurcondensed-regular";
   font-weight: normal;
-  color: #a3a3a3;
+  color: #737373;
 }
-/* line 76, ../sass/style.scss */
+/* line 103, ../sass/style.scss */
 section .intro {
   font-family: "egyptienne";
+  margin-bottom: 60px;
+  color: #222222;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+/* line 111, ../sass/style.scss */
+section .intro p {
   font-size: 16px;
   line-height: 24px;
-  -webkit-column-count: 2;
-  -moz-column-count: 2;
-  column-count: 2;
-  margin-bottom: 60px;
-  column-gap: 50px;
-  color: #707070;
+  width: calc(50% - 25px);
+  flex: 1;
+  margin-bottom: 20px;
+  color: #222;
+}
+/* line 119, ../sass/style.scss */
+section .intro p:nth-of-type(even) {
+  margin-left: 25px;
+}
+/* line 120, ../sass/style.scss */
+section .intro p:nth-of-type(odd) {
+  margin-right: 25px;
 }
 
-/* line 91, ../sass/style.scss */
+/* line 126, ../sass/style.scss */
 .control {
   width: 100%;
 }
-/* line 93, ../sass/style.scss */
+/* line 128, ../sass/style.scss */
 .control svg {
   background-color: #fff;
 }
-/* line 95, ../sass/style.scss */
+/* line 130, ../sass/style.scss */
 .control svg .grid-background {
   fill: rgba(190, 230, 249, 0.26);
 }
 
-/* line 105, ../sass/style.scss */
+/* line 140, ../sass/style.scss */
 text {
   font: 10px sans-serif;
 }
 
-/* line 109, ../sass/style.scss */
+/* line 144, ../sass/style.scss */
 tspan:last-child {
   font-size: 9px;
   fill-opacity: 0.8;
 }
 
-/* line 114, ../sass/style.scss */
+/* line 149, ../sass/style.scss */
 ::-webkit-scrollbar {
   -webkit-appearance: none;
   width: 7px;
 }
 
-/* line 118, ../sass/style.scss */
+/* line 153, ../sass/style.scss */
 ::-webkit-scrollbar-thumb {
   border-radius: 4px;
   background-color: rgba(0, 0, 0, 0.5);
