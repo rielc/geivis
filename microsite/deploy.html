@@ -8,28 +8,44 @@
     <script src="js/lib/crossfilter.min.js"></script>
     <title>GEI visualized</title>
   </head>
-  <body>
+
     <div class="container">
       <header>
-        <img class="logo" src="assets/gei-logo.svg">
         <div class="navi">
-          <a href="#StreamSection">Timeline</a>
-          <a href="#GeomapSection">Places</a>
-          <a href="#TreemapSection">Compare</a>
-          <a href="#NetworkSection">Tags</a>
+          <img class="logo" src="assets/gei-logo.svg">
+          <a href="#/Stream" class="link"><span>Timeline</span></a>
+          <a href="#/Geomap" class="link"><span>Places</span></a>
+          <a href="#/Treemap" class="link"><span>Comparison</span></a>
+          <a href="#/Network" class="link"><span>Tags</span></a>
           <!--<a href="#tags">Books</a>-->
         </div>
       </header>
       <section id="intro">
         <p>
-        As cultural institutions are digitizing their assets, great opportunities emerge to engage with cultural content through novel means. However, it is the often comprehensive and complex nature of collections that can make it difficult to gain a sense of overview and orientation. After an introduction to the visualization of collections, we present the outcomes of two design studies, one engaging with an aggregated collection from diverse cultural institutions, and the other focusing on the specific features of a collection of school books. Both design studies involved iterative design processes with the collection owners leading to prototypical implementations of multiple aesthetically and interactively coordinated visualizations. The resulting representations are experimental, yet playful overviews of the temporal and spatial distribution of objects and the associated topics, people, and organizations. In our presentation we discuss our method of involving collection owners into the design process, present the diverse resulting interactive visualizations, and discuss the two information architectures integrating the multiple views. 
+        <strong>GEI-Digital visualisiert</strong> bietet einen interaktiven Zugang zur virtuellen Schulbuchbibliothek GEI-Digital.
+        <br/><br/><br/>
+        Über die Hauptnavigationen <em>Timeline</em> und <em>Places</em> können Sie sich die Sammlung deutscher Schulbücher der Fächer Geschichte, Geographie und Politik sowie Realien- und Lesebücher vom 17. Jahrhundert bis 1918 in ihrer zeitlichen (Erscheinungsdatum) und räumlichen Dimension (Verlagsorte) anzeigen lassen. Zur Auswahl stehen dabei die Facetten Schulfächer, Bildungslevel, Verlage und Verlagsorte. 
         </p>
-       <h2 class="title">Timeline</h2>
         <p>
-        In our first visualization you can see the distribution of the whole collection as a stacked streams along the time. By hovering on the graph you can will be able to distinguish between multiple sub streams which represent the active domain shown underneath as a bar chart. You can browse the collection by looking at the distribution of subjects, schoollevels, publishers and places. Selecting a time span, by dragging on the timeline, shows the most common characteristics for these periods.
+        In der Visualisierung <em>Compare</em> können die Facetten kombiniert werden, wodurch differenzierte Einblicke in die Geschichte der Schulbuchproduktion möglich sind. Die Visualisierung <em>Tags</em> veranschaulicht die Verteilung und Verbindung von Schlagwörtern in GEI-Digital.
+        <br/><br/>
+        Im Menüfeld <em>Books</em> am rechten Rand der Seite wird Ihnen der zur Ihrer Auswahl entsprechende Bestand angezeigt, so dass Sie über die Visualisierung direkt zu den in GEI-Digital vorhandenen digitalisierten Schulbüchern gelangen. <strong>GEI-Digital visualisiert</strong> ist somit intuitives Recherche- und Präsentationstool zugleich.
         </p>
+      </section>
+      <section id="timeline">
+        <h2 class="title">Timeline</h2>
+        <div class="intro">
+          <p>
+          Diese Visualisierung zeigt die Verteilung der Sammlung GEI-Digital entlang der Zeit. Wählen Sie auf der Zeitleiste durch Ziehen mit gedrückter Maustaste eine Zeitspanne aus. Im darunter liegenden Balkendiagramm können Sie in den Facetten Schulfächer, Bildungslevel, Verlage und Verlagsorte browsen.
+          </p>
+          <p>
+          Die quantitative Distribution der ausgewählten Facettenmerkmale werden in der Zeitleiste als Graphen dargestellt. Zu den zu Ihrer Auswahl passenden Schulbüchern gelangen Sie über das Menü Books am rechten Rand der Seite.
+          </p>
+        </div>
       </section>
     </div>    
     <script src="build.js"></script>
   </body>
+  <body>
+
 </html>

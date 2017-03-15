@@ -1,4 +1,4 @@
-!function(e){function r(e,r,o){return 4===arguments.length?t.apply(this,arguments):void n(e,{declarative:!0,deps:r,declare:o})}function t(e,r,t,o){n(e,{declarative:!1,deps:r,executingRequire:t,execute:o})}function n(e,r){r.name=e,e in v||(v[e]=r),r.normalizedDeps=r.deps}function o(e,r){if(r[e.groupIndex]=r[e.groupIndex]||[],-1==g.call(r[e.groupIndex],e)){r[e.groupIndex].push(e);for(var t=0,n=e.normalizedDeps.length;n>t;t++){var a=e.normalizedDeps[t],u=v[a];if(u&&!u.evaluated){var d=e.groupIndex+(u.declarative!=e.declarative);if(void 0===u.groupIndex||u.groupIndex<d){if(void 0!==u.groupIndex&&(r[u.groupIndex].splice(g.call(r[u.groupIndex],u),1),0==r[u.groupIndex].length))throw new TypeError("Mixed dependency cycle detected");u.groupIndex=d}o(u,r)}}}}function a(e){var r=v[e];r.groupIndex=0;var t=[];o(r,t);for(var n=!!r.declarative==t.length%2,a=t.length-1;a>=0;a--){for(var u=t[a],i=0;i<u.length;i++){var s=u[i];n?d(s):l(s)}n=!n}}function u(e){return y[e]||(y[e]={name:e,dependencies:[],exports:{},importers:[]})}function d(r){if(!r.module){var t=r.module=u(r.name),n=r.module.exports,o=r.declare.call(e,function(e,r){if(t.locked=!0,"object"==typeof e)for(var o in e)n[o]=e[o];else n[e]=r;for(var a=0,u=t.importers.length;u>a;a++){var d=t.importers[a];if(!d.locked)for(var i=0;i<d.dependencies.length;++i)d.dependencies[i]===t&&d.setters[i](n)}return t.locked=!1,r},{id:r.name});t.setters=o.setters,t.execute=o.execute;for(var a=0,i=r.normalizedDeps.length;i>a;a++){var l,s=r.normalizedDeps[a],c=v[s],f=y[s];f?l=f.exports:c&&!c.declarative?l=c.esModule:c?(d(c),f=c.module,l=f.exports):l=p(s),f&&f.importers?(f.importers.push(t),t.dependencies.push(f)):t.dependencies.push(null),t.setters[a]&&t.setters[a](l)}}}function i(e){var r,t=v[e];if(t)t.declarative?f(e,[]):t.evaluated||l(t),r=t.module.exports;else if(r=p(e),!r)throw new Error("Unable to load dependency "+e+".");return(!t||t.declarative)&&r&&r.__useDefault?r["default"]:r}function l(r){if(!r.module){var t={},n=r.module={exports:t,id:r.name};if(!r.executingRequire)for(var o=0,a=r.normalizedDeps.length;a>o;o++){var u=r.normalizedDeps[o],d=v[u];d&&l(d)}r.evaluated=!0;var c=r.execute.call(e,function(e){for(var t=0,n=r.deps.length;n>t;t++)if(r.deps[t]==e)return i(r.normalizedDeps[t]);throw new TypeError("Module "+e+" not declared as a dependency.")},t,n);void 0!==typeof c&&(n.exports=c),t=n.exports,t&&t.__esModule?r.esModule=t:r.esModule=s(t)}}function s(r){var t={};if(("object"==typeof r||"function"==typeof r)&&r!==e)if(m)for(var n in r)"default"!==n&&c(t,r,n);else{var o=r&&r.hasOwnProperty;for(var n in r)"default"===n||o&&!r.hasOwnProperty(n)||(t[n]=r[n])}return t["default"]=r,x(t,"__useDefault",{value:!0}),t}function c(e,r,t){try{var n;(n=Object.getOwnPropertyDescriptor(r,t))&&x(e,t,n)}catch(o){return e[t]=r[t],!1}}function f(r,t){var n=v[r];if(n&&!n.evaluated&&n.declarative){t.push(r);for(var o=0,a=n.normalizedDeps.length;a>o;o++){var u=n.normalizedDeps[o];-1==g.call(t,u)&&(v[u]?f(u,t):p(u))}n.evaluated||(n.evaluated=!0,n.module.execute.call(e))}}function p(e){if(I[e])return I[e];if("@node/"==e.substr(0,6))return I[e]=s(D(e.substr(6)));var r=v[e];if(!r)throw"Module "+e+" not present.";return a(e),f(e,[]),v[e]=void 0,r.declarative&&x(r.module.exports,"__esModule",{value:!0}),I[e]=r.declarative?r.module.exports:r.esModule}var v={},g=Array.prototype.indexOf||function(e){for(var r=0,t=this.length;t>r;r++)if(this[r]===e)return r;return-1},m=!0;try{Object.getOwnPropertyDescriptor({a:0},"a")}catch(h){m=!1}var x;!function(){try{Object.defineProperty({},"a",{})&&(x=Object.defineProperty)}catch(e){x=function(e,r,t){try{e[r]=t.value||t.get.call(e)}catch(n){}}}}();var y={},D="undefined"!=typeof System&&System._nodeRequire||"undefined"!=typeof require&&require.resolve&&"undefined"!=typeof process&&require,I={"@empty":{}};return function(e,n,o,a){return function(u){u(function(u){for(var d={_nodeRequire:D,register:r,registerDynamic:t,get:p,set:function(e,r){I[e]=r},newModule:function(e){return e}},i=0;i<n.length;i++)(function(e,r){r&&r.__esModule?I[e]=r:I[e]=s(r)})(n[i],arguments[i]);a(d);var l=p(e[0]);if(e.length>1)for(var i=1;i<e.length;i++)p(e[i]);return o?l["default"]:l})}}}("undefined"!=typeof self?self:global)
+!function(e){function r(e,r,o){return 4===arguments.length?t.apply(this,arguments):void n(e,{declarative:!0,deps:r,declare:o})}function t(e,r,t,o){n(e,{declarative:!1,deps:r,executingRequire:t,execute:o})}function n(e,r){r.name=e,e in v||(v[e]=r),r.normalizedDeps=r.deps}function o(e,r){if(r[e.groupIndex]=r[e.groupIndex]||[],-1==g.call(r[e.groupIndex],e)){r[e.groupIndex].push(e);for(var t=0,n=e.normalizedDeps.length;n>t;t++){var a=e.normalizedDeps[t],u=v[a];if(u&&!u.evaluated){var d=e.groupIndex+(u.declarative!=e.declarative);if(void 0===u.groupIndex||u.groupIndex<d){if(void 0!==u.groupIndex&&(r[u.groupIndex].splice(g.call(r[u.groupIndex],u),1),0==r[u.groupIndex].length))throw new TypeError("Mixed dependency cycle detected");u.groupIndex=d}o(u,r)}}}}function a(e){var r=v[e];r.groupIndex=0;var t=[];o(r,t);for(var n=!!r.declarative==t.length%2,a=t.length-1;a>=0;a--){for(var u=t[a],i=0;i<u.length;i++){var s=u[i];n?d(s):l(s)}n=!n}}function u(e){return y[e]||(y[e]={name:e,dependencies:[],exports:{},importers:[]})}function d(r){if(!r.module){var t=r.module=u(r.name),n=r.module.exports,o=r.declare.call(e,function(e,r){if(t.locked=!0,"object"==typeof e)for(var o in e)n[o]=e[o];else n[e]=r;for(var a=0,u=t.importers.length;u>a;a++){var d=t.importers[a];if(!d.locked)for(var i=0;i<d.dependencies.length;++i)d.dependencies[i]===t&&d.setters[i](n)}return t.locked=!1,r},{id:r.name});t.setters=o.setters,t.execute=o.execute;for(var a=0,i=r.normalizedDeps.length;i>a;a++){var l,s=r.normalizedDeps[a],c=v[s],f=y[s];f?l=f.exports:c&&!c.declarative?l=c.esModule:c?(d(c),f=c.module,l=f.exports):l=p(s),f&&f.importers?(f.importers.push(t),t.dependencies.push(f)):t.dependencies.push(null),t.setters[a]&&t.setters[a](l)}}}function i(e){var r,t=v[e];if(t)t.declarative?f(e,[]):t.evaluated||l(t),r=t.module.exports;else if(r=p(e),!r)throw new Error("Unable to load dependency "+e+".");return(!t||t.declarative)&&r&&r.__useDefault?r["default"]:r}function l(r){if(!r.module){var t={},n=r.module={exports:t,id:r.name};if(!r.executingRequire)for(var o=0,a=r.normalizedDeps.length;a>o;o++){var u=r.normalizedDeps[o],d=v[u];d&&l(d)}r.evaluated=!0;var c=r.execute.call(e,function(e){for(var t=0,n=r.deps.length;n>t;t++)if(r.deps[t]==e)return i(r.normalizedDeps[t]);throw new TypeError("Module "+e+" not declared as a dependency.")},t,n);void 0!==c&&(n.exports=c),t=n.exports,t&&t.__esModule?r.esModule=t:r.esModule=s(t)}}function s(r){var t={};if(("object"==typeof r||"function"==typeof r)&&r!==e)if(m)for(var n in r)"default"!==n&&c(t,r,n);else{var o=r&&r.hasOwnProperty;for(var n in r)"default"===n||o&&!r.hasOwnProperty(n)||(t[n]=r[n])}return t["default"]=r,x(t,"__useDefault",{value:!0}),t}function c(e,r,t){try{var n;(n=Object.getOwnPropertyDescriptor(r,t))&&x(e,t,n)}catch(o){return e[t]=r[t],!1}}function f(r,t){var n=v[r];if(n&&!n.evaluated&&n.declarative){t.push(r);for(var o=0,a=n.normalizedDeps.length;a>o;o++){var u=n.normalizedDeps[o];-1==g.call(t,u)&&(v[u]?f(u,t):p(u))}n.evaluated||(n.evaluated=!0,n.module.execute.call(e))}}function p(e){if(I[e])return I[e];if("@node/"==e.substr(0,6))return I[e]=s(D(e.substr(6)));var r=v[e];if(!r)throw"Module "+e+" not present.";return a(e),f(e,[]),v[e]=void 0,r.declarative&&x(r.module.exports,"__esModule",{value:!0}),I[e]=r.declarative?r.module.exports:r.esModule}var v={},g=Array.prototype.indexOf||function(e){for(var r=0,t=this.length;t>r;r++)if(this[r]===e)return r;return-1},m=!0;try{Object.getOwnPropertyDescriptor({a:0},"a")}catch(h){m=!1}var x;!function(){try{Object.defineProperty({},"a",{})&&(x=Object.defineProperty)}catch(e){x=function(e,r,t){try{e[r]=t.value||t.get.call(e)}catch(n){}}}}();var y={},D="undefined"!=typeof System&&System._nodeRequire||"undefined"!=typeof require&&"undefined"!=typeof require.resolve&&"undefined"!=typeof process&&process.platform&&require,I={"@empty":{}};return function(e,n,o,a){return function(u){u(function(u){for(var d={_nodeRequire:D,register:r,registerDynamic:t,get:p,set:function(e,r){I[e]=r},newModule:function(e){return e}},i=0;i<n.length;i++)(function(e,r){r&&r.__esModule?I[e]=r:I[e]=s(r)})(n[i],arguments[i]);a(d);var l=p(e[0]);if(e.length>1)for(var i=1;i<e.length;i++)p(e[i]);return o?l["default"]:l})}}}("undefined"!=typeof self?self:global)
 
 (["1"], [], false, function($__System) {
 var require = this.require, exports = this.exports, module = this.module;
@@ -7,8 +7,7 @@ $__System.registerDynamic('2', [], true, function ($__require, exports, module) 
 	'use strict';
 	/* eslint-disable no-unused-vars */
 
-	var define,
-	    global = this || self,
+	var global = this || self,
 	    GLOBAL = global;
 	var hasOwnProperty = Object.prototype.hasOwnProperty;
 	var propIsEnumerable = Object.prototype.propertyIsEnumerable;
@@ -90,14 +89,11 @@ $__System.registerDynamic('2', [], true, function ($__require, exports, module) 
 
 		return to;
 	};
-	return module.exports;
 });
 $__System.registerDynamic("3", ["2"], true, function ($__require, exports, module) {
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   module.exports = $__require("2");
-  return module.exports;
 });
 $__System.register("4", ["3", "5", "6"], function (_export) {
   var objectAssign, _createClass, _classCallCheck, __hotReload, StateMachine;
@@ -191,8 +187,7 @@ $__System.register("4", ["3", "5", "6"], function (_export) {
   };
 });
 $__System.registerDynamic('7', ['8', '9'], true, function ($__require, exports, module) {
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   /* */
   var toObject = $__require('8');
@@ -201,24 +196,19 @@ $__System.registerDynamic('7', ['8', '9'], true, function ($__require, exports, 
       return $keys(toObject(it));
     };
   });
-  return module.exports;
 });
 $__System.registerDynamic('a', ['7', 'b'], true, function ($__require, exports, module) {
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   /* */
   $__require('7');
   module.exports = $__require('b').Object.keys;
-  return module.exports;
 });
 $__System.registerDynamic("c", ["a"], true, function ($__require, exports, module) {
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   /* */
   module.exports = { "default": $__require("a"), __esModule: true };
-  return module.exports;
 });
 $__System.register("d", ["5", "6", "e", "c"], function (_export) {
   var _createClass, _classCallCheck, _extends, _Object$keys, __hotReload, DataBase;
@@ -264,15 +254,17 @@ $__System.register("d", ["5", "6", "e", "c"], function (_export) {
             // this.state.push({ loading: true });
 
             d3.csv("data/data.csv", function (data) {
-              d3.csv("data/geocode.csv", function (geocode) {
-                d3.json("data/map/topo.json", function (rivers) {
-                  d3.json("data/map/landbig.json", function (land) {
+              d3.csv("data/places.csv", function (places) {
+                d3.csv("data/geocode.csv", function (geocode) {
+                  d3.json("data/map/topo.json", function (rivers) {
+                    d3.json("data/map/landbig.json", function (land) {
 
-                    _this.add({ rivers: rivers });
-                    _this.add({ land: land });
-                    _this.init(data, geocode);
+                      _this.add({ rivers: rivers });
+                      _this.add({ land: land });
+                      _this.init(data, places, geocode);
 
-                    _this.state.push({ loaded: true, keyframe: true });
+                      _this.state.push({ loaded: true, keyframe: true });
+                    });
                   });
                 });
               });
@@ -281,11 +273,20 @@ $__System.register("d", ["5", "6", "e", "c"], function (_export) {
             return this;
           }
         }, {
+          key: "placesInit",
+          value: function placesInit(places) {
+            return places.reduce(function (prev, cur) {
+              prev[cur.place] = cur;
+              return prev;
+            }, {});
+          }
+        }, {
           key: "init",
-          value: function init(_data, _geocode) {
+          value: function init(_data, _places, _geocode) {
             var _this2 = this;
 
             this.data = _data;
+            this.places = this.placesInit(_places);
             // this.data = _data.filter(d=>d.year <= 1920);
             this.geocode = _geocode;
 
@@ -295,20 +296,21 @@ $__System.register("d", ["5", "6", "e", "c"], function (_export) {
             this.data.forEach(function (d) {
               d.date = _this2.formater(d.year);
               d.year = parseInt(d.year);
-              // console.log(d.year);
 
               d.RSWKTag = d.RSWKTag.split(",");
 
               d.publisher = d.publisher || "none";
               d.schoollevel = d.schoollevel || "none";
               d.subject = d.subject || "none";
-              d.place = d.publisher_city || "none";
+              // d.place = d.publisher_city || "none";
+              d.placeRef = _this2.places[d.publisher_city];
+              if (!d.placeRef) {
+                console.warn("no place for", d.publisher_city);
+              }
 
-              var geo = _geocode.find(function (g) {
-                return g.name === d.place;
-              });
-              d.lat = geo ? +geo.lat : null;
-              d.lon = geo ? +geo.lon : null;
+              d.place = d.placeRef ? d.placeRef.toPlace : "none";
+              d.lat = d.placeRef ? d.placeRef.lat : null;
+              d.lon = d.placeRef ? d.placeRef.lng : null;
             });
 
             this.extent = d3.extent(this.data, function (d) {
@@ -628,29 +630,47 @@ $__System.register('f', ['5', '6', '10'], function (_export) {
               console.log("check", next.visible);
 
               this.check();
-              this.scrollTo(next.scrollY);
+              //this.scrollTo(next.scrollY);
             }
+
+            if (next.activeSection != prev.activeSection) {
+              this.updateNavi(next.activeSection);
+            }
+          }
+        }, {
+          key: 'updateNavi',
+          value: function updateNavi(section) {
+            var activeLink = section.replace("Section", "");
+            d3.select('.navi').selectAll('a').classed("active", function (d, i, a) {
+              return a[i].hash.replace('#/', '') == activeLink;
+            });
           }
         }, {
           key: 'scrollTo',
           value: function scrollTo(pos) {
+            var _this = this;
+
             // scrollTo(0,pos);
             // this.syntetic = true;
+            this.state.push({ scrolling: true });
 
-            d3.select("body").transition().duration(1000).tween("scroll", this.scrollTween(pos));
-            // .on("end", ()=> {
-            //   this.syntetic = false;
-            //   this.check();
-            // })
+            var top = document.body.scrollTop || window.scrollY;
+            // console.log(top, window.scrollY);
+
+            console.log("scrollTo", top, pos);
+
+            d3.select("body").transition().duration(1000).tween("scroll", this.scrollTween(pos, top)).on("end", function () {
+              _this.state.push({ scrolling: false });
+              _this.check();
+            });
           }
         }, {
           key: 'scrollTween',
-          value: function scrollTween(offset) {
-            var top = this.scrollY;
+          value: function scrollTween(offset, top) {
             return function () {
               var i = d3.interpolateNumber(top, top + offset);
               return function (t) {
-                scrollTo(0, i(t));
+                window.scrollTo(0, i(t));
               };
             };
           }
@@ -658,11 +678,10 @@ $__System.register('f', ['5', '6', '10'], function (_export) {
           key: 'scrollToSection',
           value: function scrollToSection(section) {
             console.log("scrollToSection", section);
-            var offset = 0;
             if (section != "") {
-              // offset = document.getElementById(section).offsetTop;
-              offset = document.getElementById(section).getBoundingClientRect().top;
-              // console.log(offset)
+              // let offset2 = document.getElementById(section).offsetTop;
+              var offset = document.getElementById(section).getBoundingClientRect().top;
+              // const offset2 = document.getElementById(section+"Section").getBoundingClientRect().top;
               this.scrollTo(offset);
             }
           }
@@ -720,19 +739,29 @@ $__System.register('11', ['5', '6', '10'], function (_export) {
           key: 'stateChange',
           value: function stateChange(next, prev) {
 
-            if (next.activeSection != prev.activeSection) {
+            if (!next.scrolling && next.activeSection != prev.activeSection) {
               var newHash = '#/' + next.activeSection.replace("Section", "");
               var oldHash = window.location.hash;
               if (newHash != oldHash) {
+                // console.log("push", newHash)
+
                 history.pushState(null, null, newHash);
+                // window.location.hash = newHash;
               }
             }
           }
         }, {
           key: 'hashchange',
           value: function hashchange(_hashchange) {
+            // there is still a bug when a hashchange is triggered via the history
+
             var section = window.location.hash.slice(2);
+            // console.log("hashchange", section, hashchange);
+            // console.log(window.scrollY);
+
             this.scroll.scrollToSection(section);
+            _hashchange.preventDefault();
+
             return false;
           }
         }, {
@@ -754,8 +783,7 @@ $__System.registerDynamic('12', ['@empty'], true, function ($__require, exports,
   /* */
   "format cjs";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   (function (Buffer, process) {
     ;
@@ -6507,7 +6535,7 @@ $__System.registerDynamic('12', ['@empty'], true, function ($__require, exports,
         return lodash;
       };
       var _ = runInContext();
-      if (typeof define == 'function' && typeof define.amd == 'object' && define.amd) {
+      if (typeof undefined == 'function' && typeof define.amd == 'object' && define.amd) {
         root._ = _;
         define(function () {
           return _;
@@ -6520,14 +6548,11 @@ $__System.registerDynamic('12', ['@empty'], true, function ($__require, exports,
       }
     }).call(this);
   })($__require('@empty').Buffer, $__require('@empty'));
-  return module.exports;
 });
 $__System.registerDynamic("10", ["12"], true, function ($__require, exports, module) {
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   module.exports = $__require("12");
-  return module.exports;
 });
 $__System.register('13', ['5', '6', '10', '14', '15', '16', '17', 'e'], function (_export) {
   var _createClass, _classCallCheck, defer, StateDb, _get, _inherits, _defineProperty, _extends, __hotReload, StreamGraph;
@@ -6921,19 +6946,16 @@ $__System.register('13', ['5', '6', '10', '14', '15', '16', '17', 'e'], function
   };
 });
 $__System.registerDynamic('8', ['18'], true, function ($__require, exports, module) {
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   /* */
   var defined = $__require('18');
   module.exports = function (it) {
     return Object(defined(it));
   };
-  return module.exports;
 });
 $__System.registerDynamic('19', ['1a', '8', '1b', '1c'], true, function ($__require, exports, module) {
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   /* */
   var $ = $__require('1a'),
@@ -6968,40 +6990,32 @@ $__System.registerDynamic('19', ['1a', '8', '1b', '1c'], true, function ($__requ
     }
     return T;
   } : Object.assign;
-  return module.exports;
 });
 $__System.registerDynamic('1d', ['1e', '19'], true, function ($__require, exports, module) {
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   /* */
   var $export = $__require('1e');
   $export($export.S + $export.F, 'Object', { assign: $__require('19') });
-  return module.exports;
 });
 $__System.registerDynamic('1f', ['1d', 'b'], true, function ($__require, exports, module) {
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   /* */
   $__require('1d');
   module.exports = $__require('b').Object.assign;
-  return module.exports;
 });
 $__System.registerDynamic("20", ["1f"], true, function ($__require, exports, module) {
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   /* */
   module.exports = { "default": $__require("1f"), __esModule: true };
-  return module.exports;
 });
 $__System.registerDynamic("e", ["20"], true, function ($__require, exports, module) {
   /* */
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var _Object$assign = $__require("20")["default"];
   exports["default"] = _Object$assign || function (target) {
@@ -7016,14 +7030,12 @@ $__System.registerDynamic("e", ["20"], true, function ($__require, exports, modu
     return target;
   };
   exports.__esModule = true;
-  return module.exports;
 });
 $__System.registerDynamic("17", ["21"], true, function ($__require, exports, module) {
   /* */
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var _Object$defineProperty = $__require("21")["default"];
   exports["default"] = function (obj, key, value) {
@@ -7040,7 +7052,6 @@ $__System.registerDynamic("17", ["21"], true, function ($__require, exports, mod
     return obj;
   };
   exports.__esModule = true;
-  return module.exports;
 });
 $__System.register('22', [], function (_export) {
 	'use strict';
@@ -7836,7 +7847,8 @@ $__System.register('2a', ['5', '6', '15', '16', '25', '29'], function (_export) 
           _get(Object.getPrototypeOf(GeomapSection.prototype), 'constructor', this).call(this, state, db);
 
           this.title.text('Places');
-          this.div.append("div").attr("class", "intro").text('\n        Die Visualisierung bezieht sich auf Verlagsorte in der Schulbuchsammlung GEI-Digital. Wählen Sie durch Ziehen mit gedrückter Maustaste auf der Zeitleiste eine Zeitspanne aus und es wird Ihnen die entsprechende geographische Verteilung der Verlagsorte angezeigt. Die Größe der Blasen repräsentiert die Menge der Bücher, die an dem jeweiligen Verlagsort veröffentlicht wurden. Klicken Sie auf eine der Blasen, dann gelangen Sie zu den in GEI-Digital vorhandenen Schulbüchern. Start- und Endzeit können durch Doppelklick auf der Zeitleiste neu ausgewählt werden.\n      ');
+
+          this.setIntro(['Die Visualisierung bezieht sich auf Verlagsorte in der Schulbuchsammlung GEI-Digital. Wählen Sie durch Ziehen mit gedrückter Maustaste auf der Zeitleiste eine Zeitspanne aus und es wird Ihnen die entsprechende geographische Verteilung der Verlagsorte angezeigt.', 'Die Größe der Blasen repräsentiert die Menge der Bücher, die an dem jeweiligen Verlagsort veröffentlicht wurden. Klicken Sie auf eine der Blasen, dann gelangen Sie zu den in GEI-Digital vorhandenen Schulbüchern. Start- und Endzeit können durch Doppelklick auf der Zeitleiste neu ausgewählt werden.']);
           this.geomap = new Geomap(state, db, this.div.append("div"));
           //this.geomap.outerHeight = this.height;
           this.geomap.init();
@@ -7979,30 +7991,24 @@ $__System.register("2c", [], function (_export) {
 	};
 });
 $__System.registerDynamic('2d', ['1e'], true, function ($__require, exports, module) {
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   /* */
   var $export = $__require('1e');
   $export($export.S, 'Number', { parseFloat: parseFloat });
-  return module.exports;
 });
 $__System.registerDynamic('2e', ['2d'], true, function ($__require, exports, module) {
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   /* */
   $__require('2d');
   module.exports = parseFloat;
-  return module.exports;
 });
 $__System.registerDynamic("2f", ["2e"], true, function ($__require, exports, module) {
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   /* */
   module.exports = { "default": $__require("2e"), __esModule: true };
-  return module.exports;
 });
 $__System.register("30", ["5", "6", "31", "2f"], function (_export) {
   var _createClass, _classCallCheck, GeiVisUtils, _Number$parseFloat, __hotReload, CirclePackedNetwork;
@@ -8666,7 +8672,8 @@ $__System.register('32', ['5', '6', '15', '16', '25', '30', '2c'], function (_ex
             });
           });
 
-          this.div.append("div").attr("class", "intro").text('\n        Diese Visualisierung veranschaulicht die Verteilung der Schlagwörter in GEI-Digital. Wählen Sie eine Zeitspanne aus und es werden Ihnen die für diesen Zeitraum vergebenen Schlagwörter in Form von Kreisen angezeigt. Die Größe eines Kreises stellt die Anzahl der Schulbücher dar, die mit dem gleichen Schlagwort in GEI-Digital erfasst sind. Um die Hauptschlagwörter gruppieren sich weitere Schlagwort-Kreise, die mit den Hauptschlagwörtern in Verbindung stehen. Wenn Sie auf ein Schlagwort klicken, öffnet sich eine Ansicht mit weiteren verwandten Schlagwörtern. Per Mausklick können Sie sich die zu den Schlagwörtern passenden Schulbücher im Menü Books anzeigen lassen. Durch Klicken auf den zentrierten Knoten oder durch Ändern des Zeitrahmens verlassen Sie die ausgewählte Ansicht. \n      ');
+          this.setIntro(['Diese Visualisierung veranschaulicht die Verteilung der Schlagwörter in GEI-Digital. Wählen Sie eine Zeitspanne aus und es werden Ihnen die für diesen Zeitraum vergebenen Schlagwörter in Form von Kreisen angezeigt. Die Größe eines Kreises stellt die Anzahl der Schulbücher dar, die mit dem gleichen Schlagwort in GEI-Digital erfasst sind. Um die Hauptschlagwörter gruppieren sich weitere Schlagwort-Kreise, die mit den Hauptschlagwörtern in Verbindung stehen.', 'Wenn Sie auf ein Schlagwort klicken, öffnet sich eine Ansicht mit weiteren verwandten Schlagwörtern. Per Mausklick können Sie sich die zu den Schlagwörtern passenden Schulbücher im Menü Books anzeigen lassen. Durch Klicken auf den zentrierten Knoten oder durch Ändern des Zeitrahmens verlassen Sie die ausgewählte Ansicht.']);
+
           this.title.html('Tags');
 
           var oh = 0;
@@ -8675,7 +8682,9 @@ $__System.register('32', ['5', '6', '15', '16', '25', '30', '2c'], function (_ex
           oh += parseInt(this.title.style("height"));
           this.margin = { 'top': oh, 'right': 0, 'bottom': 0, 'left': 0 };
 
-          this.network = new CirclePackedNetwork({ 'margin': this.margin }).setBlacklist(this.blacklist).setNodeAccessor("RSWKTag").setOccurrenceScale(d3.scaleLinear().domain([0, 1]).range([0.5, 1.0])).append(this.div);
+          this.network = new CirclePackedNetwork({ 'margin': this.margin }).setBlacklist([])
+          //.setBlacklist(this.blacklist)
+          .setNodeAccessor("RSWKTag").setOccurrenceScale(d3.scaleLinear().domain([0, 1]).range([0.5, 1.0])).append(this.div);
 
           this.network.setState(state);
           this.network.setDB(db);
@@ -8721,8 +8730,7 @@ $__System.register('32', ['5', '6', '15', '16', '25', '30', '2c'], function (_ex
   };
 });
 $__System.registerDynamic("33", [], true, function ($__require, exports, module) {
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   /* */
   var toString = {}.toString;
@@ -8730,33 +8738,27 @@ $__System.registerDynamic("33", [], true, function ($__require, exports, module)
   module.exports = function (it) {
     return toString.call(it).slice(8, -1);
   };
-  return module.exports;
 });
 $__System.registerDynamic('1b', ['33'], true, function ($__require, exports, module) {
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   /* */
   var cof = $__require('33');
   module.exports = Object('z').propertyIsEnumerable(0) ? Object : function (it) {
     return cof(it) == 'String' ? it.split('') : Object(it);
   };
-  return module.exports;
 });
 $__System.registerDynamic("18", [], true, function ($__require, exports, module) {
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   // 7.2.1 RequireObjectCoercible(argument)
   module.exports = function (it) {
     if (it == undefined) throw TypeError("Can't call method on  " + it);
     return it;
   };
-  return module.exports;
 });
 $__System.registerDynamic('34', ['1b', '18'], true, function ($__require, exports, module) {
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   /* */
   var IObject = $__require('1b'),
@@ -8764,11 +8766,9 @@ $__System.registerDynamic('34', ['1b', '18'], true, function ($__require, export
   module.exports = function (it) {
     return IObject(defined(it));
   };
-  return module.exports;
 });
 $__System.registerDynamic("1c", [], true, function ($__require, exports, module) {
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   /* */
   module.exports = function (exec) {
@@ -8778,11 +8778,9 @@ $__System.registerDynamic("1c", [], true, function ($__require, exports, module)
       return true;
     }
   };
-  return module.exports;
 });
 $__System.registerDynamic('9', ['1e', 'b', '1c'], true, function ($__require, exports, module) {
-    var define,
-        global = this || self,
+    var global = this || self,
         GLOBAL = global;
     /* */
     var $export = $__require('1e'),
@@ -8796,11 +8794,9 @@ $__System.registerDynamic('9', ['1e', 'b', '1c'], true, function ($__require, ex
             fn(1);
         }), 'Object', exp);
     };
-    return module.exports;
 });
 $__System.registerDynamic('35', ['34', '9'], true, function ($__require, exports, module) {
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   /* */
   var toIObject = $__require('34');
@@ -8809,11 +8805,9 @@ $__System.registerDynamic('35', ['34', '9'], true, function ($__require, exports
       return $getOwnPropertyDescriptor(toIObject(it), key);
     };
   });
-  return module.exports;
 });
 $__System.registerDynamic('36', ['1a', '35'], true, function ($__require, exports, module) {
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   /* */
   var $ = $__require('1a');
@@ -8821,22 +8815,18 @@ $__System.registerDynamic('36', ['1a', '35'], true, function ($__require, export
   module.exports = function getOwnPropertyDescriptor(it, key) {
     return $.getDesc(it, key);
   };
-  return module.exports;
 });
 $__System.registerDynamic("37", ["36"], true, function ($__require, exports, module) {
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   /* */
   module.exports = { "default": $__require("36"), __esModule: true };
-  return module.exports;
 });
 $__System.registerDynamic("15", ["37"], true, function ($__require, exports, module) {
   /* */
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var _Object$getOwnPropertyDescriptor = $__require("37")["default"];
   exports["default"] = function get(_x, _x2, _x3) {
@@ -8872,40 +8862,31 @@ $__System.registerDynamic("15", ["37"], true, function ($__require, exports, mod
     }
   };
   exports.__esModule = true;
-  return module.exports;
 });
 $__System.registerDynamic('38', ['1a'], true, function ($__require, exports, module) {
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   /* */
   var $ = $__require('1a');
   module.exports = function create(P, D) {
     return $.create(P, D);
   };
-  return module.exports;
 });
 $__System.registerDynamic("39", ["38"], true, function ($__require, exports, module) {
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   /* */
   module.exports = { "default": $__require("38"), __esModule: true };
-  return module.exports;
 });
 $__System.registerDynamic('3a', [], true, function ($__require, exports, module) {
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   // https://github.com/zloirock/core-js/issues/86#issuecomment-115759028
   var global = module.exports = typeof window != 'undefined' && window.Math == Math ? window : typeof self != 'undefined' && self.Math == Math ? self : Function('return this')();
   if (typeof __g == 'number') __g = global; // eslint-disable-line no-undef
-
-  return module.exports;
 });
 $__System.registerDynamic('1e', ['3a', 'b', '3b'], true, function ($__require, exports, module) {
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   /* */
   var global = $__require('3a'),
@@ -8946,21 +8927,17 @@ $__System.registerDynamic('1e', ['3a', 'b', '3b'], true, function ($__require, e
   $export.B = 16;
   $export.W = 32;
   module.exports = $export;
-  return module.exports;
 });
 $__System.registerDynamic('3c', [], true, function ($__require, exports, module) {
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   /* */
   module.exports = function (it) {
     return typeof it === 'object' ? it !== null : typeof it === 'function';
   };
-  return module.exports;
 });
 $__System.registerDynamic('3d', ['3c'], true, function ($__require, exports, module) {
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   /* */
   var isObject = $__require('3c');
@@ -8968,22 +8945,18 @@ $__System.registerDynamic('3d', ['3c'], true, function ($__require, exports, mod
     if (!isObject(it)) throw TypeError(it + ' is not an object!');
     return it;
   };
-  return module.exports;
 });
 $__System.registerDynamic('3e', [], true, function ($__require, exports, module) {
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   /* */
   module.exports = function (it) {
     if (typeof it != 'function') throw TypeError(it + ' is not a function!');
     return it;
   };
-  return module.exports;
 });
 $__System.registerDynamic('3b', ['3e'], true, function ($__require, exports, module) {
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   /* */
   var aFunction = $__require('3e');
@@ -9008,11 +8981,9 @@ $__System.registerDynamic('3b', ['3e'], true, function ($__require, exports, mod
       return fn.apply(that, arguments);
     };
   };
-  return module.exports;
 });
 $__System.registerDynamic('3f', ['1a', '3c', '3d', '3b'], true, function ($__require, exports, module) {
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   /* */
   var getDesc = $__require('1a').getDesc,
@@ -9039,50 +9010,39 @@ $__System.registerDynamic('3f', ['1a', '3c', '3d', '3b'], true, function ($__req
     }({}, false) : undefined),
     check: check
   };
-  return module.exports;
 });
 $__System.registerDynamic('40', ['1e', '3f'], true, function ($__require, exports, module) {
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   /* */
   var $export = $__require('1e');
   $export($export.S, 'Object', { setPrototypeOf: $__require('3f').set });
-  return module.exports;
 });
 $__System.registerDynamic('b', [], true, function ($__require, exports, module) {
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   /* */
   var core = module.exports = { version: '1.2.6' };
   if (typeof __e == 'number') __e = core; // eslint-disable-line no-undef
-
-  return module.exports;
 });
 $__System.registerDynamic('41', ['40', 'b'], true, function ($__require, exports, module) {
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   /* */
   $__require('40');
   module.exports = $__require('b').Object.setPrototypeOf;
-  return module.exports;
 });
 $__System.registerDynamic("42", ["41"], true, function ($__require, exports, module) {
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   /* */
   module.exports = { "default": $__require("41"), __esModule: true };
-  return module.exports;
 });
 $__System.registerDynamic("16", ["39", "42"], true, function ($__require, exports, module) {
   /* */
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var _Object$create = $__require("39")["default"];
   var _Object$setPrototypeOf = $__require("42")["default"];
@@ -9099,7 +9059,6 @@ $__System.registerDynamic("16", ["39", "42"], true, function ($__require, export
     if (superClass) _Object$setPrototypeOf ? _Object$setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
   };
   exports.__esModule = true;
-  return module.exports;
 });
 $__System.register("14", ["5", "6"], function (_export) {
 	var _createClass, _classCallCheck, __hotReload, StateDb;
@@ -9141,14 +9100,16 @@ $__System.register("14", ["5", "6"], function (_export) {
 		}
 	};
 });
-$__System.register("25", ["6", "14", "15", "16"], function (_export) {
-	var _classCallCheck, StateDb, _get, _inherits, __hotReload, Section;
+$__System.register("25", ["5", "6", "14", "15", "16"], function (_export) {
+	var _createClass, _classCallCheck, StateDb, _get, _inherits, __hotReload, Section;
 
 	return {
 		setters: [function (_3) {
-			_classCallCheck = _3["default"];
+			_createClass = _3["default"];
 		}, function (_4) {
-			StateDb = _4.StateDb;
+			_classCallCheck = _4["default"];
+		}, function (_5) {
+			StateDb = _5.StateDb;
 		}, function (_) {
 			_get = _["default"];
 		}, function (_2) {
@@ -9178,6 +9139,16 @@ $__System.register("25", ["6", "14", "15", "16"], function (_export) {
 					this.height = parseInt(this.div.style("height"));
 				}
 
+				_createClass(Section, [{
+					key: "setIntro",
+					value: function setIntro(content) {
+						this.intro = this.div.append('div').classed('intro', true);
+						this.intro.selectAll('p').data(content).enter().append('p').html(function (d) {
+							return d;
+						});
+					}
+				}]);
+
 				return Section;
 			})(StateDb);
 
@@ -9186,8 +9157,7 @@ $__System.register("25", ["6", "14", "15", "16"], function (_export) {
 	};
 });
 $__System.registerDynamic("1a", [], true, function ($__require, exports, module) {
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   /* */
   var $Object = Object;
@@ -9203,33 +9173,27 @@ $__System.registerDynamic("1a", [], true, function ($__require, exports, module)
     getSymbols: $Object.getOwnPropertySymbols,
     each: [].forEach
   };
-  return module.exports;
 });
 $__System.registerDynamic('43', ['1a'], true, function ($__require, exports, module) {
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   /* */
   var $ = $__require('1a');
   module.exports = function defineProperty(it, key, desc) {
     return $.setDesc(it, key, desc);
   };
-  return module.exports;
 });
 $__System.registerDynamic("21", ["43"], true, function ($__require, exports, module) {
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   /* */
   module.exports = { "default": $__require("43"), __esModule: true };
-  return module.exports;
 });
 $__System.registerDynamic("5", ["21"], true, function ($__require, exports, module) {
   /* */
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   var _Object$defineProperty = $__require("21")["default"];
   exports["default"] = function () {
@@ -9249,14 +9213,12 @@ $__System.registerDynamic("5", ["21"], true, function ($__require, exports, modu
     };
   }();
   exports.__esModule = true;
-  return module.exports;
 });
 $__System.registerDynamic("6", [], true, function ($__require, exports, module) {
   /* */
   "use strict";
 
-  var define,
-      global = this || self,
+  var global = this || self,
       GLOBAL = global;
   exports["default"] = function (instance, Constructor) {
     if (!(instance instanceof Constructor)) {
@@ -9265,7 +9227,6 @@ $__System.registerDynamic("6", [], true, function ($__require, exports, module) 
   };
 
   exports.__esModule = true;
-  return module.exports;
 });
 $__System.register("31", [], function (_export) {
   "use strict";
@@ -9760,9 +9721,16 @@ $__System.register('45', ['5', '6', '15', '16', '25', '44'], function (_export) 
             } }]];
 
           this.margin = { 'top': 0, 'right': 0, 'bottom': 0, 'left': 0 };
-
           this.title.text('Comparison');
-          this.div.append("div").attr("class", "intro").text('\n        In dieser Visualisierung können Sie die Facetten Verlage und Verlagsorte mit den Facetten Schulfächer und Bildungslevel kombinieren und sich quantitative Vergleiche anzeigen lassen. Durch die Kombination Verlage mit Schulfächern werden zum Beispiel die Aktivitäten der Verlage entlang der Schulfächer dargestellt. \n        Wählen Sie durch Ziehen mit gedrückter Maustaste auf der Zeitleiste eine Zeitspanne aus und treffen Sie Ihre Facetten-Auswahl mit den Schaltern links unten auf der Seite. Die Ergebnisse Ihrer Auswahl werden nacheinander gruppiert als Tabelle dargestellt. Fahren Sie mit der Maus über eine der Zellen, können Sie das in der Zelle markierte Topic in seiner relationalen Verteilung verfolgen. Bei Klick auf die markierte Zelle, werden Ihnen die zur Auswahl passenden Schulbücher angezeigt.\n      ');
+
+          this.setIntro(['In dieser Visualisierung können Sie die Facetten Verlage und Verlagsorte mit den Facetten Schulfächer und Bildungslevel kombinieren und sich quantitative Vergleiche anzeigen lassen. Durch die Kombination Verlage mit Schulfächern werden zum Beispiel die Aktivitäten der Verlage entlang der Schulfächer dargestellt.', 'Wählen Sie durch Ziehen mit gedrückter Maustaste auf der Zeitleiste eine Zeitspanne aus und treffen Sie Ihre Facetten-Auswahl mit den Schaltern links unten auf der Seite. Die Ergebnisse Ihrer Auswahl werden nacheinander gruppiert als Tabelle dargestellt. Fahren Sie mit der Maus über eine der Zellen, können Sie das in der Zelle markierte Topic in seiner relationalen Verteilung verfolgen. Bei Klick auf die markierte Zelle, werden Ihnen die zur Auswahl passenden Schulbücher angezeigt.']);
+
+          // this.div.append("div")
+          //   .attr("class", "intro")
+          //   .text(`
+          //     In dieser Visualisierung können Sie die Facetten Verlage und Verlagsorte mit den Facetten Schulfächer und Bildungslevel kombinieren und sich quantitative Vergleiche anzeigen lassen. Durch die Kombination Verlage mit Schulfächern werden zum Beispiel die Aktivitäten der Verlage entlang der Schulfächer dargestellt.
+          //     Wählen Sie durch Ziehen mit gedrückter Maustaste auf der Zeitleiste eine Zeitspanne aus und treffen Sie Ihre Facetten-Auswahl mit den Schaltern links unten auf der Seite. Die Ergebnisse Ihrer Auswahl werden nacheinander gruppiert als Tabelle dargestellt. Fahren Sie mit der Maus über eine der Zellen, können Sie das in der Zelle markierte Topic in seiner relationalen Verteilung verfolgen. Bei Klick auf die markierte Zelle, werden Ihnen die zur Auswahl passenden Schulbücher angezeigt.
+          //   `);
 
           this.treemap = new NestedTreemap({ 'margin': this.margin });
           this.treemap.setState(state);
