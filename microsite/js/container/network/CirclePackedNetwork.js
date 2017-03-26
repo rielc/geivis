@@ -264,14 +264,15 @@ export class CirclePackedNetwork {
 
   switchToMonad ( data, index, elements ) {
 
-      let monadRadius = (this.height-200)/2
+      let monadRadius = (this.height)/2
 
+      // book objects that have this id are related
       let linkedBooks = this.data.filter( (d,i) => { return (data.data.data.entryID.indexOf(i) != -1) } )
-      let booksBySubject = d3.nest().key( (d) => d.subject ).entries(linkedBooks)
-
       let clickedElement = d3.select(elements[index])
+
       let d = data.data
 
+      // if it is already open
       if (this.monad == d.name) {
 
         this.monad = ""
@@ -279,25 +280,27 @@ export class CirclePackedNetwork {
         this.render('brushend')
         this.openBookshelfButton.classed('hidden', true)
 
-
       } else {
 
         const linkedIDs = data.data.data.entryID
+        
+        /*
         const taggedBooks = this.data.reduce( (p,c,i,a) => {
           if(linkedIDs.indexOf(i)!=-1){
             p.push(c);return p;
           } else {
             return p;
           }}, [] )
+        */
 
-
-        console.log(data.data.data.occurrence)
+        const taggedBooks = linkedBooks
 
         // copy the data into the bookshelf && show the button
         this.bookshelfData = taggedBooks
         this.openBookshelfButton.classed('hidden', false).html(`show all <span>${data.data.data.occurrence}</span> books <br/>tagged with <span>'${data.data.name}'</span>`)
 
-        this.monad = d.name;
+        // update to the current monad
+        this.monad = d.name
         let center = [this.width/2-50,this.height/2]
 
         // reset all nodes
@@ -311,7 +314,7 @@ export class CirclePackedNetwork {
           .attr("data-balloon", null)
           .attr("data-balloon-pos", null)
 
-        // center this node
+        // but center the clicked node
         clickedElement
           .classed("hidden", false)
           .classed("monad", true)
@@ -321,6 +324,8 @@ export class CirclePackedNetwork {
           .style("opacity", 1)
           .style("transform",  d => `translate3d(${center[0]}px,${center[1]}px,0px)`)
 
+
+        // get the related tags to the selected one 
         let linkedNodes = this.transformedData.links
           .filter( l => (l.source.name == d.name || l.target.name == d.name) )
           .map( (l) => {
@@ -328,24 +333,30 @@ export class CirclePackedNetwork {
             if (l.target.name == d.name) { return { "strength" : l.strength, "node":l.source }; }
           } )
 
-        let linkMax = d3.max(linkedNodes, l=>l.strength)
+        // look for the strongest and weakest connections
         let linkMin = d3.min(linkedNodes, l=>l.strength)
+        let linkMax = d3.max(linkedNodes, l=>l.strength)
 
-        let range = linkedNodes.length<3 ? [Math.PI*0.5, Math.PI*2.5]:[0, Math.PI*2]
+        // the range values used to construct the polar coords are dependent of the number of elements
+        let range = linkedNodes.length<3 ? [Math.PI*0.5, Math.PI*2.5] : [0, Math.PI*2]
 
+        // scales 
         let indexToPolar = d3.scaleLinear().domain([0,linkedNodes.length]).range(range)
         let occurenceToProximity = d3.scaleLinear().domain([linkMax,linkMin]).range([200, monadRadius])
         //let occurenceToAlpha = d3.scaleLinear().domain([linkMin, linkMax]).range([0.125, 1.0])
 
+        // caps the value
       let sizeAdjustment = monadRadius/(linkedNodes.reduce( (p,c,i,a)=> {
         let value = occurenceToProximity(c.strength)/this.occurrenceScale.domain([linkMin, c.node.data.occurrence])(c.strength)
         return value>p?value:p 
       }, 0))
 
-      console.log(sizeAdjustment)
+      // console.log(sizeAdjustment)
 
+        // go through all tag-dom-elements
         linkedNodes.forEach( (l,i) => {
 
+          // skip the centered one
           if (l.node.name != this.monad) {
 
             let n = 
@@ -357,10 +368,8 @@ export class CirclePackedNetwork {
               .classed("overflow", false)
               .classed("partial", false)
 
-              console.log(monadRadius)
-
             let relationDivision = (this.occurrenceScale.domain([linkMin, l.node.data.occurrence])(l.strength))*2
-            let proximity = Math.min(occurenceToProximity(l.strength)/relationDivision, monadRadius)
+            let proximity = Math.min(occurenceToProximity(l.strength), monadRadius)
 
             let xBase = Math.sin(indexToPolar(i))*proximity;
             let yBase = Math.cos(indexToPolar(i))*proximity;
