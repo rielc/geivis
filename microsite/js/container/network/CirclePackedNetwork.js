@@ -333,16 +333,18 @@ export class CirclePackedNetwork {
             if (l.target.name == d.name) { return { "strength" : l.strength, "node":l.source }; }
           } )
 
-        // look for the strongest and weakest connections
-        let linkMin = d3.min(linkedNodes, l=>l.strength)
-        let linkMax = d3.max(linkedNodes, l=>l.strength)
+
+        // look for the strongest and weakest co-occurrences
+        let extent =  d3.extent(linkedNodes, l=>l.strength)
+        let linkMin = extent[0]
+        let linkMax = extent[1]
 
         // the range values used to construct the polar coords are dependent of the number of elements
         let range = linkedNodes.length<3 ? [Math.PI*0.5, Math.PI*2.5] : [0, Math.PI*2]
 
         // scales 
         let indexToPolar = d3.scaleLinear().domain([0,linkedNodes.length]).range(range)
-        let occurenceToProximity = d3.scaleLinear().domain([linkMax,linkMin]).range([200, monadRadius])
+        let occurenceToProximity = d3.scaleLog().domain([linkMax,linkMin]).range([200, monadRadius])
         //let occurenceToAlpha = d3.scaleLinear().domain([linkMin, linkMax]).range([0.125, 1.0])
 
         // caps the value
