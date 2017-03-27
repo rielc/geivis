@@ -324,7 +324,6 @@ export class CirclePackedNetwork {
           .style("opacity", 1)
           .style("transform",  d => `translate3d(${center[0]}px,${center[1]}px,0px)`)
 
-
         // get the related tags to the selected one 
         let linkedNodes = this.transformedData.links
           .filter( l => (l.source.name == d.name || l.target.name == d.name) )
@@ -332,7 +331,6 @@ export class CirclePackedNetwork {
             if (l.source.name == d.name) { return { "strength" : l.strength, "node":l.target }; }
             if (l.target.name == d.name) { return { "strength" : l.strength, "node":l.source }; }
           } )
-
 
         // look for the strongest and weakest co-occurrences
         let extent =  d3.extent(linkedNodes, l=>l.strength)
@@ -353,8 +351,6 @@ export class CirclePackedNetwork {
         return value>p?value:p 
       }, 0))
 
-      // console.log(sizeAdjustment)
-
         // go through all tag-dom-elements
         linkedNodes.forEach( (l,i) => {
 
@@ -369,27 +365,30 @@ export class CirclePackedNetwork {
               .classed("monadic-related", true)
               .classed("overflow", false)
               .classed("partial", false)
+              .classed('element-'+i, true)
 
             let relationDivision = (this.occurrenceScale.domain([linkMin, l.node.data.occurrence])(l.strength))*2
             let proximity = Math.min(occurenceToProximity(l.strength), monadRadius)
 
-            let xBase = Math.sin(indexToPolar(i))*proximity;
-            let yBase = Math.cos(indexToPolar(i))*proximity;
+            let xBase = Math.sin(indexToPolar(i))*proximity
+            let yBase = Math.cos(indexToPolar(i))*proximity
 
-            let pos = [ center[0]+xBase, center[1]+yBase ]
+            let pos = [ center[0]+xBase, center[1]+yBase]
 
             let width = n.select(".label").node().offsetWidth
             let height = n.select(".label").node().offsetHeight
 
-            let value
+            let value = 0
+
+            const polarVal = indexToPolar(i)
 
             // decide on the rotation
-            if (indexToPolar(i) >= Math.PI && indexToPolar(i) <= Math.PI*2) { n.classed("right", true); value = 90; }
-            if (indexToPolar(i) >= 0 && indexToPolar(i) <= Math.PI) { n.classed("left", true); value = 270; }
+            if (polarVal >= Math.PI && polarVal < Math.PI*2) { n.classed("right", true); value = 90; }
+            if (polarVal >= 0 && polarVal < Math.PI) { n.classed("left", true); value = 270; }
 
             n.style("width", null)
               .style("height", null)
-              .style("transform", d => `translate3d(${pos[0]}px,${pos[1]}px,0px)rotate(-${(indexToPolar(i)*180/Math.PI)+(value)}deg)`)
+              .style("transform", d => `translate3d(${pos[0]}px,${pos[1]}px,0px)rotate(-${(polarVal*180/Math.PI)+(value)}deg)`)
           }
 
         })
@@ -403,7 +402,7 @@ export class CirclePackedNetwork {
     let hoveredElement = d3.select(elements[index]);
     this.container.selectAll(".node").classed("inactive", true) // deactive all nodes
     hoveredElement.classed("inactive", false) // activate the hovered
-    let d = data.data;
+    let d = data.data
     // search for links from and to this node
     let links = this.transformedData.links
       .filter( l => (l.source.name == d.name || l.target.name == d.name) )
