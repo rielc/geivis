@@ -428,7 +428,8 @@ export class CirclePackedNetwork {
     // show tooltip if needed
     if (hoveredElement.classed('overflow')) {
       const noun = d.data.occurrence>1 ? 'Bücher' : 'Buch'
-      const tooltip = { name: `${d.name} : ${d.data.occurrence} ${noun}` , pos: [data.x, this.container.node().offsetTop + this.container.node().parentElement.offsetTop+data.y-data.r-5] };
+      const name = d.name[0].toUpperCase() + d.name.substring(1)
+      const tooltip = { name: `${d.data.occurrence} ${noun} mit '${name}'` , pos: [data.x, this.container.node().offsetTop + this.container.node().parentElement.offsetTop+data.y-data.r-5] };
       this.state.push({ hover: d.name, tooltip });
     }
 
