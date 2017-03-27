@@ -301,7 +301,7 @@ export class CirclePackedNetwork {
 
         // update to the current monad
         this.monad = d.name
-        let center = [this.width/2-50,this.height/2]
+        let center = [this.width/2-100,this.height/2]
 
         // reset all nodes
         this.container.selectAll(".node")
@@ -322,7 +322,7 @@ export class CirclePackedNetwork {
           .style("width", null)
           .style("height", null)
           .style("opacity", 1)
-          .style("transform",  d => `translate3d(${center[0]}px,${center[1]}px,0px)`)
+          .style("transform",  d => `translate3d(${center[0]+50}px,${center[1]}px,0px)`)
 
         // get the related tags to the selected one 
         let linkedNodes = this.transformedData.links
@@ -345,12 +345,13 @@ export class CirclePackedNetwork {
         let occurenceToProximity = d3.scaleLog().domain([linkMax,linkMin]).range([200, monadRadius])
         //let occurenceToAlpha = d3.scaleLinear().domain([linkMin, linkMax]).range([0.125, 1.0])
 
+/*
         // caps the value
       let sizeAdjustment = monadRadius/(linkedNodes.reduce( (p,c,i,a)=> {
         let value = occurenceToProximity(c.strength)/this.occurrenceScale.domain([linkMin, c.node.data.occurrence])(c.strength)
         return value>p?value:p 
       }, 0))
-
+*/  
         // go through all tag-dom-elements
         linkedNodes.forEach( (l,i) => {
 
@@ -360,12 +361,11 @@ export class CirclePackedNetwork {
             let n = 
               d3.select( "#"+GeiVisUtils.makeSafeForCSS( l.node.name ) )
               .style("opacity", 1)
-              .style("transition-delay", (d,i)=>`${i*0.2}s`)
+              .style("transition-delay", (d,i)=>`${i*0.5}s`)
               .classed("hidden", false)
               .classed("monadic-related", true)
               .classed("overflow", false)
               .classed("partial", false)
-              .classed('element-'+i, true)
 
             let relationDivision = (this.occurrenceScale.domain([linkMin, l.node.data.occurrence])(l.strength))*2
             let proximity = Math.min(occurenceToProximity(l.strength), monadRadius)
@@ -445,7 +445,6 @@ export class CirclePackedNetwork {
   checkOverflow ( data, elements ) {
 
     let el = d3.select(this)
-    //let overflow = GeiVisUtils.checkPartialOverflow(el.node(), 11)
 
     if (el.node().offsetWidth < 40)
         el.classed("overflow", true).classed("partial", true)
@@ -453,15 +452,6 @@ export class CirclePackedNetwork {
     if (el.node().offsetWidth < 11)
         el.classed("overflow", true).classed("partial", false)
 
-
-    // switch (overflow) {
-    //   case "overflow":
-    //     el.classed("overflow", true).classed("partial", false)
-    //   break
-    //   case "partial-overflow":
-    //     el.classed("overflow", true).classed("partial", true)
-    //   break
-    // }
   }
 
 

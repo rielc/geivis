@@ -31,7 +31,7 @@
     &.hasTransition {
         .node {
             transition-timing-function: cubic-bezier(.78,.06,.58,1);
-            transition: width 0.4s , height 0.4s, transform 0.4s, opacity 0.4s, border 0.4s;
+            transition: transform 0.4s, opacity 0.4s;
       }  
 
     }
@@ -128,7 +128,7 @@
             }
 
             > .label {
-                width:100px;
+                width:200px;
                 top:0;
                 transform:translate(0,0);
                 display:block !important;

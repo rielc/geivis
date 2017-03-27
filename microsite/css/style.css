@@ -620,7 +620,7 @@ header .navi a:hover:after, header .navi a:active:after, header .navi a.active:a
 /* line 32, ../sass/_circlePackedNetwork.scss */
 #NetworkSection.hasTransition .node {
   transition-timing-function: cubic-bezier(0.78, 0.06, 0.58, 1);
-  transition: width 0.4s , height 0.4s, transform 0.4s, opacity 0.4s, border 0.4s;
+  transition: transform 0.4s, opacity 0.4s;
 }
 /* line 39, ../sass/_circlePackedNetwork.scss */
 #NetworkSection .node {
@@ -733,7 +733,7 @@ header .navi a:hover:after, header .navi a:active:after, header .navi a.active:a
 }
 /* line 130, ../sass/_circlePackedNetwork.scss */
 #NetworkSection .node.monadic-related > .label {
-  width: 100px;
+  width: 200px;
   top: 0;
   transform: translate(0, 0);
   display: block !important;
