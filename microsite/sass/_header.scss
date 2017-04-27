@@ -1,6 +1,6 @@
 $headerWidth: 1200px;
-$logoWidth: 149px;
-$logoHeight:47px;
+$logoWidth: 154px;
+$logoHeight: 65px;
 
 header {
 
@@ -28,7 +28,11 @@ header {
 		padding-bottom:20px;
 		background-color: #FFF;
 
-		.logo { max-width: 15%; flex: auto; }
+		.logo { 
+			width: $logoWidth;
+			height:  $logoHeight;
+			margin-right: 10px;
+		}
 
 		a {
 			transform:translate(0,-30px);

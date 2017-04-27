@@ -22,7 +22,7 @@ export class TreemapSection extends Section {
     ]
 
     this.margin = {'top':0,'right':0,'bottom':0,'left':0}
-    this.title.text(`Comparison`);
+    this.title.text(`Vergleich`);
 
     this.setIntro([
       `In dieser Visualisierung können Sie die Facetten Verlage und Verlagsorte mit den Facetten Schulfächer und Bildungslevel kombinieren und sich quantitative Vergleiche anzeigen lassen. Durch die Kombination Verlage mit Schulfächern werden zum Beispiel die Aktivitäten der Verlage entlang der Schulfächer dargestellt.`,

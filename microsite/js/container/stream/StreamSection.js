@@ -10,13 +10,14 @@ export class StreamSection extends Section {
     super(state,db);
 
     // this.title.html("<strong>GEORG ECKERT INSTITUTE</strong> / Visualized Collection Prototype");
-
+    // this.title.html(`Zeitleiste`);
     this.divStream = this.div.append("div").attr("class", "stream");
     this.divEntities = this.div.append("div").attr("class", "entities");
 
     this.stream = new StreamGraph(state, db, this.divStream);
     this.stream.paddingTop = 350;
-    this.stream.outerHeight = this.height - this.stream.paddingTop;
+    this.stream.paddingBottom = 60;
+    this.stream.outerHeight = this.height - this.stream.paddingTop - this.stream.paddingBottom;
     this.stream.outerHeightInitial = this.stream.outerHeight;
     this.stream.init();
 
@@ -34,7 +35,7 @@ export class StreamSection extends Section {
     if(next.scrollY !== last.scrollY){
         const bb = this.div.node().getBoundingClientRect();
         // console.log(bb.bottom, bb.top, this.height , this.stream.outerHeight,  this.height + bb.top - this.stream.outerHeight -88);
-        const bottom = bb.bottom - 88 - this.stream.outerHeightInitial;
+        const bottom = bb.bottom - 148 - this.stream.outerHeightInitial;
         const height = this.stream.outerHeightInitial + bottom;
 
         // console.log(bottom, height);

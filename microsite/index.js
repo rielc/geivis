@@ -13,6 +13,8 @@ import {Tooltip} from './js/Tooltip'
 import {NetworkSection} from './js/container/network/NetworkSection'
 import {TreemapSection} from './js/container/treemap/TreemapSection'
 
+import {AboutSection} from './js/container/about/AboutSection'
+
 let state = new StateMachine();
 let db = new DataBase(state);
 let scroll = new ScrollListener(state)
@@ -27,6 +29,9 @@ let geomapSection = new GeomapSection(state, db);
 
 let treemapSection = new TreemapSection(state, db);
 let networkSection = new NetworkSection(state, db);
+
+
+let aboutSection = new AboutSection(state, db);
 
 
 // let dummy = new DummySection(state, db);

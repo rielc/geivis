@@ -19,7 +19,7 @@
 }
 
 #StreamSection {
-    height:calc(100vh - 88px);
+    height:calc(100vh - 128px);
 
     h2.title {
         background-color: #fff;
@@ -111,7 +111,7 @@
     .entities {
         padding-left: 10px;
         position: absolute;
-        bottom: 40px;
+        bottom: 100px;
         padding-right: 10px;
         // margin-top: calc(92vh - 400px);
         .title {

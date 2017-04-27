@@ -13,7 +13,7 @@ export class StreamGraph extends StateDb {
     
 
     this.outerWidth = 1200;
-    this.outerHeight = window.innerHeight-500;
+    this.outerHeight = window.innerHeight-600;
     this.outerHeightInitial = this.outerHeight;
     this.outerHeightSmall = 100;
     this.margin = {top: 10, right: 13, bottom: 10, left: 13};
@@ -61,7 +61,7 @@ export class StreamGraph extends StateDb {
 
     this.div.append("div")
       .attr("class", "totals")
-      .html('<span id="active">-</span> of <span id="total">-</span> books selected')
+      .html('<span id="active">-</span> von <span id="total">-</span> Büchern ausgewählt')
       .on("click", ()=>{
         this.gBrush.call(this.brush.move, null)
       })

@@ -25,7 +25,7 @@ export class NetworkSection extends Section {
       `Wenn Sie auf ein Schlagwort klicken, öffnet sich eine Ansicht mit weiteren verwandten Schlagwörtern. Per Mausklick können Sie sich die zu den Schlagwörtern passenden Schulbücher im Menü Books anzeigen lassen. Durch Klicken auf den zentrierten Knoten oder durch Ändern des Zeitrahmens verlassen Sie die ausgewählte Ansicht.`
     ]);
 
-    this.title.html(`Tags`);
+    this.title.html(`Stichworte`);
 
     let oh = 0;
     oh+=parseInt(this.title.style("padding-top"));
