@@ -9,8 +9,17 @@ export class AboutSection extends Section {
 
     this.title.text(`Über`);
 
-    this.setIntro(
-      ['Die Visualisierung bezieht sich auf Verlagsorte in der Schulbuchsammlung GEI-Digital. Wählen Sie durch Ziehen mit gedrückter Maustaste auf der Zeitleiste eine Zeitspanne aus und es wird Ihnen die entsprechende geographische Verteilung der Verlagsorte angezeigt.','Die Größe der Blasen repräsentiert die Menge der Bücher, die an dem jeweiligen Verlagsort veröffentlicht wurden. Klicken Sie auf eine der Blasen, dann gelangen Sie zu den in GEI-Digital vorhandenen Schulbüchern. Start- und Endzeit können durch Doppelklick auf der Zeitleiste neu ausgewählt werden.'])
+    this.setIntro([
+      'Die prototypischen Visualisierungen auf dieser Webseite sind an der Fachhochschule Potsdam im Urban Complexity Lab im Rahmen eines Forschungsprojektes mit dem Georg-Eckert-Institut für internationale Schulbuchforschung enstanden.',
+      `Design und Entwicklung: Christopher Pietsch & Gabriel Credico
+      <br>
+Wissenschaftliche Leitung: Prof. Dr. Marian Dörk
+<br>
+Wissenschaftliche Betreuung seitens des GEI: 
+Dr. Anke Hertling, Lena Stahn, Prof. Dr.-Ing. Ernesto William De Luca
+<br><br>
+Die Visualisierungen basieren auf GEI-Digital, Stand February 2017.`,
+      ])
   }
 
   stateChange(next, pev){
