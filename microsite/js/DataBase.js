@@ -50,7 +50,7 @@ export class DataBase {
   init(_data, _places, _geocode){
     this.data = _data;
     this.places = this.placesInit(_places);
-    // this.data = _data.filter(d=>d.year <= 1920);
+    this.data = _data.filter(d=>d.year <= 1920);
     this.geocode = _geocode;
 
     // _data.filter(d=>d.year > 1920).forEach(d=> console.log(d))

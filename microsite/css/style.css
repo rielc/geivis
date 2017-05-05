@@ -563,8 +563,8 @@ header {
   #StreamSection .totals {
     font-size: 12px;
     position: absolute;
-    top: -6px;
-    right: 20px;
+    top: -14px;
+    right: 0px;
     /* background: #FFF; */
     padding: 5px;
     cursor: pointer;
