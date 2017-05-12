@@ -18,9 +18,9 @@ import {AboutSection} from './js/container/about/AboutSection'
 let state = new StateMachine();
 let db = new DataBase(state);
 let scroll = new ScrollListener(state)
-window.scroll = scroll;
+// window.scroll = scroll;
 let router = new Router(state, scroll)
-window.router = router;
+// window.router = router;
 let tooltip = new Tooltip(state)
 
 let bookshelfSection = new BookshelfSection(state, db);
