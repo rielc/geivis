@@ -18,7 +18,7 @@ export class ScrollListener {
 
 
   check(){
-    this.scrollY = window.scrollY;
+    this.scrollY = window.scrollY || window.pageYOffset;
     // if(this.syntetic) return;
     // console.log("check")
 
@@ -30,10 +30,12 @@ export class ScrollListener {
       return [s.name, visible];
     });
 
+    // console.log(visible)
+
     const active = visible.find(v => v[1]);
     const activeSection = active ? active[0] : '';
 
-    this.state.push({ scrollY: window.scrollY, visible: fromPairs(visible), activeSection });
+    this.state.push({ scrollY: window.scrollY || window.pageYOffset, visible: fromPairs(visible), activeSection });
   }
 
   stateChange(next, prev){
@@ -64,7 +66,7 @@ export class ScrollListener {
     // this.syntetic = true;
     this.state.push({ scrolling: true });
 
-    const top = document.body.scrollTop || window.scrollY;
+    const top = document.body.scrollTop || window.scrollY || window.pageYOffset;
     // console.log(top, window.scrollY);
 
     console.log("scrollTo", top, pos)
@@ -104,3 +106,47 @@ export class ScrollListener {
   }
 }
 
+// IE find polyfill
+if (!Array.prototype.find) {
+  Object.defineProperty(Array.prototype, 'find', {
+    value: function(predicate) {
+     // 1. Let O be ? ToObject(this value).
+      if (this == null) {
+        throw new TypeError('"this" is null or not defined');
+      }
+
+      var o = Object(this);
+
+      // 2. Let len be ? ToLength(? Get(O, "length")).
+      var len = o.length >>> 0;
+
+      // 3. If IsCallable(predicate) is false, throw a TypeError exception.
+      if (typeof predicate !== 'function') {
+        throw new TypeError('predicate must be a function');
+      }
+
+      // 4. If thisArg was supplied, let T be thisArg; else let T be undefined.
+      var thisArg = arguments[1];
+
+      // 5. Let k be 0.
+      var k = 0;
+
+      // 6. Repeat, while k < len
+      while (k < len) {
+        // a. Let Pk be ! ToString(k).
+        // b. Let kValue be ? Get(O, Pk).
+        // c. Let testResult be ToBoolean(? Call(predicate, T, « kValue, k, O »)).
+        // d. If testResult is true, return kValue.
+        var kValue = o[k];
+        if (predicate.call(thisArg, kValue, k, o)) {
+          return kValue;
+        }
+        // e. Increase k by 1.
+        k++;
+      }
+
+      // 7. Return undefined.
+      return undefined;
+    }
+  });
+}

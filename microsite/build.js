@@ -610,10 +610,12 @@ $__System.register('f', ['5', '6', '10'], function (_export) {
           //this.check();
         }
 
+        // IE find polyfill
+
         _createClass(ScrollListener, [{
           key: 'check',
           value: function check() {
-            this.scrollY = window.scrollY;
+            this.scrollY = window.scrollY || window.pageYOffset;
             // if(this.syntetic) return;
             // console.log("check")
 
@@ -627,12 +629,14 @@ $__System.register('f', ['5', '6', '10'], function (_export) {
               return [s.name, visible];
             });
 
+            // console.log(visible)
+
             var active = visible.find(function (v) {
               return v[1];
             });
             var activeSection = active ? active[0] : '';
 
-            this.state.push({ scrollY: window.scrollY, visible: fromPairs(visible), activeSection: activeSection });
+            this.state.push({ scrollY: window.scrollY || window.pageYOffset, visible: fromPairs(visible), activeSection: activeSection });
           }
         }, {
           key: 'stateChange',
@@ -666,7 +670,7 @@ $__System.register('f', ['5', '6', '10'], function (_export) {
             // this.syntetic = true;
             this.state.push({ scrolling: true });
 
-            var top = document.body.scrollTop || window.scrollY;
+            var top = document.body.scrollTop || window.scrollY || window.pageYOffset;
             // console.log(top, window.scrollY);
 
             console.log("scrollTo", top, pos);
@@ -709,6 +713,50 @@ $__System.register('f', ['5', '6', '10'], function (_export) {
       })();
 
       _export('ScrollListener', ScrollListener);
+
+      if (!Array.prototype.find) {
+        Object.defineProperty(Array.prototype, 'find', {
+          value: function value(predicate) {
+            // 1. Let O be ? ToObject(this value).
+            if (this == null) {
+              throw new TypeError('"this" is null or not defined');
+            }
+
+            var o = Object(this);
+
+            // 2. Let len be ? ToLength(? Get(O, "length")).
+            var len = o.length >>> 0;
+
+            // 3. If IsCallable(predicate) is false, throw a TypeError exception.
+            if (typeof predicate !== 'function') {
+              throw new TypeError('predicate must be a function');
+            }
+
+            // 4. If thisArg was supplied, let T be thisArg; else let T be undefined.
+            var thisArg = arguments[1];
+
+            // 5. Let k be 0.
+            var k = 0;
+
+            // 6. Repeat, while k < len
+            while (k < len) {
+              // a. Let Pk be ! ToString(k).
+              // b. Let kValue be ? Get(O, Pk).
+              // c. Let testResult be ToBoolean(? Call(predicate, T, « kValue, k, O »)).
+              // d. If testResult is true, return kValue.
+              var kValue = o[k];
+              if (predicate.call(thisArg, kValue, k, o)) {
+                return kValue;
+              }
+              // e. Increase k by 1.
+              k++;
+            }
+
+            // 7. Return undefined.
+            return undefined;
+          }
+        });
+      }
     }
   };
 });
@@ -9715,45 +9763,6 @@ $__System.registerDynamic("16", ["3b", "44"], true, function ($__require, export
   exports.__esModule = true;
   return module.exports;
 });
-$__System.registerDynamic("1a", [], true, function ($__require, exports, module) {
-  var define,
-      global = this || self,
-      GLOBAL = global;
-  /* */
-  var $Object = Object;
-  module.exports = {
-    create: $Object.create,
-    getProto: $Object.getPrototypeOf,
-    isEnum: {}.propertyIsEnumerable,
-    getDesc: $Object.getOwnPropertyDescriptor,
-    setDesc: $Object.defineProperty,
-    setDescs: $Object.defineProperties,
-    getKeys: $Object.keys,
-    getNames: $Object.getOwnPropertyNames,
-    getSymbols: $Object.getOwnPropertySymbols,
-    each: [].forEach
-  };
-  return module.exports;
-});
-$__System.registerDynamic('45', ['1a'], true, function ($__require, exports, module) {
-  var define,
-      global = this || self,
-      GLOBAL = global;
-  /* */
-  var $ = $__require('1a');
-  module.exports = function defineProperty(it, key, desc) {
-    return $.setDesc(it, key, desc);
-  };
-  return module.exports;
-});
-$__System.registerDynamic("21", ["45"], true, function ($__require, exports, module) {
-  var define,
-      global = this || self,
-      GLOBAL = global;
-  /* */
-  module.exports = { "default": $__require("45"), __esModule: true };
-  return module.exports;
-});
 $__System.registerDynamic("5", ["21"], true, function ($__require, exports, module) {
   /* */
   "use strict";
@@ -9797,14 +9806,68 @@ $__System.registerDynamic("6", [], true, function ($__require, exports, module) 
   exports.__esModule = true;
   return module.exports;
 });
-$__System.register("14", ["5", "6"], function (_export) {
-	var _createClass, _classCallCheck, __hotReload, StateDb;
+$__System.registerDynamic("1a", [], true, function ($__require, exports, module) {
+  var define,
+      global = this || self,
+      GLOBAL = global;
+  /* */
+  var $Object = Object;
+  module.exports = {
+    create: $Object.create,
+    getProto: $Object.getPrototypeOf,
+    isEnum: {}.propertyIsEnumerable,
+    getDesc: $Object.getOwnPropertyDescriptor,
+    setDesc: $Object.defineProperty,
+    setDescs: $Object.defineProperties,
+    getKeys: $Object.keys,
+    getNames: $Object.getOwnPropertyNames,
+    getSymbols: $Object.getOwnPropertySymbols,
+    each: [].forEach
+  };
+  return module.exports;
+});
+$__System.registerDynamic('45', ['1a'], true, function ($__require, exports, module) {
+  var define,
+      global = this || self,
+      GLOBAL = global;
+  /* */
+  var $ = $__require('1a');
+  module.exports = function defineProperty(it, key, desc) {
+    return $.setDesc(it, key, desc);
+  };
+  return module.exports;
+});
+$__System.registerDynamic("21", ["45"], true, function ($__require, exports, module) {
+  var define,
+      global = this || self,
+      GLOBAL = global;
+  /* */
+  module.exports = { "default": $__require("45"), __esModule: true };
+  return module.exports;
+});
+$__System.register("14", ["5", "6", "21"], function (_export) {
+	var _createClass, _classCallCheck, _Object$defineProperty, __hotReload, StateDb;
+
+	function ieFix() {
+		if (Function.prototype.name === undefined && _Object$defineProperty !== undefined) {
+			Object.defineProperty(Function.prototype, 'name', {
+				get: function get() {
+					var funcNameRegex = /function\s([^(]{1,})\(/;
+					var results = funcNameRegex.exec(this.toString());
+					return results && results.length > 1 ? results[1].trim() : "";
+				},
+				set: function set(value) {}
+			});
+		}
+	}
 
 	return {
 		setters: [function (_) {
 			_createClass = _["default"];
 		}, function (_2) {
 			_classCallCheck = _2["default"];
+		}, function (_3) {
+			_Object$defineProperty = _3["default"];
 		}],
 		execute: function () {
 			"use strict";
@@ -9817,6 +9880,7 @@ $__System.register("14", ["5", "6"], function (_export) {
 				function StateDb(state, db) {
 					_classCallCheck(this, StateDb);
 
+					ieFix();
 					this.name = this.constructor.name;
 					this.state = state;
 					this.state.subscribe(this);
@@ -9866,7 +9930,6 @@ $__System.register("25", ["5", "6", "14", "15", "16"], function (_export) {
 					_classCallCheck(this, Section);
 
 					_get(Object.getPrototypeOf(Section.prototype), "constructor", this).call(this, state, db);
-
 					d3.select("#" + this.name).remove(); //hotreload hotfix
 					this.div = d3.select(".container").append("section").attr("id", this.name);
 					this.div.append("a").attr("id", this.name.replace("Section", "")).attr("class", "anchor");
@@ -9982,13 +10045,15 @@ $__System.register('1', ['4', '11', '24', '26', '28', '32', '34', '46', 'd', 'f'
       _export('__hotReload', __hotReload);
 
       state = new StateMachine();
+
+      window.state = state;
       db = new DataBase(state);
       scroll = new ScrollListener(state);
 
-      window.scroll = scroll;
+      // window.scroll = scroll;
       router = new Router(state, scroll);
 
-      window.router = router;
+      // window.router = router;
       tooltip = new Tooltip(state);
       bookshelfSection = new BookshelfSection(state, db);
       streamSection = new StreamSection(state, db);

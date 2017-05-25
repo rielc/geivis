@@ -568,6 +568,7 @@ header {
     /* background: #FFF; */
     padding: 5px;
     cursor: pointer;
+    z-index: 100;
     /* z-index: 10000; */ }
   #StreamSection .brushLegend {
     pointer-events: none; }

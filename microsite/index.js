@@ -16,6 +16,7 @@ import {TreemapSection} from './js/container/treemap/TreemapSection'
 import {AboutSection} from './js/container/about/AboutSection'
 
 let state = new StateMachine();
+window.state = state;
 let db = new DataBase(state);
 let scroll = new ScrollListener(state)
 // window.scroll = scroll;
