@@ -286,49 +286,39 @@ export class NestedTreemap {
 
 	createDropdowns (a,b) {
 
-		let that = this
+		this.dropdownA = a.append("select").attr("id", "dropdown-a")
+		this.dropdownB = b.append("select").attr("id", "dropdown-b")
+		
+		this.dropdownA.on("change", (sel) => {
+			this.activeNest[0] = Number(this.dropdownA.property("value"))
+			this.updateData()
+			this.render('brushmove')
+			this.render('brushend')
+		});
+		this.dropdownB.on("change", (sel) => {
+			this.activeNest[1] = Number(this.dropdownA.property("value"))
+			this.updateData()
+			this.render('brushmove')
+			this.render('brushend')
+		});
+		
+		this.dropdownA
+			.selectAll("option")
+			.data(this.nestings[0].map(m => m.name))
+			.enter()
+			.append("option")
+			.attr("selected", (d,i) => i == this.activeNest[0] ? "true" : null)
+			.attr("value", (d,i) => { return i; })
+			.text( (d) => { return d; });
 
-		this.nestingA = a.append("span").attr("id", "nesting-0").call(createSwitchContent)
-		this.nestingB = b.append("span").attr("id", "nesting-1").call(createSwitchContent)
-
-		function createSwitchContent(selection) {
-
-			let target = selection.attr('id')
-			let targetID = target.replace('nesting-', '')
-			let name = that.nestings[targetID][that.activeNest[targetID]].name
-
-			selection.append('a').attr('href', '#')
-				.classed('prev', true)
-				.classed(target, true)
-				.on("click", switchNesting)
-				.text('‹')
-			selection.append('span').classed('name', true).text(name)
-			selection.append('a')
-				.attr('href', '#')
-				.classed('next', true)
-				.classed(target, true)
-				.on("click", switchNesting)
-				.text('›')
-		}
-
-		function switchNesting() {
-			d3.event.preventDefault()
-
-			let direction = d3.select(this).classed('prev') ? -1:1
-			let target = d3.select(this).classed('nesting-0') ? 0:1
-			
-			let newNest = that.activeNest[target]+1*direction
-			newNest = newNest>that.nestings[target].length-1? 0:newNest
-			newNest = newNest<0 ? that.nestings[target].length-1:newNest
-
-			that.activeNest[target] = newNest
-			d3.select('#nesting-'+target).select('.name').text(that.nestings[target][newNest].name)
-			that.updateData()
-			that.render('brushmove')
-			that.render('brushend')
-		}
-
-
+		this.dropdownB
+			.selectAll("option")
+			.data(this.nestings[1].map(m => m.name))
+			.enter()
+			.append("option")
+			.attr("selected", (d,i) => i == this.activeNest[1] ? "true" : null)
+			.attr("value", (d,i) => { return i; })
+			.text( (d) => { return d; });
 
 		return this;
 	}

@@ -20,6 +20,29 @@ $width:180px;
   }
 
 
+	select {
+		text-transform: uppercase;
+		margin-right:$padding/2;
+		float:left;
+		font-size: 14px;
+		color: $blue;
+		font-family:"gravurcondensed-regular";
+		-webkit-appearance: none;
+		-moz-appearance:    none;
+		-ms-appearance:     none;
+		-o-appearance:      none;
+		appearance:         none;
+		border-radius:0;
+		border:0;
+		background-color: transparent;
+		background-image: url('../assets/arrow-down.svg');
+		background-repeat: no-repeat;
+		background-position: 100% 50%;
+		background-size: 15%;
+		padding-right:10px;
+		margin-right:10px;
+	}
+
 
 	.selects {
 		margin-top:25px;
