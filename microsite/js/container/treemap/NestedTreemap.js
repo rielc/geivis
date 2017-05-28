@@ -57,7 +57,7 @@ export class NestedTreemap {
 	showButton() { 
 		this.loadButton
 		.classed('hidden', false)
-		.text(`Click to load ${this.nestings[1][this.activeNest[1]].name} data`) 
+		.text(`Bitte klicken um die Daten zu laden`) 
 	}
 
 

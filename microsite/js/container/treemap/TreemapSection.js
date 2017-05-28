@@ -11,13 +11,13 @@ export class TreemapSection extends Section {
     // these accessor functions describe the nesting values
     let nestings = [
       [
-        {isActive:true, name:'Subject', accessor:d=>d.subject==undefined?'Subject unknown':d.subject },
-        {name:'Schooltype', accessor: d=>d.schooltype==undefined?'Schooltype unknown':d.schooltype },
-        {name:'Schoollevel', accessor: d=>d.schoollevel==undefined?'Schoollevel unknown':d.schoollevel }
+        {isActive:true, name:'Fach', accessor:d=>d.subject==undefined?'Fach unbekannt':d.subject },
+        {name:'Schultyp', accessor: d=>d.schooltype==undefined?'Schultyp unbekannt':d.schooltype },
+        {name:'Schullevel', accessor: d=>d.schoollevel==undefined?'Schullevel unbekannt':d.schoollevel }
       ],
       [
-        {isActive:true, name:'Place', accessor:d=>d.publisher_city==undefined?'Place unknown':d.publisher_city },
-        {name:'Publisher', accessor: d=>d.publisher==undefined?'Publisher unbekannt':d.publisher }
+        {isActive:true, name:'Ort', accessor:d=>d.publisher_city==undefined?'Ort unbekannt':d.publisher_city },
+        {name:'Verlag', accessor: d=>d.publisher==undefined?'Verlag unbekannt':d.publisher }
       ]
     ]
 
@@ -44,7 +44,7 @@ export class TreemapSection extends Section {
 
     // selects
     this.selects = this.div.append("div").classed('selects', true)
-    this.selects.append('span').text('Compare')
+    this.selects.append('span').text('Vergleiche')
     let select1 = this.selects.append("div").classed("select-1 switch", true)
     this.selects.append('span').text('in')
     let select0 = this.selects.append("div").classed("select-0 switch", true)
