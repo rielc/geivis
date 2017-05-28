@@ -8930,7 +8930,7 @@ $__System.register("33", ["5", "6", "31"], function (_export) {
 				}, {
 					key: "showButton",
 					value: function showButton() {
-						this.loadButton.classed('hidden', false).text("Click to load " + this.nestings[1][this.activeNest[1]].name + " data");
+						this.loadButton.classed('hidden', false).text("Bitte klicken um die Daten zu laden");
 					}
 				}, {
 					key: "relativeColorScale",
@@ -9262,16 +9262,16 @@ $__System.register('34', ['5', '6', '15', '16', '25', '33'], function (_export) 
           _get(Object.getPrototypeOf(TreemapSection.prototype), 'constructor', this).call(this, state, db);
 
           // these accessor functions describe the nesting values
-          var nestings = [[{ isActive: true, name: 'Subject', accessor: function accessor(d) {
-              return d.subject == undefined ? 'Subject unknown' : d.subject;
-            } }, { name: 'Schooltype', accessor: function accessor(d) {
-              return d.schooltype == undefined ? 'Schooltype unknown' : d.schooltype;
-            } }, { name: 'Schoollevel', accessor: function accessor(d) {
-              return d.schoollevel == undefined ? 'Schoollevel unknown' : d.schoollevel;
-            } }], [{ isActive: true, name: 'Place', accessor: function accessor(d) {
-              return d.publisher_city == undefined ? 'Place unknown' : d.publisher_city;
-            } }, { name: 'Publisher', accessor: function accessor(d) {
-              return d.publisher == undefined ? 'Publisher unbekannt' : d.publisher;
+          var nestings = [[{ isActive: true, name: 'Fach', accessor: function accessor(d) {
+              return d.subject == undefined ? 'Fach unbekannt' : d.subject;
+            } }, { name: 'Schultyp', accessor: function accessor(d) {
+              return d.schooltype == undefined ? 'Schultyp unbekannt' : d.schooltype;
+            } }, { name: 'Schullevel', accessor: function accessor(d) {
+              return d.schoollevel == undefined ? 'Schullevel unbekannt' : d.schoollevel;
+            } }], [{ isActive: true, name: 'Ort', accessor: function accessor(d) {
+              return d.publisher_city == undefined ? 'Ort unbekannt' : d.publisher_city;
+            } }, { name: 'Verlag', accessor: function accessor(d) {
+              return d.publisher == undefined ? 'Verlag unbekannt' : d.publisher;
             } }]];
 
           this.margin = { 'top': 0, 'right': 0, 'bottom': 0, 'left': 0 };
@@ -9293,7 +9293,7 @@ $__System.register('34', ['5', '6', '15', '16', '25', '33'], function (_export) 
 
           // selects
           this.selects = this.div.append("div").classed('selects', true);
-          this.selects.append('span').text('Compare');
+          this.selects.append('span').text('Vergleiche');
           var select1 = this.selects.append("div").classed("select-1 switch", true);
           this.selects.append('span').text('in');
           var select0 = this.selects.append("div").classed("select-0 switch", true);
