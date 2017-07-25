@@ -62,14 +62,14 @@ export class DataBase {
 
       d.RSWKTag = d.RSWKTag.split(",");
 
-      d.publisher = d.publisher || "none";
-      d.schoollevel = d.schoollevel || "none";
-      d.subject = d.subject || "none";
+      d.publisher = d.publisher || "Keine Angabe";
+      d.schoollevel = d.schoollevel || "Keine Angabe";
+      d.subject = d.subject || "Keine Angabe";
       // d.place = d.publisher_city || "none";
       d.placeRef = this.places[d.publisher_city];
       if(!d.placeRef){ console.warn("no place for", d.publisher_city); }
 
-      d.place = d.placeRef ? d.placeRef.toPlace : "none";
+      d.place = d.placeRef ? d.placeRef.toPlace : "Keine Angabe";
       d.lat = d.placeRef ? d.placeRef.lat : null;
       d.lon = d.placeRef ? d.placeRef.lng : null;
     })
