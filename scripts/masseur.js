@@ -52,7 +52,7 @@ var keywordClasses = {
         "k05": ["Berufliche Bildungsgänge", "Berufsbildende Schule", "Berufsbildende Höhere Schule", "Berufsbildende Mittlere Schule", "Berufsfachschule", "Berufsgrundbildungsjahr", "Berufliches Gymnasium", "Berufskolleg", "Berufsoberschule", "Berufsschule", "Fachoberschule", "Fortbildungsschule", "Gewerbeschule", "Gewerbliche Berufsfachschule", "Gewerbliche Fortbildungsschule", "Heeres-Unteroffiziervorschule", "Handelsakademie (HAK)", "Handelsschule (HAS)", "Höhere Berufsfachschule", "Höhere Handelsschule", "Höhere Lehranstalt für wirtschaftliche Berufe (HLW)", "Höhere Lehranstalt für Tourismus (HLT)", "Höhere technische Lehranstalt (HTL)", "Kaufmännische Fortbildungsschule", "Marineschule", "Militärschule", "Technikerschule (Technikum)", "Technisches Gymnasium", "Wirtschaftsgymnasium"],
         "k06": ["Tertiärbereich", "Hochschulbildung", "College", "Erwachsenenbildung", "Selbststudium", "Selbstunterricht"],
         "k07": ["Lehrmittel"],
-        "k08": ["Geschichte"],
+        "k08": ["Lehrerbildung"],
         "k09": ["Nicht zuordbar"]
     },
     "keyword": {
