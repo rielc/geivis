@@ -211,8 +211,9 @@ header {
       width: 154px;
       height: 65px;
       margin-right: 10px;
+			padding: 0;
       float: left; }
-    header .navi a {
+    header .navi a  {
       position: relative;
       color: #b00046;
       text-align: center;
@@ -244,7 +245,7 @@ header {
         transform-origin: 50% 100%; }
       header .navi a:hover, header .navi a:active, header .navi a.active {
         color: #009ee0; }
-        header .navi a:hover:after, header .navi a:active:after, header .navi a.active:after {
+        header .navi a.link:hover:after, header .navi a.link:active:after, header .navi a.link.active:after {
           opacity: 0.75;
           transform: scale(1, 1); }
 
@@ -267,7 +268,9 @@ header {
       margin-left: 25px; }
     #intro p:nth-of-type(odd) {
       margin-right: 25px; }
-
+		.intro p a, .intro p a:visited, .intro p a:active  { color: #b7084e; text-decoration: none;}
+		.intro p a:hover { color: #009de3; text-decoration: underline; }
+		
 #TreemapSection .loadButton {
   z-index: 99;
   transition: opacity 0.4s;
