@@ -14,3 +14,4 @@ vis/node_modules/
 vis/jspm_packages/.dependencies.json
 *.log
 *.map
+scripts/node_modules
